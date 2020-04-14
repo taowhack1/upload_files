@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Logout extends Component {
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <h1>Logout Pages</h1>
+      </div>
+    );
   }
 }
 

@@ -1,12 +1,7 @@
 import React from 'react';
-
+import ViewFolder from '../files/ViewFolder';
 const Home = () => {
-  return (
-    <div>
-      <button>Signout</button>
-      Home
-    </div>
-  );
+  return <div>{<ViewFolder />}</div>;
 };
 
 export default Home;

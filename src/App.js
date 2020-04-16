@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import SignIn from "./components/authen/SignIn";
-
+import ViewFiles from "./components/files/ViewFiles";
 const token = localStorage.getItem("user_id");
 if (token) {
   store.dispatch({
@@ -19,12 +19,11 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navbar />
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={home} />
-            <Route exact path="/signin" component={SignIn} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/ViewFiles/:folder_id" children={<ViewFiles />} />
+          <Route exact path="/" component={Home} />
+        </Switch>
       </Router>
     </Provider>
   );

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import Modal from "@material-ui/core/Modal";
-import "./style.css";
-import { DropzoneArea } from "material-ui-dropzone";
+import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import Modal from '@material-ui/core/Modal';
+import './style.css';
+import { DropzoneArea } from 'material-ui-dropzone';
 const style = {
   root: {
     height: 380,
@@ -12,9 +12,9 @@ const style = {
     flexGrow: 1,
   },
   speedDial: {
-    position: "fixed",
-    bottom: "16px",
-    right: "16px",
+    position: 'fixed',
+    bottom: '16px',
+    right: '16px',
   },
 };
 
@@ -22,7 +22,7 @@ class SpeedDialTooltipOpen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true,
+      open: false,
       files: [],
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -40,11 +40,11 @@ class SpeedDialTooltipOpen extends Component {
     if (this.state.files) {
       let formData = new FormData();
       this.state.files.forEach((files) => {
-        formData.append("files[]", files);
+        formData.append('files[]', files);
         console.log(formData);
       });
-      fetch("http://localhost/REACT_API/upload.php", {
-        method: "POST",
+      fetch('http://localhost/REACT_API/upload.php', {
+        method: 'POST',
         body: formData,
       });
     } else {
@@ -66,31 +66,31 @@ class SpeedDialTooltipOpen extends Component {
     return (
       <div style={style.root}>
         <SpeedDial
-          ariaLabel="SpeedDial tooltip example"
+          ariaLabel='SpeedDial tooltip example'
           style={style.speedDial}
           icon={<SpeedDialIcon />}
           onClick={this.handleOpen}
         ></SpeedDial>
         <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
+          aria-labelledby='transition-modal-title'
+          aria-describedby='transition-modal-description'
           style={style.modal}
           open={this.state.open}
         >
-          <div className="page">
-            <div className="container">
-              <div className="toolbar">
+          <div className='page'>
+            <div className='container'>
+              <div className='toolbar'>
                 <h3>ไฟล์ที่อัพโหลด</h3>
               </div>
-              <div className="UploadBox">
+              <div className='UploadBox'>
                 <DropzoneArea
                   style={{
-                    width: "150px",
+                    width: '150px',
                   }}
-                  dropzoneClass="dropZone"
+                  dropzoneClass='dropZone'
                   //   showPreviewsInDropzone={false}
                   //   showPreviews={true}
-                  dropzoneText="วางไฟล์หรือคลิกเพื่อ upload  "
+                  dropzoneText='วางไฟล์หรือคลิกเพื่อ upload  '
                   filesLimit={5}
                   maxFileSize={30000000}
                   //   useChipsForPreview={true}
@@ -100,11 +100,11 @@ class SpeedDialTooltipOpen extends Component {
                 />
                 {/* <div className="dropZone"></div> */}
               </div>
-              <div className="controlBtn">
-                <Button className="UploadBtn" onClick={this.handleUpload}>
+              <div className='controlBtn'>
+                <Button className='UploadBtn' onClick={this.handleUpload}>
                   Upload
                 </Button>
-                <Button className="Cancel" onClick={this.handleClose}>
+                <Button className='Cancel' onClick={this.handleClose}>
                   Cancel
                 </Button>
               </div>

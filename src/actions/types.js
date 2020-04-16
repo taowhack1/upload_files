@@ -1,6 +1,7 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
 export const GET_FOLDERS = 'GET_FOLDERS';
+export const GET_FILES = 'GET_FILES';
 export const ADD_FOLDERS = 'ADD_FOLDERS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 export const SET_CURRENT = 'SET_CURRENT';

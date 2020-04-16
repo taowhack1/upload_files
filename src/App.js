@@ -5,6 +5,7 @@ import store from './store';
 import Navbar from './components/layout/Navbar';
 import Home from './components/pages/Home';
 import SignIn from './components/authen/SignIn';
+import ViewFiles from './components/files/ViewFiles';
 
 const token = localStorage.getItem('user_id');
 if (token) {

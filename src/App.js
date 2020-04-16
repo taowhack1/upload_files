@@ -21,7 +21,7 @@ const App = () => {
         <Navbar />
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={home} />
             <Route exact path="/signin" component={SignIn} />
           </Switch>
         </div>

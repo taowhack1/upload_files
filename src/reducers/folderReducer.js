@@ -1,12 +1,12 @@
 import {
-  GET_POSTS,
-  ADD_POST,
+  GET_FOLDERS,
+  ADD_FOLDERS,
   SET_LOADING,
   POSTS_ERROR,
 } from '../actions/types';
 
 const initialState = {
-  posts: null,
+  folders: null,
   current: null,
   loading: null,
   error: null,
@@ -14,16 +14,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_POSTS:
+    case GET_FOLDERS:
       return {
         ...state,
-        posts: action.payload,
+        folders: action.payload,
         loading: false,
       };
-    case ADD_POST:
+    case ADD_FOLDERS:
       return {
         ...state,
-        posts: [action.payload, ...state.posts],
+        folders: [action.payload, ...state.folders],
         loading: false,
       };
     case SET_LOADING:

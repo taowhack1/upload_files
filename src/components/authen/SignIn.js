@@ -60,7 +60,7 @@ const SignIn = () => {
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component='h1' variant='h2'>
+        <Typography component='h1' variant='h4'>
           ระบบจัดการเอกสารออนไลน์
         </Typography>
         <img src={ReactLogo} alt='React Logo' />

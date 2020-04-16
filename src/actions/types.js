@@ -1,7 +1,7 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
-export const GET_POSTS = 'GET_POSTS';
-export const ADD_POST = 'ADD_POST';
+export const GET_FOLDERS = 'GET_FOLDERS';
+export const ADD_FOLDERS = 'ADD_FOLDERS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';

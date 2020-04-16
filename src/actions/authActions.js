@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from '../actions/types';
-
+const url = 'http://192.168.5.230:8080/upload';
 export const signOut = () => {
   return (dispatch) => {
     localStorage.removeItem('token');
@@ -18,11 +18,7 @@ export const signIn = (user) => async (dispatch) => {
   };
 
   try {
-    const response = await axios.post(
-      `http://192.168.5.11:8080/users/login`,
-      user,
-      config
-    );
+    const response = await axios.post(`${url}/login`, user, config);
     console.log(response.data);
     if (response.data.user_login === false) {
       alert('Username หรือ Password ไม่ถูกต้อง!');

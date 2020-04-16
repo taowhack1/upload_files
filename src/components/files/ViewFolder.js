@@ -1,5 +1,4 @@
 import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,10 +33,6 @@ const useStyles = makeStyles({
   },
 });
 
-const handleRowClick = () => {
-  console.log('Folder Click');
-};
-
 const ViewFolder = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
@@ -46,6 +41,10 @@ const ViewFolder = () => {
   useEffect(() => {
     dispatch(getFolders(localStorage.getItem('user_id')));
   }, []);
+
+  const handleRowClick = (folder_id) => {
+    console.log(folder_id);
+  };
 
   if (loading) {
     console.log('loading >>> ' + loading);
@@ -75,16 +74,16 @@ const ViewFolder = () => {
                 ? folders.map((row) => (
                     <TableRow key={row.folder_id}>
                       <TableCell>
-                        {/* <Button onClick={() => handleRowClick()} */}
                         <Button
                           component={Link}
                           to={{
-                            pathname: 'www.google.com',
+                            pathname: '/ViewFiles/' + row.folder_id,
                           }}
                         >
                           <FolderIcon className={classes.color} />
                           &nbsp;&nbsp;{row.folder_name}
                         </Button>
+                        {/* </Link> */}
                       </TableCell>
                       <TableCell align='left'>
                         {moment(row.folder_created).format()}

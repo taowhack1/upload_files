@@ -1,4 +1,5 @@
 import React, { useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +14,6 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-  Link,
 } from '@material-ui/core/';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
@@ -34,7 +34,9 @@ const useStyles = makeStyles({
   },
 });
 
-const handleRowClick = () => console.log('Folder Click');
+const handleRowClick = () => {
+  console.log('Folder Click');
+};
 
 const ViewFolder = () => {
   const classes = useStyles();
@@ -73,7 +75,13 @@ const ViewFolder = () => {
                 ? folders.map((row) => (
                     <TableRow key={row.folder_id}>
                       <TableCell>
-                        <Button onClick={() => handleRowClick()}>
+                        {/* <Button onClick={() => handleRowClick()} */}
+                        <Button
+                          component={Link}
+                          to={{
+                            pathname: 'www.google.com',
+                          }}
+                        >
                           <FolderIcon className={classes.color} />
                           &nbsp;&nbsp;{row.folder_name}
                         </Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -75,12 +75,6 @@ const ViewFolder = () => {
                 ? folders.map((row) => (
                     <TableRow key={row.folder_id}>
                       <TableCell>
-                        {/* <Link
-                          to={{
-                            pathname: "/ViewFiles",
-                            folderId: row.folder_id,
-                          }}
-                        > */}
                         <Button
                           component={Link}
                           to={{

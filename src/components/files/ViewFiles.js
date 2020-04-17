@@ -17,7 +17,7 @@ import {
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SpeedDialTooltipOpen from "./speedDial";
 import FolderIcon from "@material-ui/icons/Folder";
-import { getFolders } from "../../actions/folderActions";
+import { getFiles } from "../../actions/fileActions";
 import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -42,11 +42,11 @@ const ViewFiles = () => {
   const { folder_id } = useParams();
   console.log(folder_id);
   const classes = useStyles();
-  const { files, loading } = useSelector((state) => state.files);
-
+  const { files, loading } = useSelector((state) => state.file);
+  // const { files } = useSelector((state) => state.file.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(localStorage.getItem("user_id")));
+    dispatch(getFiles(folder_id));
   }, []);
 
   if (loading) {

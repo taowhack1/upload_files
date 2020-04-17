@@ -5,6 +5,8 @@ import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import Modal from "@material-ui/core/Modal";
 import "./style.css";
 import { DropzoneArea } from "material-ui-dropzone";
+import Upload from "./upload";
+
 const style = {
   root: {
     height: 380,
@@ -22,7 +24,7 @@ class SpeedDialTooltipOpen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true,
+      open: false,
       files: [],
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -32,6 +34,7 @@ class SpeedDialTooltipOpen extends Component {
   }
 
   handleChange(files) {
+    console.log(files);
     this.setState({
       files: files,
     });
@@ -46,6 +49,9 @@ class SpeedDialTooltipOpen extends Component {
       fetch("http://localhost/REACT_API/upload.php", {
         method: "POST",
         body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
     } else {
       console.log(0);
@@ -83,7 +89,8 @@ class SpeedDialTooltipOpen extends Component {
                 <h3>ไฟล์ที่อัพโหลด</h3>
               </div>
               <div className="UploadBox">
-                <DropzoneArea
+                <Upload handleClose={this.handleClose} />
+                {/* <DropzoneArea
                   style={{
                     width: "150px",
                   }}
@@ -97,16 +104,7 @@ class SpeedDialTooltipOpen extends Component {
                   //   dropzoneParagraphClass="dropZoneText"
                   showFileNames={true}
                   onChange={this.handleChange.bind(this)}
-                />
-                {/* <div className="dropZone"></div> */}
-              </div>
-              <div className="controlBtn">
-                <Button className="UploadBtn" onClick={this.handleUpload}>
-                  Upload
-                </Button>
-                <Button className="Cancel" onClick={this.handleClose}>
-                  Cancel
-                </Button>
+                /> */}
               </div>
             </div>
           </div>

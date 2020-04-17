@@ -18,11 +18,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Switch>
           <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/ViewFiles/:folder_id" children={<ViewFiles />} />
           <Route exact path="/" component={Home} />
+          <Route exact path="/ViewFiles/:folder_id" children={<ViewFiles />} />
         </Switch>
       </Router>
     </Provider>

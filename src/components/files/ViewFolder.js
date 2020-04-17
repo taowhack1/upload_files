@@ -53,26 +53,14 @@ const ViewFolder = () => {
 
   return (
     <Fragment>
-<<<<<<< HEAD
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <Typography color="textPrimary" variant="h6">
-          โฟล์เดอร์ของฉัน
-        </Typography>
-      </Breadcrumbs>
       <Grid container direction="row" justify="center" alignItems="center">
-=======
-      <Grid container direction='row' justify='center' alignItems='center'>
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
         <Paper className={classes.paper}>
-          <Grid container direction='row' justify='left' alignItems='center'>
+          <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
-              separator={<NavigateNextIcon fontSize='small' />}
-              aria-label='breadcrumb'
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
             >
-              <Typography color='textPrimary' variant='h6'>
+              <Typography color="textPrimary" variant="h6">
                 โฟล์เดอร์ของฉัน
               </Typography>
             </Breadcrumbs>
@@ -95,12 +83,8 @@ const ViewFolder = () => {
                         <Button
                           component={Link}
                           to={{
-<<<<<<< HEAD
-                            pathname: "/ViewFiles/" + row.folder_id,
-=======
                             pathname:
-                              '/ViewFiles/' + row.folder_id + row.folder_name,
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
+                              "/ViewFiles/" + row.folder_id + row.folder_name,
                           }}
                         >
                           <FolderIcon className={classes.color} />
@@ -108,13 +92,7 @@ const ViewFolder = () => {
                         </Button>
                         {/* </Link> */}
                       </TableCell>
-<<<<<<< HEAD
-                      <TableCell align="left">
-                        {moment(row.folder_created).format()}
-                      </TableCell>
-=======
-                      <TableCell align='left'>{row.folder_created}</TableCell>
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
+                      <TableCell align="left">{row.folder_created}</TableCell>
                     </TableRow>
                   ))
                 : console.log("Nodata")}

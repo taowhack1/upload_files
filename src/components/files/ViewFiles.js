@@ -13,22 +13,13 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-<<<<<<< HEAD
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SpeedDialTooltipOpen from "./speedDial";
-import FolderIcon from "@material-ui/icons/Folder";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import GetAppIcon from "@material-ui/icons/GetApp";
 import { getFiles } from "../../actions/fileActions";
 import { useParams } from "react-router-dom";
-=======
-} from '@material-ui/core/';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import SpeedDialTooltipOpen from './speedDial';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import { getFiles } from '../../actions/fileActions';
-import { useParams } from 'react-router-dom';
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
 
 const useStyles = makeStyles({
   paper: {
@@ -40,11 +31,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   color: {
-<<<<<<< HEAD
-    color: "#FCD462",
-=======
-    color: '#1976D2',
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
+    color: "#1976D2",
   },
 });
 
@@ -69,26 +56,14 @@ const ViewFiles = () => {
 
   return (
     <Fragment>
-<<<<<<< HEAD
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        <Typography color="textPrimary" variant="h6">
-          โฟล์เดอร์ของฉัน > โฟลเดอร์ A
-        </Typography>
-      </Breadcrumbs>
       <Grid container direction="row" justify="center" alignItems="center">
-=======
-      <Grid container direction='row' justify='center' alignItems='center'>
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
         <Paper className={classes.paper}>
-          <Grid container direction='row' justify='left' alignItems='center'>
+          <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
-              separator={<NavigateNextIcon fontSize='small' />}
-              aria-label='breadcrumb'
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
             >
-              <Typography color='textPrimary' variant='h6'>
+              <Typography color="textPrimary" variant="h6">
                 โฟล์เดอร์ของฉัน > โฟลเดอร์ {folder_name}
               </Typography>
             </Breadcrumbs>
@@ -98,21 +73,15 @@ const ViewFiles = () => {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-<<<<<<< HEAD
-                <TableCell align="center">ชื่อ</TableCell>
-                <TableCell align="left">วันที่แก้ไขล่าสุด</TableCell>
-                <TableCell align="left">ดาวน์โหลด</TableCell>
-=======
-                <TableCell variant='head' align='center'>
+                <TableCell variant="head" align="center">
                   ชื่อ
                 </TableCell>
-                <TableCell variant='head' align='left'>
+                <TableCell variant="head" align="left">
                   วันที่แก้ไขล่าสุด
                 </TableCell>
-                <TableCell variant='head' align='left'>
+                <TableCell variant="head" align="left">
                   ดาวน์โหลด
                 </TableCell>
->>>>>>> 502dbb40198bf9e4a851fb94184ffe94dce60563
               </TableRow>
             </TableHead>
             <TableBody>

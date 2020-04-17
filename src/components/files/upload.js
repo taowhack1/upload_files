@@ -8,7 +8,7 @@ const Upload = (props) => {
   const [post, setPost] = useState({
     photos: [],
   });
-  const [files, setFiles] = useState([]);
+  const [filesUpload, setFilesUpload] = useState([]);
   const [highlight, setHighlight] = useState(false);
   const { photos } = post;
   const [uploadedFile, setUploadedFile] = useState({});
@@ -18,13 +18,14 @@ const Upload = (props) => {
   const handleFileChange = (e) => {
     let files = e.target.files;
     // console.log(files);
+
     handleFiles(files);
   };
 
   const handleFiles = (files) => {
     let photosArr = [];
+    let filesUploadArr = [];
     for (let file of files) {
-      setFiles([...files, file]);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.addEventListener("load", () => {
@@ -35,16 +36,18 @@ const Upload = (props) => {
           src: reader.result,
         };
         photosArr.push(fileobj);
+        filesUploadArr.push(file);
         setPost({
           photos: [...photos, ...photosArr],
         });
+        setFilesUpload([...filesUpload, ...filesUploadArr]);
       });
     }
   };
   const handleUpload = async (e) => {
     e.preventDefault();
     // console.log(post.photos[0]);
-    console.log(files);
+    console.log(filesUpload);
     // const formData = new FormData();
     // formData.append("myFile", file);
     // try {
@@ -86,7 +89,10 @@ const Upload = (props) => {
         ...photos.slice(targetIndex + 1),
       ],
     });
-    setFiles(...files.slice(0, targetIndex), ...files.slice(targetIndex + 1));
+    setFilesUpload([
+      ...filesUpload.slice(0, targetIndex),
+      ...filesUpload.slice(targetIndex + 1),
+    ]);
   };
   const handleHighlight = (e) => {
     e.preventDefault();

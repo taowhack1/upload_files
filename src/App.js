@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
         <Switch>
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/" component={Home} />

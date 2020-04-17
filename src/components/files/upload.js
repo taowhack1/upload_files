@@ -46,39 +46,28 @@ const Upload = (props) => {
   };
   const handleUpload = async (e) => {
     e.preventDefault();
-    // console.log(post.photos[0]);
-    console.log(filesUpload);
-    // const formData = new FormData();
-    // formData.append("myFile", file);
-    // try {
-    //   const res = await axios.post("/upload/2", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //     onUploadProgress: (progressEvent) => {
-    //       setUploadPercentage(
-    //         parseInt(
-    //           Math.round((progressEvent.loaded * 100) / progressEvent.total)
-    //         )
-    //       );
 
-    //       // Clear percentage
-    //       setTimeout(() => setUploadPercentage(0), 10000);
-    //     },
-    //   });
+    console.log(filesUpload[0]);
+    let formData = new FormData();
+    let res;
+    for (let i = 0; i < filesUpload.length; i++) {
+      formData.set("myFile", filesUpload[i]);
 
-    //   const { fileName, filePath } = res.data;
-
-    //   setUploadedFile({ fileName, filePath });
-
-    //   setMessage("File Uploaded");
-    // } catch (err) {
-    //   if (err.response.status === 500) {
-    //     setMessage("There was a problem with the server");
-    //   } else {
-    //     setMessage(err.response.data.msg);
-    //   }
-    // }
+      try {
+        res = await axios.post("http://192.168.5.230:8080/upload/2", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    res.data ? UploadSucces() : alert("Error : Something went wrong...");
+  };
+  const UploadSucces = () => {
+    alert("Upload Successfully");
+    props.handleClose();
   };
   const handleDelete = (e) => {
     let target = e.target.parentElement;
@@ -147,7 +136,7 @@ const Upload = (props) => {
         </div>
       </div>
       <div className="controlBtn">
-        <Button className="UploadBtn" onClick={handleUpload}>
+        <Button className="UploadBtn" onClick={(e) => handleUpload(e)}>
           Upload
         </Button>
         <Button className="Cancel" onClick={() => props.handleClose()}>

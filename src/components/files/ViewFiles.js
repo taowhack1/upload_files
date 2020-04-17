@@ -16,7 +16,8 @@ import {
 } from '@material-ui/core/';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import SpeedDialTooltipOpen from './speedDial';
-import FolderIcon from '@material-ui/icons/Folder';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { getFiles } from '../../actions/fileActions';
 import { useParams } from 'react-router-dom';
 
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   color: {
-    color: '#FCD462',
+    color: '#1976D2',
   },
 });
 
@@ -39,7 +40,7 @@ const handleRowClick = (e) => {
 };
 
 const ViewFiles = () => {
-  const { folder_id } = useParams();
+  const { folder_id, folder_name } = useParams();
   console.log(folder_id);
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
@@ -55,22 +56,32 @@ const ViewFiles = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize='small' />}
-        aria-label='breadcrumb'
-      >
-        <Typography color='textPrimary' variant='h6'>
-          โฟล์เดอร์ของฉัน > โฟลเดอร์ A
-        </Typography>
-      </Breadcrumbs>
       <Grid container direction='row' justify='center' alignItems='center'>
+        <Paper className={classes.paper}>
+          <Grid container direction='row' justify='left' alignItems='center'>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize='small' />}
+              aria-label='breadcrumb'
+            >
+              <Typography color='textPrimary' variant='h6'>
+                โฟล์เดอร์ของฉัน > โฟลเดอร์ {folder_name}
+              </Typography>
+            </Breadcrumbs>
+          </Grid>
+        </Paper>
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell align='center'>ชื่อ</TableCell>
-                <TableCell align='left'>วันที่แก้ไขล่าสุด</TableCell>
-                <TableCell align='left'>ดาวน์โหลด</TableCell>
+                <TableCell variant='head' align='center'>
+                  ชื่อ
+                </TableCell>
+                <TableCell variant='head' align='left'>
+                  วันที่แก้ไขล่าสุด
+                </TableCell>
+                <TableCell variant='head' align='left'>
+                  ดาวน์โหลด
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,13 +89,17 @@ const ViewFiles = () => {
                 ? files.map((row) => (
                     <TableRow key={row.file_id}>
                       <TableCell>
-                        <Button onClick={() => handleRowClick()}>
-                          <FolderIcon className={classes.color} />
-                          &nbsp;&nbsp;{row.file_name}
-                        </Button>
+                        <InsertDriveFileIcon className={classes.color} />
+                        &nbsp;&nbsp;
+                        {row.file_name}
                       </TableCell>
                       <TableCell align='left'>
                         {moment(row.file_created).format()}
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={() => handleRowClick()}>
+                          <GetAppIcon />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))

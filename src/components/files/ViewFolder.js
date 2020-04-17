@@ -53,15 +53,20 @@ const ViewFolder = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        separator={<NavigateNextIcon fontSize='small' />}
-        aria-label='breadcrumb'
-      >
-        <Typography color='textPrimary' variant='h6'>
-          โฟล์เดอร์ของฉัน
-        </Typography>
-      </Breadcrumbs>
       <Grid container direction='row' justify='center' alignItems='center'>
+        <Paper className={classes.paper}>
+          <Grid container direction='row' justify='left' alignItems='center'>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize='small' />}
+              aria-label='breadcrumb'
+            >
+              <Typography color='textPrimary' variant='h6'>
+                โฟล์เดอร์ของฉัน
+              </Typography>
+            </Breadcrumbs>
+          </Grid>
+        </Paper>
+
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
@@ -78,7 +83,8 @@ const ViewFolder = () => {
                         <Button
                           component={Link}
                           to={{
-                            pathname: '/ViewFiles/' + row.folder_id,
+                            pathname:
+                              '/ViewFiles/' + row.folder_id + row.folder_name,
                           }}
                         >
                           <FolderIcon className={classes.color} />
@@ -86,9 +92,7 @@ const ViewFolder = () => {
                         </Button>
                         {/* </Link> */}
                       </TableCell>
-                      <TableCell align='left'>
-                        {moment(row.folder_created).format()}
-                      </TableCell>
+                      <TableCell align='left'>{row.folder_created}</TableCell>
                     </TableRow>
                   ))
                 : console.log('Nodata')}

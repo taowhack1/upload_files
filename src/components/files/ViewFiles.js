@@ -94,7 +94,7 @@ const ViewFiles = () => {
                         {row.file_name}
                       </TableCell>
                       <TableCell align="left">
-                        {moment(row.file_created).format()}
+                        {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
                       </TableCell>
                       <TableCell>
                         <Button onClick={() => handleRowClick()}>

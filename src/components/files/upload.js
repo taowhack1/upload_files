@@ -123,7 +123,7 @@ const Upload = (props) => {
             id="filephotos"
             onChange={handleFileChange}
           />
-          <label htmlFor="filephotos">{"Drag & Drop"}</label>
+          <label htmlFor="filephotos">{"ลากหรือคลิกเพื่ออัพโหลดไฟล์"}</label>
         </div>
         <div className="custom-file-preview">
           {photos.length > 0 &&

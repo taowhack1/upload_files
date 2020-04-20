@@ -17,6 +17,30 @@ import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+
+function a11yProps(index) {
+  return {
+    id: `nav-tab-${index}`,
+    "aria-controls": `nav-tabpanel-${index}`,
+  };
+}
+
+function LinkTab(props) {
+  console.log(props);
+  return (
+    <Tab
+      component={Link}
+      to="/Admin"
+      // onClick={(event) => {
+      //   event.preventDefault();
+      // }}
+      {...props}
+    />
+  );
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -25,10 +49,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#1976D2",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
+    fontSize: "20px",
   },
   title: {
     flexGrow: 1,
+  },
+  userBtn: {
+    position: "absolute",
+    right: 5,
+  },
+  toolbar: {
+    minHeight: 0,
+    padding: "8px 0px 0px 0px",
   },
 }));
 
@@ -39,6 +72,12 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [admin, setAdmin] = useState(true);
+  const [value, setValue] = React.useState(0);
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
   const open = Boolean(anchorEl);
   useEffect(() => {
     if (!authenticated) {
@@ -63,24 +102,52 @@ const Navbar = () => {
   };
 
   const authLinks = (
-    <Toolbar>
-      <Typography
-        variant="h6"
-        className={classes.title}
-        component={Link}
-        to="/"
-      >
-        ระบบจัดการเอกสารออนไลน์
-      </Typography>
-
+    <Toolbar className={classes.toolbar}>
+      {admin ? (
+        <Tabs
+          variant="fullWidth"
+          value={value}
+          onChange={handleChangeTab}
+          aria-label="nav tabs example"
+        >
+          <Tab
+            // onClick={(event) => {
+            //   event.preventDefault();
+            // }}
+            className={classes.menuButton}
+            label="จัดการเอกสาร"
+            component={Link}
+            to="/"
+          />
+          <Tab
+            // onClick={(event) => {
+            //   event.preventDefault();
+            // }}
+            className={classes.menuButton}
+            label="จัดการผู้ใช้งาน"
+            component={Link}
+            to="/admin"
+          />
+        </Tabs>
+      ) : (
+        <Typography
+          variant="h6"
+          className={classes.title}
+          component={Link}
+          to="/"
+        >
+          ระบบจัดการเอกสารออนไลน์
+        </Typography>
+      )}
       {auth && (
-        <div>
+        <div className={classes.userBtn}>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
             color="inherit"
+            style={{ padding: "5px" }}
           >
             <AccountCircle fontSize="large" />
           </IconButton>

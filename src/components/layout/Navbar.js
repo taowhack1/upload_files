@@ -7,7 +7,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -72,6 +71,23 @@ const Navbar = () => {
       >
         ระบบจัดการเอกสารออนไลน์
       </Typography>
+      <Typography
+        variant="h6"
+        className={classes.title}
+        component={Link}
+        to="/viewfolderadmin"
+      >
+        Admin
+      </Typography>
+      <Typography
+        variant="h6"
+        className={classes.title}
+        component={Link}
+        to="/manageuser"
+      >
+        AdminManage
+      </Typography>
+
 
       {auth && (
         <div>
@@ -87,19 +103,13 @@ const Navbar = () => {
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
+            anchorOrigin={{ vertical: "center", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
             open={open}
             onClose={handleClose}
           >
             {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+            <MenuItem >เปลี่ยน Password</MenuItem>
             <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
           </Menu>
         </div>

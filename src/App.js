@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import './App.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -6,6 +7,22 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import SignIn from "./components/authen/SignIn";
 import ViewFiles from "./components/files/ViewFiles";
+import ViewFolderAdmin from './components/files/ViewFolderAdmin'
+import AddFolder from './components/files/AddFolder';
+import AddUser from './components/files/AddUser'
+import Delete from './components/files/DeleteFiles'
+import ViewFilesAdmin from './components/files/ViewFilesAdmin'
+import ManageUser from './components/files/MangeUser'
+import ManageUserFirst from './components/files/ManageUserFirst'
+import ManageUserSecond from './components/files/ManageUserSecond'
+import ManageUserThird from './components/files/ManageUserThird'
+import Dowload from "./components/files/Dowload";
+import ConfirmDowload from "./components/files/ConfirmDowload";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'; //Google fonts
+
+
+
+
 const token = localStorage.getItem("user_id");
 if (token) {
   store.dispatch({
@@ -14,21 +31,41 @@ if (token) {
   });
 }
 
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      '"Sarabun"',
+    ].join(','),
+  },
+});
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/" component={Home} />
-          <Route
-            exact
-            path="/ViewFiles/:folder_id:folder_name"
-            children={<ViewFiles />}
-          />
-        </Switch>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route exact path="/admin" component={AddFolder} />
+            <Route exact path="/adduser" component={AddUser} />
+            <Route exact path="/del" component={Delete} />
+            <Route exact path="/viewfolderadmin" component={ViewFolderAdmin} />
+            <Route exact path="/viewfilesadmin" component={ViewFilesAdmin} />
+            <Route exact path="/manageuser" component={ManageUser} />
+            <Route exact path="/manageuserfirst" component={ManageUserFirst} />
+            <Route exact path="/manageusersecond" component={ManageUserSecond} />
+            <Route exact path="/dowload" component={Dowload} />
+            <Route exact path="/confirm" component={ConfirmDowload} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/ViewFiles/:folder_id:folder_name"
+              children={<ViewFiles />}
+            />
+          </Switch>
+        </Router>
+      </ThemeProvider>
     </Provider>
   );
 };

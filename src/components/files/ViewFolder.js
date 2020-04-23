@@ -29,8 +29,17 @@ const useStyles = makeStyles({
   table: {
     width: "100%",
   },
+  text: {
+    fontSize: 20
+  },
   color: {
+    fontSize: 40,
     color: "#FCD462",
+    verticalAlign: 'middle'
+  },
+  breadcrumbs: {
+    marginTop: 20,
+    marginBottom: 10,
   },
 });
 
@@ -57,12 +66,11 @@ const ViewFolder = () => {
         <Paper className={classes.paper}>
           <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
+              className={classes.breadcrumbs}
+              separator={<NavigateNextIcon />}
               aria-label="breadcrumb"
             >
-              <Typography color="textPrimary" variant="h6">
-                โฟล์เดอร์ของฉัน
-              </Typography>
+              <Typography className={classes.text} color="textPrimary">โฟลเดอร์ทั้งหมด</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -70,31 +78,56 @@ const ViewFolder = () => {
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
-              <TableRow>
-                <TableCell align="center">ชื่อ</TableCell>
-                <TableCell align="left">วันที่แก้ไขล่าสุด</TableCell>
-              </TableRow>
+              <TableCell style={{ width: '50%' }} align="center">
+                <Typography color="textPrimary" className={classes.text} >
+                  ชื่อ
+                </Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Typography color="textPrimary" className={classes.text} >
+                  วันที่แก้ไข
+                </Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Typography color="textPrimary" className={classes.text} >
+
+                </Typography>
+              </TableCell>
+
             </TableHead>
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((row) => (
-                    <TableRow key={row.folder_id}>
-                      <TableCell>
-                        <Button
-                          component={Link}
-                          to={{
-                            pathname:
-                              "/ViewFiles/" + row.folder_id + row.folder_name,
-                          }}
-                        >
-                          <FolderIcon className={classes.color} />
-                          &nbsp;&nbsp;{row.folder_name}
-                        </Button>
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align="left">{row.folder_created}</TableCell>
-                    </TableRow>
-                  ))
+                  <TableRow key={row.folder_id}>
+                    <TableCell>
+                      <Link
+                        to={{
+                          pathname:
+                            "/ViewFiles/" + row.folder_id + row.folder_name,
+                        }}
+                      >
+                        <Grid container spacing={1} direction="row" alignItems="center">
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.color} />
+                          </Grid>
+                          <Grid item></Grid>
+                          <Grid item xs={10}>
+                            <Typography color="textPrimary" className={classes.text} >
+                              {row.folder_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography color="textPrimary" className={classes.text} >
+                        {moment(row.folder_created).format("DD-MM-YYYY HH:MM")}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left"></TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>

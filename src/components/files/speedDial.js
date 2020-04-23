@@ -4,7 +4,12 @@ import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import Modal from "@material-ui/core/Modal";
 import "./style.css";
+import { withStyles } from '@material-ui/styles';
+import Fade from '@material-ui/core/Fade';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import { DropzoneArea } from "material-ui-dropzone";
+
 import Upload from "./upload";
 
 const style = {
@@ -15,10 +20,29 @@ const style = {
   },
   speedDial: {
     position: "fixed",
-    bottom: "16px",
-    right: "16px",
+    bottom: 100,
+    right: 100,
   },
 };
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  absolute: {
+    position: 'fixed',
+    bottom: theme.spacing(8),
+    right: theme.spacing(8),
+    height: 100,
+    width: 100,
+    backgroundColor: "#1976D2",
+  },
+  icon: {
+    fontSize: 50,
+  },
+});
+
+
 
 class SpeedDialTooltipOpen extends Component {
   constructor(props) {
@@ -32,6 +56,7 @@ class SpeedDialTooltipOpen extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
 
   handleChange(files) {
     console.log(files);
@@ -69,14 +94,18 @@ class SpeedDialTooltipOpen extends Component {
     });
   };
   render() {
+    const { classes } = this.props;
     return (
-      <div style={style.root}>
-        <SpeedDial
+      <div className={classes.root}>
+        <Fab onClick={this.handleOpen} className={classes.absolute} color="primary" >
+          <AddIcon className={classes.icon} />
+        </Fab>
+        {/* <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          style={style.speedDial}
+          className={classes.absolute}
           icon={<SpeedDialIcon />}
           onClick={this.handleOpen}
-        ></SpeedDial>
+        ></SpeedDial> */}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -114,4 +143,4 @@ class SpeedDialTooltipOpen extends Component {
   }
 }
 
-export default SpeedDialTooltipOpen;
+export default withStyles(styles)(SpeedDialTooltipOpen);

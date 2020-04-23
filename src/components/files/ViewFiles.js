@@ -13,13 +13,17 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
+  Checkbox,
+  IconButton,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SpeedDialTooltipOpen from "./speedDial";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import { getFiles } from "../../actions/fileActions";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import ConfirmDownload from './ConfirmDowload';
+import Download from './Dowload';
+
 
 const useStyles = makeStyles({
   paper: {
@@ -30,16 +34,39 @@ const useStyles = makeStyles({
   table: {
     width: "100%",
   },
-  color: {
-    color: "#1976D2",
+  text: {
+    fontSize: 20
   },
+  color: {
+    fontSize: 40,
+    color: "#1976D2",
+    verticalAlign: 'middle'
+  },
+  breadcrumbs: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  NavigateNextIcon: {
+    fontSize: 30,
+  },
+  opacity: {
+    fontSize: 20,
+    opacity: 0.7,
+  },
+
 });
 
 const handleRowClick = (e) => {
   console.log(e);
 };
+const ViewFiles = (props) => {
 
-const ViewFiles = () => {
+  const [checked, setChecked] = React.useState(false);
+
+  const handleCheckBoxChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   const { folder_id, folder_name } = useParams();
   console.log(folder_id);
   const classes = useStyles();
@@ -60,12 +87,14 @@ const ViewFiles = () => {
         <Paper className={classes.paper}>
           <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
+              className={classes.breadcrumbs}
+              separator={<NavigateNextIcon className={classes.NavigateNextIcon} />}
               aria-label="breadcrumb"
             >
-              <Typography color="textPrimary" variant="h6">
-                โฟล์เดอร์ของฉัน > โฟลเดอร์ {folder_name}
-              </Typography>
+              <Link to={{ pathname: '/' }} >
+                <Typography className={classes.opacity} color="textPrimary">โฟลเดอร์ทั้งหมด</Typography>
+              </Link>
+              <Typography className={classes.text} color="textPrimary">โฟลเดอร์ {folder_name}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -73,43 +102,69 @@ const ViewFiles = () => {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
+                <TableCell variant="head" style={{ width: '50%' }} align="center">
+                  <Typography color="textPrimary" className={classes.text} >
+                    ชื่อ
+                  </Typography>
+                </TableCell>
                 <TableCell variant="head" align="center">
-                  ชื่อ
+                  <Typography color="textPrimary" className={classes.text} >
+                    วันที่แก้ไขล่าสุด
+                  </Typography>
                 </TableCell>
-                <TableCell variant="head" align="left">
-                  วันที่แก้ไขล่าสุด
-                </TableCell>
-                <TableCell variant="head" align="left">
-                  ดาวน์โหลด
+                <TableCell variant="head" align="center">
+                  <Typography color="textPrimary" className={classes.text} >
+                    ดาวน์โหลด
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {!loading && files !== null
                 ? files.map((row) => (
-                    <TableRow key={row.file_id}>
-                      <TableCell>
-                        <InsertDriveFileIcon className={classes.color} />
-                        &nbsp;&nbsp;
-                        {row.file_name}
-                      </TableCell>
-                      <TableCell align="left">
+                  <TableRow key={row.file_id}>
+                    <TableCell>
+                      <Grid container spacing={1} direction="row" alignItems="center">
+                        <Grid item xs={1}>
+                          <Checkbox
+                            checked={checked}
+                            onChange={handleCheckBoxChange}
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                          />
+                        </Grid>
+                        <Grid item xs={1}>
+                          <InsertDriveFileIcon className={classes.color} />
+                        </Grid>
+                        <Grid item></Grid>
+                        <Grid item xs={9}>
+                          <Typography color="textPrimary" className={classes.text} >
+                            {row.file_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography color="textPrimary" className={classes.text} >
                         {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
-                      </TableCell>
-                      <TableCell>
-                        <Button onClick={() => handleRowClick()}>
-                          <GetAppIcon />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <ConfirmDownload filename={row.file_name} />
+                    </TableCell>
+
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
-        </Paper>
-      </Grid>
-      <SpeedDialTooltipOpen />
-    </Fragment>
+        </Paper >
+      </Grid >
+      {checked == false
+        ? < SpeedDialTooltipOpen />
+        : <Download />
+      }
+    </Fragment >
   );
 };
 

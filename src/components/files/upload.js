@@ -50,13 +50,18 @@ const Upload = (props) => {
     console.log(filesUpload[0]);
     let formData = new FormData();
     let res;
+    formData.append("user_id", 1);
+    formData.append("folder_id", 2);
+    // formData.append("myFile", filesUpload[0]);
     for (let i = 0; i < filesUpload.length; i++) {
       formData.set("myFile", filesUpload[i]);
-
+      //   for (var pair of formData.entries()) {
+      //     console.log(pair[0] + ", " + pair[1]);
+      //   }
       try {
         res = await axios.post("http://192.168.5.230:8080/upload/2", formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         });
       } catch (err) {

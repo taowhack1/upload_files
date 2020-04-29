@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { getFiles } from "../../actions/fileActions";
+import { useParams, Link } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -27,70 +28,66 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { getFolders } from "../../actions/folderActions";
 import DeleteFiles from './DeleteFiles'
+import useStyles from './StyleFiles';
+import MenuFolder from './MenuFolder';
 
-const ViewFilesAdminStyle = makeStyles({
-    paper: {
-        width: "90%",
-        boxShadow: "0 0 0 0",
-        color: "white",
-    },
-    table: {
-        width: "100%",
-    },
-    color: {
-        fontSize: 40,
-        color: "#1976D2",
-        verticalAlign: 'middle'
-    },
-    text: {
-        fontSize: 20
-    },
-    breadcrumbs: {
-        marginTop: 20,
-        marginBottom: 10
-    },
-    opacity: {
-        fontSize: 20,
-        opacity: 0.7,
-    },
-    NavigateNextIcon: {
-        fontSize: 30,
-    },
-    menu: {
-        width: 250
-    }
-});
-
-const ViewFilesAdmin = () => {
-    const classes = ViewFilesAdminStyle();
-    const { folders, loading } = useSelector((state) => state.folder);
-
+const ViewFilesAdmin = (props) => {
+    const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [menuselected, menusetSelected] = React.useState([]);
 
-    const handleMoreVertIconClick = (event) => {
+    const handleMoreVertIconClick = (event, id) => {
+        console.log(event)
         setAnchorEl(event.currentTarget);
+
+
     };
 
     const handleMoreVertIconClose = () => {
         setAnchorEl(null);
     };
 
-    const [checked, setChecked] = React.useState(true);
 
-    const handleCheckBoxChange = (event) => {
-        setChecked(event.target.checked);
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            const newSelecteds = files.map((n) => n.name);
+            setSelected(newSelecteds);
+            return;
+        }
+        setSelected([]);
     };
 
+    const [selected, setSelected] = React.useState([]);
+
+    const handleSelectClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+        setSelected(newSelected);
+    };
+
+    const { folder_id, folder_name } = useParams();
+    //console.log(folder_id);
+    const { files, loading } = useSelector((state) => state.file);
+    // const { files } = useSelector((state) => state.file.files);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getFolders(localStorage.getItem("user_id")));
+        dispatch(getFiles(folder_id));
     }, []);
-
-    const handleRowClick = (folder_id) => {
-        console.log(folder_id);
-    };
 
     if (loading) {
         console.log("loading >>> " + loading);
@@ -98,18 +95,18 @@ const ViewFilesAdmin = () => {
 
     return (
         <Fragment>
-            <Grid container direction="row" justify="center" alignItems="center">
+            <Grid container className={classes.gridContainer}>
                 <Paper className={classes.paper}>
-                    <Grid container direction="row" justify="left" alignItems="center">
+                    <Grid container >
                         <Breadcrumbs
                             className={classes.breadcrumbs}
                             separator={<NavigateNextIcon className={classes.NavigateNextIcon} />}
                             aria-label="breadcrumb"
                         >
                             <Link to={{ pathname: '/viewfolderadmin' }} >
-                                <Typography className={classes.opacity} color="textPrimary">โฟลเดอร์ทั้งหมด</Typography>
+                                <Typography className={classes.opacity} >โฟลเดอร์ทั้งหมด</Typography>
                             </Link>
-                            <Typography className={classes.text} color="textPrimary">โฟลเดอร์</Typography>
+                            <Typography className={classes.text} >โฟลเดอร์</Typography>
                         </Breadcrumbs>
                     </Grid>
                 </Paper>
@@ -118,7 +115,17 @@ const ViewFilesAdmin = () => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }} align="center">
+                                <TableCell align="center" style={{ width: "1%" }}>
+                                    <Checkbox
+                                        className={classes.tableMargin}
+                                        onClick={handleSelectAllClick}
+                                    // checked={state.checkedA} 
+                                    // name="checkedA"
+                                    // onChange={handleCheckBoxChange}
+                                    // inputProps={{ 'aria-label': 'primary checkbox' }}
+                                    />
+                                </TableCell>
+                                <TableCell className={classes.tableCellName}>
                                     <Typography color="textPrimary" className={classes.text} >
                                         ชื่อ
                                      </Typography>
@@ -136,143 +143,52 @@ const ViewFilesAdmin = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* {!loading && folders !== null
-                            ? folders.map((row) => ( */}
-                            <TableRow >
-                                <TableCell >
-                                    <Grid container spacing={1} direction="row" alignItems="center">
-                                        <Grid item xs={1}>
+                            {!loading && files !== null
+                                ? files.map((row) => (
+                                    <TableRow key={row.file_id} hover >
+
+                                        <TableCell align="center">
                                             <Checkbox
-                                                checked={checked}
-                                                onChange={handleCheckBoxChange}
-                                                inputProps={{ 'aria-label': 'primary checkbox' }}
+                                                className={classes.tableMargin}
+                                                // checked={isItemSelected(row.file_id)}
+                                                // onChange={() => handleSelect(row.file_id)}
+                                                onClick={(event) => handleSelectClick(event, row.file_name)}
+                                            // checked={state.checkedA}
+                                            // name="checkedA"
+                                            // onChange={handleCheckBoxChange}
+                                            // inputProps={{ 'aria-label': 'primary checkbox' }}
                                             />
-                                        </Grid>
-                                        <Grid item xs={1}>
-                                            <InsertDriveFileIcon className={classes.color} />
-                                        </Grid>
-                                        <Grid item></Grid>
-                                        <Grid item xs={9}>
-                                            <Typography color="textPrimary" className={classes.text} >
-                                                เอกสาร
+                                        </TableCell>
+                                        <TableCell >
+                                            <Grid container className={classes.iconAlign}>
+                                                <Grid item xs={1}>
+                                                    <InsertDriveFileIcon className={classes.iconFilesTable} />
+                                                </Grid>
+                                                <Grid item xs={9}>
+                                                    <Typography color="textPrimary" className={classes.text} >
+                                                        {row.file_name}
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>
+
+                                            {/* </Link> */}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Typography className={classes.text} >
+                                                {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
                                             </Typography>
-                                        </Grid>
-                                    </Grid>
-
-                                    {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
-                                        15/4/2020
-                                    </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton onClick={handleMoreVertIconClick}>
-                                        <MoreVertIcon></MoreVertIcon>
-                                    </IconButton>
-                                    <Menu className={classes.menu}
-                                        id="simple-menu"
-                                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                                        transformOrigin={{ vertical: "top", horizontal: "right" }}
-                                        anchorEl={anchorEl}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleMoreVertIconClose}
-                                    >
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <RemoveIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ลบ</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <CreateIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">แก้ไข</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <GetAppIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ดาวน์โหลด</Typography>
-                                        </MenuItem>
-                                    </Menu>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow >
-                                <TableCell >
-                                    <Link
-                                        component={Link}
-                                    // to={{
-                                    //     pathname:
-                                    //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                                    // }}
-                                    >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <Checkbox
-                                                    checked={checked}
-                                                    onChange={handleCheckBoxChange}
-                                                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={1}>
-                                                <InsertDriveFileIcon className={classes.color} />
-                                            </Grid>
-                                            <Grid item></Grid>
-                                            <Grid item xs={9}>
-                                                <Typography color="textPrimary" className={classes.text} >
-                                                    เอกสาร
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-
-                                    </Link>
-                                    {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
-                                        15/4/2020
-                                    </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton onClick={handleMoreVertIconClick}>
-                                        <MoreVertIcon></MoreVertIcon>
-                                    </IconButton>
-                                    <Menu className={classes.menu}
-                                        id="simple-menu"
-                                        anchorEl={anchorEl}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleMoreVertIconClose}
-                                    >
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <RemoveIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ลบ</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <CreateIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">แก้ไข</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <GetAppIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ดาวน์โหลด</Typography>
-                                        </MenuItem>
-                                    </Menu>
-                                </TableCell>
-                            </TableRow>
-                            {/* ))
-                            : console.log("Nodata")} */}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <MenuFolder />
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                                : console.log("Nodata")}
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
-            <DeleteFiles />
+            <DeleteFiles listDelFiles={selected} />
         </Fragment >
     );
 }

@@ -19,7 +19,6 @@ import {
     IconButton,
 
 } from "@material-ui/core/";
-
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CreateIcon from '@material-ui/icons/Create';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -28,53 +27,30 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FolderIcon from "@material-ui/icons/Folder";
 import { getFolders } from "../../actions/folderActions";
-import AddFolder from './AddFolder'
-
-
-const ViewFolderAdminStyle = makeStyles({
-    paper: {
-        width: "90%",
-        boxShadow: "0 0 0 0",
-        color: "white",
-    },
-    table: {
-        width: "100%",
-    },
-    color: {
-        fontSize: 40,
-        color: "#FCD462",
-        verticalAlign: 'middle'
-    },
-    breadcrumbs: {
-        marginTop: 20,
-        marginBottom: 10,
-    },
-    text: {
-        fontSize: 20,
-    },
-    menu: {
-        width: 250,
-    },
-});
+import AddFolder from './AddFolder';
+import useStyles from './StyleFiles';
+import MenuFolder from './MenuFolder';
 
 const ViewFolderAdmin = () => {
-    const classes = ViewFolderAdminStyle();
+    const classes = useStyles();
     const { folders, loading } = useSelector((state) => state.folder);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleMoreVertIconClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleMoreVertIconClick = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const handleMoreVertIconClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleMoreVertIconClose = () => {
+    //     setAnchorEl(null);
+    // };
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getFolders(localStorage.getItem("user_id")));
     }, []);
+
+    console.log(getFolders.user_id)
 
     const handleRowClick = (folder_id) => {
         console.log(folder_id);
@@ -86,174 +62,76 @@ const ViewFolderAdmin = () => {
 
     return (
         <Fragment>
-            <Grid container direction="row" justify="center" alignItems="center">
+            <Grid container className={classes.gridContainer}>
                 <Paper className={classes.paper}>
-                    <Grid container direction="row" justify="left" alignItems="center">
+                    <Grid container >
                         <Breadcrumbs
                             className={classes.breadcrumbs}
-                            separator={<NavigateNextIcon />}
+                            separator={<NavigateNextIcon className={classes.NavigateNextIcon} />}
                             aria-label="breadcrumb"
                         >
-                            <Typography className={classes.text} color="textPrimary">โฟลเดอร์ทั้งหมด</Typography>
+                            <Typography className={classes.text}>โฟลเดอร์ทั้งหมด</Typography>
                         </Breadcrumbs>
                     </Grid>
                 </Paper>
-
                 <Paper className={classes.paper}>
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }} align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                <TableCell className={classes.tableCellName}>
+                                    <Typography className={classes.text} >
                                         ชื่อ
                                      </Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                    <Typography className={classes.text} >
                                         วันที่แก้ไข
                                      </Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                    <Typography className={classes.text} >
                                         ตัวเลือก
                                      </Typography>
                                 </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* {!loading && folders !== null
-                            ? folders.map((row) => ( */}
-                            <TableRow >
-                                <TableCell >
-                                    <Link
-                                        //component={Link}
-                                        to={{
-                                            pathname: "/viewfilesadmin/"
-                                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                                        }}
-                                    >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <FolderIcon className={classes.color} />
-                                            </Grid>
-                                            <Grid item></Grid>
-                                            <Grid item xs={10}>
-                                                <Typography color="textPrimary" className={classes.text} >
-                                                    โฟลเดอร์ A
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-
-                                    </Link>
-                                    {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
-                                        15/4/2020
-                                    </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton onClick={handleMoreVertIconClick}>
-                                        <MoreVertIcon></MoreVertIcon>
-                                    </IconButton>
-                                    <Menu className={classes.menu}
-                                        id="simple-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                                        transformOrigin={{ vertical: "top", horizontal: "right" }}
-                                        onClose={handleMoreVertIconClose}
-                                    >
-                                        <MenuItem>
-                                            <ListItemIcon >
-                                                <RemoveIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ลบ</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <CreateIcon fontSize="small" />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">แก้ไข</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <GetAppIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ดาวน์โหลด</Typography>
-                                        </MenuItem>
-                                    </Menu>
-                                </TableCell>
-                            </TableRow>
-
-                            <TableRow >
-                                <TableCell >
-                                    <Link
-                                        //component={Link}
-                                        to={{
-                                            pathname: "/viewfilesadmin/"
-                                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                                        }}
-                                    >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <FolderIcon className={classes.color} />
-                                            </Grid>
-                                            <Grid item></Grid>
-                                            <Grid item xs={10}>
-                                                <Typography color="textPrimary" className={classes.text} >
-                                                    โฟลเดอร์ A
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-
-                                    </Link>
-                                    {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
-                                        15/4/2020
-                                    </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton onClick={handleMoreVertIconClick}>
-                                        <MoreVertIcon></MoreVertIcon>
-                                    </IconButton>
-                                    <Menu className={classes.menu}
-                                        id="simple-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                                        transformOrigin={{ vertical: "top", horizontal: "right" }}
-                                        onClose={handleMoreVertIconClose}
-                                    >
-                                        <MenuItem>
-                                            <ListItemIcon >
-                                                <RemoveIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ลบ</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <CreateIcon fontSize="small" />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">แก้ไข</Typography>
-                                        </MenuItem>
-                                        <MenuItem >
-                                            <ListItemIcon>
-                                                <GetAppIcon />
-                                            </ListItemIcon>
-                                            <Typography variant="inherit">ดาวน์โหลด</Typography>
-                                        </MenuItem>
-                                    </Menu>
-                                </TableCell>
-                            </TableRow>
-
-
-                            {/* ))
-                            : console.log("Nodata")} */}
+                            {!loading && folders !== null
+                                ? folders.map((row) => (
+                                    <TableRow key={row.folder_id} >
+                                        <TableCell >
+                                            <Link
+                                                //component={Link}
+                                                to={{
+                                                    pathname: "/viewfilesadmin/" + row.folder_id + row.folder_name,
+                                                    //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                                                }}
+                                            >
+                                                <Grid container className={classes.iconAlign}>
+                                                    <Grid item></Grid>
+                                                    <Grid item xs={1}>
+                                                        <FolderIcon className={classes.iconFolderTable} />
+                                                    </Grid>
+                                                    <Grid item xs={10}>
+                                                        <Typography className={classes.text} >
+                                                            {row.folder_name}
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Link>
+                                            {/* </Link> */}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Typography className={classes.text} >
+                                                {moment(row.folder_created).format("DD-MM-YYYY HH:MM")}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <MenuFolder listRowFolder={row.folder_id} />
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                                : console.log("Nodata")}
                         </TableBody>
                     </Table>
                 </Paper>

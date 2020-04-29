@@ -15,12 +15,11 @@ import ViewFilesAdmin from './components/files/ViewFilesAdmin'
 import ManageUser from './components/files/MangeUser'
 import ManageUserFirst from './components/files/ManageUserFirst'
 import ManageUserSecond from './components/files/ManageUserSecond'
-import ManageUserThird from './components/files/ManageUserThird'
 import Dowload from "./components/files/Dowload";
+import speedial from './components/files/speedDial'
 import ConfirmDowload from "./components/files/ConfirmDowload";
+import test from './components/files/test'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'; //Google fonts
-
-
 
 
 const token = localStorage.getItem("user_id");
@@ -31,7 +30,7 @@ if (token) {
   });
 }
 
-
+//Google Fonts
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
@@ -39,6 +38,8 @@ const theme = createMuiTheme({
     ].join(','),
   },
 });
+//
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -50,19 +51,23 @@ const App = () => {
             <Route exact path="/adduser" component={AddUser} />
             <Route exact path="/del" component={Delete} />
             <Route exact path="/viewfolderadmin" component={ViewFolderAdmin} />
-            <Route exact path="/viewfilesadmin" component={ViewFilesAdmin} />
             <Route exact path="/manageuser" component={ManageUser} />
             <Route exact path="/manageuserfirst" component={ManageUserFirst} />
             <Route exact path="/manageusersecond" component={ManageUserSecond} />
             <Route exact path="/dowload" component={Dowload} />
             <Route exact path="/confirm" component={ConfirmDowload} />
             <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/speedial" component={speedial} />
+            <Route exact path="/test" component={test} />
             <Route exact path="/" component={Home} />
             <Route
               exact
               path="/ViewFiles/:folder_id:folder_name"
               children={<ViewFiles />}
             />
+            <Route exact
+              path="/viewfilesadmin/:folder_id:folder_name"
+              children={<ViewFilesAdmin />} />
           </Switch>
         </Router>
       </ThemeProvider>

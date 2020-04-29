@@ -23,52 +23,38 @@ import { getFiles } from "../../actions/fileActions";
 import { useParams, Link } from "react-router-dom";
 import ConfirmDownload from './ConfirmDowload';
 import Download from './Dowload';
+import useStyles from './StyleFiles'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-const useStyles = makeStyles({
-  paper: {
-    width: "90%",
-    boxShadow: "0 0 0 0",
-    color: "white",
-  },
-  table: {
-    width: "100%",
-  },
-  text: {
-    fontSize: 20
-  },
-  color: {
-    fontSize: 40,
-    color: "#1976D2",
-    verticalAlign: 'middle'
-  },
-  breadcrumbs: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  NavigateNextIcon: {
-    fontSize: 30,
-  },
-  opacity: {
-    fontSize: 20,
-    opacity: 0.7,
-  },
-
-});
 
 const handleRowClick = (e) => {
   console.log(e);
 };
 const ViewFiles = (props) => {
 
-  const [checked, setChecked] = React.useState(false);
+  // const [selected, setSelected] = React.useState([]);
+  // const handleSelectClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-  const handleCheckBoxChange = (event) => {
-    setChecked(event.target.checked);
-  };
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //   }
+  //   setSelected(newSelected);
+  // };
+
 
   const { folder_id, folder_name } = useParams();
-  console.log(folder_id);
+  //console.log(folder_id);
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   // const { files } = useSelector((state) => state.file.files);
@@ -82,37 +68,49 @@ const ViewFiles = (props) => {
   }
 
   return (
+
     <Fragment>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container className={classes.gridContainer}>
         <Paper className={classes.paper}>
-          <Grid container direction="row" justify="left" alignItems="center">
+          <Grid container>
             <Breadcrumbs
               className={classes.breadcrumbs}
               separator={<NavigateNextIcon className={classes.NavigateNextIcon} />}
               aria-label="breadcrumb"
             >
               <Link to={{ pathname: '/' }} >
-                <Typography className={classes.opacity} color="textPrimary">โฟลเดอร์ทั้งหมด</Typography>
+                <Typography className={classes.opacity} >โฟลเดอร์ทั้งหมด</Typography>
               </Link>
-              <Typography className={classes.text} color="textPrimary">โฟลเดอร์ {folder_name}</Typography>
+              <Typography className={classes.text} >โฟลเดอร์ {folder_name}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
+
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell variant="head" style={{ width: '50%' }} align="center">
+                {/* <TableCell align="center" style={{ width: "1%" }}>
+                  <Checkbox
+                    className={classes.tableMargin}
+
+                  // checked={state.checkedA} 
+                  // name="checkedA"
+                  // onChange={handleCheckBoxChange}
+                  // inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                </TableCell> */}
+                <TableCell className={classes.tableCellName}>
                   <Typography color="textPrimary" className={classes.text} >
                     ชื่อ
                   </Typography>
                 </TableCell>
-                <TableCell variant="head" align="center">
+                <TableCell align="center">
                   <Typography color="textPrimary" className={classes.text} >
                     วันที่แก้ไขล่าสุด
                   </Typography>
                 </TableCell>
-                <TableCell variant="head" align="center">
+                <TableCell align="center">
                   <Typography color="textPrimary" className={classes.text} >
                     ดาวน์โหลด
                   </Typography>
@@ -122,48 +120,57 @@ const ViewFiles = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((row) => (
-                  <TableRow key={row.file_id}>
-                    <TableCell>
-                      <Grid container spacing={1} direction="row" alignItems="center">
+                  <TableRow key={row.file_id} hover>
+                    {/* <TableCell align="center">
+                      <Checkbox
+                        className={classes.tableMargin}
+                        // checked={isItemSelected(row.file_id)}
+                        // onChange={() => handleSelect(row.file_id)}
+                        onClick={(event) => handleSelectClick(event, row.file_name)}
+                      // checked={state.checkedA}
+                      // name="checkedA"
+                      // onChange={handleCheckBoxChange}
+                      // inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                    </TableCell> */}
+                    <TableCell >
+                      <Grid container className={classes.iconAlign} >
                         <Grid item xs={1}>
-                          <Checkbox
-                            checked={checked}
-                            onChange={handleCheckBoxChange}
-                            inputProps={{ 'aria-label': 'primary checkbox' }}
-                          />
+                          <InsertDriveFileIcon className={classes.iconFilesTable} />
                         </Grid>
-                        <Grid item xs={1}>
-                          <InsertDriveFileIcon className={classes.color} />
-                        </Grid>
-                        <Grid item></Grid>
                         <Grid item xs={9}>
                           <Typography color="textPrimary" className={classes.text} >
                             {row.file_name}
                           </Typography>
                         </Grid>
                       </Grid>
-
+                      {/* </Link> */}
                     </TableCell>
                     <TableCell align="center">
-                      <Typography color="textPrimary" className={classes.text} >
+                      <Typography className={classes.text} >
                         {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <ConfirmDownload filename={row.file_name} />
+                      <ConfirmDownload filename={row.file_name} fileid={row.file_id} />
                     </TableCell>
-
                   </TableRow>
                 ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {loading &&
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          }
         </Paper >
       </Grid >
-      {checked == false
+      < SpeedDialTooltipOpen />
+      {/* {selected == false
         ? < SpeedDialTooltipOpen />
-        : <Download />
-      }
+        : <Download listDownloads={selected} />
+      } */}
     </Fragment >
   );
 };

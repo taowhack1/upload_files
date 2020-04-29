@@ -16,32 +16,11 @@ import {
   Typography,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import FolderIcon from "@material-ui/icons/Folder";
 import { getFolders } from "../../actions/folderActions";
-
-const useStyles = makeStyles({
-  paper: {
-    width: "90%",
-    boxShadow: "0 0 0 0",
-    color: "white",
-  },
-  table: {
-    width: "100%",
-  },
-  text: {
-    fontSize: 20
-  },
-  color: {
-    fontSize: 40,
-    color: "#FCD462",
-    verticalAlign: 'middle'
-  },
-  breadcrumbs: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
-});
+import useStyles from './StyleFiles'
 
 const ViewFolder = () => {
   const classes = useStyles();
@@ -62,9 +41,9 @@ const ViewFolder = () => {
 
   return (
     <Fragment>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container container className={classes.gridContainer}>
         <Paper className={classes.paper}>
-          <Grid container direction="row" justify="left" alignItems="center">
+          <Grid container >
             <Breadcrumbs
               className={classes.breadcrumbs}
               separator={<NavigateNextIcon />}
@@ -78,7 +57,7 @@ const ViewFolder = () => {
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
-              <TableCell style={{ width: '50%' }} align="center">
+              <TableCell className={classes.tableCellName}>
                 <Typography color="textPrimary" className={classes.text} >
                   ชื่อ
                 </Typography>
@@ -106,13 +85,13 @@ const ViewFolder = () => {
                             "/ViewFiles/" + row.folder_id + row.folder_name,
                         }}
                       >
-                        <Grid container spacing={1} direction="row" alignItems="center">
-                          <Grid item xs={1}>
-                            <FolderIcon className={classes.color} />
-                          </Grid>
+                        <Grid container className={classes.iconAlign}>
                           <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
+                          </Grid>
                           <Grid item xs={10}>
-                            <Typography color="textPrimary" className={classes.text} >
+                            <Typography className={classes.text} >
                               {row.folder_name}
                             </Typography>
                           </Grid>
@@ -125,12 +104,17 @@ const ViewFolder = () => {
                         {moment(row.folder_created).format("DD-MM-YYYY HH:MM")}
                       </Typography>
                     </TableCell>
-                    <TableCell align="left"></TableCell>
+                    <TableCell align="center"></TableCell>
                   </TableRow>
                 ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {loading &&
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          }
         </Paper>
       </Grid>
     </Fragment>

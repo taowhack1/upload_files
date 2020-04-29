@@ -32,39 +32,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import { getFolders } from "../../actions/folderActions";
 import PersonIcon from '@material-ui/icons/Person';
 import AddUser from "./AddUser";
-
-const useStyles = makeStyles({
-    paper: {
-        width: "90%",
-        boxShadow: "0 0 0 0",
-        color: "white",
-    },
-    table: {
-        width: "100%",
-    },
-    color: {
-        fontSize: 40,
-        color: "#FDC8A2",
-        verticalAlign: 'middle'
-    },
-    text: {
-        fontSize: 20
-    },
-    breadcrumbs: {
-        marginTop: 20,
-        marginBottom: 10
-    },
-    opacity: {
-        fontSize: 20,
-        opacity: 0.7,
-    },
-    NavigateNextIcon: {
-        fontSize: 30,
-    },
-    menu: {
-        width: 250
-    }
-});
+import useStyles from './StyleFiles'
 
 const ManageUserFirst = () => {
     const classes = useStyles();
@@ -117,13 +85,12 @@ const ManageUserFirst = () => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }} align="center">
+                                <TableCell className={classes.tableCellName}>
                                     <Typography color="textPrimary" className={classes.text} >
                                         ชื่อ
                                      </Typography>
                                 </TableCell>
                                 <TableCell style={{ width: '30%' }} align="center">
-
                                 </TableCell>
                                 <TableCell align="center">
                                     <Typography color="textPrimary" className={classes.text} >
@@ -135,42 +102,42 @@ const ManageUserFirst = () => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody >
                             {/* {!loading && folders !== null
                             ? folders.map((row) => ( */}
                             <TableRow >
                                 <TableCell >
                                     <Link
-                                        component={Link}
-                                    // to={{
-                                    //     pathname:
-                                    //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                                    // }}
+                                        //component={Link}
+                                        to={{
+                                            pathname: "/manageusersecond"
+                                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                                        }}
                                     >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <PersonIcon className={classes.color} />
-                                            </Grid>
+                                        <Grid container className={classes.iconAlign} >
                                             <Grid item></Grid>
-                                            <Grid item xs={9}>
+                                            <Grid item xs={1}>
+                                                <PersonIcon className={classes.iconPersonTable} />
+                                            </Grid>
+                                            <Grid item xs={10}>
                                                 <Typography color="textPrimary" className={classes.text} >
                                                     นาง A
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-
                                     </Link>
-                                    {/* </Link> */}
                                 </TableCell>
                                 <TableCell align="center">
 
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Switch ></Switch>
+                                    <Switch className={classes.tableMargin}></Switch>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to='/manageusersecond'>
-                                        <NavigateNextIcon fontSize="large"></NavigateNextIcon>
+                                    <Link to='/manageusersecond' >
+                                        <IconButton className={classes.tableMargin}>
+                                            <NavigateNextIcon ></NavigateNextIcon>
+                                        </IconButton>
                                     </Link>
                                 </TableCell>
                             </TableRow>

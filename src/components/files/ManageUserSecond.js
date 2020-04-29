@@ -32,39 +32,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import { getFolders } from "../../actions/folderActions";
 import PersonIcon from '@material-ui/icons/Person';
 import AddUser from "./AddUser";
-
-const useStyles = makeStyles({
-    paper: {
-        width: "90%",
-        boxShadow: "0 0 0 0",
-        color: "white",
-    },
-    table: {
-        width: "100%",
-    },
-    color: {
-        fontSize: 40,
-        color: "#FDC8A2",
-        verticalAlign: 'middle'
-    },
-    text: {
-        fontSize: 20
-    },
-    breadcrumbs: {
-        marginTop: 20,
-        marginBottom: 10
-    },
-    opacity: {
-        fontSize: 20,
-        opacity: 0.7,
-    },
-    NavigateNextIcon: {
-        fontSize: 30,
-    },
-    menu: {
-        width: 250
-    }
-});
+import useStyles from './StyleFiles'
 
 const ManageUserSecond = () => {
     const classes = useStyles();
@@ -125,7 +93,7 @@ const ManageUserSecond = () => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }} align="center">
+                                <TableCell className={classes.tableCellName}>
                                     <Typography color="textPrimary" className={classes.text} >
                                         ชื่อ
                                      </Typography>
@@ -153,29 +121,29 @@ const ManageUserSecond = () => {
                             <TableRow >
                                 <TableCell >
                                     <Link
-                                        component={Link}
+                                    //component={Link}
                                     // to={{
                                     //     pathname:
                                     //         "/ViewFiles/" + row.folder_id + row.folder_name,
                                     // }}
                                     >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <PersonIcon className={classes.color} />
-                                            </Grid>
+                                        <Grid container className={classes.iconAlign}>
                                             <Grid item></Grid>
-                                            <Grid item xs={9}>
+                                            <Grid item xs={1}>
+                                                <PersonIcon className={classes.iconPersonTable} />
+                                            </Grid>
+                                            <Grid item xs={10}>
                                                 <Typography color="textPrimary" className={classes.text} >
                                                     นาง A
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-
                                     </Link>
                                     {/* </Link> */}
                                 </TableCell>
                                 <TableCell align="center">
                                     <Checkbox
+                                        className={classes.tableMargin}
                                         checked={checked}
                                         onChange={handleCheckBoxChange}
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
@@ -183,32 +151,37 @@ const ManageUserSecond = () => {
                                 </TableCell>
                                 <TableCell align="center">
                                     <Checkbox
+                                        className={classes.tableMargin}
                                         checked={checked}
                                         onChange={handleCheckBoxChange}
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton onClick={handleMoreVertIconClick}>
+
+                                    <IconButton className={classes.tableMargin} onClick={handleMoreVertIconClick}>
                                         <MoreVertIcon></MoreVertIcon>
                                     </IconButton>
                                     <Menu className={classes.menu}
                                         id="simple-menu"
                                         anchorEl={anchorEl}
+                                        keepMounted
                                         open={Boolean(anchorEl)}
+                                        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                                        transformOrigin={{ vertical: "top", horizontal: "right" }}
                                         onClose={handleMoreVertIconClose}
                                     >
-                                        <MenuItem >
-                                            <ListItemIcon>
+                                        <MenuItem>
+                                            <ListItemIcon >
                                                 <RemoveIcon />
                                             </ListItemIcon>
-                                            <Typography variant="inherit">ลบ</Typography>
+                                            <Typography variant="inherit" className={classes.menuItem} >ลบ</Typography>
                                         </MenuItem>
                                         <MenuItem >
-                                            <ListItemIcon>
-                                                <CreateIcon />
+                                            <ListItemIcon >
+                                                <CreateIcon fontSize="small" />
                                             </ListItemIcon>
-                                            <Typography variant="inherit">แก้ไขชื่อ</Typography>
+                                            <Typography variant="inherit" className={classes.menuItem}  >แก้ไข</Typography>
                                         </MenuItem>
 
                                     </Menu>

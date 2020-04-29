@@ -9,38 +9,39 @@ import Fade from '@material-ui/core/Fade';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { DropzoneArea } from "material-ui-dropzone";
-
+import styles from './StyleFilesClass'
 import Upload from "./upload";
+import { Typography } from "@material-ui/core";
 
-const style = {
-  root: {
-    height: 380,
-    // transform: "translateZ(0px)",
-    flexGrow: 1,
-  },
-  speedDial: {
-    position: "fixed",
-    bottom: 100,
-    right: 100,
-  },
-};
+// const style = {
+//   root: {
+//     height: 380,
+//     // transform: "translateZ(0px)",
+//     flexGrow: 1,
+//   },
+//   speedDial: {
+//     position: "fixed",
+//     bottom: 100,
+//     right: 100,
+//   },
+// };
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  absolute: {
-    position: 'fixed',
-    bottom: theme.spacing(8),
-    right: theme.spacing(8),
-    height: 100,
-    width: 100,
-    backgroundColor: "#1976D2",
-  },
-  icon: {
-    fontSize: 50,
-  },
-});
+// const styles = theme => ({
+// root: {
+//   flexGrow: 1,
+// },
+// absolute: {
+//   position: 'fixed',
+//   bottom: theme.spacing(8),
+//   right: theme.spacing(8),
+//   height: 100,
+//   width: 100,
+//   backgroundColor: "#1976D2",
+// },
+// icon: {
+//   fontSize: 50,
+// },
+// });
 
 
 
@@ -109,15 +110,13 @@ class SpeedDialTooltipOpen extends Component {
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
-          style={style.modal}
+          className={classes.modal}
           open={this.state.open}
         >
-          <div className="page">
-            <div className="container">
-              <div className="toolbar">
-                <h3>ไฟล์ที่อัพโหลด</h3>
-              </div>
-              <div className="UploadBox">
+          <div className={classes.modalPaper}>
+            <div className={classes.root}>
+              <Typography className={classes.text} color="textPrimary">ไฟล์ที่อัพโหลด</Typography>
+              <div className={classes.modalIconAlign}>
                 <Upload handleClose={this.handleClose} />
                 {/* <DropzoneArea
                   style={{

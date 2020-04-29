@@ -14,77 +14,10 @@ import { yellow } from '@material-ui/core/colors';
 import { TextField, Checkbox, Typography } from '@material-ui/core';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import useStyles from './StyleFiles'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        margin: theme.spacing(2),
-    },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        width: 500,
-        alignItems: 'center',
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(5, 5, 4),
-    },
-    fab: {
-        margin: theme.spacing(2),
-    },
-    absolute: {
-        position: 'fixed',
-        bottom: theme.spacing(8),
-        right: theme.spacing(8),
-        height: 100,
-        width: 100,
-        backgroundColor: "#1976D2",
-    },
-    text: {
-        fontSize: 20,
-        marginTop: 4
-    },
-    icon: {
-        fontSize: 50,
-    },
-    iconCheck: {
-        margin: theme.spacing(0, 0, 0, -2),
-        color: yellow[500],
-        fontSize: 40
-    },
-    margin: {
-        marginTop: 20,
-    },
-    grid: {
-        marginTop: -5,
-    },
-    controlBtnfolder: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20
-    },
-    btnDownload: {
-        padding: theme.spacing(0, 2, 1),
-    },
-    btnCancel: {
-        padding: theme.spacing(0, 4, 1),
-    },
-    input: {
-        '&::placeholder': {
-            fontSize: 20,
-        },
-    },
 
-}));
-
-export default function Dowload() {
+export default function Dowload(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
@@ -99,15 +32,17 @@ export default function Dowload() {
     const handleClose = () => {
         setOpen(false);
     };
-
     return (
-        <div>
+
+        < div >
             <Tooltip onClick={handleOpen} title="เพิ่มโฟลเดอร์" aria-label="add">
                 <Fab color="primary" className={classes.absolute}>
                     <GetAppIcon className={classes.icon} />
                 </Fab>
             </Tooltip>
             <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
                 className={classes.modal}
                 open={open}
                 onClose={handleClose}
@@ -118,45 +53,66 @@ export default function Dowload() {
                 }}
             >
                 <Fade in={open}>
-                    <div className={classes.paper}>
+                    <div className={classes.modalPaper}>
                         <div className={classes.root}>
-                            <Typography className={classes.text} color="textPrimary">เอกสารที่เลือก</Typography>
-                            <div className={classes.margin}>
-                                <Grid container className={classes.grid} >
-                                    <Grid item xs></Grid>
-                                    <Grid item xs={1} > <Checkbox
-                                        className={classes.iconCheck}
-                                        checked={checked}
-                                        onChange={handleChange}
-                                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                                    /></Grid>
-                                    <Grid item xs={9} >
-                                        <Typography className={classes.text} color="textPrimary">เอกสาร</Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container className={classes.grid} >
-                                    <Grid item xs></Grid>
-                                    <Grid item xs={1} > <Checkbox
-                                        className={classes.iconCheck}
-                                        checked={checked}
-                                        onChange={handleChange}
-                                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                                    /></Grid>
-                                    <Grid item xs={9} >
-                                        <Typography className={classes.text} color="textPrimary">เอกสาร</Typography>
-                                    </Grid>
-                                </Grid>
+                            <Typography className={classes.text}>เอกสารที่เลือก</Typography>
+                            <div className={classes.modalIconAlign}>
+
+                                {props.listDownloads && props.listDownloads.map((listDownload) => (
+                                    < div key={listDownload}>
+
+                                        {props.listDownloads.length < 5
+                                            ? <Grid container className={classes.iconAlign} >
+                                                <Grid item xs></Grid>
+                                                <Grid item xs={1} > <Checkbox
+                                                    className={classes.iconCheck}
+                                                    checked={checked}
+                                                    onChange={handleChange}
+                                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                                /></Grid>
+                                                <Grid item xs={10} >
+                                                    <Typography className={classes.text}>{listDownload}</Typography>
+                                                </Grid>
+                                            </Grid>
+                                            : <Grid container className={classes.iconAlign} >
+
+                                                ? < Grid item xs></Grid>
+                                                <Grid item xs={1} > <Checkbox
+                                                    className={classes.iconCheck}
+                                                    checked={checked}
+                                                    onChange={handleChange}
+                                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                                /></Grid>
+                                                <Grid item xs={5} >
+                                                    <Typography className={classes.text}>{listDownload}</Typography>
+                                                </Grid>
+                                                    : <Grid item xs></Grid>
+                                                <Grid item xs={1} > <Checkbox
+                                                    className={classes.iconCheck}
+                                                    checked={checked}
+                                                    onChange={handleChange}
+                                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                                /></Grid>
+                                                <Grid item xs={5} >
+                                                    <Typography className={classes.text}>{listDownload}</Typography>
+                                                </Grid>
+
+                                            </Grid>
+
+                                        }
+                                    </div>
+                                ))
+                                }
                             </div>
                         </div>
-
-                        <div className={classes.controlBtnfolder}>
-                            <Button variant="contained" className={classes.btnDownload}>
-                                <Typography className={classes.text} color="textPrimary" elevation={0}>
+                        <div className={classes.modalBtn}>
+                            <Button variant="contained" className={classes.modalbtnDownload}>
+                                <Typography className={classes.text}>
                                     Download
                                 </Typography>
                             </Button>
-                            <Button color="primary" className={classes.btnCancel}>
-                                <Typography className={classes.text} color="textPrimary">
+                            <Button onClick={handleClose} color="primary" className={classes.modalbtnCancel}>
+                                <Typography className={classes.text} >
                                     Cancel
                                 </Typography>
                             </Button>

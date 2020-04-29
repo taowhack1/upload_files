@@ -13,7 +13,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
-import MenuItem from "@material-ui/core/MenuItem";
+import { MenuItem, Grid } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "#FFFFFF",
+    fontSize: 25
   },
 }));
 
@@ -61,33 +63,33 @@ const Navbar = () => {
     dispatch(signOut());
   };
 
+
+
   const authLinks = (
     <Toolbar>
-      <Typography
-        variant="h6"
-        className={classes.title}
-        component={Link}
-        to="/"
-      >
-        ระบบจัดการเอกสารออนไลน์
-      </Typography>
-      <Typography
-        variant="h6"
-        className={classes.title}
-        component={Link}
-        to="/viewfolderadmin"
-      >
-        Admin
-      </Typography>
-      <Typography
-        variant="h6"
-        className={classes.title}
-        component={Link}
-        to="/manageuser"
-      >
-        AdminManage
-      </Typography>
-
+      <Grid container>
+        <Grid item xs={3}> <Typography
+          className={classes.title}
+          component={Link}
+          to="/"
+        >
+          ระบบจัดการเอกสารออนไลน์
+      </Typography></Grid>
+        <Grid item xs={2}>  <Typography
+          className={classes.title}
+          component={Link}
+          to="/viewfolderadmin"
+        >
+          จัดการโฟลเดอร์
+      </Typography></Grid>
+        <Grid item xs={2}>  <Typography
+          className={classes.title}
+          component={Link}
+          to="/manageuser"
+        >
+          จัดการผู้ใช้งาน
+      </Typography></Grid>
+      </Grid>
 
       {auth && (
         <div>

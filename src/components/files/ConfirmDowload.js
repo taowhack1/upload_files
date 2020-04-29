@@ -10,54 +10,37 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Button, Typography, IconButton } from '@material-ui/core';
+import useStyles from './StyleFiles'
+import axios from 'axios'
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        width: 600,
-        alignItems: 'center',
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        borderRadius: 4,
-        outline: 'none',
-        padding: theme.spacing(5, 5, 4),
-    },
-    absolute: {
-
-        backgroundColor: "#1976D2",
-    },
-    text: {
-        fontSize: 20,
-        marginTop: 4
-    },
-    controlBtnfolder: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 40
-    },
-    btnConfirm: {
-        padding: theme.spacing(0, 2, 1, 2),
-    },
-    btnCancel: {
-        padding: theme.spacing(0, 4.5, 1, 4.5),
-    },
-}));
 
 export default function ConfirmDownload(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const filename = props.filename
+    const fileid = props.fileid
+
+    console.log(filename)
+
+
+    const FileDownload = require('js-file-download');
+
+    const handleDownload = () => {
+        axios({
+            url: `http://192.168.5.230:8080/download/file_id=` + fileid,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const URL = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = URL;
+            link.setAttribute('download', filename); //or any other extension
+
+            document.body.appendChild(link);
+            link.click();
+        });
+
+    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -67,7 +50,7 @@ export default function ConfirmDownload(props) {
     };
     return (
         <div>
-            <IconButton>
+            <IconButton className={classes.tableMargin}>
                 <GetAppIcon onClick={handleOpen} />
             </IconButton>
             <Modal
@@ -81,17 +64,18 @@ export default function ConfirmDownload(props) {
                 }}
             >
                 <Fade in={open}>
-                    <div className={classes.paper}>
+                    <div className={classes.modalPaper}>
                         <div className={classes.root}>
-                            <Typography className={classes.text} color="textPrimary">คุณต้องการดาวน์โหลด {props.filename} ?</Typography>
-                            <div className={classes.controlBtnfolder}>
-                                <Button variant="contained" className={classes.btnConfirm}  >
-                                    <Typography className={classes.text} color="textPrimary">
+                            <h1>{props.count}</h1>
+                            <Typography className={classes.text}>คุณต้องการดาวน์โหลด {props.filename} ?</Typography>
+                            <div className={classes.modalBtn}>
+                                <Button variant="contained" className={classes.modalbtnDownload} onClick={handleDownload}>
+                                    <Typography className={classes.text}>
                                         Download
                                 </Typography>
                                 </Button>
-                                <Button color="primary" className={classes.btnCancel}>
-                                    <Typography className={classes.text} color="textPrimary">
+                                <Button color="primary" className={classes.modalbtnCancel} onClick={handleClose}>
+                                    <Typography className={classes.text} >
                                         Cancel
                                 </Typography>
                                 </Button>

@@ -9,86 +9,13 @@ import Fab from '@material-ui/core/Fab';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
-import PersonIcon from '@material-ui/icons/Person';
-import { yellow } from '@material-ui/core/colors';
-import TextField from '@material-ui/core/TextField';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-import { spacing } from '@material-ui/system';
-import { sizing } from '@material-ui/system';
+import useStyles from './StyleFiles'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        margin: theme.spacing(2),
-    },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        width: 500,
-        alignItems: 'center',
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-    fab: {
-        margin: theme.spacing(2),
-    },
-    absolute: {
-        position: 'fixed',
-        bottom: theme.spacing(8),
-        right: theme.spacing(8),
-        height: 100,
-        width: 100,
-        backgroundColor: "#1976D2",
-    },
-    icon: {
-        fontSize: 50,
-    },
-    text: {
-        fontSize: 20,
-        marginTop: 4
-    },
-    icon: {
-        fontSize: 50,
-    },
-    iconCheck: {
-        margin: theme.spacing(0, 0, 0, -2),
-        color: yellow[500],
-        fontSize: 40
-    },
-    margin: {
-        marginTop: 20,
-    },
-    grid: {
-        marginTop: -5,
-    },
-    controlBtnfolder: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20
-    },
-    btnDel: {
-        padding: theme.spacing(1, 4, 1),
-    },
-    btnCancel: {
-        padding: theme.spacing(1, 4, 1),
-    },
-    input: {
-        '&::placeholder': {
-            fontSize: 20,
-        },
-    },
-}));
 
-export default function DeleteFiles() {
+
+const DeleteFiles = (props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
@@ -124,44 +51,34 @@ export default function DeleteFiles() {
                 }}
             >
                 <Fade in={open}>
-                    <div className={classes.paper}>
+                    <div className={classes.modalPaper}>
                         <div className={classes.root}>
-                            <Typography className={classes.text} color="textPrimary">เอกสารที่เลือก</Typography>
-                            <div className={classes.margin}>
-                                <Grid container className={classes.grid} >
-                                    <Grid item xs></Grid>
-                                    <Grid item xs={1} > <Checkbox
-                                        className={classes.iconCheck}
-                                        checked={checked}
-                                        onChange={handleChange}
-                                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                                    /></Grid>
-                                    <Grid item xs={9} >
-                                        <Typography className={classes.text} color="textPrimary">เอกสาร</Typography>
+                            <Typography className={classes.text}>เอกสารที่เลือก</Typography>
+                            <div className={classes.modalIconAlign}>
+                                {props.listDelFiles && props.listDelFiles.map((listDelFile) => (
+                                    < Grid container className={classes.iconAlign} key={listDelFile} >
+                                        <Grid item xs></Grid>
+                                        <Grid item xs={1} > <Checkbox
+                                            className={classes.iconCheck}
+                                            checked={checked}
+                                            onChange={handleChange}
+                                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                                        /></Grid>
+                                        <Grid item xs={10} >
+                                            <Typography className={classes.text}>{listDelFile}</Typography>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container className={classes.grid} >
-                                    <Grid item xs></Grid>
-                                    <Grid item xs={1} > <Checkbox
-                                        className={classes.iconCheck}
-                                        checked={checked}
-                                        onChange={handleChange}
-                                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                                    /></Grid>
-                                    <Grid item xs={9} >
-                                        <Typography className={classes.text} color="textPrimary">เอกสาร</Typography>
-                                    </Grid>
-                                </Grid>
+                                ))}
                             </div>
                         </div>
-                        <div className={classes.controlBtnfolder}>
-                            <Button variant="contained" className={classes.btnDel}>
-                                <Typography className={classes.text} color="textPrimary" elevation={0}>
+                        <div className={classes.modalBtn}>
+                            <Button variant="contained" className={classes.modalbtnDel}>
+                                <Typography className={classes.text}>
                                     Delete
                                 </Typography>
                             </Button>
-                            <Button color="primary" className={classes.btnCancel}>
-                                <Typography className={classes.text} color="textPrimary">
+                            <Button color="primary" className={classes.modalbtnCancel}>
+                                <Typography className={classes.text} >
                                     Cancel
                                 </Typography>
                             </Button>
@@ -173,3 +90,4 @@ export default function DeleteFiles() {
         </div >
     );
 }
+export default DeleteFiles

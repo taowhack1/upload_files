@@ -27,43 +27,44 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FolderIcon from "@material-ui/icons/Folder";
 import { getFolders } from "../../actions/folderActions";
+import useStyles from './StyleFiles'
 
 
-const useStyles = makeStyles({
-    paper: {
-        width: "90%",
-        boxShadow: "0 0 0 0",
-        color: "white",
-    },
-    table: {
-        width: "100%",
-    },
-    color: {
-        fontSize: 40,
-        color: "#FCD462",
-        verticalAlign: 'middle'
-    },
-    text: {
-        fontSize: 20
-    },
-    menu: {
-        width: 250
-    },
-    breadcrumbs: {
-        marginTop: 20,
-        marginBottom: 10
-    },
-    opacity: {
-        fontSize: 20,
-        opacity: 0.7,
-    },
-    NavigateNextIcon: {
-        fontSize: 30,
-    },
-    menu: {
-        width: 250
-    }
-});
+// const useStyles = makeStyles({
+//     paper: {
+//         width: "90%",
+//         boxShadow: "0 0 0 0",
+//         color: "white",
+//     },
+//     table: {
+//         width: "100%",
+//     },
+//     color: {
+//         fontSize: 40,
+//         color: "#FCD462",
+//         verticalAlign: 'middle'
+//     },
+//     text: {
+//         fontSize: 20
+//     },
+//     menu: {
+//         width: 250
+//     },
+//     breadcrumbs: {
+//         marginTop: 20,
+//         marginBottom: 10
+//     },
+//     opacity: {
+//         fontSize: 20,
+//         opacity: 0.7,
+//     },
+//     NavigateNextIcon: {
+//         fontSize: 30,
+//     },
+//     menu: {
+//         width: 250
+//     }
+// });
 
 const ManageUser = () => {
     const classes = useStyles();
@@ -94,15 +95,15 @@ const ManageUser = () => {
 
     return (
         <Fragment>
-            <Grid container direction="row" justify="center" alignItems="center">
+            <Grid container className={classes.gridContainer}>
                 <Paper className={classes.paper}>
-                    <Grid container direction="row" justify="left" alignItems="center">
+                    <Grid container >
                         <Breadcrumbs
                             className={classes.breadcrumbs}
-                            separator={<NavigateNextIcon />}
+                            separator={<NavigateNextIcon className={classes.NavigateNextIcon} />}
                             aria-label="breadcrumb"
                         >
-                            <Typography className={classes.text} color="textPrimary">จัดการผู้ใช้งาน</Typography>
+                            <Typography className={classes.text}>จัดการผู้ใช้งาน</Typography>
                         </Breadcrumbs>
                     </Grid>
                 </Paper>
@@ -111,17 +112,19 @@ const ManageUser = () => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: '50%' }} align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                <TableCell className={classes.tableCellName}>
+                                    <Typography className={classes.text} >
                                         ชื่อ
                                      </Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                    <Typography className={classes.text} >
                                         วันที่แก้ไข
                                      </Typography>
                                 </TableCell>
+                                <TableCell align="center">
 
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -132,29 +135,31 @@ const ManageUser = () => {
                                     <Link
                                         //component={Link}
                                         to={{
-                                            pathname: "/manageuserfirst/"
+                                            pathname: "/manageuserfirst"
                                             //         "/ViewFiles/" + row.folder_id + row.folder_name,
                                         }}
                                     >
-                                        <Grid container spacing={1} direction="row" alignItems="center">
-                                            <Grid item xs={1}>
-                                                <FolderIcon className={classes.color} />
-                                            </Grid>
+                                        <Grid container className={classes.iconAlign}>
                                             <Grid item></Grid>
+                                            <Grid item xs={1}>
+                                                <FolderIcon className={classes.iconFolderTable} />
+                                            </Grid>
                                             <Grid item xs={10}>
-                                                <Typography color="textPrimary" className={classes.text} >
+                                                <Typography className={classes.text} >
                                                     โฟลเดอร์ A
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-
                                     </Link>
                                     {/* </Link> */}
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Typography color="textPrimary" className={classes.text} >
+                                    <Typography className={classes.text} >
                                         15/4/2020
                                     </Typography>
+                                </TableCell>
+                                <TableCell align="center" className={classes.tableMargin}>
+
                                 </TableCell>
                             </TableRow>
                             {/* ))
@@ -163,7 +168,7 @@ const ManageUser = () => {
                     </Table>
                 </Paper>
             </Grid>
-        </Fragment>
+        </Fragment >
     );
 }
 export default ManageUser;

@@ -3,19 +3,13 @@ import "./upload_style.css";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useParams, Link } from "react-router-dom";
-import Message from "./Message";
-import Progress from "./Progress";
-import { Theme, useTheme } from "@material-ui/core/styles";
 import useStyles from "./StyleFiles";
 import axios from "axios";
 import { Grid, Card } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Box from "@material-ui/core/Box";
-import Delete from "@material-ui/icons/Delete";
 import Icon from "@material-ui/core/Icon";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const Upload = (props) => {
   const classes = useStyles();

@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import "./upload_style.css";
 import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography'
+import Typography from "@material-ui/core/Typography";
 import { useParams, Link } from "react-router-dom";
 import Message from "./Message";
 import Progress from "./Progress";
-import { Theme, useTheme } from '@material-ui/core/styles';
-import useStyles from './StyleFiles'
+import { Theme, useTheme } from "@material-ui/core/styles";
+import useStyles from "./StyleFiles";
 import axios from "axios";
 import { Grid, Card } from "@material-ui/core";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Box from '@material-ui/core/Box';
-
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Box from "@material-ui/core/Box";
+import Delete from "@material-ui/icons/Delete";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const Upload = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
   const { folder_id, folder_name } = useParams();
-  const user_id = localStorage.getItem("user_id")
-
+  const user_id = localStorage.getItem("user_id");
 
   const [post, setPost] = useState({
     photos: [],
@@ -27,13 +28,9 @@ const Upload = (props) => {
   const [filesUpload, setFilesUpload] = useState([]);
   const [highlight, setHighlight] = useState(false);
   const { photos } = post;
-  const [uploadedFile, setUploadedFile] = useState({});
-  const [message, setMessage] = useState("");
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const handleFileChange = (e) => {
     let files = e.target.files;
-    // console.log(files);
     handleFiles(files);
   };
 
@@ -66,26 +63,31 @@ const Upload = (props) => {
     formData.append("my_file", filesUpload[0]);
     formData.append("user_id", user_id);
     formData.append("folder_id", folder_id);
-
-    for (let i = 0; i < filesUpload.length; i++) {
-      formData.set("my_file", filesUpload[i]);
-      //   for (var pair of formData.entries()) {
-      //     console.log(pair[0] + ", " + pair[1]);
-      //   }
-      try {
-        res = await axios.post("http://192.168.5.230:8080/upload/file", formData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } catch (err) {
-        console.log(err);
+    if (filesUpload.length > 0) {
+      for (let i = 0; i < filesUpload.length; i++) {
+        formData.set("my_file", filesUpload[i]);
+        try {
+          res = await axios.post(
+            "http://192.168.5.230:8080/upload/file",
+            formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        } catch (err) {
+          console.log(err);
+        }
       }
+      res.data ? UploadSucces() : alert("Error : Something went wrong...");
+    } else {
+      alert("Choose any file to upload.");
     }
-    res.data ? UploadSucces() : alert("Error : Something went wrong...");
   };
   const UploadSucces = () => {
     alert("Upload Successfully");
+    props.refresh();
     props.handleClose();
   };
   const handleDelete = (e) => {
@@ -134,70 +136,79 @@ const Upload = (props) => {
           onDragLeave={handleUnHighlight}
           onDrop={handleDrop}
         >
-          <Grid>
-            <input
-              type="file"
-              name="photos"
-              placeholder="Enter photos"
-              multiple
-              id="filephotos"
-              onChange={handleFileChange}
-            />
-            <label htmlFor="filephotos">{"ลากหรือคลิกเพื่ออัพโหลดไฟล์"}</label>
-          </Grid>
+          <input
+            type="file"
+            name="photos"
+            placeholder="Enter photos"
+            multiple
+            id="filephotos"
+            onChange={handleFileChange}
+          />
+          <label htmlFor="filephotos">{"ลากหรือคลิกเพื่ออัพโหลดไฟล์"}</label>
         </div>
-        {photos.length != 0
-          ? <div className={classes.uploadPreview}>
-
+        {photos.length != 0 ? (
+          <div className={classes.uploadPreview}>
             <List>
               {photos.length > 0 &&
                 photos.map((item, index) => (
-                  <div className={classes.uploadPreviewList} >
+                  <div key={index} className={classes.uploadPreviewList}>
                     <Card className={classes.uploadPreviewCard}>
-                      <ListItem key={index} data-imgindex={index}>
-                        <span onClick={handleDelete} className={classes.uploadPreviewListIcon}>x</span>
-                        <img src={item.src} />
-                        <div className={classes.uploadPreviewBox} >
-                          <Box className={classes.uploadPreviewListName}
-                            my={2}
+                      <ListItem data-imgindex={index}>
+                        <Icon
+                          aria-label="delete"
+                          title="Delete"
+                          onClick={handleDelete}
+                          className={classes.uploadPreviewListIcon}
+                        >
+                          delete
+                        </Icon>
+                        <img
+                          style={{ width: "20px", height: "20px" }}
+                          src={item.src}
+                        />
+                        <div className={classes.uploadPreviewBox}>
+                          <Box
+                            className={classes.uploadPreviewListName}
+                            // my={2}
                             textOverflow="ellipsis"
                             overflow="hidden"
                           >
                             {item.name}
                           </Box>
                         </div>
-
-                        {/* <Box style={{ whiteSpace: 'nowrap' }}>
-                          <Typography
-                            className={classes.uploadPreviewListName}
-                            component="div"
-                            my={2}
-                            textOverflow="ellipsis"
-                            overflow="hidden"
-                          >
-                            {item.name}
-                          </Typography>
-                        </Box> */}
                       </ListItem>
                     </Card>
                   </div>
                 ))}
             </List>
           </div>
-          : <div className={classes.uploadPreviewDisable}></div>
-        }
+        ) : (
+          <div className={classes.uploadPreviewDisable}></div>
+        )}
       </div>
 
       <div className={classes.modalBtnUpload}>
-        <Button variant="contained" className={classes.modalbtnCancel} onClick={(e) => handleUpload(e)} >
-          <Typography className={classes.text} color="textPrimary" elevation={0}>
+        <Button
+          variant="contained"
+          className={classes.modalbtnCancel}
+          onClick={(e) => handleUpload(e)}
+        >
+          <Typography
+            className={classes.text}
+            color="textPrimary"
+            elevation={0}
+          >
             Upload
           </Typography>
         </Button>
-        <Button color="primary" className={classes.modalbtnCancel} onClick={() => props.handleClose()}>
+        <Button
+          color="primary"
+          className={classes.modalbtnCancel}
+          onClick={() => props.handleClose()}
+        >
           <Typography className={classes.text} color="textPrimary">
             Cancel
-             </Typography>
+          </Typography>
         </Button>
       </div>
     </form>

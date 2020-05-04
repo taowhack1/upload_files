@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -25,7 +25,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderIcon from "@material-ui/icons/Folder";
-import { getFolders } from "../../actions/folderActions";
+import { getFolders,deleteFolder,getAllFolder } from "../../actions/folderActions";
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
@@ -34,10 +34,11 @@ import axios from "axios";
 const ViewFolderAdmin = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isAdmin , setIsAdmin] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
+    isAdmin ? dispatch(getAllFolder()) : 
     dispatch(getFolders(localStorage.getItem("user_id")));
   }, []);
 
@@ -51,18 +52,11 @@ const ViewFolderAdmin = () => {
     console.log("loading >>> " + loading);
   }
   const deleteFolder = (folder_id) => {
-    console.log('delete : '+folder_id);
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-      data:{
-        "folder_id" : folder_id
-      }
-    }
-    axios.delete('http://192.168.5.230:8080/upload/folder/delete',config).then(res =>{
-      console.log(res.data);
-    })
+    console.log(folder_id)
+    dispatch(deleteFolder(folder_id));
+  }
+  const refresh = () =>{
+    dispatch(getAllFolder());
   }
   return (
     <Fragment>
@@ -140,7 +134,7 @@ const ViewFolderAdmin = () => {
             </TableBody>
           </Table>
         </Paper>
-        <AddFolder />
+        <AddFolder  refresh={refresh}/>
       </Grid>
     </Fragment>
   );

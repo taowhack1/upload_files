@@ -14,14 +14,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from "./StyleFiles";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { deleteFile } from '../../actions/fileActions'
 
 
 const DeleteFiles = (props) => {
+  const {refresh,listDelFiles} = props
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
-  const listDel = props.listDelFiles
-
+  const listDel =  listDelFiles
+  const dispatch = useDispatch();
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -32,28 +35,13 @@ const DeleteFiles = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
     for (let i = 0; i < listDel.length; i++) {
-      const list = listDel[i]
-      const config = {
-        header: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          file_id: list.file_id,
-        },
-      };
-      try {
-        const res = axios.delete(`http://192.168.5.230:8080/upload/file/delete`, config);
-        console.log(res.data);
-      } catch (err) {
-        console.log('deleteFile Error >>>');
-      }
-      console.log('deleteFile Render >>>');
-      handleClose();
+      const status = await dispatch(deleteFile(listDel[i].file_id));
+      console.log(status);
     }
-    alert('Delete SUccess')
-    props.refresh()
+    handleClose();
+    refresh();
   };
 
 
@@ -81,8 +69,8 @@ const DeleteFiles = (props) => {
             <div className={classes.root}>
               <Typography className={classes.text}>เอกสารที่เลือก</Typography>
               <div className={classes.modalIconAlign}>
-                {props.listDelFiles &&
-                  props.listDelFiles.map((listDelFile, index) => (
+                { listDelFiles &&
+                   listDelFiles.map((listDelFile, index) => (
                     <Grid
                       container
                       className={classes.iconAlign}

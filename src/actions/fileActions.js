@@ -58,16 +58,16 @@ export const deleteFile = (fileId) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.delete(`${url}/file/delete`, config);
-    dispatch({
-      type: DELETE_FILE,
-      payload: res.data,
-    });
-    console.log(res.data);
+    await axios.delete(`${url}/file/delete`, config).then(res=>{
+      dispatch({
+        type: DELETE_FILE,
+        payload: res.data,
+      });
+      return res.data.success;
+    })
   } catch (err) {
-    console.log('deleteFile Error >>>');
+    return alert('deleteFile Error >>>'+err);
   }
-  console.log('deleteFile Render >>>');
 };
 
 // Set loading to true

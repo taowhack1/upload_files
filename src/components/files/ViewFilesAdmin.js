@@ -82,6 +82,7 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
+  console.log(selected)
 
   if (loading) {
     console.log("loading >>> " + loading);
@@ -89,6 +90,7 @@ const ViewFilesAdmin = (props) => {
 
   const updateList = () => {
     dispatch(getFiles(folder_id));
+    alert('delete')
   };
 
   return (

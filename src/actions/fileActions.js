@@ -58,13 +58,15 @@ export const deleteFile = (fileId) => async (dispatch) => {
     },
   };
   try {
-    await axios.delete(`${url}/file/delete`, config).then(res=>{
-      dispatch({
-        type: DELETE_FILE,
-        payload: res.data,
-      });
-      return res.data.success;
-    })
+    const res = await axios.delete(`${url}/file/delete`, config);
+    dispatch({
+      type: SET_LOADING,
+    });
+    dispatch({
+      type: DELETE_FILE,
+      payload: res.data,
+    });
+    console.log(res.data);
   } catch (err) {
     return alert('deleteFile Error >>>'+err);
   }

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { deleteFile } from "../../actions/fileActions";
 import "./upload_style.css";
 import "./style.css";
 import { Modal, Typography, Select } from "@material-ui/core";
@@ -21,10 +23,36 @@ import { deleteFile } from '../../actions/fileActions'
 const DeleteFiles = (props) => {
   const {refresh,listDelFiles} = props
   const classes = useStyles();
+  const { listDelFiles, refresh } = props
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
-  const listDel =  listDelFiles
+  const listDel = listDelFiles
+  const [selected, setSelected] = React.useState([]);
+  const [index, setIndex] = React.useState([]);
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    setSelected(newSelected);
+  };
+  console.log(selected)
+
+
   const dispatch = useDispatch();
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -35,15 +63,15 @@ const DeleteFiles = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDelete = async () => {
-    for (let i = 0; i < listDel.length; i++) {
-      const status = await dispatch(deleteFile(listDel[i].file_id));
-      console.log(status);
-    }
-    handleClose();
-    refresh();
-  };
 
+  const handleDelete = async () => {
+    for (let i = 0; i < selected.length; i++) {
+      const list = selected[i]
+      await dispatch(deleteFile(list));
+    }
+    handleClose()
+    refresh()
+  };
 
   return (
     <div>
@@ -81,9 +109,10 @@ const DeleteFiles = (props) => {
                         {" "}
                         <Checkbox
                           className={classes.iconCheck}
-                          checked={checked}
-                          onChange={handleChange}
-                          inputProps={{ "aria-label": "primary checkbox" }}
+
+                          onClick={(event) =>
+                            handleClick(event, listDelFile.file_id)
+                          }
                         />
                       </Grid>
                       <Grid item xs={10}>

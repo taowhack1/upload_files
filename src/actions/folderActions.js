@@ -12,7 +12,7 @@ export const getAllFolder = () => async (dispatch) =>{
       }
     )
   }catch(err){
-    console.log('get file error !!');
+    console.log('ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!');
   }
 }
 export const getFolders = (user_id) => async (dispatch) => {

@@ -2,7 +2,6 @@ import React, { useEffect, Fragment ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -10,40 +9,26 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Grid,
   Breadcrumbs,
   Typography,
-  Menu,
-  MenuItem,
-  IconButton,
 } from "@material-ui/core/";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CreateIcon from "@material-ui/icons/Create";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderIcon from "@material-ui/icons/Folder";
 import { getFolders,deleteFolder,getAllFolder } from "../../actions/folderActions";
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
-import axios from "axios";
 
 const ViewFolderAdmin = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
-  const [anchorEl, setAnchorEl] = useState(null);
   const { authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     authdata.authorized_id == 2 ? dispatch(getAllFolder()) : 
     dispatch(getFolders(authdata.user_id));
   }, []);
-  const handleRowClick = (folder_id) => {
-    console.log(folder_id);
-  };
 
   if (loading) {
     console.log("loading >>> " + loading);

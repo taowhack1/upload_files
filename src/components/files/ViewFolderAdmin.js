@@ -29,6 +29,7 @@ import { getFolders } from "../../actions/folderActions";
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
+import axios from "axios";
 
 const ViewFolderAdmin = () => {
   const classes = useStyles();
@@ -49,7 +50,20 @@ const ViewFolderAdmin = () => {
   if (loading) {
     console.log("loading >>> " + loading);
   }
-
+  const deleteFolder = (folder_id) => {
+    console.log('delete : '+folder_id);
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+      data:{
+        "folder_id" : folder_id
+      }
+    }
+    axios.delete('http://192.168.5.230:8080/upload/folder/delete',config).then(res =>{
+      console.log(res.data);
+    })
+  }
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -118,7 +132,7 @@ const ViewFolderAdmin = () => {
                         </Typography>
                       </TableCell>
                       <TableCell align="center">
-                        <MenuFolder listRowFolder={row.folder_id} />
+                        <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
                       </TableCell>
                     </TableRow>
                   ))

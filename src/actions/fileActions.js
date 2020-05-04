@@ -1,6 +1,6 @@
-import { GET_FILES, ADD_FOLDERS, SET_LOADING } from "./types";
-import axios from "axios";
-const url = "http://192.168.5.230:8080/upload";
+import { GET_FILES, ADD_FOLDERS, DELETE_FILE, SET_LOADING } from './types';
+import axios from 'axios';
+const url = 'http://192.168.5.230:8080/upload';
 
 export const getFiles = (folder_id) => async (dispatch) => {
   try {
@@ -14,14 +14,14 @@ export const getFiles = (folder_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log("Error");
+    console.log('Error');
   }
 };
 
 export const addPost = (post) => async (dispatch) => {
   const config = {
     header: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -31,21 +31,43 @@ export const addPost = (post) => async (dispatch) => {
       post,
       config
     );
-    console.log("addPost Success >>>", res.data);
+    console.log('addPost Success >>>', res.data);
     dispatch({
       type: ADD_FOLDERS,
       payload: res.data,
     });
   } catch (err) {
-    console.log("addPost Error >>>");
+    console.log('addPost Error >>>');
     // dispatch({
     //   type: POST_ERROR,
     //   payload: err.response.msg,
     // });
   }
-  console.log("addPost Render >>>");
+  console.log('addPost Render >>>');
   setLoading();
   setLoading(false);
+};
+
+export const deleteFile = (fileId) => async (dispatch) => {
+  const config = {
+    header: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      file_id: fileId,
+    },
+  };
+  try {
+    const res = await axios.delete(`${url}/file/delete`, config);
+    dispatch({
+      type: DELETE_FILE,
+      payload: res.data,
+    });
+    console.log(res.data);
+  } catch (err) {
+    console.log('deleteFile Error >>>');
+  }
+  console.log('deleteFile Render >>>');
 };
 
 // Set loading to true

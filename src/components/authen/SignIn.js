@@ -19,7 +19,7 @@ function Alert(props) {
 }
 
 const SignIn = () => {
-  const authenticated = useSelector((state) => state.authReducer.authenticated);
+  const authenticated = useSelector((state) => state.auth.authenticated);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [user, setUser] = useState({

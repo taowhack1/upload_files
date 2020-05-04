@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFiles } from "../../actions/fileActions";
 import { useParams, Link } from "react-router-dom";
 import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -20,12 +19,7 @@ import {
   IconButton,
   Checkbox,
 } from "@material-ui/core/";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CreateIcon from "@material-ui/icons/Create";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import DeleteFiles from "./DeleteFiles";
 import useStyles from "./StyleFiles";
@@ -126,14 +120,6 @@ const ViewFilesAdmin = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell align="center" style={{ width: "1%" }}>
-                  {/* <Checkbox
-                    className={classes.tableMargin}
-                    onClick={handleSelectAllClick}
-                  // checked={state.checkedA}
-                  // name="checkedA"
-                  // onChange={handleCheckBoxChange}
-                  // inputProps={{ 'aria-label': 'primary checkbox' }}
-                  /> */}
                 </TableCell>
                 <TableCell className={classes.tableCellName}>
                   <Typography color="textPrimary" className={classes.text}>
@@ -159,15 +145,9 @@ const ViewFilesAdmin = (props) => {
                     <TableCell align="center">
                       <Checkbox
                         className={classes.tableMargin}
-                        // checked={isItemSelected(row.file_id)}
-                        // onChange={() => handleSelect(row.file_id)}
                         onClick={(event) =>
                           handleSelectClick(event, row.file_id, row.file_name)
                         }
-                      // checked={state.checkedA}
-                      // name="checkedA"
-                      // onChange={handleCheckBoxChange}
-                      // inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
                     </TableCell>
                     <TableCell>

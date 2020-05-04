@@ -68,9 +68,8 @@ export const deleteFile = (fileId) => async (dispatch) => {
     });
     console.log(res.data);
   } catch (err) {
-    console.log('deleteFile Error >>>');
+    return alert('deleteFile Error >>>'+err);
   }
-  console.log('deleteFile Render >>>');
 };
 
 // Set loading to true

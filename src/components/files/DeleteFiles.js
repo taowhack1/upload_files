@@ -1,6 +1,4 @@
 import React, { useEffect, Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { deleteFile } from "../../actions/fileActions";
 import "./upload_style.css";
 import "./style.css";
@@ -16,11 +14,12 @@ import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from "./StyleFiles";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 
 const DeleteFiles = (props) => {
+  const {refresh,listDelFiles} = props
   const classes = useStyles();
-  const { listDelFiles, refresh } = props
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
   const listDel = listDelFiles
@@ -94,8 +93,8 @@ const DeleteFiles = (props) => {
             <div className={classes.root}>
               <Typography className={classes.text}>เอกสารที่เลือก</Typography>
               <div className={classes.modalIconAlign}>
-                {props.listDelFiles &&
-                  props.listDelFiles.map((listDelFile, index) => (
+                { listDelFiles &&
+                   listDelFiles.map((listDelFile, index) => (
                     <Grid
                       container
                       className={classes.iconAlign}

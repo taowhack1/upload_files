@@ -14,7 +14,7 @@ import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
 import axios from "axios";
 
-export default function AddFolder() {
+export default function AddFolder(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [folderName, setFolderName] = useState("");
@@ -35,6 +35,7 @@ export default function AddFolder() {
           if (res.data.folder_name) {
             alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
             handleAddFolderClose();
+            props.refresh();
           } else {
             alert(`เกิดข้อผิดพลาด`);
           }

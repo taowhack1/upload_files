@@ -30,6 +30,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import DeleteFiles from "./DeleteFiles";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
@@ -65,8 +66,6 @@ const ViewFilesAdmin = (props) => {
 
   const handleSelectClick = (event, id, name) => {
     const selectedIndex = index.indexOf(name);
-    // let data2 = [];
-    // data2.push({ file_name: name, file_id: id });
     let newSelected = [];
     let selectIndex = [];
     if (selectedIndex === -1) {
@@ -94,7 +93,26 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  console.log(selected);
+  // const handleSelectClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   console.log(selectedIndex)
+  //   let newSelected = [];
+
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //   }
+  //   setSelected(newSelected);
+  // };
+  console.log(selected)
   const { folder_id, folder_name } = useParams();
   //console.log(folder_id);
   const { files, loading } = useSelector((state) => state.file);
@@ -107,6 +125,10 @@ const ViewFilesAdmin = (props) => {
   if (loading) {
     console.log("loading >>> " + loading);
   }
+
+  const updateList = () => {
+    dispatch(getFiles(folder_id));
+  };
 
   return (
     <Fragment>
@@ -135,14 +157,14 @@ const ViewFilesAdmin = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell align="center" style={{ width: "1%" }}>
-                  <Checkbox
+                  {/* <Checkbox
                     className={classes.tableMargin}
                     onClick={handleSelectAllClick}
-                    // checked={state.checkedA}
-                    // name="checkedA"
-                    // onChange={handleCheckBoxChange}
-                    // inputProps={{ 'aria-label': 'primary checkbox' }}
-                  />
+                  // checked={state.checkedA}
+                  // name="checkedA"
+                  // onChange={handleCheckBoxChange}
+                  // inputProps={{ 'aria-label': 'primary checkbox' }}
+                  /> */}
                 </TableCell>
                 <TableCell className={classes.tableCellName}>
                   <Typography color="textPrimary" className={classes.text}>
@@ -164,56 +186,63 @@ const ViewFilesAdmin = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((row) => (
-                    <TableRow key={row.file_id} hover>
-                      <TableCell align="center">
-                        <Checkbox
-                          className={classes.tableMargin}
-                          // checked={isItemSelected(row.file_id)}
-                          // onChange={() => handleSelect(row.file_id)}
-                          onClick={(event) =>
-                            handleSelectClick(event, row.file_id, row.file_name)
-                          }
-                          // checked={state.checkedA}
-                          // name="checkedA"
-                          // onChange={handleCheckBoxChange}
-                          // inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
-                          </Grid>
-                          <Grid item xs={9}>
-                            <Typography
-                              color="textPrimary"
-                              className={classes.text}
-                            >
-                              {row.file_name}
-                            </Typography>
-                          </Grid>
+                  <TableRow key={row.file_id} hover>
+                    <TableCell align="center">
+                      <Checkbox
+                        className={classes.tableMargin}
+                        // checked={isItemSelected(row.file_id)}
+                        // onChange={() => handleSelect(row.file_id)}
+                        onClick={(event) =>
+                          handleSelectClick(event, row.file_id, row_name)
+                        }
+                      // checked={state.checkedA}
+                      // name="checkedA"
+                      // onChange={handleCheckBoxChange}
+                      // inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid item xs={1}>
+                          <InsertDriveFileIcon
+                            className={classes.iconFilesTable}
+                          />
                         </Grid>
+                        <Grid item xs={9}>
+                          <Typography
+                            color="textPrimary"
+                            className={classes.text}
+                          >
+                            {row.file_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
 
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <MenuFolder />
-                      </TableCell>
-                    </TableRow>
-                  ))
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <MenuFolder />
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {loading &&
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          }
+          {selected.length != 0 &&
+            <DeleteFiles listDelFiles={selected} refresh={updateList} />
+          }
         </Paper>
       </Grid>
-      <DeleteFiles listDelFiles={selected} />
     </Fragment>
   );
 };

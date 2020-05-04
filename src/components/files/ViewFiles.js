@@ -92,38 +92,38 @@ const ViewFiles = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((row) => (
-                    <TableRow key={row.file_id} hover>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
-                          </Grid>
-                          <Grid item xs={9}>
-                            <Typography
-                              color="textPrimary"
-                              className={classes.text}
-                            >
-                              {row.file_name}
-                            </Typography>
-                          </Grid>
+                  <TableRow key={row.file_id} hover>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid item xs={1}>
+                          <InsertDriveFileIcon
+                            className={classes.iconFilesTable}
+                          />
                         </Grid>
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <ConfirmDownload
-                          filename={row.file_name}
-                          fileid={row.file_id}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        <Grid item xs={9}>
+                          <Typography
+                            color="textPrimary"
+                            className={classes.text}
+                          >
+                            {row.file_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <ConfirmDownload
+                        filename={row.file_name}
+                        fileid={row.file_id}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>

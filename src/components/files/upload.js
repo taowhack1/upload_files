@@ -177,8 +177,8 @@ const Upload = (props) => {
             </List>
           </div>
         ) : (
-          <div className={classes.uploadPreviewDisable}></div>
-        )}
+            <div className={classes.uploadPreviewDisable}></div>
+          )}
       </div>
 
       <div className={classes.modalBtnUpload}>

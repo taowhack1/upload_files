@@ -22,6 +22,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'; //Goog
 
 const token = localStorage.getItem('authData');
 const tokenParse = JSON.parse(token);
+
 if (tokenParse) {
   store.dispatch({
     type: 'AUTH_USER',

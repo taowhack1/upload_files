@@ -3,6 +3,7 @@ import {
   ADD_FOLDERS,
   SET_LOADING,
   POSTS_ERROR,
+  DELETE_FILE,
 } from '../actions/types';
 
 const initialState = {
@@ -24,6 +25,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         folders: [action.payload, ...state.folders],
+        loading: false,
+      };
+    case DELETE_FILE:
+      return {
+        ...state,
         loading: false,
       };
     case SET_LOADING:

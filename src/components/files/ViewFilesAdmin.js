@@ -34,18 +34,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [menuselected, menusetSelected] = React.useState([]);
-
-  const handleMoreVertIconClick = (event, id) => {
-    console.log(event);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMoreVertIconClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = files.map((n) => n.name);
@@ -54,6 +42,13 @@ const ViewFilesAdmin = (props) => {
     }
     setSelected([]);
   };
+  const { folder_id, folder_name } = useParams();
+  const { files, loading } = useSelector((state) => state.file);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFiles(folder_id));
+  }, []);
 
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
@@ -121,6 +116,7 @@ const ViewFilesAdmin = (props) => {
   useEffect(() => {
     dispatch(getFiles(folder_id));
   }, []);
+
 
   if (loading) {
     console.log("loading >>> " + loading);

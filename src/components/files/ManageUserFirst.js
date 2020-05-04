@@ -112,7 +112,7 @@ const ManageUserFirst = () => {
                     //component={Link}
                     to={{
                       pathname: "/manageusersecond",
-                      //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                      //         "/ViewFiles/" + row.folder_id + row.folder_name
                     }}
                   >
                     <Grid container className={classes.iconAlign}>
@@ -126,6 +126,43 @@ const ManageUserFirst = () => {
                           className={classes.text}
                         >
                           นาง A
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Link>
+                </TableCell>
+                <TableCell align="center"></TableCell>
+                <TableCell align="center">
+                  <Switch className={classes.tableMargin}></Switch>
+                </TableCell>
+                <TableCell align="center">
+                  <Link to="/manageusersecond">
+                    <IconButton className={classes.tableMargin}>
+                      <NavigateNextIcon></NavigateNextIcon>
+                    </IconButton>
+                  </Link>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Link
+                    //component={Link}
+                    to={{
+                      pathname: "/manageusersecond",
+                      //         "/ViewFiles/" + row.folder_id + row.folder_name
+                    }}
+                  >
+                    <Grid container className={classes.iconAlign}>
+                      <Grid item></Grid>
+                      <Grid item xs={1}>
+                        <PersonIcon className={classes.iconPersonTable} />
+                      </Grid>
+                      <Grid item xs={10}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.text}
+                        >
+                          นาย บรรลือ บรรลัยกัลป์
                         </Typography>
                       </Grid>
                     </Grid>

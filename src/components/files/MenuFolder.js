@@ -26,10 +26,6 @@ const MenuFolder = (props) => {
         setAnchorEl(null);
     };
 
-    const removeFolder = () => {
-        console.log(folder)
-    }
-
     const [folder, setFolder] = React.useState(props.listRowFolder);
 
     return (
@@ -46,11 +42,11 @@ const MenuFolder = (props) => {
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
                 onClose={handleMoreVertIconClose}
             >
-                <MenuItem onClick={removeFolder}>
+                <MenuItem onClick={()=>props.deleteFolder(folder)}>
                     <ListItemIcon >
                         <RemoveIcon />
                     </ListItemIcon>
-                    <Typography variant="inherit" className={classes.menuItem}  >ลบ</Typography>
+                    <Typography variant="inherit" className={classes.menuItem}>ลบ</Typography>
                 </MenuItem>
                 <MenuItem >
                     <ListItemIcon>

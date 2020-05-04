@@ -88,35 +88,7 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  // const handleSelectClick = (event, name) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   console.log(selectedIndex)
-  //   let newSelected = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1),
-  //     );
-  //   }
-  //   setSelected(newSelected);
-  // };
   console.log(selected)
-  const { folder_id, folder_name } = useParams();
-  //console.log(folder_id);
-  const { files, loading } = useSelector((state) => state.file);
-  // const { files } = useSelector((state) => state.file.files);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getFiles(folder_id));
-  }, []);
-
 
   if (loading) {
     console.log("loading >>> " + loading);
@@ -124,6 +96,7 @@ const ViewFilesAdmin = (props) => {
 
   const updateList = () => {
     dispatch(getFiles(folder_id));
+    alert('delete')
   };
 
   return (
@@ -189,7 +162,7 @@ const ViewFilesAdmin = (props) => {
                         // checked={isItemSelected(row.file_id)}
                         // onChange={() => handleSelect(row.file_id)}
                         onClick={(event) =>
-                          handleSelectClick(event, row.file_id, row_name)
+                          handleSelectClick(event, row.file_id, row.file_name)
                         }
                       // checked={state.checkedA}
                       // name="checkedA"

@@ -38,7 +38,7 @@ const ManageUserFirst = () => {
   const { folders, loading } = useSelector((state) => state.folder);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const { authdata } = useSelector((state) => state.auth);
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -50,7 +50,7 @@ const ManageUserFirst = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(localStorage.getItem("user_id")));
+    dispatch(getFolders(authdata.user_id));
   }, []);
 
   const handleRowClick = (folder_id) => {

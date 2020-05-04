@@ -35,15 +35,12 @@ const ViewFolderAdmin = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isAdmin , setIsAdmin] = useState(true);
+  const { authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
-    isAdmin ? dispatch(getAllFolder()) : 
-    dispatch(getFolders(localStorage.getItem("user_id")));
+    authdata.authorized_id == 2 ? dispatch(getAllFolder()) : 
+    dispatch(getFolders(authdata.user_id));
   }, []);
-
-  console.log(getFolders.user_id);
-
   const handleRowClick = (folder_id) => {
     console.log(folder_id);
   };

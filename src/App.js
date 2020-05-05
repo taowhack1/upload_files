@@ -50,7 +50,11 @@ const App = () => {
             <Route exact path='/del' component={Delete} />
             <Route exact path='/viewfolderadmin' component={ViewFolderAdmin} />
             <Route exact path='/manageuser' component={ManageUser} />
-            <Route exact path='/manageuserfirst' component={ManageUserFirst} />
+            <Route
+              exact
+              path='/manageuserfirst/:folder_id'
+              children={<ManageUserFirst/>}
+            />
             <Route
               exact
               path='/manageusersecond'
@@ -68,8 +72,8 @@ const App = () => {
             />
             <Route
               exact
-              path='/viewfilesadmin/:folder_id:folder_name'
-              children={<ViewFilesAdmin />}
+              path='/viewfilesadmin/:folder_id'
+              children={<ViewFilesAdmin/>}
             />
           </Switch>
         </Router>

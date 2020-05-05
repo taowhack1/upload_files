@@ -26,57 +26,60 @@ const DeleteFiles = (props) => {
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
 
-  const handleClick = (event, id, name) => {
-    const selectedIndex = index.indexOf(id);
-    let newSelected = [];
-    let selectIndex = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, {
-        file_name: name,
-        file_id: id,
-        check_status: true
-      });
-      selectIndex = selectIndex.concat(index, id);
-    } else if (selectedIndex === 0) {
-      selectIndex = selectIndex.concat(index.slice(1));
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      selectIndex = selectIndex.concat(index.slice(0, -1));
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      selectIndex = selectIndex.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setIndex(selectIndex);
-    setSelected(newSelected);
-  };
+  // const handleClick = (event, id, name) => {
+  //   const selectedIndex = index.indexOf(id);
+  //   console.log(selectedIndex)
+  //   let newSelected = [];
+  //   let selectIndex = [];
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, {
+  //       file_name: name,
+  //       file_id: id,
+  //       check_status: event.target.checked
+  //     });
+  //     selectIndex = selectIndex.concat(index, id);
+  //     setChecked(false)
+  //   } else if (selectedIndex === 0) {
+  //     selectIndex = selectIndex.concat(index.slice(1));
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     selectIndex = selectIndex.concat(index.slice(0, -1));
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   }
+  //   else if (selectedIndex > 0) {
+  //     selectIndex = selectIndex.concat(
+  //       index.slice(0, selectedIndex),
+  //       index.slice(selectedIndex + 1)
+  //     );
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
+  //   setIndex(selectIndex);
+  //   setSelected(newSelected);
+  // };
+  // console.log(selected)
+  // console.log(listDel)
 
-  // const handleChecked = () => {
-  //   console.log(selected)
-  // }
-  console.log(listDel)
+  const changStatus = (event) => {
+    setChecked(event.target.checked)
+  }
+
 
   const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(true);
   };
-  console.log(selected)
-
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleDelete = async () => {
-    for (let i = 0; i < selected.length; i++) {
-      const list = selected[i]
-      await dispatch(deleteFile(list));
+    for (let i = 0; i < listDel.length; i++) {
+      const list = listDel[i]
+      await dispatch(deleteFile(list.file_id));
     }
     handleClose()
     refresh()
@@ -106,32 +109,33 @@ const DeleteFiles = (props) => {
             <div className={classes.root}>
               <Typography className={classes.text}>เอกสารที่เลือก</Typography>
               <div className={classes.modalIconAlign}>
-
                 {listDel &&
-                  listDel.map((listDelFile, index) => (
-                    <Grid
-                      container
-                      className={classes.iconAlign}
-                      key={index}
-                    >
-                      <Grid item xs></Grid>
-                      <Grid item xs={1}>
-                        {" "}
-                        <Checkbox
-                          className={classes.iconCheck}
-                          checked={checked}
-                          onClick={(event) =>
-                            handleClick(event, listDelFile.file_id)
-                          }
-                        />
+                  listDel.map((listDelFile, index) => {
+                    return (
+                      <Grid
+                        container
+                        className={classes.iconAlign}
+                        key={index}
+                      >
+                        <Grid item xs></Grid>
+                        <Grid item xs={1}>
+                          {/* <Checkbox
+                            className={classes.iconCheck}
+                            checked={checked}
+                            onClick={(event) =>
+                              handleClick(event, listDelFile.file_id, listDelFile.file_name)
+                            }
+                          //onChange={(event) => changStatus(event)}
+                          /> */}
+                        </Grid>
+                        <Grid item xs={10} className={classes.iconCheck}>
+                          <Typography className={classes.text}>
+                            {listDelFile.file_name}
+                          </Typography>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={10}>
-                        <Typography className={classes.text}>
-                          {listDelFile.file_name}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  ))}
+                    )
+                  })}
               </div>
             </div>
             <div className={classes.modalBtn}>

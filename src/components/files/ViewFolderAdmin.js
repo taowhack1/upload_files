@@ -30,6 +30,8 @@ import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
 import axios from "axios";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const ViewFolderAdmin = () => {
   const classes = useStyles();
@@ -131,6 +133,11 @@ const ViewFolderAdmin = () => {
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {loading &&
+            <div className={classes.loading}>
+              <CircularProgress />
+            </div>
+          }
         </Paper>
         <AddFolder refresh={refresh} />
       </Grid>

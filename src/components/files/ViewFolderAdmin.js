@@ -51,16 +51,16 @@ const ViewFolderAdmin = () => {
     console.log("loading >>> " + loading);
   }
   const deleteFolder = (folder_id) => {
-    console.log('delete : '+folder_id);
+    console.log('delete : ' + folder_id);
     const config = {
       header: {
         "Content-Type": "application/json",
       },
-      data:{
-        "folder_id" : folder_id
+      data: {
+        "folder_id": folder_id
       }
     }
-    axios.delete('http://192.168.5.230:8080/upload/folder/delete',config).then(res =>{
+    axios.delete('http://192.168.5.230:8080/upload/folder/delete', config).then(res => {
       console.log(res.data);
     })
   }
@@ -98,44 +98,44 @@ const ViewFolderAdmin = () => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((row) => (
-                    <TableRow key={row.folder_id}>
-                      <TableCell>
-                        <Link
-                          //component={Link}
-                          to={{
-                            pathname:
-                              "/viewfilesadmin/" +
-                              row.folder_id +
-                              row.folder_name,
-                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <FolderIcon className={classes.iconFolderTable} />
-                            </Grid>
-                            <Grid item xs={10}>
-                              <Typography className={classes.text}>
-                                {row.folder_name}
-                              </Typography>
-                            </Grid>
+                  <TableRow key={row.folder_id}>
+                    <TableCell>
+                      <Link
+                        //component={Link}
+                        to={{
+                          pathname:
+                            "/viewfilesadmin/" +
+                            row.folder_id +
+                            row.folder_name,
+                          //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
                           </Grid>
-                        </Link>
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment(row.folder_created).format(
-                            "DD-MM-YYYY HH:MM"
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          <Grid item xs={10}>
+                            <Typography className={classes.text}>
+                              {row.folder_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment(row.folder_created).format(
+                          "DD-MM-YYYY HH:MM"
+                        )}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>

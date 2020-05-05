@@ -15,7 +15,6 @@ import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from "./StyleFiles";
-import axios from "axios";
 
 
 const DeleteFiles = (props) => {
@@ -27,35 +26,48 @@ const DeleteFiles = (props) => {
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id, name) => {
+    const selectedIndex = index.indexOf(id);
     let newSelected = [];
-
+    let selectIndex = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, {
+        file_name: name,
+        file_id: id,
+        check_status: true
+      });
+      selectIndex = selectIndex.concat(index, id);
     } else if (selectedIndex === 0) {
+      selectIndex = selectIndex.concat(index.slice(1));
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
+      selectIndex = selectIndex.concat(index.slice(0, -1));
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
+      selectIndex = selectIndex.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
+    setIndex(selectIndex);
     setSelected(newSelected);
   };
-  console.log(selected)
 
+  // const handleChecked = () => {
+  //   console.log(selected)
+  // }
+  console.log(listDel)
 
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
   const handleOpen = () => {
     setOpen(true);
   };
+  console.log(selected)
 
   const handleClose = () => {
     setOpen(false);
@@ -94,8 +106,8 @@ const DeleteFiles = (props) => {
             <div className={classes.root}>
               <Typography className={classes.text}>เอกสารที่เลือก</Typography>
               <div className={classes.modalIconAlign}>
-                {props.listDelFiles &&
-                  props.listDelFiles.map((listDelFile, index) => (
+                {listDel &&
+                  listDel.map((listDelFile, index) => (
                     <Grid
                       container
                       className={classes.iconAlign}
@@ -106,7 +118,7 @@ const DeleteFiles = (props) => {
                         {" "}
                         <Checkbox
                           className={classes.iconCheck}
-
+                          checked={checked}
                           onClick={(event) =>
                             handleClick(event, listDelFile.file_id)
                           }

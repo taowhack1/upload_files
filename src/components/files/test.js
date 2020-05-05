@@ -20,6 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { isElement } from 'react-dom/test-utils';
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -273,6 +274,7 @@ export default function EnhancedTable() {
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
@@ -300,6 +302,7 @@ export default function EnhancedTable() {
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
+                                    console.log(isItemSelected)
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow

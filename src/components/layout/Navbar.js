@@ -15,6 +15,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import { MenuItem, Grid } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
+import MenuNavbar from '../menu/MenuNavbar';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -96,27 +98,7 @@ const Navbar = () => {
 
       {auth && (
         <div>
-          <IconButton
-            aria-label='account of current user'
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={handleMenu}
-            color='inherit'
-          >
-            <AccountCircle fontSize='large' />
-          </IconButton>
-          <Menu
-            id='menu-appbar'
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={open}
-            onClose={handleClose}
-          >
-            {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-            <MenuItem>เปลี่ยน Password</MenuItem>
-            <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
-          </Menu>
+          <MenuNavbar signOut={handleSignOut} />
         </div>
       )}
     </Toolbar>

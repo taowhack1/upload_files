@@ -64,6 +64,7 @@ const App = () => {
             <Route exact path='/confirm' component={ConfirmDowload} />
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/test' component={test} />
+
             <Route exact path='/' component={Home} />
             <Route
               exact

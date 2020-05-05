@@ -10,9 +10,18 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  modalPaper: {
+    width: 600,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[3],
+    borderRadius: 4,
+    outline: "none",
+    padding: theme.spacing(1, 5, 4),
+  },
   form: {
     width: '100%',
-    marginTop: theme.spacing(1),
+    margin: theme.spacing(3, 0, 0),
+    padding: theme.spacing(1, 0, 1, 0),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -22,9 +31,25 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#1976D2",
     height: '100vh'
   },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalPaper: {
+    width: 600,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[3],
+    borderRadius: 4,
+    outline: "none",
+    padding: theme.spacing(5, 5, 5, 5)
+  },
   text: {
     fontSize: 30,
     color: '#FFFFFF',
+  },
+  textPass: {
+    fontSize: 25,
   },
   input: {
     backgroundColor: 'white'

@@ -60,9 +60,6 @@ export const deleteFile = (fileId) => async (dispatch) => {
   try {
     const res = await axios.delete(`${url}/file/delete`, config);
     dispatch({
-      type: SET_LOADING,
-    });
-    dispatch({
       type: DELETE_FILE,
       payload: res.data,
     });

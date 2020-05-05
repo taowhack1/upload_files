@@ -52,17 +52,20 @@ const ViewFilesAdmin = (props) => {
       file_id: null,
     },
   ]);
+  const [checked, setChecked] = React.useState(false);
 
-  const handleSelectClick = (event, id, name) => {
-    const selectedIndex = index.indexOf(name);
+
+  const handleSelectClick = (event, id, name, check) => {
+    const selectedIndex = index.indexOf(id);
     let newSelected = [];
     let selectIndex = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, {
         file_name: name,
         file_id: id,
+        check_status: true
       });
-      selectIndex = selectIndex.concat(index, name);
+      selectIndex = selectIndex.concat(index, id);
     } else if (selectedIndex === 0) {
       selectIndex = selectIndex.concat(index.slice(1));
       newSelected = newSelected.concat(selected.slice(1));
@@ -82,7 +85,6 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  console.log(selected)
 
   if (loading) {
     console.log("loading >>> " + loading);
@@ -90,6 +92,7 @@ const ViewFilesAdmin = (props) => {
 
   const updateList = () => {
     dispatch(getFiles(folder_id));
+    setSelected([])
     alert('delete')
   };
 
@@ -110,7 +113,7 @@ const ViewFilesAdmin = (props) => {
                   โฟลเดอร์ทั้งหมด
                 </Typography>
               </Link>
-              <Typography className={classes.text}>โฟลเดอร์</Typography>
+              <Typography className={classes.text}>{folder_name}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -145,8 +148,12 @@ const ViewFilesAdmin = (props) => {
                     <TableCell align="center">
                       <Checkbox
                         className={classes.tableMargin}
+                        onChange={e => {
+                          setChecked(e.target.checked)
+                        }}
+
                         onClick={(event) =>
-                          handleSelectClick(event, row.file_id, row.file_name)
+                          handleSelectClick(event, row.file_id, row.file_name, checked)
                         }
                       />
                     </TableCell>

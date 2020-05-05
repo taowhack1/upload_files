@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment ,useState} from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -25,7 +25,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderIcon from "@material-ui/icons/Folder";
-import { getFolders,deleteFolder,getAllFolder } from "../../actions/folderActions";
+import { getFolders, deleteFolder, getAllFolder } from "../../actions/folderActions";
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
@@ -38,8 +38,8 @@ const ViewFolderAdmin = () => {
   const { authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
-    authdata.authorized_id == 2 ? dispatch(getAllFolder()) : 
-    dispatch(getFolders(authdata.user_id));
+    authdata.authorized_id == 2 ? dispatch(getAllFolder()) :
+      dispatch(getFolders(authdata.user_id));
   }, []);
   const handleRowClick = (folder_id) => {
     console.log(folder_id);
@@ -52,8 +52,9 @@ const ViewFolderAdmin = () => {
     console.log(folder_id)
     dispatch(deleteFolder(folder_id));
   }
-  const refresh = () =>{
+  const refresh = () => {
     dispatch(getAllFolder());
+
   }
   return (
     <Fragment>
@@ -89,49 +90,49 @@ const ViewFolderAdmin = () => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((row) => (
-                    <TableRow key={row.folder_id}>
-                      <TableCell>
-                        <Link
-                          //component={Link}
-                          to={{
-                            pathname:
-                              "/viewfilesadmin/" +
-                              row.folder_id +
-                              row.folder_name,
-                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <FolderIcon className={classes.iconFolderTable} />
-                            </Grid>
-                            <Grid item xs={10}>
-                              <Typography className={classes.text}>
-                                {row.folder_name}
-                              </Typography>
-                            </Grid>
+                  <TableRow key={row.folder_id}>
+                    <TableCell>
+                      <Link
+                        //component={Link}
+                        to={{
+                          pathname:
+                            "/viewfilesadmin/" +
+                            row.folder_id +
+                            row.folder_name,
+                          //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
                           </Grid>
-                        </Link>
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment(row.folder_created).format(
-                            "DD-MM-YYYY HH:MM"
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          <Grid item xs={10}>
+                            <Typography className={classes.text}>
+                              {row.folder_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment(row.folder_created).format(
+                          "DD-MM-YYYY HH:MM"
+                        )}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
         </Paper>
-        <AddFolder  refresh={refresh}/>
+        <AddFolder refresh={refresh} />
       </Grid>
     </Fragment>
   );

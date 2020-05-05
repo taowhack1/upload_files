@@ -1,6 +1,6 @@
 import {
   GET_FOLDERS,
-  ADD_FOLDERS,
+  ADD_FOLDER,
   SET_LOADING,
   POSTS_ERROR,
   DELETE_FOLDER,
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
         folders: action.payload,
         loading: false,
       };
-    case ADD_FOLDERS:
+    case ADD_FOLDER:
       return {
         ...state,
         folders: [action.payload, ...state.folders],

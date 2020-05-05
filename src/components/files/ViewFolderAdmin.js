@@ -19,7 +19,6 @@ import { getFolders, deleteFolder, getAllFolder } from "../../actions/folderActi
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
-import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ViewFolderAdmin = () => {
@@ -27,6 +26,7 @@ const ViewFolderAdmin = () => {
   const { folders, loading } = useSelector((state) => state.folder);
   const { authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   useEffect(() => {
     authdata.authorized_id == 2 ? dispatch(getAllFolder()) :
       dispatch(getFolders(authdata.user_id));
@@ -35,13 +35,9 @@ const ViewFolderAdmin = () => {
   if (loading) {
     console.log("loading >>> " + loading);
   }
-  const deleteFolder = (folder_id) => {
-    console.log(folder_id)
-    dispatch(deleteFolder(folder_id));
-  }
-  const refresh = () => {
-    dispatch(getAllFolder());
-
+  const refresh = async () => {
+    await dispatch(getAllFolder());
+    console.log("refresh");
   }
   return (
     <Fragment>
@@ -75,7 +71,7 @@ const ViewFolderAdmin = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {!loading && folders !== null
+              {!loading && folders != null
                 ? folders.map((row) => (
                   <TableRow key={row.folder_id}>
                     <TableCell>
@@ -109,7 +105,7 @@ const ViewFolderAdmin = () => {
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <MenuFolder deleteFolder={deleteFolder} listRowFolder={row.folder_id} />
+                      <MenuFolder refresh={refresh} listRowFolder={row.folder_id} />
                     </TableCell>
                   </TableRow>
                 ))

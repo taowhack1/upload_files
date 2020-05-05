@@ -1,4 +1,4 @@
-import { GET_FOLDERS, ADD_FOLDERS, SET_LOADING, DELETE_FOLDER } from './types';
+import { GET_FOLDERS, ADD_FOLDER, SET_LOADING, DELETE_FOLDER } from './types';
 import axios from 'axios';
 const url = 'http://192.168.5.230:8080/upload';
 export const getAllFolder = () => async (dispatch) => {
@@ -48,41 +48,18 @@ export const deleteFolder = (id) => async (dispatch) => {
     // dispatch({
     //   type: SET_LOADING,
     // })
-    console.log(res.data);
   } catch (err) {
     console.log('deleteFile Error >>>');
   }
   console.log('deleteFile Render >>>');
 };
 
-export const addPost = (post) => async (dispatch) => {
-  const config = {
-    header: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  try {
-    const res = await axios.post(
-      `http://192.168.5.11:8080/posts`,
-      post,
-      config
-    );
-    console.log('addPost Success >>>', res.data);
+export const createFolder = (folder_name) => async (dispatch) => {
+    const res = await axios.post(`${url}/folder`, {folder_name});
     dispatch({
-      type: ADD_FOLDERS,
+      type: ADD_FOLDER,
       payload: res.data,
     });
-  } catch (err) {
-    console.log('addPost Error >>>');
-    // dispatch({
-    //   type: POST_ERROR,
-    //   payload: err.response.msg,
-    // });
-  }
-  console.log('addPost Render >>>');
-  setLoading();
-  setLoading(false);
 };
 
 // Set loading to true

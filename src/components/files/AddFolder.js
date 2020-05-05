@@ -13,11 +13,14 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {createFolder} from '../../actions/folderActions'
 
 export default function AddFolder(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [folderName, setFolderName] = useState("");
+  const [folder_name, setFolderName] = useState("");
   const handleAddFolderOpen = () => {
     setOpen(true);
   };
@@ -28,22 +31,17 @@ export default function AddFolder(props) {
   const handleChangeFolderName = (e) => {
     setFolderName(e.target.value.trim());
   };
-  const handleCreateFolder = () => {
-    const folder_name = folderName;
+  const handleCreateFolder = async () => {
     if (folder_name) {
-      axios.post("http://192.168.5.230:8080/upload/folder",{folder_name}).then((res) => {
-          if (res.data.folder_name) {
-            alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
-            handleAddFolderClose();
-            props.refresh();
-          } else {
-            alert(`เกิดข้อผิดพลาด`);
-          }
-      });
+      await dispatch(createFolder(folder_name));
+      alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
+      setFolderName('');
+      handleAddFolderClose();
     } else {
       alert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง");
     }
   };
+
   return (
     <div>
       <Tooltip
@@ -89,7 +87,7 @@ export default function AddFolder(props) {
                       variant="outlined"
                       className={classes.textField}
                       onChange={handleChangeFolderName}
-                      value={folderName}
+                      value={folder_name}
                       InputProps={{
                         classes: { input: classes.input },
                       }}

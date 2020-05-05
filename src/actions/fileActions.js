@@ -1,4 +1,4 @@
-import { GET_FILES, ADD_FOLDERS, DELETE_FILE, SET_LOADING } from './types';
+import { GET_FILES, ADD_FILE, DELETE_FILE, SET_LOADING } from './types';
 import axios from 'axios';
 const url = 'http://192.168.5.230:8080/upload';
 
@@ -16,36 +16,6 @@ export const getFiles = (folder_id) => async (dispatch) => {
   } catch (err) {
     console.log('Error');
   }
-};
-
-export const addPost = (post) => async (dispatch) => {
-  const config = {
-    header: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  try {
-    const res = await axios.post(
-      `http://192.168.5.11:8080/posts`,
-      post,
-      config
-    );
-    console.log('addPost Success >>>', res.data);
-    dispatch({
-      type: ADD_FOLDERS,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log('addPost Error >>>');
-    // dispatch({
-    //   type: POST_ERROR,
-    //   payload: err.response.msg,
-    // });
-  }
-  console.log('addPost Render >>>');
-  setLoading();
-  setLoading(false);
 };
 
 export const deleteFile = (fileId) => async (dispatch) => {

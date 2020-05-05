@@ -1,20 +1,19 @@
-import { GET_FOLDERS, ADD_FOLDERS, SET_LOADING ,DELETE_FOLDER } from './types';
+import { GET_FOLDERS, ADD_FOLDERS, SET_LOADING, DELETE_FOLDER } from './types';
 import axios from 'axios';
 const url = 'http://192.168.5.230:8080/upload';
-export const getAllFolder = () => async (dispatch) =>{
-  try{
-    await axios.get(`${url}/folderall`).then(
-      res=>{
-        dispatch({
-          type: GET_FOLDERS,
-          payload: res.data,
-        });
-      }
-    )
-  }catch(err){
+export const getAllFolder = () => async (dispatch) => {
+  try {
+    await axios.get(`${url}/folderall`).then((res) => {
+      dispatch({
+        type: GET_FOLDERS,
+        payload: res.data,
+      });
+    });
+  } catch (err) {
     console.log('ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!');
   }
-}
+};
+
 export const getFolders = (user_id) => async (dispatch) => {
   try {
     dispatch({
@@ -30,7 +29,6 @@ export const getFolders = (user_id) => async (dispatch) => {
     console.log('Error');
   }
 };
-
 
 export const deleteFolder = (id) => async (dispatch) => {
   const config = {

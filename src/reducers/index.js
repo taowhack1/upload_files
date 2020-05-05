@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import auth from './authReducer';
 import folderReducer from './folderReducer';
 import fileReducer from './fileReducer';
+import authReducer from './authReducer';
 
 export default combineReducers({
   folder: folderReducer,
   file: fileReducer,
-  auth,
+  auth: authReducer,
 });

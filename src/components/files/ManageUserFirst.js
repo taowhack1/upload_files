@@ -1,8 +1,9 @@
-import React, { useEffect, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import moment from 'moment';
+import Circular from '../layout/Circular';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
@@ -19,24 +20,26 @@ import {
   IconButton,
   Checkbox,
   Switch,
-} from "@material-ui/core/";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CreateIcon from "@material-ui/icons/Create";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import RemoveIcon from "@material-ui/icons/Remove";
+} from '@material-ui/core/';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import CreateIcon from '@material-ui/icons/Create';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import RemoveIcon from '@material-ui/icons/Remove';
 
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { getUserInFolder } from "../../actions/authActions";
-import PersonIcon from "@material-ui/icons/Person";
-import AddUser from "./AddUser";
-import useStyles from "./StyleFiles";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import { getUserByFolderId } from '../../actions/authActions';
+import PersonIcon from '@material-ui/icons/Person';
+import AddUser from './AddUser';
+import useStyles from './StyleFiles';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
-  const { folderUser } = useSelector((state) => state.auth);
-  const [state, setState] = React.useState({
+  const { folder_id } = useParams();
+  const { loading, userbyfolderid } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
   });
@@ -45,33 +48,33 @@ const ManageUserFirst = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUserInFolder(1));
+    dispatch(getUserByFolderId(folder_id));
+    console.log(userbyfolderid);
   }, []);
 
-  // if (loading) {
-  //   console.log("loading >>> " + loading);
-  // }
+  if (loading) {
+    return <Circular />;
+  }
 
   return (
     <Fragment>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container direction='row' justify='center' alignItems='center'>
         <Paper className={classes.paper}>
-          <Grid container direction="row" justify="left" alignItems="center">
+          <Grid container direction='row' justify='left' alignItems='center'>
             <Breadcrumbs
               className={classes.breadcrumbs}
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label="breadcrumb"
+              aria-label='breadcrumb'
             >
-              <Link to={{ pathname: "/manageuser" }}>
-                <Typography className={classes.opacity} color="textPrimary">
+              <Link to={{ pathname: '/manageuser' }}>
+                <Typography className={classes.opacity} color='textPrimary'>
                   จัดการผู้ใช้งาน
                 </Typography>
               </Link>
-              <Typography className={classes.text} color="textPrimary">
+              <Typography className={classes.text} color='textPrimary'>
                 โฟลเดอร์
               </Typography>
             </Breadcrumbs>
@@ -83,98 +86,61 @@ const ManageUserFirst = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableCellName}>
-                  <Typography color="textPrimary" className={classes.text}>
+                  <Typography color='textPrimary' className={classes.text}>
                     ชื่อ
                   </Typography>
                 </TableCell>
-                <TableCell style={{ width: "20%" }} align="center"></TableCell>
-                <TableCell align="center">
-                  <Typography color="textPrimary" className={classes.text}>
+                <TableCell style={{ width: '20%' }} align='center'></TableCell>
+                <TableCell align='center'>
+                  <Typography color='textPrimary' className={classes.text}>
                     สิทธิ์การใช้งาน
                   </Typography>
                 </TableCell>
-                <TableCell align="center"></TableCell>
+                <TableCell align='center'></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {!loading && folders !== null
-                            ? folders.map((row) => ( */}
-              <TableRow>
-                <TableCell>
-                  <Link
-                    //component={Link}
-                    to={{
-                      pathname: "/manageusersecond",
-                      //         "/ViewFiles/" + row.folder_id + row.folder_name
-                    }}
-                  >
-                    <Grid container className={classes.iconAlign}>
-                      <Grid item></Grid>
-                      <Grid item xs={1}>
-                        <PersonIcon className={classes.iconPersonTable} />
-                      </Grid>
-                      <Grid item xs={10}>
-                        <Typography
-                          color="textPrimary"
-                          className={classes.text}
+              {userbyfolderid !== null
+                ? userbyfolderid.map((userbyid) => (
+                    <TableRow key={userbyid.folder_id}>
+                      <TableCell>
+                        <Link
+                          //component={Link}
+                          to={{
+                            pathname: '/manageusersecond',
+                            //         "/ViewFiles/" + row.folder_id + row.folder_name
+                          }}
                         >
-                          นาง A
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Link>
-                </TableCell>
-                <TableCell align="center"></TableCell>
-                <TableCell align="center">
-                  <Switch className={classes.tableMargin}></Switch>
-                </TableCell>
-                <TableCell align="center">
-                  <Link to="/manageusersecond">
-                    <IconButton className={classes.tableMargin}>
-                      <NavigateNextIcon></NavigateNextIcon>
-                    </IconButton>
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Link
-                    //component={Link}
-                    to={{
-                      pathname: "/manageusersecond",
-                      //         "/ViewFiles/" + row.folder_id + row.folder_name
-                    }}
-                  >
-                    <Grid container className={classes.iconAlign}>
-                      <Grid item></Grid>
-                      <Grid item xs={1}>
-                        <PersonIcon className={classes.iconPersonTable} />
-                      </Grid>
-                      <Grid item xs={10}>
-                        <Typography
-                          color="textPrimary"
-                          className={classes.text}
-                        >
-                          นาย บรรลือ บรรลัยกัลป์
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Link>
-                </TableCell>
-                <TableCell align="center"></TableCell>
-                <TableCell align="center">
-                  <Switch className={classes.tableMargin}></Switch>
-                </TableCell>
-                <TableCell align="center">
-                  <Link to="/manageusersecond">
-                    <IconButton className={classes.tableMargin}>
-                      <NavigateNextIcon></NavigateNextIcon>
-                    </IconButton>
-                  </Link>
-                </TableCell>
-              </TableRow>
-              {/* ))
-                            : console.log("Nodata")} */}
+                          <Grid container className={classes.iconAlign}>
+                            <Grid item></Grid>
+                            <Grid item xs={1}>
+                              <PersonIcon className={classes.iconPersonTable} />
+                            </Grid>
+                            <Grid item xs={10}>
+                              <Typography
+                                color='textPrimary'
+                                className={classes.text}
+                              >
+                                {userbyid.user_name}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Link>
+                      </TableCell>
+                      <TableCell align='center'></TableCell>
+                      <TableCell align='center'>
+                        <Switch className={classes.tableMargin}></Switch>
+                      </TableCell>
+                      <TableCell align='center'>
+                        <Link to='/manageusersecond'>
+                          <IconButton className={classes.tableMargin}>
+                            <NavigateNextIcon></NavigateNextIcon>
+                          </IconButton>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : console.log('Nodata')}
             </TableBody>
           </Table>
         </Paper>

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { AUTH_USER, UNAUTH_USER, AUTH_ERROR , GET_FOLDER_USERS } from '../actions/types';
+import {
+  AUTH_USER,
+  UNAUTH_USER,
+  AUTH_ERROR,
+  SET_LOADING,
+  GET_USER_BY_FOLDER_ID,
+} from '../actions/types';
 const url = 'http://192.168.5.230:8080/upload';
 export const signOut = () => {
   return (dispatch) => {
@@ -41,17 +47,26 @@ export const signIn = (user) => async (dispatch) => {
     console.log(err);
   }
 };
-export const getUserInFolder = (folder_id) => async (dispatch) =>{
-    try{
-      await axios.get(`${url}/accessfile/folder_id=${folder_id}`).then(
-        res=>{
-          dispatch({
-            type: GET_FOLDER_USERS,
-            payload: res.data,
-          });
-        }
-      )
-    }catch(err){
-      console.log('ไม่สามารถเข้าดึงข้อมูลได้ !!');
-    }
-}
+
+export const getUserByFolderId = (folder_id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_LOADING,
+    });
+
+    const res = await fetch(`${url}/accessuser/folder_id=${folder_id}`);
+    const data = await res.json();
+    dispatch({
+      type: GET_USER_BY_FOLDER_ID,
+      payload: data,
+    });
+  } catch (err) {
+    console.log('Error');
+  }
+};
+
+export const setLoading = () => {
+  return {
+    type: SET_LOADING,
+  };
+};

@@ -1,7 +1,8 @@
-import React, { useEffect, Fragment ,useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { useEffect, Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import Circular from '../layout/Circular';
 import {
   Table,
   TableBody,
@@ -12,13 +13,17 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderIcon from "@material-ui/icons/Folder";
-import { getFolders,deleteFolder,getAllFolder } from "../../actions/folderActions";
-import AddFolder from "./AddFolder";
-import useStyles from "./StyleFiles";
-import MenuFolder from "./MenuFolder";
+} from '@material-ui/core/';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import FolderIcon from '@material-ui/icons/Folder';
+import {
+  getFolders,
+  deleteFolder,
+  getAllFolder,
+} from '../../actions/folderActions';
+import AddFolder from './AddFolder';
+import useStyles from './StyleFiles';
+import MenuFolder from './MenuFolder';
 
 const ManageUser = () => {
   const classes = useStyles();
@@ -29,11 +34,11 @@ const ManageUser = () => {
   }, []);
 
   if (loading) {
-    console.log("loading >>> " + loading);
+    return <Circular />;
   }
-  const refresh = () =>{
+  const refresh = () => {
     dispatch(getAllFolder());
-  }
+  };
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -44,9 +49,11 @@ const ManageUser = () => {
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label="breadcrumb"
+              aria-label='breadcrumb'
             >
-              <Typography className={classes.text}>โฟลเดอร์ทั้งหมด (จัดการผู้ใช้งาน)</Typography>
+              <Typography className={classes.text}>
+                โฟลเดอร์ทั้งหมด (จัดการผู้ใช้งาน)
+              </Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -57,7 +64,7 @@ const ManageUser = () => {
                 <TableCell className={classes.tableCellName}>
                   <Typography className={classes.text}>ชื่อ</Typography>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align='center'>
                   <Typography className={classes.text}>วันที่แก้ไข</Typography>
                 </TableCell>
               </TableRow>
@@ -70,9 +77,7 @@ const ManageUser = () => {
                         <Link
                           //component={Link}
                           to={{
-                            pathname:
-                              "/manageuserfirst/" +
-                              row.folder_id,
+                            pathname: '/manageuserfirst/' + row.folder_id,
                           }}
                         >
                           <Grid container className={classes.iconAlign}>
@@ -89,16 +94,16 @@ const ManageUser = () => {
                         </Link>
                         {/* </Link> */}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align='center'>
                         <Typography className={classes.text}>
                           {moment(row.folder_created).format(
-                            "DD-MM-YYYY HH:MM"
+                            'DD-MM-YYYY HH:MM'
                           )}
                         </Typography>
                       </TableCell>
                     </TableRow>
                   ))
-                : console.log("Nodata")}
+                : console.log('Nodata')}
             </TableBody>
           </Table>
         </Paper>

@@ -16,4 +16,4 @@ export const SET_LOADING = 'SET_LOADING';
 export const AUTH_USER = 'AUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const UNAUTH_USER = 'UNAUTH_USER';
-export const GET_FOLDER_USERS = 'GET_FOLDER_USERS';
+export const GET_USER_BY_FOLDER_ID = 'GET_USER_BY_FOLDER_ID';

@@ -53,7 +53,7 @@ const App = () => {
             <Route
               exact
               path='/manageuserfirst/:folder_id'
-              children={<ManageUserFirst/>}
+              children={<ManageUserFirst />}
             />
             <Route
               exact
@@ -73,7 +73,7 @@ const App = () => {
             <Route
               exact
               path='/viewfilesadmin/:folder_id'
-              children={<ViewFilesAdmin/>}
+              children={<ViewFilesAdmin />}
             />
           </Switch>
         </Router>

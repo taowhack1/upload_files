@@ -37,33 +37,32 @@ const ViewFilesAdmin = (props) => {
 
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
-  const [data, setData] = React.useState([
-    {
-      file_name: null,
-      file_id: null,
-    },
-  ]);
+  const [checked, setChecked] = React.useState(false);
+
 
   const handleSelectClick = (event, id, name) => {
-    const selectedIndex = index.indexOf(name);
+    const selectedIndex = index.indexOf(id);
+    console.log(selectedIndex)
     let newSelected = [];
     let selectIndex = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, {
         file_name: name,
         file_id: id,
+        check_status: event.target.checked
       });
-      selectIndex = selectIndex.concat(index, name);
+      selectIndex = selectIndex.concat(index, id);
     } else if (selectedIndex === 0) {
       selectIndex = selectIndex.concat(index.slice(1));
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       selectIndex = selectIndex.concat(index.slice(0, -1));
       newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
+    }
+    else if (selectedIndex > 0) {
       selectIndex = selectIndex.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        index.slice(0, selectedIndex),
+        index.slice(selectedIndex + 1)
       );
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
@@ -73,14 +72,15 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  console.log(selected)
-
   if (loading) {
     console.log("loading >>> " + loading);
   }
 
+
+
   const updateList = () => {
     dispatch(getFiles(folder_id));
+    setSelected([])
     alert('delete')
   };
 
@@ -101,7 +101,7 @@ const ViewFilesAdmin = (props) => {
                   โฟลเดอร์ทั้งหมด
                 </Typography>
               </Link>
-              <Typography className={classes.text}>โฟลเดอร์</Typography>
+              <Typography className={classes.text}>{folder_name}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -131,45 +131,47 @@ const ViewFilesAdmin = (props) => {
             </TableHead>
             <TableBody>
               {!loading && files !== null
-                ? files.map((row) => (
-                  <TableRow key={row.file_id} hover>
-                    <TableCell align="center">
-                      <Checkbox
-                        className={classes.tableMargin}
-                        onClick={(event) =>
-                          handleSelectClick(event, row.file_id, row.file_name)
-                        }
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid item xs={1}>
-                          <InsertDriveFileIcon
-                            className={classes.iconFilesTable}
-                          />
+                ? files.map((row, index) => {
+                  return (
+                    <TableRow key={row.file_id} hover>
+                      <TableCell align="center">
+                        <Checkbox
+                          className={classes.tableMargin}
+                          onClick={(event) =>
+                            handleSelectClick(event, row.file_id, row.file_name)
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item xs={1}>
+                            <InsertDriveFileIcon
+                              className={classes.iconFilesTable}
+                            />
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {row.file_name}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            color="textPrimary"
-                            className={classes.text}
-                          >
-                            {row.file_name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
 
-                      {/* </Link> */}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Typography className={classes.text}>
-                        {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      <MenuFolder />
-                    </TableCell>
-                  </TableRow>
-                ))
+                        {/* </Link> */}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuFolder />
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
                 : console.log("Nodata")}
             </TableBody>
           </Table>

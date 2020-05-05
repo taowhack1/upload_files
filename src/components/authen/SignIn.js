@@ -57,64 +57,72 @@ const SignIn = () => {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component='h1' variant='h4'>
-          ระบบจัดการเอกสารออนไลน์
+    <div className={classes.background}>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography className={classes.text}>
+            ระบบจัดการเอกสารออนไลน์
         </Typography>
-        <img src={ReactLogo} alt='React Logo' />
-        <form className={classes.form} onSubmit={onSubmit} noValidate>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='user_name'
-            label='Username'
-            name='user_name'
-            autoComplete='email'
-            autoFocus
-            onChange={onChange}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='user_password'
-            label='Password'
-            type='password'
-            id='user_password'
-            autoComplete='current-password'
-            onChange={onChange}
-          />
-          <Button
-            type='submit'
-            size='large'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            LOGIN
+          <img src={ReactLogo} alt='React Logo' />
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              id='user_name'
+              placeholder="Username"
+              name='user_name'
+              autoComplete='email'
+              autoFocus
+              onChange={onChange}
+              InputProps={{
+                className: classes.input,
+              }}
+            />
+            <TextField
+              variant='outlined'
+              margin='normal'
+              required
+              fullWidth
+              name='user_password'
+              placeholder="Password"
+              type='password'
+              id='user_password'
+              autoComplete='current-password'
+              onChange={onChange}
+              InputProps={{
+                className: classes.input,
+              }}
+            />
+
+            <Button
+              type='submit'
+              size='large'
+              fullWidth
+              variant='contained'
+              className={classes.submit}
+            >
+              LOGIN
           </Button>
-        </form>
-        <Snackbar
-          open={opensnackbar}
-          autoHideDuration={2000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert onClose={handleCloseSnackbar} severity='error'>
-            {alerttitle}
-          </Alert>
-        </Snackbar>
-        {/* <Alert severity='error'>This is an error message!</Alert>
+          </form>
+          <Snackbar
+            open={opensnackbar}
+            autoHideDuration={2000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert onClose={handleCloseSnackbar} severity='error'>
+              {alerttitle}
+            </Alert>
+          </Snackbar>
+          {/* <Alert severity='error'>This is an error message!</Alert>
         <Alert severity='warning'>This is a warning message!</Alert>
         <Alert severity='info'>This is an information message!</Alert>
         <Alert severity='success'>This is a success message!</Alert> */}
-      </div>
-    </Container>
+        </div>
+      </Container>
+    </div>
   );
 };
 

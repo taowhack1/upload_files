@@ -28,17 +28,14 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { getFolders } from "../../actions/folderActions";
+import { getUserInFolder } from "../../actions/authActions";
 import PersonIcon from "@material-ui/icons/Person";
 import AddUser from "./AddUser";
 import useStyles from "./StyleFiles";
 
 const ManageUserFirst = () => {
   const classes = useStyles();
-  const { folders, loading } = useSelector((state) => state.folder);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const { authdata } = useSelector((state) => state.auth);
+  const { folderUser } = useSelector((state) => state.auth);
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -50,16 +47,12 @@ const ManageUserFirst = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(authdata.user_id));
+    dispatch(getUserInFolder(1));
   }, []);
 
-  const handleRowClick = (folder_id) => {
-    console.log(folder_id);
-  };
-
-  if (loading) {
-    console.log("loading >>> " + loading);
-  }
+  // if (loading) {
+  //   console.log("loading >>> " + loading);
+  // }
 
   return (
     <Fragment>

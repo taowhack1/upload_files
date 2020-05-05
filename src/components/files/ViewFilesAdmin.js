@@ -28,18 +28,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = files.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
   const { folder_id, folder_name } = useParams();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getFiles(folder_id));
   }, []);

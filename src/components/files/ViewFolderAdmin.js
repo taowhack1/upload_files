@@ -81,9 +81,7 @@ const ViewFolderAdmin = () => {
                           to={{
                             pathname:
                               "/viewfilesadmin/" +
-                              row.folder_id +
-                              row.folder_name,
-                            //         "/ViewFiles/" + row.folder_id + row.folder_name,
+                              row.folder_id,
                           }}
                         >
                           <Grid container className={classes.iconAlign}>

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./upload_style.css";
 import "./style.css";
 import { Modal, Typography } from "@material-ui/core";
@@ -14,7 +14,7 @@ import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import {createFolder} from '../../actions/folderActions'
+import { createFolder } from "../../actions/folderActions";
 
 export default function AddFolder(props) {
   const classes = useStyles();
@@ -29,13 +29,18 @@ export default function AddFolder(props) {
     setOpen(false);
   };
   const handleChangeFolderName = (e) => {
-    setFolderName(e.target.value.trim());
+    let value = e.target.value.replace(/[^A-Za-z\d]$/gi, "");
+    ///[^A-Za-z]+*[0-9]$/
+    ///^[A-Za-z][A-Za-z0-9]*$//^[a-z][a-z0-9]*$/
+    value = value.slice(0, 15);
+    setFolderName(value);
   };
   const handleCreateFolder = async () => {
     if (folder_name) {
       await dispatch(createFolder(folder_name));
-      alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
-      setFolderName('');
+      // alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
+      //props.refresh();
+      setFolderName("");
       handleAddFolderClose();
     } else {
       alert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง");
@@ -53,6 +58,7 @@ export default function AddFolder(props) {
           <AddIcon className={classes.icon} />
         </Fab>
       </Tooltip>
+      {props.children}
       <Modal
         className={classes.modal}
         disableAutoFocus={true}
@@ -101,22 +107,25 @@ export default function AddFolder(props) {
             </div>
 
             <div className={classes.modalBtn}>
-              <Button variant="contained" className={classes.modalbtnOk}>
+              <Button
+                variant="contained"
+                className={classes.modalbtnOk}
+                onClick={handleCreateFolder}
+              >
                 <Typography
                   className={classes.text}
                   color="textPrimary"
                   elevation={0}
-                  onClick={handleCreateFolder}
                 >
                   OK
                 </Typography>
               </Button>
-              <Button color="primary" className={classes.modalbtnCancel}>
-                <Typography
-                  className={classes.text}
-                  color="textPrimary"
-                  onClick={handleAddFolderClose}
-                >
+              <Button
+                color="primary"
+                className={classes.modalbtnCancel}
+                onClick={handleAddFolderClose}
+              >
+                <Typography className={classes.text} color="textPrimary">
                   Cancel
                 </Typography>
               </Button>

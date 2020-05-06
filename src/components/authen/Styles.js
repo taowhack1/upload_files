@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   textPass: {
     fontSize: 25,
   },
+  textColor: {
+    color: '#FFFFFF',
+  },
   input: {
     backgroundColor: 'white'
   }

@@ -13,10 +13,10 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import RemoveIcon from '@material-ui/icons/Remove';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useStyles from './StyleFiles';
-
-
+import {deleteFolder} from '../../actions/folderActions'
+import {useDispatch} from "react-redux";
 const MenuFolder = (props) => {
-    //test Github
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleMoreVertIconClick = (event) => {
@@ -27,8 +27,13 @@ const MenuFolder = (props) => {
         setAnchorEl(null);
     };
 
-    const [folder, setFolder] = React.useState(props.listRowFolder);
-
+    const [folderId, setFolderId] = React.useState(props.listRowFolder);
+    const handleDelete = async () =>{
+        await dispatch(deleteFolder(folderId));
+        alert("ลบโฟลเดอร์เรียบร้อยแล้ว");
+        props.refresh()
+        
+    }
     return (
         <div>
             <IconButton className={classes.tableMargin} onClick={handleMoreVertIconClick}>
@@ -43,7 +48,7 @@ const MenuFolder = (props) => {
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
                 onClose={handleMoreVertIconClose}
             >
-                <MenuItem onClick={()=>props.deleteFolder(folder)}>
+                <MenuItem onClick={handleDelete}>
                     <ListItemIcon >
                         <RemoveIcon />
                     </ListItemIcon>

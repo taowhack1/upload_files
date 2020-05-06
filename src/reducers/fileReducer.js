@@ -1,8 +1,7 @@
 import {
   GET_FILES,
-  ADD_FOLDERS,
+  ADD_FILE,
   SET_LOADING,
-  POSTS_ERROR,
   DELETE_FILE,
 } from '../actions/types';
 
@@ -21,10 +20,10 @@ export default (state = initialState, action) => {
         files: action.payload,
         loading: false,
       };
-    case ADD_FOLDERS:
+    case ADD_FILE:
       return {
         ...state,
-        folders: [action.payload, ...state.folders],
+        files: [action.payload, ...state.files],
         loading: false,
       };
     case DELETE_FILE:
@@ -36,12 +35,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-      };
-    case POSTS_ERROR:
-      console.error(action.payload);
-      return {
-        ...state,
-        error: action.payload,
       };
     default:
       return state;

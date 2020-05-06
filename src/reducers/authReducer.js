@@ -4,6 +4,7 @@ import {
   AUTH_ERROR,
   SET_LOADING,
   GET_USER_BY_FOLDER_ID,
+  UPDATE_ACCESS_FOLDER,
 } from '../actions/types';
 const initialState = {
   authenticated: null,
@@ -11,6 +12,7 @@ const initialState = {
   loading: null,
   userbyfolderid: null,
   error: null,
+  updatestatus: null,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -29,6 +31,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userbyfolderid: action.payload,
+        loading: false,
+      };
+    case UPDATE_ACCESS_FOLDER:
+      return {
+        ...state,
+        updatestatus: action.payload,
         loading: false,
       };
     default:

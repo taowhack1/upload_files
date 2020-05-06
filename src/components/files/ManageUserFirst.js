@@ -29,7 +29,11 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { getUserByFolderId } from '../../actions/authActions';
+import {
+  getUserByFolderId,
+  updateAccessFolder,
+  setLoading,
+} from '../../actions/authActions';
 import PersonIcon from '@material-ui/icons/Person';
 import AddUser from './AddUser';
 import useStyles from './StyleFiles';
@@ -39,22 +43,32 @@ const ManageUserFirst = () => {
   const { folder_id } = useParams();
   const { loading, userbyfolderid } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
+  const [state, setState] = useState([]);
+  const [current, setCurrent] = useState({
+    access_id: '',
+    access_upload: '',
+    access_download: '',
+    access_active: '',
   });
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  // const handleChangeSwitch = (event) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  // };
 
   useEffect(() => {
     dispatch(getUserByFolderId(folder_id));
-    console.log(userbyfolderid);
+    setState(userbyfolderid);
   }, []);
 
+  const handleChangeSwitch = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    dispatch(updateAccessFolder(current));
+    dispatch(setLoading());
+  };
+
   if (loading) {
-    return <Circular />;
+    //return <Circular />;
+    console.log('555');
   }
 
   return (
@@ -101,8 +115,8 @@ const ManageUserFirst = () => {
             </TableHead>
             <TableBody>
               {userbyfolderid !== null
-                ? userbyfolderid.map((userbyid) => (
-                    <TableRow key={userbyid.folder_id}>
+                ? userbyfolderid.map((row, index) => (
+                    <TableRow key={index}>
                       <TableCell>
                         <Link
                           //component={Link}
@@ -121,7 +135,7 @@ const ManageUserFirst = () => {
                                 color='textPrimary'
                                 className={classes.text}
                               >
-                                {userbyid.user_name}
+                                {row.user_firstname}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -129,7 +143,11 @@ const ManageUserFirst = () => {
                       </TableCell>
                       <TableCell align='center'></TableCell>
                       <TableCell align='center'>
-                        <Switch className={classes.tableMargin}></Switch>
+                        <Switch
+                          onChange={handleChangeSwitch}
+                          checked={row.access_active}
+                          className={classes.tableMargin}
+                        ></Switch>
                       </TableCell>
                       <TableCell align='center'>
                         <Link to='/manageusersecond'>

@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   SET_LOADING,
   GET_USER_BY_FOLDER_ID,
+  UPDATE_ACCESS_FOLDER,
 } from '../actions/types';
 const url = 'http://192.168.5.230:8080/upload';
 export const signOut = () => {
@@ -65,8 +66,35 @@ export const getUserByFolderId = (folder_id) => async (dispatch) => {
   }
 };
 
-export const setLoading = () => {
-  return {
-    type: SET_LOADING,
+export const updateAccessFolder = (user) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
   };
+
+  try {
+    const response = await axios.post(
+      `${url}/admin/accessfolder/update`,
+      user,
+      config
+    );
+    console.log(response.data);
+    dispatch({
+      type: UPDATE_ACCESS_FOLDER,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err,
+    });
+    alert(err);
+    console.log(err);
+  }
+};
+export const setLoading = () => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+  });
 };

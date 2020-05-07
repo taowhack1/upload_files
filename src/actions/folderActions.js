@@ -6,7 +6,9 @@ import {
   UPDATE_FOLDER,
 } from "./types";
 import axios from "axios";
+
 const url = "http://192.168.5.230:8080/upload";
+
 export const getAllFolder = () => async (dispatch) => {
   try {
     await axios.get(`${url}/folderall`).then((res) => {
@@ -63,13 +65,13 @@ export const deleteFolder = (id) => async (dispatch) => {
     console.log("deleteFile Error >>>");
   }
 };
-
 export const createFolder = (folder_name) => async (dispatch) => {
-  dispatch({
-    type: SET_LOADING,
-  });
+  // dispatch({
+  //   type: SET_LOADING,
+  // });
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
+    //alert("dulicate folder name");
     alert("dulicate folder name");
   } else {
     alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
@@ -82,21 +84,20 @@ export const createFolder = (folder_name) => async (dispatch) => {
 
 export const updateFolder = (folder) => async (dispatch) => {
   const { folder_name, folder_id, folder_name_old } = folder;
-  console.log(folder);
   const res = await axios.post(`${url}/folder/update`, {
     folder_name,
     folder_id,
     folder_name_old,
   });
-  if (res.data.success == false) {
-    alert(res.data.remark);
-  } else {
+  if (res.data.success == true) {
     alert(`เปลี่ยนชื่อโฟลเดอร์เรียบร้อยแล้ว`);
+  } else {
+    alert(res.data.remark);
   }
   dispatch({
     type: UPDATE_FOLDER,
-    payload: res.data,
   });
+  dispatch(getAllFolder());
 };
 // Set loading to true
 export const setLoading = (dispatch) => {

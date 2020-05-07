@@ -26,7 +26,7 @@ import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const ViewFolderAdmin = () => {
+const ViewFolderAdmin = (props) => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
   const { authdata } = useSelector((state) => state.auth);
@@ -34,28 +34,22 @@ const ViewFolderAdmin = () => {
   const [edit, setEdit] = useState(false);
   const [folder_name, setFolder_name] = useState();
   useEffect(() => {
+    console.log("useEffect Running");
     dispatch(getAllFolder());
   }, []);
-
-  if (loading) {
-    console.log("loading >>> " + loading);
-  }
   const refresh = () => {
     dispatch(getAllFolder());
-    //setEdit(!edit)
     console.log("refresh");
   };
   const handleDelete = async (folderId) => {
-    // handleMoreVertIconClose();
     console.log("delete : " + folderId);
     await dispatch(deleteFolder(folderId));
-    await dispatch(getAllFolder());
+    dispatch(getAllFolder());
   };
-  const handleRename = async (folder) => {
-    await dispatch(updateFolder(folder));
-    // handleAddFolderClose();
-    await dispatch(getAllFolder());
-  };
+  // const handleRename = async (folder) => {
+  //   await dispatch(updateFolder(folder));
+  //   dispatch(getAllFolder());
+  // };
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -122,9 +116,10 @@ const ViewFolderAdmin = () => {
                       </TableCell>
                       <TableCell align="center">
                         <MenuFolder
-                          rename={handleRename}
+                          //rename={handleRename}
                           delete={handleDelete}
                           refresh={refresh}
+                          folder_name_old={folder.folder_name}
                           folder_name={folder.folder_name}
                           folder_id={folder.folder_id}
                         />
@@ -140,7 +135,7 @@ const ViewFolderAdmin = () => {
             </div>
           )}
         </Paper>
-        <AddFolder refresh={refresh} />
+        <AddFolder />
       </Grid>
     </Fragment>
   );

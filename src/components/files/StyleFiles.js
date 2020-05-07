@@ -170,6 +170,10 @@ const useStyles = makeStyles((theme) => ({
   modalbtnDel: {
     padding: theme.spacing(1, 4.5, 1),
   },
+  modalbtnSave: {
+    padding: theme.spacing(1, 6, 1),
+  },
+
 
   upload: {
     display: "flex",

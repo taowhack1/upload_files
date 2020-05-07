@@ -28,7 +28,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import { getAllFolder, getFolders } from '../../actions/folderActions';
 import PersonIcon from '@material-ui/icons/Person';
-import AddUser from './AddUser';
 import useStyles from './StyleFiles';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Circular from '../layout/Circular';
@@ -118,46 +117,46 @@ const ManageUserSecond = () => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((folder, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item></Grid>
-                          <Grid item xs={1}>
-                            {/* <PersonIcon className={classes.iconPersonTable} /> */}
-                            <FolderIcon className={classes.iconFolderTable} />
-                          </Grid>
-                          <Grid item xs={10}>
-                            <Typography
-                              color='textPrimary'
-                              className={classes.text}
-                            >
-                              {folder.folder_name}
-                            </Typography>
-                          </Grid>
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid item></Grid>
+                        <Grid item xs={1}>
+                          {/* <PersonIcon className={classes.iconPersonTable} /> */}
+                          <FolderIcon className={classes.iconFolderTable} />
                         </Grid>
-                      </TableCell>
-                      {/* <TableCell align='center'> */}
-                      {/* <MenuUserCheckUpload folderData={folder} /> */}
-                      {/* <Checkbox
+                        <Grid item xs={10}>
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
+                            {folder.folder_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    {/* <TableCell align='center'> */}
+                    {/* <MenuUserCheckUpload folderData={folder} /> */}
+                    {/* <Checkbox
                           name='cbUpload'
                           className={classes.tableMargin}
                           //checked={checked}
                           onChange={handleCheckBoxChange}
                           inputProps={{ 'aria-label': 'Allow Upload' }}
                         /> */}
-                      {/* </TableCell> */}
-                      {/* <TableCell align='center'> */}
-                      <MenuUserCheckUpload folderData={folder} />
-                      {/* <Checkbox
+                    {/* </TableCell> */}
+                    {/* <TableCell align='center'> */}
+                    <MenuUserCheckUpload folderData={folder} />
+                    {/* <Checkbox
                           name='cbDownload'
                           className={classes.tableMargin}
                           //checked={checked}
                           onChange={handleCheckBoxChange}
                           inputProps={{ 'aria-label': 'Allow Download' }}
                         /> */}
-                      {/* </TableCell> */}
-                    </TableRow>
-                  ))
+                    {/* </TableCell> */}
+                  </TableRow>
+                ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>

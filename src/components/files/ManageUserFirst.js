@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Circular from '../layout/Circular';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,18 +30,18 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import {
-  getUserByFolderId,
   updateAccessFolder,
   setLoading,
+  getUserAll,
 } from '../../actions/authActions';
 import PersonIcon from '@material-ui/icons/Person';
 import AddUser from './AddUser';
 import useStyles from './StyleFiles';
+import MenuUser from './MenuUser';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
-  const { folder_id } = useParams();
-  const { loading, userbyfolderid } = useSelector((state) => state.auth);
+  const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [state, setState] = useState([]);
   const [current, setCurrent] = useState({
@@ -55,9 +55,13 @@ const ManageUserFirst = () => {
   //   setState({ ...state, [event.target.name]: event.target.checked });
   // };
 
+  // useEffect(() => {
+  //   dispatch(getUserByFolderId(folder_id));
+  //   setState(userbyfolderid);
+  // }, []);
+
   useEffect(() => {
-    dispatch(getUserByFolderId(folder_id));
-    setState(userbyfolderid);
+    dispatch(getUserAll());
   }, []);
 
   const handleChangeSwitch = (event) => {
@@ -67,8 +71,7 @@ const ManageUserFirst = () => {
   };
 
   if (loading) {
-    //return <Circular />;
-    console.log('555');
+    return <Circular />;
   }
 
   return (
@@ -83,14 +86,14 @@ const ManageUserFirst = () => {
               }
               aria-label='breadcrumb'
             >
-              <Link to={{ pathname: '/manageuser' }}>
+              <Link to={{ pathname: '/manageuserfirst' }}>
                 <Typography className={classes.opacity} color='textPrimary'>
                   จัดการผู้ใช้งาน
                 </Typography>
               </Link>
-              <Typography className={classes.text} color='textPrimary'>
+              {/* <Typography className={classes.text} color='textPrimary'>
                 โฟลเดอร์
-              </Typography>
+              </Typography> */}
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -114,14 +117,14 @@ const ManageUserFirst = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userbyfolderid !== null
-                ? userbyfolderid.map((row, index) => (
+              {users !== null
+                ? users.map((user, index) => (
                     <TableRow key={index}>
                       <TableCell>
                         <Link
                           //component={Link}
                           to={{
-                            pathname: '/manageusersecond',
+                            pathname: '/manageusersecond/' + user.user_id,
                             //         "/ViewFiles/" + row.folder_id + row.folder_name
                           }}
                         >
@@ -135,7 +138,7 @@ const ManageUserFirst = () => {
                                 color='textPrimary'
                                 className={classes.text}
                               >
-                                {row.user_firstname}
+                                {user.user_firstname}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -143,11 +146,12 @@ const ManageUserFirst = () => {
                       </TableCell>
                       <TableCell align='center'></TableCell>
                       <TableCell align='center'>
-                        <Switch
+                        <MenuUser userData={user} />
+                        {/* <Switch
                           onChange={handleChangeSwitch}
                           checked={row.access_active}
                           className={classes.tableMargin}
-                        ></Switch>
+                        ></Switch> */}
                       </TableCell>
                       <TableCell align='center'>
                         <Link to='/manageusersecond'>

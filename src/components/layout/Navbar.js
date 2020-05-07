@@ -17,7 +17,6 @@ import { MenuItem, Grid } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuNavbar from '../menu/MenuNavbar';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -89,7 +88,7 @@ const Navbar = () => {
           <Typography
             className={classes.title}
             component={Link}
-            to='/manageuser'
+            to='/manageuserfirst'
           >
             จัดการผู้ใช้งาน
           </Typography>

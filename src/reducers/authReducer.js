@@ -5,14 +5,18 @@ import {
   SET_LOADING,
   GET_USER_BY_FOLDER_ID,
   UPDATE_ACCESS_FOLDER,
+  GET_USER_ALL,
+  UPDATE_ACTIVE_USER,
 } from '../actions/types';
 const initialState = {
   authenticated: null,
   authdata: null,
+  users: null,
   loading: null,
   userbyfolderid: null,
   error: null,
   updatestatus: null,
+  updatestatususer: null,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -27,6 +31,12 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case GET_USER_ALL:
+      return {
+        ...state,
+        users: action.payload,
+        loading: false,
+      };
     case GET_USER_BY_FOLDER_ID:
       return {
         ...state,
@@ -37,6 +47,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updatestatus: action.payload,
+        loading: false,
+      };
+    case UPDATE_ACTIVE_USER:
+      return {
+        ...state,
+        updatestatususer: action.payload,
         loading: false,
       };
     default:

@@ -49,15 +49,15 @@ const App = () => {
             <Route exact path='/adduser' component={AddUser} />
             <Route exact path='/del' component={Delete} />
             <Route exact path='/viewfolderadmin' component={ViewFolderAdmin} />
-            <Route exact path='/manageuser' component={ManageUser} />
-            <Route
+            <Route exact path='/manageuserfirst' component={ManageUserFirst} />
+            {/* <Route
               exact
               path='/manageuserfirst/:folder_id'
               children={<ManageUserFirst />}
-            />
+            /> */}
             <Route
               exact
-              path='/manageusersecond'
+              path='/manageusersecond/:user_id'
               component={ManageUserSecond}
             />
             <Route exact path='/dowload' component={Dowload} />

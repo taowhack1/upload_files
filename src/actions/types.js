@@ -1,5 +1,6 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
+export const GET_USER_ALL = 'GET_USER_ALL';
 export const GET_FOLDERS = 'GET_FOLDERS';
 export const GET_FILES = 'GET_FILES';
 export const ADD_FILE = 'ADD_FILE';
@@ -19,3 +20,4 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const UNAUTH_USER = 'UNAUTH_USER';
 export const GET_USER_BY_FOLDER_ID = 'GET_USER_BY_FOLDER_ID';
 export const UPDATE_ACCESS_FOLDER = 'UPDATE_ACCESS_FOLDER';
+export const UPDATE_ACTIVE_USER = 'UPDATE_ACTIVE_USER';

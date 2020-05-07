@@ -24,19 +24,22 @@ import Button from "@material-ui/core/Button";
 import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-
+import { SnackbarProvider, useSnackbar } from "notistack";
 const MenuFolder = (props) => {
-  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [folderId, setFolderId] = useState(props.folder_id);
+  //const [folderId, setFolderId] = useState(props.folder_id);
   const [open, setOpen] = useState(false);
   const [folder, setFolder] = useState({
     folder_id: props.folder_id,
-    folder_name_old: props.folder_name,
+    folder_name_old: props.folder_name_old,
     folder_name: props.folder_name,
   });
+  console.log(folder);
   const handleAddFolderOpen = () => {
+    handleMoreVertIconClose();
     setOpen(true);
   };
 
@@ -59,17 +62,20 @@ const MenuFolder = (props) => {
     });
     console.log(folder.folder_name);
   };
-  //   const handleDelete = async () => {
-  //     handleMoreVertIconClose();
-  //     console.log("delete : " + folderId);
-  //     await dispatch(deleteFolder(folderId));
-  //     props.refresh();
-  //   };
-  //   const handleRename = async () => {
-  //     await dispatch(updateFolder(folder));
-  //     handleAddFolderClose();
-  //     props.refresh();
-  //   };
+
+  const handleChangeName = async () => {
+    if (folder.folder_name) {
+      await dispatch(updateFolder(folder));
+      // alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
+    } else {
+      enqueueSnackbar("กรุณาระบุชื่อโฟลเดอร์");
+    }
+    handleAddFolderClose();
+    setFolder({
+      ...folder,
+      folder_name_old: folder.folder_name,
+    });
+  };
   return (
     <div>
       <IconButton
@@ -88,7 +94,12 @@ const MenuFolder = (props) => {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={handleMoreVertIconClose}
       >
-        <MenuItem onClick={() => props.delete(folderId)}>
+        <MenuItem
+          onClick={() => {
+            handleMoreVertIconClose();
+            props.delete(folder.folder_id);
+          }}
+        >
           <ListItemIcon>
             <RemoveIcon />
           </ListItemIcon>
@@ -155,7 +166,10 @@ const MenuFolder = (props) => {
                 <Button
                   variant="contained"
                   className={classes.modalbtnOk}
-                  onClick={() => props.rename(folder)}
+                  onClick={() => {
+                    handleAddFolderClose();
+                    handleChangeName();
+                  }}
                 >
                   <Typography
                     className={classes.text}

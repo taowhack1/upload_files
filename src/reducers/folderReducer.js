@@ -5,7 +5,7 @@ import {
   POSTS_ERROR,
   DELETE_FOLDER,
   UPDATE_FOLDER,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   folders: null,
@@ -31,7 +31,6 @@ export default (state = initialState, action) => {
     case UPDATE_FOLDER:
       return {
         ...state,
-        folders: [action.payload, ...state.folders],
         loading: false,
       };
     case DELETE_FOLDER:

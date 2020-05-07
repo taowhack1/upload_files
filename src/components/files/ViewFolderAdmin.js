@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -12,7 +12,6 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-  TextField,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import FolderIcon from "@material-ui/icons/Folder";
@@ -20,36 +19,55 @@ import {
   deleteFolder,
   updateFolder,
   getAllFolder,
+  createFolder,
 } from "../../actions/folderActions";
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useSnackbar } from "notistack";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
-  const { authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [edit, setEdit] = useState(false);
-  const [folder_name, setFolder_name] = useState();
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     console.log("useEffect Running");
     dispatch(getAllFolder());
   }, []);
+
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
+
   const refresh = () => {
     dispatch(getAllFolder());
     console.log("refresh");
   };
-  const handleDelete = async (folderId) => {
-    console.log("delete : " + folderId);
-    await dispatch(deleteFolder(folderId));
-    dispatch(getAllFolder());
+
+  const handleDeleteFolder = async (folderId) => {
+    await dispatch(deleteFolder(folderId, snackAlert));
   };
-  // const handleRename = async (folder) => {
-  //   await dispatch(updateFolder(folder));
-  //   dispatch(getAllFolder());
-  // };
+  const handleCreateFolder = async (folder_name, handleAddFolderClose) => {
+    if (folder_name) {
+      handleAddFolderClose();
+      await dispatch(createFolder(folder_name, snackAlert));
+    } else {
+      snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
+    }
+  };
+  const handleChangeFolderName = async (folder, handleAddFolderClose) => {
+    if (folder.folder_name) {
+      await dispatch(updateFolder(folder, snackAlert));
+      handleAddFolderClose(true);
+    } else {
+      snackAlert("กรุณาระบุชื่อโฟลเดอร์", "warning");
+    }
+  };
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -87,7 +105,6 @@ const ViewFolderAdmin = (props) => {
                     <TableRow key={folder.folder_id}>
                       <TableCell>
                         <Link
-                          //component={Link}
                           to={{
                             pathname: "/viewfilesadmin/" + folder.folder_id,
                           }}
@@ -105,7 +122,6 @@ const ViewFolderAdmin = (props) => {
                             </Grid>
                           </Grid>
                         </Link>
-                        {/* </Link> */}
                       </TableCell>
                       <TableCell align="center">
                         <Typography className={classes.text}>
@@ -116,8 +132,9 @@ const ViewFolderAdmin = (props) => {
                       </TableCell>
                       <TableCell align="center">
                         <MenuFolder
-                          //rename={handleRename}
-                          delete={handleDelete}
+                          delete={handleDeleteFolder}
+                          edit={handleChangeFolderName}
+                          snackAlert={snackAlert}
                           refresh={refresh}
                           folder_name_old={folder.folder_name}
                           folder_name={folder.folder_name}
@@ -135,7 +152,7 @@ const ViewFolderAdmin = (props) => {
             </div>
           )}
         </Paper>
-        <AddFolder />
+        <AddFolder handleCreateFolder={handleCreateFolder} />
       </Grid>
     </Fragment>
   );

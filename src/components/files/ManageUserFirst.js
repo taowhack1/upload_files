@@ -1,9 +1,13 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import Circular from '../layout/Circular';
-import { makeStyles } from '@material-ui/core/styles';
+import { getUserAll } from '../../actions/authActions';
+import AddUser from './AddUser';
+import useStyles from './StyleFiles';
+import MenuUser from './MenuUser';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PersonIcon from '@material-ui/icons/Person';
 import {
   Table,
   TableBody,
@@ -11,64 +15,20 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Grid,
   Breadcrumbs,
   Typography,
-  Menu,
-  MenuItem,
   IconButton,
-  Checkbox,
-  Switch,
 } from '@material-ui/core/';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CreateIcon from '@material-ui/icons/Create';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import RemoveIcon from '@material-ui/icons/Remove';
-
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import {
-  updateAccessFolder,
-  setLoading,
-  getUserAll,
-} from '../../actions/authActions';
-import PersonIcon from '@material-ui/icons/Person';
-import AddUser from './AddUser';
-import useStyles from './StyleFiles';
-import MenuUser from './MenuUser';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [state, setState] = useState([]);
-  const [current, setCurrent] = useState({
-    access_id: '',
-    access_upload: '',
-    access_download: '',
-    access_active: '',
-  });
-
-  // const handleChangeSwitch = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
-
-  // useEffect(() => {
-  //   dispatch(getUserByFolderId(folder_id));
-  //   setState(userbyfolderid);
-  // }, []);
 
   useEffect(() => {
     dispatch(getUserAll());
   }, []);
-
-  const handleChangeSwitch = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    dispatch(updateAccessFolder(current));
-    dispatch(setLoading());
-  };
 
   if (loading) {
     return <Circular />;
@@ -86,14 +46,9 @@ const ManageUserFirst = () => {
               }
               aria-label='breadcrumb'
             >
-              <Link to={{ pathname: '/manageuserfirst' }}>
-                <Typography className={classes.opacity} color='textPrimary'>
-                  จัดการผู้ใช้งาน
-                </Typography>
-              </Link>
-              {/* <Typography className={classes.text} color='textPrimary'>
-                โฟลเดอร์
-              </Typography> */}
+              <Typography className={classes.text} color='textPrimary'>
+                จัดการผู้ใช้งาน
+              </Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
@@ -122,10 +77,8 @@ const ManageUserFirst = () => {
                     <TableRow key={index}>
                       <TableCell>
                         <Link
-                          //component={Link}
                           to={{
                             pathname: '/manageusersecond/' + user.user_id,
-                            //         "/ViewFiles/" + row.folder_id + row.folder_name
                           }}
                         >
                           <Grid container className={classes.iconAlign}>
@@ -147,14 +100,13 @@ const ManageUserFirst = () => {
                       <TableCell align='center'></TableCell>
                       <TableCell align='center'>
                         <MenuUser userData={user} />
-                        {/* <Switch
-                          onChange={handleChangeSwitch}
-                          checked={row.access_active}
-                          className={classes.tableMargin}
-                        ></Switch> */}
                       </TableCell>
                       <TableCell align='center'>
-                        <Link to='/manageusersecond'>
+                        <Link
+                          to={{
+                            pathname: '/manageusersecond/' + user.user_id,
+                          }}
+                        >
                           <IconButton className={classes.tableMargin}>
                             <NavigateNextIcon></NavigateNextIcon>
                           </IconButton>

@@ -180,6 +180,7 @@ export default function AddFolder(props) {
                                         onChange={(e) => onChange(e)}
                                         error={errorCheck.errorChecks_password_old}
                                         helperText={error.error_password_old}
+                                        className={classes.textField}
                                         InputProps={{
                                             className: classes.input,
                                             endAdornment: (
@@ -208,6 +209,7 @@ export default function AddFolder(props) {
                                         onChange={(e) => onChange(e)}
                                         error={errorCheck.errorChecks_password}
                                         helperText={error.error_password}
+                                        className={classes.textField}
                                         InputProps={{
                                             className: classes.input,
                                             endAdornment: (
@@ -236,6 +238,7 @@ export default function AddFolder(props) {
                                         onChange={onChangePass}
                                         error={errorCheck.errorChecks_password_confirm}
                                         helperText={error.error_password_confirm}
+                                        className={classes.textField}
                                         InputProps={{
                                             className: classes.input,
 

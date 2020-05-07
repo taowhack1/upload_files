@@ -74,7 +74,7 @@ const ManageUserFirst = () => {
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} hover>
                       <TableCell>
                         <Link
                           to={{

@@ -1,6 +1,12 @@
-import { GET_FOLDERS, ADD_FOLDER, SET_LOADING, DELETE_FOLDER } from './types';
-import axios from 'axios';
-const url = 'http://192.168.5.230:8080/upload';
+import {
+  GET_FOLDERS,
+  ADD_FOLDER,
+  SET_LOADING,
+  DELETE_FOLDER,
+  UPDATE_FOLDER,
+} from "./types";
+import axios from "axios";
+const url = "http://192.168.5.230:8080/upload";
 export const getAllFolder = () => async (dispatch) => {
   try {
     await axios.get(`${url}/folderall`).then((res) => {
@@ -10,7 +16,7 @@ export const getAllFolder = () => async (dispatch) => {
       });
     });
   } catch (err) {
-    console.log('ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!');
+    console.log("ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!");
   }
 };
 
@@ -26,14 +32,14 @@ export const getFolders = (user_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log('Error');
+    console.log("Error");
   }
 };
 
 export const deleteFolder = (id) => async (dispatch) => {
   const config = {
     header: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     data: {
       folder_id: id,
@@ -41,6 +47,11 @@ export const deleteFolder = (id) => async (dispatch) => {
   };
   try {
     const res = await axios.delete(`${url}/folder/delete`, config);
+    if (res.data.success == false) {
+      alert("ไม่สามารถลบโฟลเดอร์ได้ ติดต่อโปรแกรมเมอร์");
+    } else {
+      alert(`ลบโฟลเดอร์เรียบร้อยแล้ว`);
+    }
     dispatch({
       type: DELETE_FOLDER,
       payload: res.data,
@@ -49,22 +60,47 @@ export const deleteFolder = (id) => async (dispatch) => {
     //   type: SET_LOADING,
     // })
   } catch (err) {
-    console.log('deleteFile Error >>>');
+    console.log("deleteFile Error >>>");
   }
-  console.log('deleteFile Render >>>');
 };
 
 export const createFolder = (folder_name) => async (dispatch) => {
-    const res = await axios.post(`${url}/folder`, {folder_name});
-    dispatch({
-      type: ADD_FOLDER,
-      payload: res.data,
-    });
+  dispatch({
+    type: SET_LOADING,
+  });
+  const res = await axios.post(`${url}/folder`, { folder_name });
+  if (res.data.success == false) {
+    alert("dulicate folder name");
+  } else {
+    alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
+  }
+  dispatch({
+    type: ADD_FOLDER,
+    payload: res.data,
+  });
 };
 
+export const updateFolder = (folder) => async (dispatch) => {
+  const { folder_name, folder_id, folder_name_old } = folder;
+  console.log(folder);
+  const res = await axios.post(`${url}/folder/update`, {
+    folder_name,
+    folder_id,
+    folder_name_old,
+  });
+  if (res.data.success == false) {
+    alert(res.data.remark);
+  } else {
+    alert(`เปลี่ยนชื่อโฟลเดอร์เรียบร้อยแล้ว`);
+  }
+  dispatch({
+    type: UPDATE_FOLDER,
+    payload: res.data,
+  });
+};
 // Set loading to true
-export const setLoading = () => {
-  return {
+export const setLoading = (dispatch) => {
+  dispatch({
     type: SET_LOADING,
-  };
+  });
 };

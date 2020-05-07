@@ -5,16 +5,13 @@ import {
     Menu,
     MenuItem,
     IconButton,
-
 } from "@material-ui/core/";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CreateIcon from '@material-ui/icons/Create';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import RemoveIcon from '@material-ui/icons/Remove';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useDispatch, useSelector } from 'react-redux';
 import useStyles from '../files/StyleFiles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChangePassword from '../authen/ChangePassword';
+import UserImage from './user.svg';
+import Divider from '@material-ui/core/Divider';
 
 
 const MenuNavbar = (props) => {
@@ -28,10 +25,12 @@ const MenuNavbar = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const { authenticated, authdata } = useSelector((state) => state.auth)
     return (
         <div>
             <IconButton className={classes.tableMargin} onClick={handleOpen}>
-                <AccountCircle fontSize='large' />
+                <img src={UserImage} width="50" />
             </IconButton>
             <Menu className={classes.menu}
                 id="simple-menu"
@@ -42,6 +41,12 @@ const MenuNavbar = (props) => {
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
                 onClose={handleClose}
             >
+                <MenuItem disabled>
+                    <Typography >
+                        {authdata.user_name}
+                    </Typography>
+                </MenuItem>
+                <Divider />
                 <MenuItem>
                     <Typography variant="inherit" >
                         <ChangePassword closeMenu={handleClose} />

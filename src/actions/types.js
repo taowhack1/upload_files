@@ -2,6 +2,7 @@ export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
 export const GET_USER_ALL = 'GET_USER_ALL';
 export const GET_FOLDERS = 'GET_FOLDERS';
+export const UPDATE_FOLDER = 'UPDATE_FOLDER';
 export const GET_FILES = 'GET_FILES';
 export const ADD_FILE = 'ADD_FILE';
 export const DELETE_FILE = 'DELETE_FILE';

@@ -32,10 +32,10 @@ export const signIn = (user) => async (dispatch) => {
     if (response.data.user_login === false) {
       alert('Username หรือ Password ไม่ถูกต้อง!');
     }
-    // if (response.data.user_login_active === false) {
-    //   alert('คุณถูกระงับการใช้งานชั่วคราว');
-    // }
-    if (response.data.user_login === true) {
+    if (response.data.user_login_active === false) {
+      alert('คุณถูกระงับการใช้งานชั่วคราว');
+    }
+    if (response.data.user_login_active === true) {
       localStorage.setItem('authData', JSON.stringify(response.data.user_data));
       localStorage.setItem('user_id', response.data.user_data.user_id);
       const token = localStorage.getItem('authData');

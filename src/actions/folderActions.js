@@ -65,16 +65,16 @@ export const deleteFolder = (id) => async (dispatch) => {
     console.log("deleteFile Error >>>");
   }
 };
-export const createFolder = (folder_name) => async (dispatch) => {
+export const createFolder = (folder_name, snackAlert) => async (dispatch) => {
   // dispatch({
   //   type: SET_LOADING,
   // });
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
     //alert("dulicate folder name");
-    alert("dulicate folder name");
+    snackAlert("dulicate folder name");
   } else {
-    alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
+    snackAlert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
   }
   dispatch({
     type: ADD_FOLDER,

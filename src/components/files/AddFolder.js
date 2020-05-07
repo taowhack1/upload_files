@@ -36,14 +36,17 @@ export default function AddFolder(props) {
     value = value.slice(0, 15);
     setFolderName(value);
   };
+  const snackAlert = (msg) => {
+    enqueueSnackbar(msg);
+  };
   const handleCreateFolder = async () => {
     if (folder_name) {
       handleAddFolderClose();
-      await dispatch(createFolder(folder_name));
+      await dispatch(createFolder(folder_name, snackAlert));
       // alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
       //props.refresh();
     } else {
-      enqueueSnackbar("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง");
+      snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง");
     }
   };
 

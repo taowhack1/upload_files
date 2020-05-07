@@ -65,6 +65,9 @@ export const deleteFolder = (id) => async (dispatch) => {
 };
 
 export const createFolder = (folder_name) => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+  });
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
     alert("dulicate folder name");
@@ -96,8 +99,8 @@ export const updateFolder = (folder) => async (dispatch) => {
   });
 };
 // Set loading to true
-export const setLoading = () => {
-  return {
+export const setLoading = (dispatch) => {
+  dispatch({
     type: SET_LOADING,
-  };
+  });
 };

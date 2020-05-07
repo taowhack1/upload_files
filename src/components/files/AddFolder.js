@@ -12,19 +12,19 @@ import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createFolder } from "../../actions/folderActions";
+import Circular from "../layout/Circular";
 
 export default function AddFolder(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [folder_name, setFolderName] = useState("");
+  const { loading } = useSelector((state) => state.folder);
   const handleAddFolderOpen = () => {
     setOpen(true);
   };
-
   const handleAddFolderClose = () => {
     setOpen(false);
   };
@@ -49,90 +49,95 @@ export default function AddFolder(props) {
 
   return (
     <div>
-      <Tooltip
-        onClick={handleAddFolderOpen}
-        title="เพิ่มโฟลเดอร์"
-        aria-label="add"
-      >
-        <Fab color="primary" className={classes.absolute}>
-          <AddIcon className={classes.icon} />
-        </Fab>
-      </Tooltip>
-      {props.children}
-      <Modal
-        className={classes.modal}
-        disableAutoFocus={true}
-        outline="none"
-        open={open}
-        onClose={handleAddFolderClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.modalPaper}>
-            <div className={classes.root}>
-              <Typography className={classes.text} color="textPrimary">
-                สร้างโฟลเดอร์
-              </Typography>
-              <div className={classes.modalIconAlign}>
-                <Grid container className={classes.iconAlign}>
-                  <Grid item xs>
-                    {" "}
-                  </Grid>
-                  <Grid item sm={1}>
-                    <FolderIcon className={classes.iconFolder} />
-                  </Grid>
-                  <Grid item> </Grid>
-                  <Grid item xs={7}>
-                    <TextField
-                      placeholder="ชื่อโฟลเดอร์"
-                      type="search"
-                      variant="outlined"
-                      className={classes.textField}
-                      onChange={handleChangeFolderName}
-                      value={folder_name}
-                      InputProps={{
-                        classes: { input: classes.input },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    {" "}
-                  </Grid>
-                </Grid>
-              </div>
-            </div>
+      {loading ? (
+        <Circular />
+      ) : (
+        <>
+          <Tooltip
+            onClick={handleAddFolderOpen}
+            title="เพิ่มโฟลเดอร์"
+            aria-label="add"
+          >
+            <Fab color="primary" className={classes.absolute}>
+              <AddIcon className={classes.icon} />
+            </Fab>
+          </Tooltip>
+          <Modal
+            className={classes.modal}
+            disableAutoFocus={true}
+            outline="none"
+            open={open}
+            onClose={handleAddFolderClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className={classes.modalPaper}>
+                <div className={classes.root}>
+                  <Typography className={classes.text} color="textPrimary">
+                    สร้างโฟลเดอร์
+                  </Typography>
+                  <div className={classes.modalIconAlign}>
+                    <Grid container className={classes.iconAlign}>
+                      <Grid item xs>
+                        {" "}
+                      </Grid>
+                      <Grid item sm={1}>
+                        <FolderIcon className={classes.iconFolder} />
+                      </Grid>
+                      <Grid item> </Grid>
+                      <Grid item xs={7}>
+                        <TextField
+                          placeholder="ชื่อโฟลเดอร์"
+                          type="search"
+                          variant="outlined"
+                          className={classes.textField}
+                          onChange={handleChangeFolderName}
+                          value={folder_name}
+                          InputProps={{
+                            classes: { input: classes.input },
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs>
+                        {" "}
+                      </Grid>
+                    </Grid>
+                  </div>
+                </div>
 
-            <div className={classes.modalBtn}>
-              <Button
-                variant="contained"
-                className={classes.modalbtnOk}
-                onClick={handleCreateFolder}
-              >
-                <Typography
-                  className={classes.text}
-                  color="textPrimary"
-                  elevation={0}
-                >
-                  OK
-                </Typography>
-              </Button>
-              <Button
-                color="primary"
-                className={classes.modalbtnCancel}
-                onClick={handleAddFolderClose}
-              >
-                <Typography className={classes.text} color="textPrimary">
-                  Cancel
-                </Typography>
-              </Button>
-            </div>
-          </div>
-        </Fade>
-      </Modal>
+                <div className={classes.modalBtn}>
+                  <Button
+                    variant="contained"
+                    className={classes.modalbtnOk}
+                    onClick={handleCreateFolder}
+                  >
+                    <Typography
+                      className={classes.text}
+                      color="textPrimary"
+                      elevation={0}
+                    >
+                      OK
+                    </Typography>
+                  </Button>
+                  <Button
+                    color="primary"
+                    className={classes.modalbtnCancel}
+                    onClick={handleAddFolderClose}
+                  >
+                    <Typography className={classes.text} color="textPrimary">
+                      Cancel
+                    </Typography>
+                  </Button>
+                </div>
+              </div>
+            </Fade>
+          </Modal>
+        </>
+      )}
     </div>
   );
 }

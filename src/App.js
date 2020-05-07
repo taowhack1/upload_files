@@ -9,7 +9,7 @@ import SignIn from "./components/authen/SignIn";
 import ViewFiles from "./components/files/ViewFiles";
 import ViewFolderAdmin from "./components/files/ViewFolderAdmin";
 import AddFolder from "./components/files/AddFolder";
-import AddUser from "./components/files/AddUser";
+import Registor from "./components/authen/Registor";
 import Delete from "./components/files/DeleteFiles";
 import ViewFilesAdmin from "./components/files/ViewFilesAdmin";
 import ManageUser from "./components/files/MangeUser";
@@ -53,7 +53,7 @@ const App = () => {
             <Navbar />
             <Switch>
               <Route exact path="/admin" component={AddFolder} />
-              <Route exact path="/adduser" component={AddUser} />
+              <Route exact path="/registor" component={Registor} />
               <Route exact path="/del" component={Delete} />
               <Route
                 exact

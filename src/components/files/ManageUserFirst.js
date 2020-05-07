@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Circular from '../layout/Circular';
 import { getUserAll } from '../../actions/authActions';
-import AddUser from './AddUser';
+import Registor from '../authen/Registor';
 import useStyles from './StyleFiles';
 import MenuUser from './MenuUser';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -74,52 +74,52 @@ const ManageUserFirst = () => {
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <Link
-                          to={{
-                            pathname: '/manageusersecond/' + user.user_id,
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <PersonIcon className={classes.iconPersonTable} />
-                            </Grid>
-                            <Grid item xs={10}>
-                              <Typography
-                                color='textPrimary'
-                                className={classes.text}
-                              >
-                                {user.user_firstname}
-                              </Typography>
-                            </Grid>
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Link
+                        to={{
+                          pathname: '/manageusersecond/' + user.user_id,
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <PersonIcon className={classes.iconPersonTable} />
                           </Grid>
-                        </Link>
-                      </TableCell>
-                      <TableCell align='center'></TableCell>
-                      <TableCell align='center'>
-                        <MenuUser userData={user} />
-                      </TableCell>
-                      <TableCell align='center'>
-                        <Link
-                          to={{
-                            pathname: '/manageusersecond/' + user.user_id,
-                          }}
-                        >
-                          <IconButton className={classes.tableMargin}>
-                            <NavigateNextIcon></NavigateNextIcon>
-                          </IconButton>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          <Grid item xs={10}>
+                            <Typography
+                              color='textPrimary'
+                              className={classes.text}
+                            >
+                              {user.user_firstname}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                    </TableCell>
+                    <TableCell align='center'></TableCell>
+                    <TableCell align='center'>
+                      <MenuUser userData={user} />
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Link
+                        to={{
+                          pathname: '/manageusersecond/' + user.user_id,
+                        }}
+                      >
+                        <IconButton className={classes.tableMargin}>
+                          <NavigateNextIcon></NavigateNextIcon>
+                        </IconButton>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>
         </Paper>
       </Grid>
-      <AddUser />
+      <Registor />
     </Fragment>
   );
 };

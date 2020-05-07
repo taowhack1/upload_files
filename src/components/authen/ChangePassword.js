@@ -90,6 +90,8 @@ export default function AddFolder(props) {
         setOpen(false);
         let errors = {}
         setError({})
+        setUser({})
+
 
     };
     const handleOpenAlert = () => {

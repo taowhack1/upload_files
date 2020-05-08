@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
@@ -36,6 +37,8 @@ import MenuUserCheckUpload from './MenuUserCheckUpload';
 const ManageUserSecond = () => {
   const classes = useStyles();
   const { user_id } = useParams();
+  const decoded = jwt.verify(user_id, '1234');
+  //console.log(decoded.user_id);
   const { folders, loading } = useSelector((state) => state.folder);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -57,7 +60,7 @@ const ManageUserSecond = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch(getAllFolder());
-    dispatch(getFolders(user_id));
+    dispatch(getFolders(decoded.user_id));
   }, []);
 
   if (loading) {
@@ -117,27 +120,27 @@ const ManageUserSecond = () => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((folder, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid item></Grid>
-                        <Grid item xs={1}>
-                          {/* <PersonIcon className={classes.iconPersonTable} /> */}
-                          <FolderIcon className={classes.iconFolderTable} />
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            {/* <PersonIcon className={classes.iconPersonTable} /> */}
+                            <FolderIcon className={classes.iconFolderTable} />
+                          </Grid>
+                          <Grid item xs={10}>
+                            <Typography
+                              color='textPrimary'
+                              className={classes.text}
+                            >
+                              {folder.folder_name}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={10}>
-                          <Typography
-                            color='textPrimary'
-                            className={classes.text}
-                          >
-                            {folder.folder_name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </TableCell>
-                    {/* <TableCell align='center'> */}
-                    {/* <MenuUserCheckUpload folderData={folder} /> */}
-                    {/* <Checkbox
+                      </TableCell>
+                      {/* <TableCell align='center'> */}
+                      {/* <MenuUserCheckUpload folderData={folder} /> */}
+                      {/* <Checkbox
                           name='cbUpload'
                           className={classes.tableMargin}
                           //checked={checked}
@@ -157,9 +160,9 @@ const ManageUserSecond = () => {
                           onChange={handleCheckBoxChange}
                           inputProps={{ 'aria-label': 'Allow Download' }}
                         /> */}
-                    {/* </TableCell> */}
-                  </TableRow>
-                ))
+                      {/* </TableCell> */}
+                    </TableRow>
+                  ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>

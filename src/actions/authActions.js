@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -8,13 +8,13 @@ import {
   UPDATE_ACCESS_FOLDER,
   GET_USER_ALL,
   UPDATE_ACTIVE_USER,
-} from "../actions/types";
-const url = "http://192.168.5.230:8080/upload";
+} from '../actions/types';
+const url = 'http://192.168.5.230:8080/upload';
 export const signOut = () => {
   return (dispatch) => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("authData");
-    localStorage.removeItem("user_id");
+    localStorage.removeItem('token');
+    localStorage.removeItem('authData');
+    localStorage.removeItem('user_id');
     dispatch({ type: UNAUTH_USER });
   };
 };
@@ -22,7 +22,7 @@ export const signOut = () => {
 export const signIn = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -31,21 +31,21 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
     console.log(response.data);
     if (response.data.user_login) {
       if (response.data.user_login_active === false) {
-        snackAlert("คุณถูกระงับการใช้งานชั่วคราว โปรดติดต่อผู้ดูแลระบบ");
+        snackAlert('คุณถูกระงับการใช้งานชั่วคราว โปรดติดต่อผู้ดูแลระบบ');
       } else {
         localStorage.setItem(
-          "authData",
+          'authData',
           JSON.stringify(response.data.user_data)
         );
-        localStorage.setItem("user_id", response.data.user_data.user_id);
-        const token = localStorage.getItem("authData");
+        localStorage.setItem('user_id', response.data.user_data.user_id);
+        const token = localStorage.getItem('authData');
         dispatch({
           type: AUTH_USER,
           payload: response.data.user_data,
         });
       }
     } else {
-      snackAlert("Username หรือ Password ไม่ถูกต้อง!");
+      snackAlert('Username หรือ Password ไม่ถูกต้อง!');
     }
   } catch (err) {
     dispatch({
@@ -69,7 +69,7 @@ export const getUserAll = () => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log("Error");
+    console.log('Error');
   }
 };
 
@@ -86,14 +86,14 @@ export const getUserByFolderId = (folder_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log("Error");
+    console.log('Error');
   }
 };
 
 export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -117,13 +117,13 @@ export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
 export const updateAccessFolder = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
-
+  console.log(user);
   try {
     const response = await axios.post(
-      `${url}/admin/accessfolder/update`,
+      `${url}/admin/accessfolder/realtime`,
       user,
       config
     );

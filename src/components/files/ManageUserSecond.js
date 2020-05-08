@@ -1,9 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import moment from "moment";
 import jwt from "jsonwebtoken";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -14,23 +12,11 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-  Menu,
-  MenuItem,
-  IconButton,
-  Checkbox,
 } from "@material-ui/core/";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CreateIcon from "@material-ui/icons/Create";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import RemoveIcon from "@material-ui/icons/Remove";
 import FolderIcon from "@material-ui/icons/Folder";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import { getAllFolder, getFolders } from "../../actions/folderActions";
-import PersonIcon from "@material-ui/icons/Person";
 import useStyles from "./StyleFiles";
-import NavigateBefore from "@material-ui/icons/NavigateBefore";
 import Circular from "../layout/Circular";
 import MenuUserCheckUpload from "./MenuUserCheckUpload";
 import { useSnackbar } from "notistack";

@@ -9,6 +9,7 @@ const MenuUserCheckUpload = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const userDataDecoded = jwt.verify(userData, "1234");
+  let click = "";
   const [folder, setFolder] = useState({
     user_id: parseInt(userDataDecoded.user_id),
     folder_id: folderData.folder_id,
@@ -28,14 +29,20 @@ const MenuUserCheckUpload = (props) => {
   };
 
   const handleDownloadClick = async (accessDownload) => {
+    click = "download";
+    console.log(click);
     if (accessDownload === true) {
       await dispatch(
-        updateAccessFolder({
-          user_id: parseInt(userDataDecoded.user_id),
-          folder_id: folderData.folder_id,
-          access_download: false,
-          access_upload: access_upload,
-        })
+        updateAccessFolder(
+          {
+            user_id: parseInt(userDataDecoded.user_id),
+            folder_id: folderData.folder_id,
+            access_download: false,
+            access_upload: access_upload,
+          },
+          props.snackAlert,
+          click
+        )
       );
       setFolder({ ...folder, access_download: false });
       setSwitchstatus({
@@ -45,12 +52,16 @@ const MenuUserCheckUpload = (props) => {
     }
     if (accessDownload === false) {
       await dispatch(
-        updateAccessFolder({
-          user_id: parseInt(userDataDecoded.user_id),
-          folder_id: folderData.folder_id,
-          access_download: true,
-          access_upload: access_upload,
-        })
+        updateAccessFolder(
+          {
+            user_id: parseInt(userDataDecoded.user_id),
+            folder_id: folderData.folder_id,
+            access_download: true,
+            access_upload: access_upload,
+          },
+          props.snackAlert,
+          click
+        )
       );
       setFolder({ ...folder, access_download: true });
       setSwitchstatus({
@@ -61,14 +72,20 @@ const MenuUserCheckUpload = (props) => {
   };
 
   const handleUploadClick = async (accessUpload) => {
+    click = "upload";
+    console.log(click);
     if (accessUpload === true) {
       await dispatch(
-        updateAccessFolder({
-          user_id: parseInt(userDataDecoded.user_id),
-          folder_id: folderData.folder_id,
-          access_download: access_download,
-          access_upload: false,
-        })
+        updateAccessFolder(
+          {
+            user_id: parseInt(userDataDecoded.user_id),
+            folder_id: folderData.folder_id,
+            access_download: access_download,
+            access_upload: false,
+          },
+          props.snackAlert,
+          click
+        )
       );
       setFolder({ ...folder, access_upload: false });
       setSwitchstatus({
@@ -78,12 +95,16 @@ const MenuUserCheckUpload = (props) => {
     }
     if (accessUpload === false) {
       await dispatch(
-        updateAccessFolder({
-          user_id: parseInt(userDataDecoded.user_id),
-          folder_id: folderData.folder_id,
-          access_download: access_download,
-          access_upload: true,
-        })
+        updateAccessFolder(
+          {
+            user_id: parseInt(userDataDecoded.user_id),
+            folder_id: folderData.folder_id,
+            access_download: access_download,
+            access_upload: true,
+          },
+          props.snackAlert,
+          click
+        )
       );
       setFolder({ ...folder, access_upload: true });
       setSwitchstatus({

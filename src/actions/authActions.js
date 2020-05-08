@@ -122,7 +122,9 @@ export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
   }
 };
 
-export const updateAccessFolder = (user, snackAlert) => async (dispatch) => {
+export const updateAccessFolder = (user, snackAlert, click) => async (
+  dispatch
+) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -130,16 +132,30 @@ export const updateAccessFolder = (user, snackAlert) => async (dispatch) => {
   };
   console.log(user);
   try {
-    const response = await axios.post(
+    const res = await axios.post(
       `${url}/admin/accessfolder/realtime`,
       user,
       config
     );
-    console.log(response.data);
-    dispatch({
-      type: UPDATE_ACCESS_FOLDER,
-      payload: response.data,
-    });
+    if (res.data.success) {
+      dispatch({
+        type: UPDATE_ACCESS_FOLDER,
+        payload: res.data,
+      });
+      let msg = [];
+      //click = upload , download
+      console.log(click);
+      if (click === "download") {
+        user.access_download
+          ? snackAlert("เปิด สิทธิ์การใช้งานดาวน์โหลด", "success")
+          : snackAlert("ปิด สิทธิ์การใช้งานดาวน์โหลด", "info");
+      }
+      if (click === "upload") {
+        user.access_upload
+          ? snackAlert("เปิด สิทธิ์การใช้งานอัพโหลด", "success")
+          : snackAlert("ปิด สิทธิ์การใช้งานอัพโหลด", "info");
+      }
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

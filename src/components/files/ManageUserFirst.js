@@ -110,7 +110,7 @@ const ManageUserFirst = () => {
                       </TableCell>
                       <TableCell align="center"></TableCell>
                       <TableCell align="center">
-                        <MenuUser userData={user} />
+                        <MenuUser userData={user} snackAlert={snackAlert} />
                       </TableCell>
                       <TableCell align="center">
                         <Link
@@ -132,7 +132,7 @@ const ManageUserFirst = () => {
           </Table>
         </Paper>
       </Grid>
-      <Registor updateUser={updateUser} />
+      <Registor updateUser={updateUser} snackAlert={snackAlert} />
     </Fragment>
   );
 };

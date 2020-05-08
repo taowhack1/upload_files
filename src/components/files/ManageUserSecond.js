@@ -147,7 +147,10 @@ const ManageUserSecond = () => {
                         /> */}
                       {/* </TableCell> */}
                       {/* <TableCell align='center'> */}
-                      <MenuUserCheckUpload folderData={folder} />
+                      <MenuUserCheckUpload
+                        userData={user_id}
+                        folderData={folder}
+                      />
                       {/* <Checkbox
                           name='cbDownload'
                           className={classes.tableMargin}

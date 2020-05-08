@@ -5,6 +5,7 @@ import {
   DELETE_FOLDER,
   UPDATE_FOLDER,
 } from "./types";
+
 import axios from "axios";
 
 const url = "http://192.168.5.230:8080/upload";
@@ -38,7 +39,7 @@ export const getFolders = (user_id) => async (dispatch) => {
   }
 };
 
-export const deleteFolder = (id) => async (dispatch) => {
+export const deleteFolder = (id, snackAlert) => async (dispatch) => {
   const config = {
     header: {
       "Content-Type": "application/json",
@@ -50,39 +51,35 @@ export const deleteFolder = (id) => async (dispatch) => {
   try {
     const res = await axios.delete(`${url}/folder/delete`, config);
     if (res.data.success == false) {
-      alert("ไม่สามารถลบโฟลเดอร์ได้ ติดต่อโปรแกรมเมอร์");
+      snackAlert("ไม่สามารถลบโฟลเดอร์ได้ ติดต่อโปรแกรมเมอร์", "error");
     } else {
-      alert(`ลบโฟลเดอร์เรียบร้อยแล้ว`);
+      snackAlert(`ลบโฟลเดอร์เรียบร้อยแล้ว`, "success");
     }
     dispatch({
       type: DELETE_FOLDER,
-      payload: res.data,
     });
-    // dispatch({
-    //   type: SET_LOADING,
-    // })
+    dispatch(getAllFolder());
   } catch (err) {
     console.log("deleteFile Error >>>");
   }
 };
-export const createFolder = (folder_name) => async (dispatch) => {
-  // dispatch({
-  //   type: SET_LOADING,
-  // });
+export const createFolder = (folder_name, snackAlert) => async (dispatch) => {
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
-    //alert("dulicate folder name");
-    alert("dulicate folder name");
+    snackAlert("พบข้อผิดพลาด ชื่อโฟลเดอร์ซ้ำ", "error");
   } else {
-    alert(`สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`);
+    snackAlert(
+      `สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`,
+      "success"
+    );
+    dispatch({
+      type: ADD_FOLDER,
+      payload: res.data,
+    });
   }
-  dispatch({
-    type: ADD_FOLDER,
-    payload: res.data,
-  });
 };
 
-export const updateFolder = (folder) => async (dispatch) => {
+export const updateFolder = (folder, snackAlert) => async (dispatch) => {
   const { folder_name, folder_id, folder_name_old } = folder;
   const res = await axios.post(`${url}/folder/update`, {
     folder_name,
@@ -90,9 +87,9 @@ export const updateFolder = (folder) => async (dispatch) => {
     folder_name_old,
   });
   if (res.data.success == true) {
-    alert(`เปลี่ยนชื่อโฟลเดอร์เรียบร้อยแล้ว`);
+    snackAlert(`เปลี่ยนชื่อโฟลเดอร์เรียบร้อยแล้ว`, "success");
   } else {
-    alert(res.data.remark);
+    snackAlert("ชื่อโฟลเดอร์ซ้ำ หรือตรงกับชื่อเดิม", "error");
   }
   dispatch({
     type: UPDATE_FOLDER,

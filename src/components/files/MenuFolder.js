@@ -13,9 +13,6 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import RemoveIcon from "@material-ui/icons/Remove";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./StyleFiles";
-import { deleteFolder, updateFolder } from "../../actions/folderActions";
-import { useDispatch } from "react-redux";
-
 import "./upload_style.css";
 import "./style.css";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -24,27 +21,28 @@ import Button from "@material-ui/core/Button";
 import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { SnackbarProvider, useSnackbar } from "notistack";
 const MenuFolder = (props) => {
-  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  //const [folderId, setFolderId] = useState(props.folder_id);
   const [open, setOpen] = useState(false);
   const [folder, setFolder] = useState({
     folder_id: props.folder_id,
     folder_name_old: props.folder_name_old,
     folder_name: props.folder_name,
   });
-  console.log(folder);
-  const handleAddFolderOpen = () => {
+  const handleEditFolderOpen = () => {
     handleMoreVertIconClose();
     setOpen(true);
   };
 
-  const handleAddFolderClose = () => {
+  const handleEditFolderClose = (callback) => {
     setOpen(false);
+    if (callback) {
+      setFolder({
+        ...folder,
+        folder_name_old: folder.folder_name,
+      });
+    }
   };
   const handleMoreVertIconClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,19 +60,8 @@ const MenuFolder = (props) => {
     });
     console.log(folder.folder_name);
   };
-
-  const handleChangeName = async () => {
-    if (folder.folder_name) {
-      await dispatch(updateFolder(folder));
-      // alert(`สร้างโฟลเดอร์ ${folder_name} เรียบร้อยแล้ว`);
-    } else {
-      enqueueSnackbar("กรุณาระบุชื่อโฟลเดอร์");
-    }
-    handleAddFolderClose();
-    setFolder({
-      ...folder,
-      folder_name_old: folder.folder_name,
-    });
+  const handleRenameSave = () => {
+    props.edit(folder, handleEditFolderClose);
   };
   return (
     <div>
@@ -107,7 +94,7 @@ const MenuFolder = (props) => {
             ลบ
           </Typography>
         </MenuItem>
-        <MenuItem onClick={handleAddFolderOpen}>
+        <MenuItem onClick={handleEditFolderOpen}>
           <ListItemIcon>
             <CreateIcon fontSize="small" />
           </ListItemIcon>
@@ -120,7 +107,7 @@ const MenuFolder = (props) => {
           disableAutoFocus={true}
           outline="none"
           open={open}
-          onClose={handleAddFolderClose}
+          onClose={handleEditFolderClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
@@ -166,10 +153,7 @@ const MenuFolder = (props) => {
                 <Button
                   variant="contained"
                   className={classes.modalbtnOk}
-                  onClick={() => {
-                    handleAddFolderClose();
-                    handleChangeName();
-                  }}
+                  onClick={handleRenameSave}
                 >
                   <Typography
                     className={classes.text}
@@ -182,7 +166,7 @@ const MenuFolder = (props) => {
                 <Button
                   color="primary"
                   className={classes.modalbtnCancel}
-                  onClick={handleAddFolderClose}
+                  onClick={handleEditFolderClose}
                 >
                   <Typography className={classes.text} color="textPrimary">
                     Cancel

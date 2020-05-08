@@ -120,13 +120,13 @@ export default function AddFolder(props) {
         let value = e.target.value.replace(/[^A-Za-z\d]/gi, '');
         setConfirm({ ...confirm, [e.target.name]: value })
     };
+    const handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+    };
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
-    const onChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    };
-    const onChangePass = (e) => {
-        setConfirm({ ...confirm, [e.target.name]: e.target.value });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

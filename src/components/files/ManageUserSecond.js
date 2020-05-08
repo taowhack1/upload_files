@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
+import jwt from "jsonwebtoken";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -38,6 +39,8 @@ const ManageUserSecond = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const { user_id } = useParams();
+  const decoded = jwt.verify(user_id, "1234");
+  //console.log(decoded.user_id);
   const { folders, loading } = useSelector((state) => state.folder);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,7 +68,7 @@ const ManageUserSecond = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch(getAllFolder());
-    dispatch(getFolders(user_id));
+    dispatch(getFolders(decoded.user_id));
   }, []);
 
   if (loading) {

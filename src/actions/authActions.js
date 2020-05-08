@@ -128,10 +128,10 @@ export const updateAccessFolder = (user, snackAlert) => async (dispatch) => {
       "Content-Type": "application/json",
     },
   };
-
+  console.log(user);
   try {
     const response = await axios.post(
-      `${url}/admin/accessfolder/update`,
+      `${url}/admin/accessfolder/realtime`,
       user,
       config
     );

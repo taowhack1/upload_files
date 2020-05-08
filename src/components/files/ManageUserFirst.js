@@ -6,6 +6,7 @@ import { getUserAll } from "../../actions/authActions";
 import Registor from "../authen/Registor";
 import useStyles from "./StyleFiles";
 import MenuUser from "./MenuUser";
+import jwt from "jsonwebtoken";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import PersonIcon from "@material-ui/icons/Person";
 import {
@@ -86,7 +87,9 @@ const ManageUserFirst = () => {
                       <TableCell>
                         <Link
                           to={{
-                            pathname: "/manageusersecond/" + user.user_id,
+                            pathname:
+                              "/manageusersecond/" +
+                              jwt.sign({ user_id: user.user_id }, "1234"),
                           }}
                         >
                           <Grid container className={classes.iconAlign}>
@@ -107,12 +110,14 @@ const ManageUserFirst = () => {
                       </TableCell>
                       <TableCell align="center"></TableCell>
                       <TableCell align="center">
-                        <MenuUser snackAlert={snackAlert} userData={user} />
+                        <MenuUser userData={user} />
                       </TableCell>
                       <TableCell align="center">
                         <Link
                           to={{
-                            pathname: "/manageusersecond/" + user.user_id,
+                            pathname:
+                              "/manageusersecond/" +
+                              jwt.sign({ user_id: user.user_id }, "1234"),
                           }}
                         >
                           <IconButton className={classes.tableMargin}>

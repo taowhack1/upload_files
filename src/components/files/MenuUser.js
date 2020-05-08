@@ -58,6 +58,7 @@ const MenuUser = (props) => {
       setUser({ ...user, user_active: false });
     }
   };
+  props.checkRigths(user_active)
 
   return (
     <>

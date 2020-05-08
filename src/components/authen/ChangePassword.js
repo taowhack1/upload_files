@@ -190,6 +190,7 @@ export default function AddFolder(props) {
                                         name="user_password_old"
                                         type={values.showPassword ? "text" : "password"}
                                         onChange={(e) => onChange(e)}
+                                        value={user.user_password_old}
                                         error={errorCheck.errorChecks_password_old}
                                         helperText={error.error_password_old}
                                         className={classes.textField}
@@ -223,6 +224,7 @@ export default function AddFolder(props) {
                                         type={values.showPassword ? "text" : "password"}
                                         id="user_password"
                                         onChange={(e) => onChange(e)}
+                                        value={user.user_password}
                                         error={errorCheck.errorChecks_password}
                                         helperText={error.error_password}
                                         className={classes.textField}
@@ -254,6 +256,7 @@ export default function AddFolder(props) {
                                         name="user_password_confirm"
                                         placeholder="Confirm password"
                                         id="user_password_confirm"
+                                        value={confirm.user_password_confirm}
                                         onChange={onChangePass}
                                         error={errorCheck.errorChecks_password_confirm}
                                         helperText={error.error_password_confirm}

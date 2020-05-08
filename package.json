@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "js-file-download": "^0.4.11",
     "json-server": "^0.16.1",
+    "jsonwebtoken": "^8.5.1",
     "material-ui-dropzone": "^2.5.0",
     "moment": "^2.24.0",
     "notistack": "^0.9.11",
@@ -25,6 +26,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "sweetalert": "^2.1.2",
     "yup": "^0.28.5"
   },
   "scripts": {

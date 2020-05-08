@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import useStyles from './StyleFiles';
-import { useDispatch } from 'react-redux';
-import { Switch } from '@material-ui/core/';
-import { updateActiveUser } from '../../actions/authActions';
+import React, { useState, useEffect } from "react";
+import useStyles from "./StyleFiles";
+import { useDispatch } from "react-redux";
+import { Switch } from "@material-ui/core/";
+import { updateActiveUser } from "../../actions/authActions";
 
 const MenuUser = (props) => {
   const { userData } = props;
@@ -25,11 +25,14 @@ const MenuUser = (props) => {
   const handleChange = async () => {
     if (user_active === false) {
       await dispatch(
-        updateActiveUser({
-          user_id: userData.user_id,
-          user_active: true,
-          authorized_id: userData.authorized_id,
-        })
+        updateActiveUser(
+          {
+            user_id: userData.user_id,
+            user_active: true,
+            authorized_id: userData.authorized_id,
+          },
+          props.snackAlert
+        )
       );
 
       setSwitchstatus({
@@ -41,11 +44,14 @@ const MenuUser = (props) => {
     }
     if (user_active === true) {
       await dispatch(
-        updateActiveUser({
-          user_id: userData.user_id,
-          user_active: false,
-          authorized_id: userData.authorized_id,
-        })
+        updateActiveUser(
+          {
+            user_id: userData.user_id,
+            user_active: false,
+            authorized_id: userData.authorized_id,
+          },
+          props.snackAlert
+        )
       );
 
       setSwitchstatus({ ...switchstatus, switchchecked: !user_active });

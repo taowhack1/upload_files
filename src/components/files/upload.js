@@ -88,7 +88,7 @@ const Upload = (props) => {
     }
   };
   const UploadSucces = () => {
-    snackAlert("อัพโหลดเสร็จสิ้น", "success");
+    snackAlert("อัพโหลดสำเร็จ", "success");
     props.refresh();
     props.handleClose();
   };
@@ -156,14 +156,6 @@ const Upload = (props) => {
                   <div key={index} className={classes.uploadPreviewList}>
                     <Card className={classes.uploadPreviewCard}>
                       <ListItem data-imgindex={index}>
-                        <Icon
-                          aria-label="delete"
-                          title="Delete"
-                          onClick={handleDelete}
-                          className={classes.uploadPreviewListIcon}
-                        >
-                          delete
-                        </Icon>
                         <img
                           style={{ width: "20px", height: "20px" }}
                           src={item.src}
@@ -178,6 +170,14 @@ const Upload = (props) => {
                             {item.name}
                           </Box>
                         </div>
+                        <Icon
+                          aria-label="delete"
+                          title="Delete"
+                          onClick={handleDelete}
+                          className={classes.uploadPreviewListIcon}
+                        >
+                          delete
+                        </Icon>
                       </ListItem>
                     </Card>
                   </div>

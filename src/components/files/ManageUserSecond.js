@@ -1,8 +1,9 @@
-import React, { useEffect, Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import moment from "moment";
+import jwt from "jsonwebtoken";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -17,30 +18,40 @@ import {
   MenuItem,
   IconButton,
   Checkbox,
-} from '@material-ui/core/';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CreateIcon from '@material-ui/icons/Create';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import RemoveIcon from '@material-ui/icons/Remove';
-import FolderIcon from '@material-ui/icons/Folder';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { getAllFolder, getFolders } from '../../actions/folderActions';
-import PersonIcon from '@material-ui/icons/Person';
-import useStyles from './StyleFiles';
-import NavigateBefore from '@material-ui/icons/NavigateBefore';
-import Circular from '../layout/Circular';
-import MenuUserCheckUpload from './MenuUserCheckUpload';
+} from "@material-ui/core/";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import CreateIcon from "@material-ui/icons/Create";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import RemoveIcon from "@material-ui/icons/Remove";
+import FolderIcon from "@material-ui/icons/Folder";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import { getAllFolder, getFolders } from "../../actions/folderActions";
+import PersonIcon from "@material-ui/icons/Person";
+import useStyles from "./StyleFiles";
+import NavigateBefore from "@material-ui/icons/NavigateBefore";
+import Circular from "../layout/Circular";
+import MenuUserCheckUpload from "./MenuUserCheckUpload";
+import { useSnackbar } from "notistack";
 
-const ManageUserSecond = () => {
+const ManageUserSecond = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const { user_id } = useParams();
+  const decoded = jwt.verify(user_id, "1234");
+  //console.log(decoded.user_id);
   const { folders, loading } = useSelector((state) => state.folder);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [checked, setChecked] = React.useState(true);
+
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
 
   const handleCheckBoxChange = (event) => {
     setChecked(event.target.checked);
@@ -57,7 +68,7 @@ const ManageUserSecond = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch(getAllFolder());
-    dispatch(getFolders(user_id));
+    dispatch(getFolders(decoded.user_id));
   }, []);
 
   if (loading) {
@@ -66,18 +77,18 @@ const ManageUserSecond = () => {
 
   return (
     <Fragment>
-      <Grid container direction='row' justify='center' alignItems='center'>
+      <Grid container direction="row" justify="center" alignItems="center">
         <Paper className={classes.paper}>
-          <Grid container direction='row' justify='left' alignItems='center'>
+          <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
               className={classes.breadcrumbs}
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label='breadcrumb'
+              aria-label="breadcrumb"
             >
-              <Link to={{ pathname: '/manageuserfirst' }}>
-                <Typography className={classes.opacity} color='textPrimary'>
+              <Link to={{ pathname: "/manageuserfirst" }}>
+                <Typography className={classes.opacity} color="textPrimary">
                   จัดการผู้ใช้งาน
                 </Typography>
               </Link>
@@ -86,7 +97,7 @@ const ManageUserSecond = () => {
                   โฟลเดอร์
                 </Typography>
               </Link> */}
-              <Typography className={classes.text} color='textPrimary'>
+              <Typography className={classes.text} color="textPrimary">
                 สิทธิ์การใช้งาน
               </Typography>
             </Breadcrumbs>
@@ -98,17 +109,17 @@ const ManageUserSecond = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableCellName}>
-                  <Typography color='textPrimary' className={classes.text}>
+                  <Typography color="textPrimary" className={classes.text}>
                     ชื่อ
                   </Typography>
                 </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
+                <TableCell align="center">
+                  <Typography color="textPrimary" className={classes.text}>
                     ดาวน์โหลด
                   </Typography>
                 </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
+                <TableCell align="center">
+                  <Typography color="textPrimary" className={classes.text}>
                     อัพโหลด
                   </Typography>
                 </TableCell>
@@ -127,7 +138,7 @@ const ManageUserSecond = () => {
                         </Grid>
                         <Grid item xs={10}>
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             {folder.folder_name}
@@ -149,6 +160,7 @@ const ManageUserSecond = () => {
                     <MenuUserCheckUpload
                       userData={user_id}
                       folderData={folder}
+                      snackAlert={snackAlert}
                     />
                     {/* <Checkbox
                           name='cbDownload'
@@ -160,7 +172,7 @@ const ManageUserSecond = () => {
                     {/* </TableCell> */}
                   </TableRow>
                 ))
-                : console.log('Nodata')}
+                : console.log("Nodata")}
             </TableBody>
           </Table>
         </Paper>

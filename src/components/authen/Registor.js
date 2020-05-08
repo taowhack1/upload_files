@@ -60,14 +60,13 @@ export default function Registor(props) {
     };
     const onChange = (e) => {
         if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
-            let value = e.target.value.replace(/[\d]/gi, '');
+            let value = e.target.value.replace(/[^A-Za-zก-๙\d]/gi, '');
             setUser({ ...user, [e.target.name]: value })
         }
         if (e.target.name == "user_name" || e.target.name == "user_password") {
             let value = e.target.value.replace(/[^A-Za-z\d]/gi, '');
             setUser({ ...user, [e.target.name]: value })
         }
-
     };
 
 
@@ -107,7 +106,7 @@ export default function Registor(props) {
             errorChecks.errorChecks_lastname = true
             errors.error_lastname = "กรุณากรอกนามสกุล"
         }
-        if (user.user_name.length <= 8) {
+        if (user.user_name.length <= 7) {
             formIsValid = false
             errorChecks.errorChecks_username = true
             errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว"

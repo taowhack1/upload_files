@@ -5,17 +5,32 @@ import { useDispatch } from 'react-redux';
 import { Switch } from '@material-ui/core/';
 import { Checkbox, TableCell } from '@material-ui/core/';
 const MenuUserCheckUpload = (props) => {
-  const { folderData } = props;
+  const { userData, folderData } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
-
   const [check, setCheck] = useState({
     checkedA: folderData.access_download,
     checkedB: folderData.access_upload,
   });
+  console.log(userData);
+  const [folder, setFolder] = useState({
+    user_id: parseInt(userData),
+    folder_id: folderData.folder_id,
+    access_download: folderData.access_download,
+    access_upload: folderData.access_upload,
+  });
+  const { access_download, access_upload } = folder;
+  console.log(folder);
 
   const [selected, setSelected] = useState([]);
   const [index, setIndex] = useState([]);
+
+  const [checked, setChecked] = useState({
+    access_download: folderData.access_download,
+  });
+  const handleChange = (event) => {
+    setChecked({ access_download: event.target.checked });
+  };
 
   const handleSelectClick = (event, id, name) => {
     const selectedIndex = index.indexOf(id);
@@ -56,8 +71,8 @@ const MenuUserCheckUpload = (props) => {
         <Checkbox
           //name='checkedA'
           className={classes.tableMargin}
-          //checked={check.checkedA}
-          //onChange={handleChange}
+          checked={checked.access_download}
+          onChange={handleChange}
           onClick={(event) =>
             handleSelectClick(
               event,
@@ -72,7 +87,7 @@ const MenuUserCheckUpload = (props) => {
         <Checkbox
           //name='checkedB'
           className={classes.tableMargin}
-          //={check.checkedB}
+          checked={access_upload}
           //onChange={handleChange}
           inputProps={{ 'aria-label': 'Allow Upload' }}
         />

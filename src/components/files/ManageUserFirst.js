@@ -111,7 +111,13 @@ const ManageUserFirst = () => {
                           to={{
                             pathname:
                               '/manageusersecond/' +
-                              jwt.sign({ user_id: user.user_id }, '1234'),
+                              jwt.sign(
+                                {
+                                  user_id: user.user_id,
+                                  user_firstname: user.user_firstname,
+                                },
+                                '1234'
+                              ),
                           }}
                         >
                           <IconButton className={classes.tableMargin}>

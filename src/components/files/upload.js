@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import "./upload_style.css";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { useParams, Link } from "react-router-dom";
-import useStyles from "./StyleFiles";
-import axios from "axios";
-import { Grid, Card } from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Box from "@material-ui/core/Box";
-import Icon from "@material-ui/core/Icon";
-import { useSnackbar } from "notistack";
+import React, { useState } from 'react';
+import './upload_style.css';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import useStyles from './StyleFiles';
+import axios from 'axios';
+import { Grid, Card } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
+import Icon from '@material-ui/core/Icon';
+import { useSnackbar } from 'notistack';
 
 const Upload = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
-  const { folder_id, folder_name } = useParams();
-  const user_id = localStorage.getItem("user_id");
+  const { folderId } = props;
+
+  const user_id = localStorage.getItem('user_id');
 
   const [post, setPost] = useState({
     photos: [],
@@ -40,7 +40,7 @@ const Upload = (props) => {
     for (let file of files) {
       let reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.addEventListener("load", () => {
+      reader.addEventListener('load', () => {
         let fileobj = {
           name: file.name,
           type: file.type,
@@ -60,19 +60,20 @@ const Upload = (props) => {
     e.preventDefault();
     let formData = new FormData();
     let res;
-    formData.append("my_file", filesUpload[0]);
-    formData.append("user_id", user_id);
-    formData.append("folder_id", folder_id);
+    formData.append('my_file', filesUpload[0]);
+    formData.append('user_id', user_id);
+    console.log('Before Append' + folderId);
+    formData.append('folder_id', parseInt(folderId));
     if (filesUpload.length > 0) {
       for (let i = 0; i < filesUpload.length; i++) {
-        formData.set("my_file", filesUpload[i]);
+        formData.set('my_file', filesUpload[i]);
         try {
           res = await axios.post(
-            "http://192.168.5.230:8080/upload/file",
+            'http://192.168.5.230:8080/upload/file',
             formData,
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
               },
             }
           );
@@ -82,13 +83,13 @@ const Upload = (props) => {
       }
       res.data
         ? UploadSucces()
-        : snackAlert("พบข้อผิดพลาด กรุณาลองใหม่...", "error");
+        : snackAlert('พบข้อผิดพลาด กรุณาลองใหม่...', 'error');
     } else {
-      snackAlert("กรุณาเลือกไฟล์เพื่ออัพโหลด", "warning");
+      snackAlert('กรุณาเลือกไฟล์เพื่ออัพโหลด', 'warning');
     }
   };
   const UploadSucces = () => {
-    snackAlert("อัพโหลดสำเร็จ", "success");
+    snackAlert('อัพโหลดสำเร็จ', 'success');
     props.refresh();
     props.handleClose();
   };
@@ -125,13 +126,13 @@ const Upload = (props) => {
     setHighlight(false);
   };
   return (
-    <form className="" encType="multipart/form-data">
+    <form className='' encType='multipart/form-data'>
       <div className={classes.upload}>
         <div
           className={
             highlight
-              ? "custom-file-drop-area highlight"
-              : "custom-file-drop-area"
+              ? 'custom-file-drop-area highlight'
+              : 'custom-file-drop-area'
           }
           onDragEnter={handleHighlight}
           onDragOver={handleHighlight}
@@ -139,14 +140,14 @@ const Upload = (props) => {
           onDrop={handleDrop}
         >
           <input
-            type="file"
-            name="photos"
-            placeholder="Enter photos"
+            type='file'
+            name='photos'
+            placeholder='Enter photos'
             multiple
-            id="filephotos"
+            id='filephotos'
             onChange={handleFileChange}
           />
-          <label htmlFor="filephotos">{"ลากหรือคลิกเพื่ออัพโหลดไฟล์"}</label>
+          <label htmlFor='filephotos'>{'ลากหรือคลิกเพื่ออัพโหลดไฟล์'}</label>
         </div>
         {photos.length != 0 ? (
           <div className={classes.uploadPreview}>
@@ -157,22 +158,22 @@ const Upload = (props) => {
                     <Card className={classes.uploadPreviewCard}>
                       <ListItem data-imgindex={index}>
                         <img
-                          style={{ width: "20px", height: "20px" }}
+                          style={{ width: '20px', height: '20px' }}
                           src={item.src}
                         />
                         <div className={classes.uploadPreviewBox}>
                           <Box
                             className={classes.uploadPreviewListName}
                             // my={2}
-                            textOverflow="ellipsis"
-                            overflow="hidden"
+                            textOverflow='ellipsis'
+                            overflow='hidden'
                           >
                             {item.name}
                           </Box>
                         </div>
                         <Icon
-                          aria-label="delete"
-                          title="Delete"
+                          aria-label='delete'
+                          title='Delete'
                           onClick={handleDelete}
                           className={classes.uploadPreviewListIcon}
                         >
@@ -191,24 +192,24 @@ const Upload = (props) => {
 
       <div className={classes.modalBtnUpload}>
         <Button
-          variant="contained"
+          variant='contained'
           className={classes.modalbtnCancel}
           onClick={(e) => handleUpload(e)}
         >
           <Typography
             className={classes.text}
-            color="textPrimary"
+            color='textPrimary'
             elevation={0}
           >
             Upload
           </Typography>
         </Button>
         <Button
-          color="primary"
+          color='primary'
           className={classes.modalbtnCancel}
           onClick={() => props.handleClose()}
         >
-          <Typography className={classes.text} color="textPrimary">
+          <Typography className={classes.text} color='textPrimary'>
             Cancel
           </Typography>
         </Button>

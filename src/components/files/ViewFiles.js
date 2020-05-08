@@ -1,7 +1,6 @@
-import React, { useEffect, Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -9,28 +8,22 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Grid,
   Breadcrumbs,
   Typography,
-  Checkbox,
-  IconButton,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import UploadBtn from "./UploadBtn";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { getFiles } from "../../actions/fileActions";
-import { useParams, Link } from "react-router-dom";
-import ConfirmDownload from "./ConfirmDowload";
-import Download from "./Dowload";
-import useStyles from "./StyleFiles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+} from '@material-ui/core/';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import UploadBtn from './UploadBtn';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import { getFiles } from '../../actions/fileActions';
+import { Link } from 'react-router-dom';
+import ConfirmDownload from './ConfirmDowload';
 
-const handleRowClick = (e) => {
-  console.log(e);
-};
+import useStyles from './StyleFiles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const ViewFiles = (props) => {
-  const { folder_id, folder_name } = useParams();
+  const { folder_id, folder_name } = props.location.state;
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
@@ -39,11 +32,12 @@ const ViewFiles = (props) => {
   }, []);
 
   if (loading) {
-    console.log("loading >>> " + loading);
+    console.log('loading >>> ' + loading);
   }
   const updateList = () => {
     dispatch(getFiles(folder_id));
   };
+
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -54,9 +48,9 @@ const ViewFiles = (props) => {
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label="breadcrumb"
+              aria-label='breadcrumb'
             >
-              <Link to={{ pathname: "/" }}>
+              <Link to={{ pathname: '/' }}>
                 <Typography className={classes.opacity}>
                   โฟลเดอร์ทั้งหมด
                 </Typography>
@@ -73,17 +67,17 @@ const ViewFiles = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableCellName}>
-                  <Typography color="textPrimary" className={classes.text}>
+                  <Typography color='textPrimary' className={classes.text}>
                     ชื่อ
                   </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography color="textPrimary" className={classes.text}>
+                <TableCell align='center'>
+                  <Typography color='textPrimary' className={classes.text}>
                     วันที่แก้ไขล่าสุด
                   </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography color="textPrimary" className={classes.text}>
+                <TableCell align='center'>
+                  <Typography color='textPrimary' className={classes.text}>
                     ดาวน์โหลด
                   </Typography>
                 </TableCell>
@@ -102,21 +96,20 @@ const ViewFiles = (props) => {
                           </Grid>
                           <Grid item xs={9}>
                             <Typography
-                              color="textPrimary"
+                              color='textPrimary'
                               className={classes.text}
                             >
                               {row.file_name}
                             </Typography>
                           </Grid>
                         </Grid>
-                        {/* </Link> */}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align='center'>
                         <Typography className={classes.text}>
-                          {moment(row.file_created).format("DD-MM-YYYY HH:MM")}
+                          {moment(row.file_created).format('DD-MM-YYYY HH:MM')}
                         </Typography>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align='center'>
                         <ConfirmDownload
                           filename={row.file_name}
                           fileid={row.file_id}
@@ -124,7 +117,7 @@ const ViewFiles = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
-                : console.log("Nodata")}
+                : console.log('Nodata')}
             </TableBody>
           </Table>
           {loading && (
@@ -134,7 +127,7 @@ const ViewFiles = (props) => {
           )}
         </Paper>
       </Grid>
-      <UploadBtn refresh={updateList} />
+      <UploadBtn refresh={updateList} folderId={folder_id} />
     </Fragment>
   );
 };

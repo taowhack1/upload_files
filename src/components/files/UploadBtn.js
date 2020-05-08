@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import Modal from "@material-ui/core/Modal";
-import "./style.css";
-import { withStyles } from "@material-ui/styles";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import styles from "./StyleFilesClass";
-import Upload from "./upload";
-import { Typography } from "@material-ui/core";
-import { useSnackbar } from "notistack";
+import React, { Component } from 'react';
+import Modal from '@material-ui/core/Modal';
+import './style.css';
+import { withStyles } from '@material-ui/styles';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import styles from './StyleFilesClass';
+import Upload from './upload';
+import { Typography } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 class UploadBtn extends Component {
   constructor(props) {
     super(props);
@@ -54,31 +54,33 @@ class UploadBtn extends Component {
     });
   };
   render() {
+    console.log(this.props);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <Fab
           onClick={this.handleOpen}
           className={classes.absolute}
-          color="primary"
+          color='primary'
         >
           <AddIcon className={classes.icon} />
         </Fab>
         <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
+          aria-labelledby='transition-modal-title'
+          aria-describedby='transition-modal-description'
           className={classes.modal}
           open={this.state.open}
         >
           <div className={classes.modalPaper}>
             <div className={classes.root}>
-              <Typography className={classes.text} color="textPrimary">
+              <Typography className={classes.text} color='textPrimary'>
                 ไฟล์ที่อัพโหลด
               </Typography>
               <div className={classes.modalIconAlign}>
                 <Upload
                   refresh={this.props.refresh}
                   handleClose={this.handleClose}
+                  folderId={this.props.folderId}
                 />
               </div>
             </div>

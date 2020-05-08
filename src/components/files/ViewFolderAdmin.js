@@ -38,7 +38,7 @@ const ViewFolderAdmin = (props) => {
     dispatch(getAllFolder());
   }, []);
 
-  const snackAlert = (msg, variant) => {
+  const snackAlert = (msg = "Alert", variant = "warning") => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
@@ -54,8 +54,9 @@ const ViewFolderAdmin = (props) => {
   };
   const handleCreateFolder = async (folder_name, handleAddFolderClose) => {
     if (folder_name) {
-      handleAddFolderClose();
-      await dispatch(createFolder(folder_name, snackAlert));
+      await dispatch(
+        createFolder(folder_name, snackAlert, handleAddFolderClose)
+      );
     } else {
       snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
     }

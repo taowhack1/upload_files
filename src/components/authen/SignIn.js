@@ -57,8 +57,8 @@ const SignIn = () => {
     handleCloseSnackbar();
     if (user_name === "" || user_password === "") {
       //alert('Please fill in all fields', 'danger');
-      setAlerttitle("กรุณาใส่ข้อมูลให้ครบถ้วน");
-      handleOpenSnackbar();
+      snackAlert("กรุณากรอก Username , Password", "warning");
+      //handleOpenSnackbar();
     } else {
       dispatch(signIn(user, snackAlert));
     }
@@ -124,10 +124,6 @@ const SignIn = () => {
               {alerttitle}
             </Alert>
           </Snackbar>
-          {/* <Alert severity='error'>This is an error message!</Alert>
-        <Alert severity='warning'>This is a warning message!</Alert>
-        <Alert severity='info'>This is an information message!</Alert>
-        <Alert severity='success'>This is a success message!</Alert> */}
         </div>
       </Container>
     </div>

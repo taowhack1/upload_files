@@ -174,7 +174,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 6, 1),
   },
 
-
   upload: {
     display: "flex",
     flexDirection: "column",
@@ -218,8 +217,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   uploadPreviewListName: {
+    fontFamily: "Sarabun",
     margin: theme.spacing(-1, 3, -1, 3),
     alignItems: "center",
+    width: 270,
     fontSize: 20,
   },
   uploadPreviewCard: {

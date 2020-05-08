@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import useStyles from './StyleFiles';
-import { deleteFolder } from '../../actions/folderActions';
-import { useDispatch } from 'react-redux';
-import { Switch } from '@material-ui/core/';
-import { Checkbox, TableCell } from '@material-ui/core/';
+import React, { useState } from "react";
+import useStyles from "./StyleFiles";
+import { deleteFolder } from "../../actions/folderActions";
+import { useDispatch } from "react-redux";
+import { Switch } from "@material-ui/core/";
+import { Checkbox, TableCell } from "@material-ui/core/";
 const MenuUserCheckUpload = (props) => {
   const { userData, folderData } = props;
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const MenuUserCheckUpload = (props) => {
 
   return (
     <>
-      <TableCell key={folderData.folder_id} align='center'>
+      <TableCell key={folderData.folder_id} align="center">
         <Checkbox
           //name='checkedA'
           className={classes.tableMargin}
@@ -80,16 +80,16 @@ const MenuUserCheckUpload = (props) => {
               folderData.folder_name
             )
           }
-          inputProps={{ 'aria-label': 'Allow Download' }}
+          inputProps={{ "aria-label": "Allow Download" }}
         />
       </TableCell>
-      <TableCell align='center'>
+      <TableCell align="center">
         <Checkbox
           //name='checkedB'
           className={classes.tableMargin}
           checked={access_upload}
           //onChange={handleChange}
-          inputProps={{ 'aria-label': 'Allow Upload' }}
+          inputProps={{ "aria-label": "Allow Upload" }}
         />
       </TableCell>
     </>

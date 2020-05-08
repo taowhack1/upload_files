@@ -31,7 +31,10 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
     console.log(response.data);
     if (response.data.user_login) {
       if (response.data.user_login_active === false) {
-        snackAlert("คุณถูกระงับการใช้งานชั่วคราว โปรดติดต่อผู้ดูแลระบบ");
+        snackAlert(
+          "คุณถูกระงับการใช้งานชั่วคราว โปรดติดต่อผู้ดูแลระบบ",
+          "error"
+        );
       } else {
         localStorage.setItem(
           "authData",
@@ -45,7 +48,7 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
         });
       }
     } else {
-      snackAlert("Username หรือ Password ไม่ถูกต้อง!");
+      snackAlert("Username หรือ Password ไม่ถูกต้อง!", "error");
     }
   } catch (err) {
     dispatch({
@@ -98,18 +101,23 @@ export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
   };
 
   try {
-    const response = await axios.post(`${url}/admin/user/update`, user, config);
-    console.log(response.data);
+    const res = await axios.post(`${url}/admin/user/update`, user, config);
+    console.log(res.data);
     dispatch({
       type: UPDATE_ACTIVE_USER,
-      payload: response.data,
+      payload: res.data,
     });
+    if (user.user_active) {
+      snackAlert("เปิด สิทธิ์การใช้งาน", "success");
+    } else {
+      snackAlert("ปิด สิทธิ์การใช้งาน", "success");
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
       payload: err,
     });
-    snackAlert(err);
+    snackAlert("พบข้อผิดพลาด", "error");
     console.log(err);
   }
 };

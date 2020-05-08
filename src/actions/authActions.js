@@ -110,7 +110,7 @@ export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
     if (user.user_active) {
       snackAlert("เปิด สิทธิ์การใช้งาน", "success");
     } else {
-      snackAlert("ปิด สิทธิ์การใช้งาน", "success");
+      snackAlert("ปิด สิทธิ์การใช้งาน", "info");
     }
   } catch (err) {
     dispatch({

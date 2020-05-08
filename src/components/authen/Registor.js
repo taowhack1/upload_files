@@ -66,7 +66,7 @@ export default function Registor(props) {
   };
   const onChange = (e) => {
     if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
-      let value = e.target.value.replace(/[\d]/gi, "");
+      let value = e.target.value.replace(/[^A-Za-zก-๙\d]/gi, "");
       setUser({ ...user, [e.target.name]: value });
     }
     if (e.target.name == "user_name" || e.target.name == "user_password") {
@@ -111,11 +111,56 @@ export default function Registor(props) {
       errorChecks_username: "",
       errorChecks_password: "",
     };
-    if (user.user_firstname.length == 0) {
-      formIsValid = false;
-      errorChecks.errorChecks_firstname = true;
-      errors.error_firstname = "กรุณากรอกชื่อ";
-    }
+
+    const validation = (e) => {
+      let formIsValid = true;
+      let errors = {
+        error_firstname: "",
+        error_lastname: "",
+        error_username: "",
+        error_password: "",
+      };
+      let errorChecks = {
+        errorChecks_firstname: "",
+        errorChecks_lastname: "",
+        errorChecks_username: "",
+        errorChecks_password: "",
+      };
+      if (user.user_firstname.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_firstname = true;
+        errors.error_firstname = "กรุณากรอกชื่อ";
+      }
+      if (user.user_lastname.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_lastname = true;
+        errors.error_lastname = "กรุณากรอกนามสกุล";
+      }
+      if (user.user_name.length <= 7) {
+        formIsValid = false;
+        errorChecks.errorChecks_username = true;
+        errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว";
+      }
+      if (user.user_name.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_username = true;
+        errors.error_username = "กรุณากรอกชื่อผู้ใช้งาน";
+      }
+      if (user.user_password.length <= 7) {
+        formIsValid = false;
+        errorChecks.errorChecks_password = true;
+        errors.error_password = "รหัสผ่านต้องมากกว่า 8 ตัว";
+      }
+      if (user.user_password.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_password = true;
+        errors.error_password = "กรุณากรอกรหัสผ่าน";
+      }
+
+      setErrorCheck({ ...errorCheck, ...errorChecks });
+      setError({ ...error, ...errors });
+      return formIsValid;
+    };
     if (user.user_lastname.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_lastname = true;
@@ -174,7 +219,7 @@ export default function Registor(props) {
           setError({ ...error, ...errors });
           snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
         } else {
-          snackAlert("สร้างผู้ใช้งานสำเร็จ", "success");
+          snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
           props.updateUser();
           handleClose();
         }

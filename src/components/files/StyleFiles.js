@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/styles";
+import MuiTableCell from "@material-ui/core/TableCell";
 import { yellow, grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -236,6 +237,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     marginTop: 30,
+  },
+  removeBorder: {
+    borderBottom: "0px"
   },
 
   input: {

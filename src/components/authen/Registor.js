@@ -59,9 +59,17 @@ export default function Registor(props) {
         setValue2(false)
     };
     const onChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value })
+        if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
+            let value = e.target.value.replace(/[\d]/gi, '');
+            setUser({ ...user, [e.target.name]: value })
+        }
+        if (e.target.name == "user_name" || e.target.name == "user_password") {
+            let value = e.target.value.replace(/[^A-Za-z\d]/gi, '');
+            setUser({ ...user, [e.target.name]: value })
+        }
+
     };
-    //const int = parseInt(user.authorized_id)
+
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -87,19 +95,8 @@ export default function Registor(props) {
 
     const validation = (e) => {
         let formIsValid = true;
-        let errors = {
-            error_firstname: '',
-            error_lastname: '',
-            error_username: '',
-            error_password: '',
-        }
-        let errorChecks = {
-            errorChecks_firstname: '',
-            errorChecks_lastname: '',
-            errorChecks_username: '',
-            errorChecks_password: '',
-        }
-
+        let errors = { error_firstname: '', error_lastname: '', error_username: '', error_password: '', }
+        let errorChecks = { errorChecks_firstname: '', errorChecks_lastname: '', errorChecks_username: '', errorChecks_password: '', }
         if (user.user_firstname.length == 0) {
             formIsValid = false
             errorChecks.errorChecks_firstname = true
@@ -110,16 +107,27 @@ export default function Registor(props) {
             errorChecks.errorChecks_lastname = true
             errors.error_lastname = "กรุณากรอกนามสกุล"
         }
+        if (user.user_name.length <= 8) {
+            formIsValid = false
+            errorChecks.errorChecks_username = true
+            errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว"
+        }
         if (user.user_name.length == 0) {
             formIsValid = false
             errorChecks.errorChecks_username = true
-            errors.error_username = "กรุณากรอก Username"
+            errors.error_username = "กรุณากรอกชื่อผู้ใช้งาน"
+        }
+        if (user.user_password.length <= 7) {
+            formIsValid = false
+            errorChecks.errorChecks_password = true
+            errors.error_password = "รหัสผ่านต้องมากกว่า 8 ตัว"
         }
         if (user.user_password.length == 0) {
             formIsValid = false
             errorChecks.errorChecks_password = true
-            errors.error_password = "กรุณากรอก Password"
+            errors.error_password = "กรุณากรอกรหัสผ่าน"
         }
+
 
         setErrorCheck({ ...errorCheck, ...errorChecks })
         setError({ ...error, ...errors })
@@ -131,46 +139,12 @@ export default function Registor(props) {
         e.preventDefault();
         const err = validation()
         console.log(user)
-        // let users = {
-        //     user_name: user.user_name,
-        //     user_password: user.user_password,
-        //     user_firstname: user.user_firstname,
-        //     user_lastname: user.user_lastname,
-        //     authorized_id: value,
-        // }
-        // setUser({ ...user, ...users })
-        // if (user.authorized_id == "0") {
-        //     console.log(user.authorized_id)
-        //     setUser({ ...user, authorized_id: user.authorized_id })
-        // }
-        // const int = parseInt(user.authorized_id)
-        // console.log(int)
-        // setUser({ ...user, authorized_id: int })
-        // console.log(user)
-
-        //setUser({ ...user, authorized_id: int })
-        // console.log(int)
-        // if (user.authorized_id == "1") {
-        //     console.log('value == 1')
-        //     const int = parseInt(user.authorized_id)
-        //     setUser({ ...user, authorized_id: int })
-        // }
         if (err) {
             axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
                 console.log(res.data)
                 if (res.data.success == false) {
-                    let errors = {
-                        error_firstname: '',
-                        error_lastname: '',
-                        error_username: '',
-                        error_password: '',
-                    }
-                    let errorChecks = {
-                        errorChecks_firstname: '',
-                        errorChecks_lastname: '',
-                        errorChecks_username: '',
-                        errorChecks_password: '',
-                    }
+                    let errors = { error_firstname: '', error_lastname: '', error_username: '', error_password: '', }
+                    let errorChecks = { errorChecks_firstname: '', errorChecks_lastname: '', errorChecks_username: '', errorChecks_password: '', }
                     errorChecks.errorChecks_username = true
                     errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย"
                     setErrorCheck({ ...errorCheck, ...errorChecks })
@@ -221,6 +195,7 @@ export default function Registor(props) {
                                                 fullWidth
                                                 id="user_firtname"
                                                 onChange={onChange}
+                                                value={user.user_firstname}
                                                 error={errorCheck.errorChecks_firstname}
                                                 helperText={error.error_firstname}
                                                 className={classes.textField}
@@ -238,6 +213,7 @@ export default function Registor(props) {
                                                 name="user_lastname"
                                                 autoComplete="lname"
                                                 onChange={onChange}
+                                                value={user.user_lastname}
                                                 error={errorCheck.errorChecks_lastname}
                                                 helperText={error.error_lastname}
                                                 className={classes.textField}
@@ -258,6 +234,7 @@ export default function Registor(props) {
                                                 fullWidth
                                                 id="user_name"
                                                 onChange={onChange}
+                                                value={user.user_name}
                                                 error={errorCheck.errorChecks_username}
                                                 helperText={error.error_username}
                                                 className={classes.textField}
@@ -275,10 +252,11 @@ export default function Registor(props) {
                                                 variant="outlined"
                                                 placeholder="Password"
                                                 type={values.showPassword ? 'text' : 'password'}
-                                                required
+
                                                 fullWidth
                                                 id="user_password"
                                                 onChange={onChange}
+                                                value={user.user_password}
                                                 error={errorCheck.errorChecks_password}
                                                 helperText={error.error_password}
                                                 className={classes.textField}

@@ -144,13 +144,13 @@ const ManageUserSecond = () => {
                           onChange={handleCheckBoxChange}
                           inputProps={{ 'aria-label': 'Allow Upload' }}
                         /> */}
-                      {/* </TableCell> */}
-                      {/* <TableCell align='center'> */}
-                      <MenuUserCheckUpload
-                        userData={user_id}
-                        folderData={folder}
-                      />
-                      {/* <Checkbox
+                    {/* </TableCell> */}
+                    {/* <TableCell align='center'> */}
+                    <MenuUserCheckUpload
+                      userData={user_id}
+                      folderData={folder}
+                    />
+                    {/* <Checkbox
                           name='cbDownload'
                           className={classes.tableMargin}
                           //checked={checked}

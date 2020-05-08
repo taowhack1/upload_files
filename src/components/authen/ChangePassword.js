@@ -111,10 +111,12 @@ export default function AddFolder(props) {
 
 
     const onChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value })
+        let value = e.target.value.replace(/[^A-Za-z\d]/gi, '');
+        setUser({ ...user, [e.target.name]: value })
     };
     const onChangePass = (e) => {
-        setConfirm({ ...confirm, [e.target.name]: e.target.value })
+        let value = e.target.value.replace(/[^A-Za-z\d]/gi, '');
+        setConfirm({ ...confirm, [e.target.name]: value })
     };
 
     const handleSubmit = (e) => {
@@ -178,6 +180,7 @@ export default function AddFolder(props) {
                                         id='user_password_old'
                                         placeholder="Current password"
                                         name='user_password_old'
+                                        value={user.user_password_old}
                                         type={values.showPassword ? 'text' : 'password'}
                                         onChange={(e) => onChange(e)}
                                         error={errorCheck.errorChecks_password_old}
@@ -208,6 +211,7 @@ export default function AddFolder(props) {
                                         placeholder="New password"
                                         type={values.showPassword ? 'text' : 'password'}
                                         id='user_password'
+                                        value={user.user_password}
                                         onChange={(e) => onChange(e)}
                                         error={errorCheck.errorChecks_password}
                                         helperText={error.error_password}
@@ -237,6 +241,7 @@ export default function AddFolder(props) {
                                         name='user_password_confirm'
                                         placeholder="Confirm password"
                                         id='user_password_confirm'
+                                        value={confirm.user_password_confirm}
                                         onChange={onChangePass}
                                         error={errorCheck.errorChecks_password_confirm}
                                         helperText={error.error_password_confirm}

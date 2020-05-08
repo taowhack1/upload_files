@@ -23,39 +23,24 @@ import { useSnackbar } from "notistack";
 
 const ManageUserSecond = (props) => {
   const { enqueueSnackbar } = useSnackbar();
+
   const classes = useStyles();
   const { user_id } = useParams();
+
   const decoded = jwt.verify(user_id, "1234");
-  //console.log(decoded.user_id);
+
   const { folders, loading } = useSelector((state) => state.folder);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const [checked, setChecked] = React.useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getFolders(decoded.user_id));
+  }, []);
 
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
   };
-
-  const handleCheckBoxChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  const handleMoreVertIconClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMoreVertIconClose = () => {
-    setAnchorEl(null);
-  };
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    // dispatch(getAllFolder());
-    dispatch(getFolders(decoded.user_id));
-  }, []);
 
   if (loading) {
     return <Circular />;
@@ -78,13 +63,8 @@ const ManageUserSecond = (props) => {
                   จัดการผู้ใช้งาน
                 </Typography>
               </Link>
-              {/* <Link to={{ pathname: "/manageuserfirst" }}>
-                <Typography className={classes.opacity} color="textPrimary">
-                  โฟลเดอร์
-                </Typography>
-              </Link> */}
               <Typography className={classes.text} color="textPrimary">
-                สิทธิ์การใช้งาน
+                ตั้งค่าการใช้งาน
               </Typography>
             </Breadcrumbs>
           </Grid>
@@ -119,7 +99,6 @@ const ManageUserSecond = (props) => {
                         <Grid container className={classes.iconAlign}>
                           <Grid item></Grid>
                           <Grid item xs={1}>
-                            {/* <PersonIcon className={classes.iconPersonTable} /> */}
                             <FolderIcon className={classes.iconFolderTable} />
                           </Grid>
                           <Grid item xs={10}>
@@ -132,30 +111,12 @@ const ManageUserSecond = (props) => {
                           </Grid>
                         </Grid>
                       </TableCell>
-                      {/* <TableCell align='center'> */}
-                      {/* <MenuUserCheckUpload folderData={folder} /> */}
-                      {/* <Checkbox
-                          name='cbUpload'
-                          className={classes.tableMargin}
-                          //checked={checked}
-                          onChange={handleCheckBoxChange}
-                          inputProps={{ 'aria-label': 'Allow Upload' }}
-                        /> */}
-                      {/* </TableCell> */}
-                      {/* <TableCell align='center'> */}
+
                       <MenuUserCheckUpload
                         userData={user_id}
                         folderData={folder}
                         snackAlert={snackAlert}
                       />
-                      {/* <Checkbox
-                          name='cbDownload'
-                          className={classes.tableMargin}
-                          //checked={checked}
-                          onChange={handleCheckBoxChange}
-                          inputProps={{ 'aria-label': 'Allow Download' }}
-                        /> */}
-                      {/* </TableCell> */}
                     </TableRow>
                   ))
                 : console.log("Nodata")}

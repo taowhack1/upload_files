@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import useStyles from './StyleFiles';
-import { useDispatch } from 'react-redux';
-import { Checkbox, TableCell } from '@material-ui/core/';
-import { updateAccessFolder } from '../../actions/authActions';
-import jwt from 'jsonwebtoken';
+import React, { useState } from "react";
+import useStyles from "./StyleFiles";
+import { useDispatch } from "react-redux";
+import { Checkbox, TableCell } from "@material-ui/core/";
+import { updateAccessFolder } from "../../actions/authActions";
+import jwt from "jsonwebtoken";
 const MenuUserCheckUpload = (props) => {
   const { userData, folderData } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
-  const userDataDecoded = jwt.verify(userData, '1234');
+  const userDataDecoded = jwt.verify(userData, "1234");
   const [folder, setFolder] = useState({
     user_id: parseInt(userDataDecoded.user_id),
     folder_id: folderData.folder_id,
@@ -95,20 +95,20 @@ const MenuUserCheckUpload = (props) => {
 
   return (
     <>
-      <TableCell key={folderData.folder_id} align='center'>
+      <TableCell key={folderData.folder_id} align="center">
         <Checkbox
           className={classes.tableMargin}
           checked={checkedDownload}
           onChange={(event) => handleDownloadClick(access_download)}
-          inputProps={{ 'aria-label': 'Allow Download' }}
+          inputProps={{ "aria-label": "Allow Download" }}
         />
       </TableCell>
-      <TableCell align='center'>
+      <TableCell align="center">
         <Checkbox
           className={classes.tableMargin}
           checked={checkedUpload}
           onChange={(event) => handleUploadClick(access_upload)}
-          inputProps={{ 'aria-label': 'Allow Upload' }}
+          inputProps={{ "aria-label": "Allow Upload" }}
         />
       </TableCell>
     </>

@@ -29,13 +29,19 @@ export const deleteFile = (fileId, snackAlert) => async (dispatch) => {
   };
   try {
     const res = await axios.delete(`${url}/file/delete`, config);
-    dispatch({
-      type: DELETE_FILE,
-      payload: res.data,
-    });
+    if (res.data.success) {
+      dispatch({
+        type: DELETE_FILE,
+        payload: res.data,
+      });
+      snackAlert("ลบเอกสารสำเร็จ", "success");
+    } else {
+      snackAlert("พบข้อผิดพลาดไม่สามารถลบไฟล์ได้");
+    }
+
     console.log(res.data);
   } catch (err) {
-    snackAlert("พบข้อผิดพลาด : ไม่สามารถลบไฟล์ได้ " + err);
+    snackAlert("พบข้อผิดพลาดไม่สามารถลบไฟล์ได้ " + err);
   }
 };
 

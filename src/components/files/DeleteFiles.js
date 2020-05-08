@@ -35,9 +35,8 @@ const DeleteFiles = (props) => {
   const handleDelete = async () => {
     for (let i = 0; i < listDel.length; i++) {
       const list = listDel[i];
-      await dispatch(deleteFile(list.file_id));
+      await dispatch(deleteFile(list.file_id, props.snackAlert));
     }
-    props.snackAlert("ลบไฟล์เรียบร้อยแล้ว", "success");
     handleClose();
     refresh();
   };
@@ -92,10 +91,12 @@ const DeleteFiles = (props) => {
               </div>
             </div>
             <div className={classes.modalBtn}>
-              <Button variant="contained" className={classes.modalbtnDel}>
-                <Typography className={classes.text} onClick={handleDelete}>
-                  Delete
-                </Typography>
+              <Button
+                variant="contained"
+                className={classes.modalbtnDel}
+                onClick={handleDelete}
+              >
+                <Typography className={classes.text}>Delete</Typography>
               </Button>
               <Button
                 color="primary"

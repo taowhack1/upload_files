@@ -51,9 +51,9 @@ export const deleteFolder = (id, snackAlert) => async (dispatch) => {
   try {
     const res = await axios.delete(`${url}/folder/delete`, config);
     if (res.data.success == false) {
-      snackAlert("ไม่สามารถลบโฟลเดอร์ได้ ติดต่อโปรแกรมเมอร์", "error");
+      snackAlert("ไม่สามารถลบโฟลเดอร์ได้", "error");
     } else {
-      snackAlert(`ลบโฟลเดอร์เรียบร้อยแล้ว`, "success");
+      snackAlert(`ลบโฟลเดอร์สำเร็จ`, "success");
     }
     dispatch({
       type: DELETE_FOLDER,
@@ -63,19 +63,19 @@ export const deleteFolder = (id, snackAlert) => async (dispatch) => {
     console.log("deleteFile Error >>>");
   }
 };
-export const createFolder = (folder_name, snackAlert) => async (dispatch) => {
+export const createFolder = (folder_name, snackAlert, closeModal) => async (
+  dispatch
+) => {
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
     snackAlert("พบข้อผิดพลาด ชื่อโฟลเดอร์ซ้ำ", "error");
   } else {
-    snackAlert(
-      `สร้างโฟลเดอร์ ${res.data.folder_name} เรียบร้อยแล้ว`,
-      "success"
-    );
+    snackAlert(`สร้างโฟลเดอร์ ${res.data.folder_name} สำเร็จ`, "success");
     dispatch({
       type: ADD_FOLDER,
       payload: res.data,
     });
+    closeModal();
   }
 };
 
@@ -87,7 +87,7 @@ export const updateFolder = (folder, snackAlert) => async (dispatch) => {
     folder_name_old,
   });
   if (res.data.success == true) {
-    snackAlert(`เปลี่ยนชื่อโฟลเดอร์เรียบร้อยแล้ว`, "success");
+    snackAlert(`เปลี่ยนชื่อโฟลเดอร์สำเร็จ`, "success");
   } else {
     snackAlert("ชื่อโฟลเดอร์ซ้ำ หรือตรงกับชื่อเดิม", "error");
   }

@@ -21,12 +21,18 @@ import {
   Typography,
   IconButton,
 } from '@material-ui/core/';
+import { useSnackbar } from 'notistack';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
   useEffect(() => {
     dispatch(getUserAll());
   }, []);

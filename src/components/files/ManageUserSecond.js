@@ -33,8 +33,11 @@ import useStyles from './StyleFiles';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Circular from '../layout/Circular';
 import MenuUserCheckUpload from './MenuUserCheckUpload';
+import { useSnackbar } from 'notistack';
 
-const ManageUserSecond = () => {
+const ManageUserSecond = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const classes = useStyles();
   const { user_id } = useParams();
 
@@ -46,6 +49,12 @@ const ManageUserSecond = () => {
   useEffect(() => {
     dispatch(getFolders(decoded.user_id));
   }, []);
+
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
 
   if (loading) {
     return <Circular />;
@@ -120,6 +129,7 @@ const ManageUserSecond = () => {
                       <MenuUserCheckUpload
                         userData={user_id}
                         folderData={folder}
+                        snackAlert={snackAlert}
                       />
                     </TableRow>
                   ))

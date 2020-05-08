@@ -174,7 +174,7 @@ export default function Registor(props) {
           setError({ ...error, ...errors });
           snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
         } else {
-          snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
+          snackAlert("สร้างผู้ใช้งานสำเร็จ", "success");
           props.updateUser();
           handleClose();
         }

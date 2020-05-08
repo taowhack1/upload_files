@@ -1,6 +1,6 @@
-import { GET_FILES, ADD_FILE, DELETE_FILE, SET_LOADING } from './types';
-import axios from 'axios';
-const url = 'http://192.168.5.230:8080/upload';
+import { GET_FILES, ADD_FILE, DELETE_FILE, SET_LOADING } from "./types";
+import axios from "axios";
+const url = "http://192.168.5.230:8080/upload";
 
 export const getFiles = (folder_id) => async (dispatch) => {
   try {
@@ -14,14 +14,14 @@ export const getFiles = (folder_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log('Error');
+    console.log("Error");
   }
 };
 
-export const deleteFile = (fileId) => async (dispatch) => {
+export const deleteFile = (fileId, snackAlert) => async (dispatch) => {
   const config = {
     header: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     data: {
       file_id: fileId,
@@ -35,7 +35,7 @@ export const deleteFile = (fileId) => async (dispatch) => {
     });
     console.log(res.data);
   } catch (err) {
-    return alert('deleteFile Error >>>'+err);
+    snackAlert("พบข้อผิดพลาด : ไม่สามารถลบไฟล์ได้ " + err);
   }
 };
 

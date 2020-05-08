@@ -106,7 +106,10 @@ const ViewFolderAdmin = (props) => {
                       <TableCell>
                         <Link
                           to={{
-                            pathname: "/viewfilesadmin/" + folder.folder_id,
+                            pathname:
+                              "/viewfilesadmin/" +
+                              folder.folder_id +
+                              folder.folder_name,
                           }}
                         >
                           <Grid container className={classes.iconAlign}>

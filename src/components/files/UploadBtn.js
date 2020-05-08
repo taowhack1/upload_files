@@ -7,44 +7,41 @@ import Fab from "@material-ui/core/Fab";
 import styles from "./StyleFilesClass";
 import Upload from "./upload";
 import { Typography } from "@material-ui/core";
-
+import { useSnackbar } from "notistack";
 class UploadBtn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      files: [],
+      //files: [],
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleUpload = this.handleUpload.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(files) {
-    console.log(files);
-    this.setState({
-      files: files,
-    });
-  }
-  handleUpload() {
-    if (this.state.files) {
-      let formData = new FormData();
-      this.state.files.forEach((files) => {
-        formData.append("files[]", files);
-        console.log(formData);
-      });
-      fetch("http://localhost/REACT_API/upload.php", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } else {
-      console.log(0);
-    }
-  }
+  // handleChange(files) {
+  //   this.setState({
+  //     files: files,
+  //   });
+  // }
+  // handleUpload() {
+  //   if (this.state.files) {
+  //     let formData = new FormData();
+  //     this.state.files.forEach((files) => {
+  //       formData.append("files[]", files);
+  //       console.log(formData);
+  //     });
+  //     fetch("http://localhost/REACT_API/upload.php", {
+  //       method: "POST",
+  //       body: formData,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //   }
+  // }
   handleOpen = () => {
     this.setState({
       open: true,

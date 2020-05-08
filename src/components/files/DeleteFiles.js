@@ -11,61 +11,17 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 import useStyles from "./StyleFiles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-
 const DeleteFiles = (props) => {
-  const { refresh, listDelFiles } = props
+  const { refresh, listDelFiles } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
-  const listDel = listDelFiles
-  const [selected, setSelected] = React.useState([]);
-  const [index, setIndex] = React.useState([]);
-
-  // const handleClick = (event, id, name) => {
-  //   const selectedIndex = index.indexOf(id);
-  //   console.log(selectedIndex)
-  //   let newSelected = [];
-  //   let selectIndex = [];
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, {
-  //       file_name: name,
-  //       file_id: id,
-  //       check_status: event.target.checked
-  //     });
-  //     selectIndex = selectIndex.concat(index, id);
-  //     setChecked(false)
-  //   } else if (selectedIndex === 0) {
-  //     selectIndex = selectIndex.concat(index.slice(1));
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     selectIndex = selectIndex.concat(index.slice(0, -1));
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   }
-  //   else if (selectedIndex > 0) {
-  //     selectIndex = selectIndex.concat(
-  //       index.slice(0, selectedIndex),
-  //       index.slice(selectedIndex + 1)
-  //     );
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-  //   setIndex(selectIndex);
-  //   setSelected(newSelected);
-  // };
-  // console.log(selected)
-  // console.log(listDel)
-
-  const changStatus = (event) => {
-    setChecked(event.target.checked)
-  }
-
+  const listDel = listDelFiles;
 
   const dispatch = useDispatch();
 
@@ -78,11 +34,12 @@ const DeleteFiles = (props) => {
 
   const handleDelete = async () => {
     for (let i = 0; i < listDel.length; i++) {
-      const list = listDel[i]
+      const list = listDel[i];
       await dispatch(deleteFile(list.file_id));
     }
-    handleClose()
-    refresh()
+    props.snackAlert("ลบไฟล์เรียบร้อยแล้ว", "success");
+    handleClose();
+    refresh();
   };
 
   return (
@@ -112,11 +69,7 @@ const DeleteFiles = (props) => {
                 {listDel &&
                   listDel.map((listDelFile, index) => {
                     return (
-                      <Grid
-                        container
-                        className={classes.iconAlign}
-                        key={index}
-                      >
+                      <Grid container className={classes.iconAlign} key={index}>
                         <Grid item xs></Grid>
                         <Grid item xs={1}>
                           {/* <Checkbox
@@ -134,17 +87,21 @@ const DeleteFiles = (props) => {
                           </Typography>
                         </Grid>
                       </Grid>
-                    )
+                    );
                   })}
               </div>
             </div>
             <div className={classes.modalBtn}>
-              <Button variant="contained" className={classes.modalbtnDel} >
+              <Button variant="contained" className={classes.modalbtnDel}>
                 <Typography className={classes.text} onClick={handleDelete}>
                   Delete
                 </Typography>
               </Button>
-              <Button color="primary" className={classes.modalbtnCancel} onClick={handleClose}>
+              <Button
+                color="primary"
+                className={classes.modalbtnCancel}
+                onClick={handleClose}
+              >
                 <Typography className={classes.text}>Cancel</Typography>
               </Button>
             </div>
@@ -155,5 +112,3 @@ const DeleteFiles = (props) => {
   );
 };
 export default DeleteFiles;
-
-

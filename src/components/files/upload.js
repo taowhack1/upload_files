@@ -10,8 +10,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Box from "@material-ui/core/Box";
 import Icon from "@material-ui/core/Icon";
+import { useSnackbar } from "notistack";
 
 const Upload = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const { folder_id, folder_name } = useParams();
   const user_id = localStorage.getItem("user_id");
@@ -22,7 +24,11 @@ const Upload = (props) => {
   const [filesUpload, setFilesUpload] = useState([]);
   const [highlight, setHighlight] = useState(false);
   const { photos } = post;
-
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
   const handleFileChange = (e) => {
     let files = e.target.files;
     handleFiles(files);
@@ -74,13 +80,15 @@ const Upload = (props) => {
           console.log(err);
         }
       }
-      res.data ? UploadSucces() : alert("Error : Something went wrong...");
+      res.data
+        ? UploadSucces()
+        : snackAlert("พบข้อผิดพลาด กรุณาลองใหม่...", "error");
     } else {
-      alert("Choose any file to upload.");
+      snackAlert("กรุณาเลือกไฟล์เพื่ออัพโหลด", "warning");
     }
   };
   const UploadSucces = () => {
-    alert("Upload Successfully");
+    snackAlert("อัพโหลดเสร็จสิ้น", "success");
     props.refresh();
     props.handleClose();
   };
@@ -177,8 +185,8 @@ const Upload = (props) => {
             </List>
           </div>
         ) : (
-            <div className={classes.uploadPreviewDisable}></div>
-          )}
+          <div className={classes.uploadPreviewDisable}></div>
+        )}
       </div>
 
       <div className={classes.modalBtnUpload}>

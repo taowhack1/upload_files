@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -8,49 +8,51 @@ import {
   UPDATE_ACCESS_FOLDER,
   GET_USER_ALL,
   UPDATE_ACTIVE_USER,
-} from '../actions/types';
-const url = 'http://192.168.5.230:8080/upload';
+} from "../actions/types";
+const url = "http://192.168.5.230:8080/upload";
 export const signOut = () => {
   return (dispatch) => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('authData');
-    localStorage.removeItem('user_id');
+    localStorage.removeItem("token");
+    localStorage.removeItem("authData");
+    localStorage.removeItem("user_id");
     dispatch({ type: UNAUTH_USER });
   };
 };
 
-export const signIn = (user) => async (dispatch) => {
+export const signIn = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
   try {
     const response = await axios.post(`${url}/login`, user, config);
     console.log(response.data);
-    if (response.data.user_login === false) {
-      alert('Username หรือ Password ไม่ถูกต้อง!');
-    }
-    if (response.data.user_login_active === false) {
-      alert('คุณถูกระงับการใช้งานชั่วคราว');
-    }
-    if (response.data.user_login_active === true) {
-      localStorage.setItem('authData', JSON.stringify(response.data.user_data));
-      localStorage.setItem('user_id', response.data.user_data.user_id);
-      const token = localStorage.getItem('authData');
-      dispatch({
-        type: AUTH_USER,
-        payload: response.data.user_data,
-      });
+    if (response.data.user_login) {
+      if (response.data.user_login_active === false) {
+        snackAlert("คุณถูกระงับการใช้งานชั่วคราว โปรดติดต่อผู้ดูแลระบบ");
+      } else {
+        localStorage.setItem(
+          "authData",
+          JSON.stringify(response.data.user_data)
+        );
+        localStorage.setItem("user_id", response.data.user_data.user_id);
+        const token = localStorage.getItem("authData");
+        dispatch({
+          type: AUTH_USER,
+          payload: response.data.user_data,
+        });
+      }
+    } else {
+      snackAlert("Username หรือ Password ไม่ถูกต้อง!");
     }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
       payload: err,
     });
-    alert(err);
-    console.log(err);
+    snackAlert(err);
   }
 };
 
@@ -67,7 +69,7 @@ export const getUserAll = () => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log('Error');
+    console.log("Error");
   }
 };
 
@@ -84,14 +86,14 @@ export const getUserByFolderId = (folder_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log('Error');
+    console.log("Error");
   }
 };
 
-export const updateActiveUser = (user) => async (dispatch) => {
+export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
@@ -107,15 +109,15 @@ export const updateActiveUser = (user) => async (dispatch) => {
       type: AUTH_ERROR,
       payload: err,
     });
-    alert(err);
+    snackAlert(err);
     console.log(err);
   }
 };
 
-export const updateAccessFolder = (user) => async (dispatch) => {
+export const updateAccessFolder = (user, snackAlert) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
@@ -135,7 +137,7 @@ export const updateAccessFolder = (user) => async (dispatch) => {
       type: AUTH_ERROR,
       payload: err,
     });
-    alert(err);
+    snackAlert(err);
     console.log(err);
   }
 };

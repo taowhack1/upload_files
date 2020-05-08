@@ -42,9 +42,6 @@ const theme = createMuiTheme({
 const App = () => {
   //const { enqueueSnackbar } = useSnackbar();
 
-  const snackAlert = () => {
-    //enqueueSnackbar("I love snacks.");
-  };
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -58,7 +55,7 @@ const App = () => {
               <Route
                 exact
                 path="/viewfolderadmin"
-                children={<ViewFolderAdmin snackAlert={snackAlert} />}
+                children={<ViewFolderAdmin />}
               />
               <Route
                 exact
@@ -88,7 +85,7 @@ const App = () => {
               />
               <Route
                 exact
-                path="/viewfilesadmin/:folder_id"
+                path="/viewfilesadmin/:folder_id:folder_name"
                 children={<ViewFilesAdmin />}
               />
             </Switch>

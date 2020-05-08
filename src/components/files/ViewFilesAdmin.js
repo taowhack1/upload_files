@@ -25,11 +25,12 @@ import DeleteFiles from "./DeleteFiles";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { useSnackbar } from "notistack";
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
   const { folder_id, folder_name } = useParams();
   const { files, loading } = useSelector((state) => state.file);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFiles(folder_id));
@@ -38,7 +39,11 @@ const ViewFilesAdmin = (props) => {
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
   const [checked, setChecked] = React.useState(false);
-
+  const snackAlert = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant: variant,
+    });
+  };
   const handleSelectClick = (event, id, name) => {
     const selectedIndex = index.indexOf(id);
     console.log(selectedIndex);
@@ -77,7 +82,6 @@ const ViewFilesAdmin = (props) => {
   const updateList = () => {
     dispatch(getFiles(folder_id));
     setSelected([]);
-    alert("delete");
   };
 
   return (
@@ -182,7 +186,11 @@ const ViewFilesAdmin = (props) => {
             </div>
           )}
           {selected.length != 0 && (
-            <DeleteFiles listDelFiles={selected} refresh={updateList} />
+            <DeleteFiles
+              snackAlert={snackAlert}
+              listDelFiles={selected}
+              refresh={updateList}
+            />
           )}
         </Paper>
       </Grid>

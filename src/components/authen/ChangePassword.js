@@ -121,13 +121,6 @@ export default function AddFolder(props) {
         setConfirm({ ...confirm, [e.target.name]: value })
     };
 
-    const onChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    };
-    const onChangePass = (e) => {
-        setConfirm({ ...confirm, [e.target.name]: e.target.value });
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const err = handleValidation();

@@ -52,31 +52,91 @@ export default function Registor(props) {
       user_lastname: "",
       authorized_id: 1,
     };
-    setUser({ ...user, ...users });
-    setError({});
-    setErrorCheck({});
-    setValue1(true);
-    setValue2(false);
-  };
-  const onChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-  //const int = parseInt(user.authorized_id)
+    const onChange = (e) => {
+      if (
+        e.target.name == "user_firstname" ||
+        e.target.name == "user_lastname"
+      ) {
+        let value = e.target.value.replace(/[\d]/gi, "");
+        setUser({ ...user, [e.target.name]: value });
+      }
+      if (e.target.name == "user_name" || e.target.name == "user_password") {
+        let value = e.target.value.replace(/[^A-Za-z\d]/gi, "");
+        setUser({ ...user, [e.target.name]: value });
+      }
+    };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+    const handleClickShowPassword = () => {
+      setValues({ ...values, showPassword: !values.showPassword });
+    };
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
 
-  const onChangeRadio = (e) => {
-    if (e.target.value == "1") {
-      setValue1(true);
-      setValue2(false);
-      console.log(e.target.value);
-      setUser({ ...user, authorized_id: parseInt(e.target.value) });
-    }
+    const onChangeRadio = (e) => {
+      if (e.target.value == "1") {
+        setValue1(true);
+        setValue2(false);
+        console.log(e.target.value);
+        setUser({ ...user, authorized_id: parseInt(e.target.value) });
+      }
+      if (e.target.value == "2") {
+        setValue1(false);
+        setValue2(true);
+        console.log(e.target.value);
+        setUser({ ...user, authorized_id: parseInt(e.target.value) });
+      }
+    };
+
+    const validation = (e) => {
+      let formIsValid = true;
+      let errors = {
+        error_firstname: "",
+        error_lastname: "",
+        error_username: "",
+        error_password: "",
+      };
+      let errorChecks = {
+        errorChecks_firstname: "",
+        errorChecks_lastname: "",
+        errorChecks_username: "",
+        errorChecks_password: "",
+      };
+      if (user.user_firstname.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_firstname = true;
+        errors.error_firstname = "กรุณากรอกชื่อ";
+      }
+      if (user.user_lastname.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_lastname = true;
+        errors.error_lastname = "กรุณากรอกนามสกุล";
+      }
+      if (user.user_name.length <= 8) {
+        formIsValid = false;
+        errorChecks.errorChecks_username = true;
+        errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว";
+      }
+      if (user.user_name.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_username = true;
+        errors.error_username = "กรุณากรอกชื่อผู้ใช้งาน";
+      }
+      if (user.user_password.length <= 7) {
+        formIsValid = false;
+        errorChecks.errorChecks_password = true;
+        errors.error_password = "รหัสผ่านต้องมากกว่า 8 ตัว";
+      }
+      if (user.user_password.length == 0) {
+        formIsValid = false;
+        errorChecks.errorChecks_password = true;
+        errors.error_password = "กรุณากรอกรหัสผ่าน";
+      }
+
+      setErrorCheck({ ...errorCheck, ...errorChecks });
+      setError({ ...error, ...errors });
+      return formIsValid;
+    };
     if (e.target.value == "2") {
       setValue1(false);
       setValue2(true);
@@ -84,77 +144,10 @@ export default function Registor(props) {
       setUser({ ...user, authorized_id: parseInt(e.target.value) });
     }
   };
-
-  const validation = (e) => {
-    let formIsValid = true;
-    let errors = {
-      error_firstname: "",
-      error_lastname: "",
-      error_username: "",
-      error_password: "",
-    };
-    let errorChecks = {
-      errorChecks_firstname: "",
-      errorChecks_lastname: "",
-      errorChecks_username: "",
-      errorChecks_password: "",
-    };
-
-    if (user.user_firstname.length == 0) {
-      formIsValid = false;
-      errorChecks.errorChecks_firstname = true;
-      errors.error_firstname = "กรุณากรอกชื่อ";
-    }
-    if (user.user_lastname.length == 0) {
-      formIsValid = false;
-      errorChecks.errorChecks_lastname = true;
-      errors.error_lastname = "กรุณากรอกนามสกุล";
-    }
-    if (user.user_name.length == 0) {
-      formIsValid = false;
-      errorChecks.errorChecks_username = true;
-      errors.error_username = "กรุณากรอก Username";
-    }
-    if (user.user_password.length == 0) {
-      formIsValid = false;
-      errorChecks.errorChecks_password = true;
-      errors.error_password = "กรุณากรอก Password";
-    }
-
-    setErrorCheck({ ...errorCheck, ...errorChecks });
-    setError({ ...error, ...errors });
-    return formIsValid;
-  };
-  console.log(user);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = validation();
     console.log(user);
-    // let users = {
-    //     user_name: user.user_name,
-    //     user_password: user.user_password,
-    //     user_firstname: user.user_firstname,
-    //     user_lastname: user.user_lastname,
-    //     authorized_id: value,
-    // }
-    // setUser({ ...user, ...users })
-    // if (user.authorized_id == "0") {
-    //     console.log(user.authorized_id)
-    //     setUser({ ...user, authorized_id: user.authorized_id })
-    // }
-    // const int = parseInt(user.authorized_id)
-    // console.log(int)
-    // setUser({ ...user, authorized_id: int })
-    // console.log(user)
-
-    //setUser({ ...user, authorized_id: int })
-    // console.log(int)
-    // if (user.authorized_id == "1") {
-    //     console.log('value == 1')
-    //     const int = parseInt(user.authorized_id)
-    //     setUser({ ...user, authorized_id: int })
-    // }
     if (err) {
       axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
         console.log(res.data);

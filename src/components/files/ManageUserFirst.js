@@ -39,7 +39,9 @@ const ManageUserFirst = () => {
   if (loading) {
     return <Circular />;
   }
-
+  const updateUser = () => {
+    dispatch(getUserAll());
+  };
   return (
     <Fragment>
       <Grid container direction="row" justify="center" alignItems="center">
@@ -125,7 +127,7 @@ const ManageUserFirst = () => {
           </Table>
         </Paper>
       </Grid>
-      <Registor />
+      <Registor updateUser={updateUser} />
     </Fragment>
   );
 };

@@ -99,18 +99,8 @@ export default function Registor(props) {
 
   const validation = (e) => {
     let formIsValid = true;
-    let errors = {
-      error_firstname: "",
-      error_lastname: "",
-      error_username: "",
-      error_password: "",
-    };
-    let errorChecks = {
-      errorChecks_firstname: "",
-      errorChecks_lastname: "",
-      errorChecks_username: "",
-      errorChecks_password: "",
-    };
+    let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
+    let errorChecks = { errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "", };
     if (user.user_firstname.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_firstname = true;
@@ -156,17 +146,9 @@ export default function Registor(props) {
       axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
         console.log(res.data);
         if (res.data.success == false) {
-          let errors = {
-            error_firstname: "",
-            error_lastname: "",
-            error_username: "",
-            error_password: "",
-          };
+          let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
           let errorChecks = {
-            errorChecks_firstname: "",
-            errorChecks_lastname: "",
-            errorChecks_username: "",
-            errorChecks_password: "",
+            errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
           };
           errorChecks.errorChecks_username = true;
           errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";

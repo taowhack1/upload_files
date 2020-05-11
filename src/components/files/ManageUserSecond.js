@@ -94,10 +94,15 @@ const ManageUserSecond = (props) => {
                   <Grid container className={classes.iconAlign}>
                     <Grid item></Grid>
                     <Grid item xs={1}>
-                      <PersonIcon
-                        className={classes.iconPersonTable}
-                        style={{ borderBottom: '0px' }}
-                      />
+                      {user_active ? (
+                        <PersonIcon
+                          className={classes.iconPersonTable}
+                        />
+                      ) : (
+                          <PersonIcon
+                            className={classes.iconPersonTableUnActive}
+                          />
+                        )}
                     </Grid>
                     <Grid item xs={10}>
                       <Typography color='textPrimary' className={classes.text}>
@@ -146,31 +151,31 @@ const ManageUserSecond = (props) => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((folder, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item></Grid>
-                          <Grid item xs={1}>
-                            <FolderIcon className={classes.iconFolderTable} />
-                          </Grid>
-                          <Grid item xs={10}>
-                            <Typography
-                              color='textPrimary'
-                              className={classes.text}
-                            >
-                              {folder.folder_name}
-                            </Typography>
-                          </Grid>
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid item></Grid>
+                        <Grid item xs={1}>
+                          <FolderIcon className={classes.iconFolderTable} />
                         </Grid>
-                      </TableCell>
+                        <Grid item xs={10}>
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
+                            {folder.folder_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
 
-                      <MenuUserCheckUpload
-                        userData={user_id}
-                        folderData={folder}
-                        snackAlert={snackAlert}
-                      />
-                    </TableRow>
-                  ))
+                    <MenuUserCheckUpload
+                      userData={user_id}
+                      folderData={folder}
+                      snackAlert={snackAlert}
+                    />
+                  </TableRow>
+                ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>

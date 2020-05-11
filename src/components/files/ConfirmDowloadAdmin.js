@@ -6,28 +6,30 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import { Button, Typography, IconButton } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  IconButton,
+  MenuItem,
+  ListItemIcon,
+} from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import { download } from "../../actions/fileActions";
-import axios from "axios";
 
-export default function ConfirmDownload(props) {
+export default function ConfirmDownloadAdmin(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const filename = props.filename;
-  const fileId = props.fileid;
-
-  console.log(filename);
-
+  const file = props.file;
   const FileDownload = require("js-file-download");
 
   const handleDownload = () => {
-    dispatch(download(fileId, filename));
+    dispatch(download(file.file_id, file.file_name));
     handleClose();
   };
 
   const handleOpen = () => {
+    props.closeMenu();
     setOpen(true);
   };
   const handleClose = () => {
@@ -35,9 +37,14 @@ export default function ConfirmDownload(props) {
   };
   return (
     <div>
-      <IconButton className={classes.tableMargin}>
-        <GetAppIcon onClick={handleOpen} />
-      </IconButton>
+      <MenuItem onClick={handleOpen}>
+        <ListItemIcon>
+          <GetAppIcon />
+        </ListItemIcon>
+        <Typography variant="inherit" className={classes.menuItem}>
+          ดาวน์โหลด
+        </Typography>
+      </MenuItem>
       <Modal
         className={classes.modal}
         open={open}
@@ -51,9 +58,8 @@ export default function ConfirmDownload(props) {
         <Fade in={open}>
           <div className={classes.modalPaper}>
             <div className={classes.root}>
-              <h1>{props.count}</h1>
               <Typography className={classes.text}>
-                คุณต้องการดาวน์โหลด {props.filename} ?
+                คุณต้องการดาวน์โหลด {file.file_name} ?
               </Typography>
               <div className={classes.modalBtn}>
                 <Button

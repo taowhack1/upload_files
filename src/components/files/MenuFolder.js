@@ -21,6 +21,7 @@ import Button from "@material-ui/core/Button";
 import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import ConfirmDelete from "./ConfirmDeleteFolder";
 const MenuFolder = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -58,7 +59,6 @@ const MenuFolder = (props) => {
       ...folder,
       folder_name: value,
     });
-    console.log(folder.folder_name);
   };
   const handleRenameSave = () => {
     props.edit(folder, handleEditFolderClose);
@@ -81,19 +81,11 @@ const MenuFolder = (props) => {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={handleMoreVertIconClose}
       >
-        <MenuItem
-          onClick={() => {
-            handleMoreVertIconClose();
-            props.delete(folder.folder_id);
-          }}
-        >
-          <ListItemIcon>
-            <RemoveIcon />
-          </ListItemIcon>
-          <Typography variant="inherit" className={classes.menuItem}>
-            ลบ
-          </Typography>
-        </MenuItem>
+        <ConfirmDelete
+          folder={folder}
+          delete={props.delete}
+          closeModal={handleMoreVertIconClose}
+        />
         <MenuItem onClick={handleEditFolderOpen}>
           <ListItemIcon>
             <CreateIcon fontSize="small" />

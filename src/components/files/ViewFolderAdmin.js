@@ -25,7 +25,9 @@ import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
 import Circular from '../layout/Circular'
+import MenuFolder2 from "./MenuFile";
 import { useSnackbar } from "notistack";
+import swal from "sweetalert";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();

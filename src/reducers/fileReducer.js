@@ -3,7 +3,8 @@ import {
   ADD_FILE,
   SET_LOADING,
   DELETE_FILE,
-} from '../actions/types';
+  DOWNLOAD_FILE,
+} from "../actions/types";
 
 const initialState = {
   files: null,
@@ -27,6 +28,11 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case DELETE_FILE:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DOWNLOAD_FILE:
       return {
         ...state,
         loading: false,

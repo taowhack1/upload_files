@@ -16,13 +16,12 @@ import useStyles from "./StyleFiles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-const DeleteFiles = (props) => {
+const ConfirmDeleteFiles = (props) => {
   const { refresh, listDelFiles } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
   const listDel = listDelFiles;
-
   const dispatch = useDispatch();
 
   const handleOpen = () => {
@@ -32,18 +31,15 @@ const DeleteFiles = (props) => {
     setOpen(false);
   };
 
-  const handleDelete = async () => {
-    for (let i = 0; i < listDel.length; i++) {
-      const list = listDel[i];
-      await dispatch(deleteFile(list.file_id, props.snackAlert));
-    }
-    handleClose();
-    refresh();
-  };
-
   return (
     <div>
-      <Tooltip onClick={handleOpen} title="ลบ" aria-label="add">
+      <Tooltip
+        onClick={() => {
+          handleOpen();
+        }}
+        title="ลบ"
+        aria-label="add"
+      >
         <Fab color="primary" className={classes.absolute}>
           <DeleteIcon className={classes.icon} />
         </Fab>
@@ -94,7 +90,10 @@ const DeleteFiles = (props) => {
               <Button
                 variant="contained"
                 className={classes.modalbtnDel}
-                onClick={handleDelete}
+                onClick={() => {
+                  props.handleDelete(listDel);
+                  handleClose();
+                }}
               >
                 <Typography className={classes.text}>Delete</Typography>
               </Button>
@@ -112,4 +111,4 @@ const DeleteFiles = (props) => {
     </div>
   );
 };
-export default DeleteFiles;
+export default ConfirmDeleteFiles;

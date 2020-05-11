@@ -85,7 +85,7 @@ const ManageUserFirst = () => {
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} hover>
                       <TableCell>
                         <Link
                           to={{
@@ -115,7 +115,7 @@ const ManageUserFirst = () => {
                                 color="textPrimary"
                                 className={classes.text}
                               >
-                                {user.user_firstname}{" "}
+                                {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
                                 {user.authorized_id == 2 ? (
                                   <StarIcon className={classes.iconStar} />
                                 ) : (

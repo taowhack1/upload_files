@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import useStyles from './StyleFiles';
-import { useDispatch } from 'react-redux';
-import { Switch } from '@material-ui/core/';
-import { updateActiveUser } from '../../actions/authActions';
+import React, { useState, useEffect } from "react";
+import useStyles from "./StyleFiles";
+import { useDispatch } from "react-redux";
+import { Switch } from "@material-ui/core/";
+import { updateActiveUser } from "../../actions/authActions";
 
 const MenuUser = (props) => {
   const { userData } = props;
@@ -28,6 +28,7 @@ const MenuUser = (props) => {
         updateActiveUser(
           {
             user_id: userData.user_id,
+            user_name: userData.user_name,
             user_firstname: userData.user_firstname,
             user_lastname: userData.user_lastname,
             user_active: true,
@@ -53,6 +54,7 @@ const MenuUser = (props) => {
         updateActiveUser(
           {
             user_id: userData.user_id,
+            user_name: userData.user_name,
             user_firstname: userData.user_firstname,
             user_lastname: userData.user_lastname,
             user_active: false,

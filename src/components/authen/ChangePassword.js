@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import useStyles from "../files/StyleFiles";
 import axios from "axios";
-import { signOut } from "../../actions/authActions";
+import { signOut, changePassword } from "../../actions/authActions";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
@@ -43,6 +43,21 @@ export default function AddFolder(props) {
   const [values, setValues] = useState({
     showPassword: false,
   });
+  const handleClose = () => {
+    setOpen(false);
+    let users = {
+      user_id: authdata.user_id,
+      user_password: "",
+      user_password_old: "",
+      user_firstname: authdata.user_firstname,
+      user_lastname: authdata.user_lastname,
+    };
+    setUser({ ...user, ...users });
+    setConfirm({ ...confirm, user_password_confirm: "" });
+    setErrorCheck({});
+    setError({});
+    setValues({ ...values, showPassword: false })
+  };
 
   const handleValidation = (e) => {
     let formIsValid = true;
@@ -52,14 +67,19 @@ export default function AddFolder(props) {
       error_password_confirm: "",
     };
     let errorChecks = {
-      errorChecks_password: "",
-      errorChecks_password_old: "",
-      errorChecks_password_confirm: "",
+      errorChecks_password: false,
+      errorChecks_password_old: false,
+      errorChecks_password_confirm: false,
     };
     if (user.user_password_old.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_password_old = true;
       errors.error_password_old = "กรุณากรอกรหัสผ่านเดิม";
+    }
+    if (user.user_password.length <= 7) {
+      formIsValid = false;
+      errorChecks.errorChecks_password = true;
+      errors.error_password = "รหัสผ่านต้องมากกว่า 8 ตัว";
     }
     if (user.user_password.length == 0) {
       formIsValid = false;
@@ -84,24 +104,16 @@ export default function AddFolder(props) {
     setError({ ...error, ...errors });
     return formIsValid;
   };
-  console.log(error);
-
   const handleOpen = () => {
     setOpen(true);
     props.closeMenu();
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    let errors = {};
-    setError({});
-    setUser({});
-  };
   const handleOpenAlert = () => {
     setOpenAlert(true);
   };
 
-  const handleCloseAlert = () => {
+  const changePasswordSignOut = () => {
     dispatch(signOut());
   };
 
@@ -123,29 +135,28 @@ export default function AddFolder(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = handleValidation();
-    // setErrorCheck(err)
-    console.log(errorCheck);
 
     if (err) {
-      axios
-        .post("http://192.168.5.230:8080/upload/user/update", user)
-        .then((res) => {
-          if (res.data.success) {
-            swal({
-              title: "เปลี่ยนรหัสผ่านแล้ว",
-              icon: "success",
-              button: "เข้าสู่ระบบ",
-            }).then((click) => {
-              click ? dispatch(signOut()) : dispatch(signOut());
-            });
-          } else {
-            swal({
-              title: "รหัสผ่านเดิมไม่ถูกต้อง",
-              icon: "error",
-              button: "ลองใหม่",
-            });
-          }
-        });
+      dispatch(changePassword(user, changePasswordSignOut))
+      // axios
+      //   .post("http://192.168.5.230:8080/upload/user/update", user)
+      //   .then((res) => {
+      //     if (res.data.success) {
+      //       swal({
+      //         title: "เปลี่ยนรหัสผ่านแล้ว",
+      //         icon: "success",
+      //         button: "เข้าสู่ระบบ",
+      //       }).then((click) => {
+      //         click ? dispatch(signOut()) : dispatch(signOut());
+      //       });
+      //     } else {
+      //       swal({
+      //         title: "รหัสผ่านเดิมไม่ถูกต้อง",
+      //         icon: "error",
+      //         button: "ลองใหม่",
+      //       });
+      //     }
+      //   });
     }
   };
 
@@ -182,8 +193,9 @@ export default function AddFolder(props) {
                     name="user_password_old"
                     type={values.showPassword ? "text" : "password"}
                     onChange={(e) => onChange(e)}
+                    value={user.user_password_old}
                     error={errorCheck.errorChecks_password_old}
-                    helperText={error.error_password_old}
+                    //helperText={error.error_password_old}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -204,7 +216,7 @@ export default function AddFolder(props) {
                       ),
                     }}
                   />
-
+                  <Typography className={classes.errorText}>{error.error_password_old}</Typography>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -215,8 +227,9 @@ export default function AddFolder(props) {
                     type={values.showPassword ? "text" : "password"}
                     id="user_password"
                     onChange={(e) => onChange(e)}
+                    value={user.user_password}
                     error={errorCheck.errorChecks_password}
-                    helperText={error.error_password}
+                    // helperText={error.error_password}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -237,6 +250,7 @@ export default function AddFolder(props) {
                       ),
                     }}
                   />
+                  <Typography className={classes.errorText}>{error.error_password}</Typography>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -247,8 +261,9 @@ export default function AddFolder(props) {
                     placeholder="Confirm password"
                     id="user_password_confirm"
                     onChange={onChangePass}
+                    value={confirm.user_password_confirm}
                     error={errorCheck.errorChecks_password_confirm}
-                    helperText={error.error_password_confirm}
+                    // helperText={error.error_password_confirm}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -269,7 +284,7 @@ export default function AddFolder(props) {
                       ),
                     }}
                   />
-
+                  <Typography className={classes.errorText}>{error.error_password_confirm}</Typography>
                   <div className={classes.modalBtn} style={{ marginTop: 5 }}>
                     <Button
                       variant="contained"

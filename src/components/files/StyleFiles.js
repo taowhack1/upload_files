@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5, 0, 0, -1),
     fontSize: 40,
   },
+  iconStar: {
+    color: '#FFC107',
+  },
   NavigateNextIcon: {
     fontSize: 20,
   },

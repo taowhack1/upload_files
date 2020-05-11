@@ -21,18 +21,20 @@ import {
   IconButton,
 } from '@material-ui/core/';
 import { useSnackbar } from 'notistack';
+import StarIcon from '@material-ui/icons/Star';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [checkRigth, setCheckRigth] = useState();
+  const [checkRigth, setCheckRigth] = useState({});
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
   };
+
   useEffect(() => {
     dispatch(getUserAll());
   }, []);
@@ -46,8 +48,10 @@ const ManageUserFirst = () => {
 
   const check = (values) => {
     setCheckRigth(values);
-    console.log(values);
+    //updateUser()
   };
+
+  console.log(checkRigth);
 
   return (
     <Fragment>
@@ -104,7 +108,7 @@ const ManageUserFirst = () => {
                           <Grid container className={classes.iconAlign}>
                             <Grid item></Grid>
                             <Grid item xs={1}>
-                              {checkRigth ? (
+                              {user.user_active ? (
                                 <PersonIcon
                                   className={classes.iconPersonTable}
                                 />
@@ -119,7 +123,12 @@ const ManageUserFirst = () => {
                                 color='textPrimary'
                                 className={classes.text}
                               >
-                                {user.user_firstname}
+                                {user.user_firstname}{' '}
+                                {user.authorized_id == 2 ? (
+                                  <StarIcon className={classes.iconStar} />
+                                ) : (
+                                  ''
+                                )}
                               </Typography>
                             </Grid>
                           </Grid>

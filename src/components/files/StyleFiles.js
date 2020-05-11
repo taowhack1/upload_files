@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5, 0, 0, -1),
     fontSize: 40,
   },
+  iconStar: {
+    color: '#FFC107',
+  },
   NavigateNextIcon: {
     fontSize: 20,
   },
@@ -245,6 +248,16 @@ const useStyles = makeStyles((theme) => ({
   },
   removeBorder: {
     borderBottom: "0px",
+  },
+  errorText: {
+    fontSize: 13,
+    color: 'red',
+    margin: theme.spacing(0, 0, 0, 2),
+  },
+  errorTextRegistor: {
+    fontSize: 13,
+    color: 'red',
+    margin: theme.spacing(1, 0, 0, 2),
   },
 
   input: {

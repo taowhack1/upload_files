@@ -20,6 +20,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
+import { addRegistor } from '../../actions/authActions'
+
 export default function Registor(props) {
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
@@ -27,6 +30,7 @@ export default function Registor(props) {
       variant: variant,
     });
   };
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [value1, setValue1] = useState(true);
@@ -63,6 +67,7 @@ export default function Registor(props) {
     setErrorCheck({});
     setValue1(true);
     setValue2(false);
+    setValues({ ...values, showPassword: false })
   };
   const onChange = (e) => {
     if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
@@ -99,74 +104,19 @@ export default function Registor(props) {
 
   const validation = (e) => {
     let formIsValid = true;
-    let errors = {
-      error_firstname: "",
-      error_lastname: "",
-      error_username: "",
-      error_password: "",
-    };
-    let errorChecks = {
-      errorChecks_firstname: "",
-      errorChecks_lastname: "",
-      errorChecks_username: "",
-      errorChecks_password: "",
-    };
-
-    const validation = (e) => {
-      let formIsValid = true;
-      let errors = {
-        error_firstname: "",
-        error_lastname: "",
-        error_username: "",
-        error_password: "",
-      };
-      let errorChecks = {
-        errorChecks_firstname: "",
-        errorChecks_lastname: "",
-        errorChecks_username: "",
-        errorChecks_password: "",
-      };
-      if (user.user_firstname.length == 0) {
-        formIsValid = false;
-        errorChecks.errorChecks_firstname = true;
-        errors.error_firstname = "กรุณากรอกชื่อ";
-      }
-      if (user.user_lastname.length == 0) {
-        formIsValid = false;
-        errorChecks.errorChecks_lastname = true;
-        errors.error_lastname = "กรุณากรอกนามสกุล";
-      }
-      if (user.user_name.length <= 7) {
-        formIsValid = false;
-        errorChecks.errorChecks_username = true;
-        errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว";
-      }
-      if (user.user_name.length == 0) {
-        formIsValid = false;
-        errorChecks.errorChecks_username = true;
-        errors.error_username = "กรุณากรอกชื่อผู้ใช้งาน";
-      }
-      if (user.user_password.length <= 7) {
-        formIsValid = false;
-        errorChecks.errorChecks_password = true;
-        errors.error_password = "รหัสผ่านต้องมากกว่า 8 ตัว";
-      }
-      if (user.user_password.length == 0) {
-        formIsValid = false;
-        errorChecks.errorChecks_password = true;
-        errors.error_password = "กรุณากรอกรหัสผ่าน";
-      }
-
-      setErrorCheck({ ...errorCheck, ...errorChecks });
-      setError({ ...error, ...errors });
-      return formIsValid;
-    };
+    let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
+    let errorChecks = { errorChecks_firstname: false, errorChecks_lastname: false, errorChecks_username: false, errorChecks_password: false, };
+    if (user.user_firstname.length == 0) {
+      formIsValid = false;
+      errorChecks.errorChecks_firstname = true;
+      errors.error_firstname = "กรุณากรอกชื่อ";
+    }
     if (user.user_lastname.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_lastname = true;
       errors.error_lastname = "กรุณากรอกนามสกุล";
     }
-    if (user.user_name.length <= 8) {
+    if (user.user_name.length <= 7) {
       formIsValid = false;
       errorChecks.errorChecks_username = true;
       errors.error_username = "ชื่อผู้ใช้งานต้องมากกว่า 8 ตัว";
@@ -191,41 +141,36 @@ export default function Registor(props) {
     setError({ ...error, ...errors });
     return formIsValid;
   };
-  console.log(user);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = validation();
     console.log(user);
     if (err) {
-      axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
-        console.log(res.data);
-        if (res.data.success == false) {
-          let errors = {
-            error_firstname: "",
-            error_lastname: "",
-            error_username: "",
-            error_password: "",
-          };
-          let errorChecks = {
-            errorChecks_firstname: "",
-            errorChecks_lastname: "",
-            errorChecks_username: "",
-            errorChecks_password: "",
-          };
-          errorChecks.errorChecks_username = true;
-          errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
-          setErrorCheck({ ...errorCheck, ...errorChecks });
-          setError({ ...error, ...errors });
-          snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
-        } else {
-          snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
-          props.updateUser();
-          handleClose();
-        }
-      });
+      dispatch(addRegistor(user, snackAlert, props.updateUser, handleClose))
     }
-  };
+    // if (err) {
+    //   axios.post("http://192.168.5.230:8s80/upload/user", user).then((res) => {
+    //     console.log(res.data);
+    //     if (res.data.success == false) {
+    //       let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
+    //       let errorChecks = {
+    //         errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
+    //       };
+    //       errorChecks.errorChecks_username = true;
+    //       errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
+    //       setErrorCheck({ ...errorCheck, ...errorChecks });
+    //       setError({ ...error, ...errors });
+    //       snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
+    //     } else {
+    //       snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
+    //       props.updateUser();
+    //       handleClose();
+    //     }
+    //   });
+    // }
+  }
 
   return (
     <div>
@@ -267,12 +212,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_firstname}
                         error={errorCheck.errorChecks_firstname}
-                        helperText={error.error_firstname}
+                        //helperText={error.error_firstname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_firstname}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -285,12 +231,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_lastname}
                         error={errorCheck.errorChecks_lastname}
-                        helperText={error.error_lastname}
+                        //helperText={error.error_lastname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_lastname}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -306,12 +253,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_name}
                         error={errorCheck.errorChecks_username}
-                        helperText={error.error_username}
+                        //helperText={error.error_username}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_username}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -327,7 +275,7 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_password}
                         error={errorCheck.errorChecks_password}
-                        helperText={error.error_password}
+                        //helperText={error.error_password}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -341,13 +289,14 @@ export default function Registor(props) {
                                 {values.showPassword ? (
                                   <Visibility />
                                 ) : (
-                                  <VisibilityOff />
-                                )}
+                                    <VisibilityOff />
+                                  )}
                               </IconButton>
                             </InputAdornment>
                           ),
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_password}</Typography>
                     </Grid>
                   </Grid>
                 </form>

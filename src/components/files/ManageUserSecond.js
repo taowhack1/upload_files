@@ -1,9 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import moment from 'moment';
-import jwt from 'jsonwebtoken';
-import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -14,40 +11,28 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-  Menu,
-  MenuItem,
-  IconButton,
-  Checkbox,
 } from '@material-ui/core/';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CreateIcon from '@material-ui/icons/Create';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import RemoveIcon from '@material-ui/icons/Remove';
+
 import FolderIcon from '@material-ui/icons/Folder';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { getAllFolder, getFolders } from '../../actions/folderActions';
+import { getFolders } from '../../actions/folderActions';
 import PersonIcon from '@material-ui/icons/Person';
 import useStyles from './StyleFiles';
-import { Switch } from "@material-ui/core/";
 import Circular from '../layout/Circular';
 import MenuUserCheckUpload from './MenuUserCheckUpload';
+import MenuUserSecondSwitch from './MenuUserSecondSwitch';
+
 import { useSnackbar } from 'notistack';
 
 const ManageUserSecond = (props) => {
   const { enqueueSnackbar } = useSnackbar();
-
   const classes = useStyles();
-  const { user_id } = useParams();
-
-  const decoded = jwt.verify(user_id, '1234');
-
+  const { user_id, user_firstname, user_active } = props.location.state;
   const { folders, loading } = useSelector((state) => state.folder);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(decoded.user_id));
+    dispatch(getFolders(user_id));
   }, []);
 
   const snackAlert = (msg, variant) => {
@@ -87,13 +72,15 @@ const ManageUserSecond = (props) => {
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
-              <TableRow >
-                <TableCell className={classes.tableCellName} style={{ borderBottom: '0px' }}>
-
-                </TableCell>
-                <TableCell align='center' style={{ width: '27%', borderBottom: '0px' }}>
-
-                </TableCell>
+              <TableRow>
+                <TableCell
+                  className={classes.tableCellName}
+                  style={{ borderBottom: '0px' }}
+                ></TableCell>
+                <TableCell
+                  align='center'
+                  style={{ width: '27%', borderBottom: '0px' }}
+                ></TableCell>
                 <TableCell align='center' style={{ borderBottom: '0px' }}>
                   <Typography color='textPrimary' className={classes.text}>
                     สิทธิ์การใช้งาน
@@ -102,31 +89,43 @@ const ManageUserSecond = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow >
+              <TableRow>
                 <TableCell border={0} style={{ borderBottom: '0px' }}>
                   <Grid container className={classes.iconAlign}>
                     <Grid item></Grid>
                     <Grid item xs={1}>
-                      <PersonIcon className={classes.iconPersonTable} style={{ borderBottom: '0px' }} />
+                      {user_active ? (
+                        <PersonIcon
+                          className={classes.iconPersonTable}
+                        />
+                      ) : (
+                          <PersonIcon
+                            className={classes.iconPersonTableUnActive}
+                          />
+                        )}
                     </Grid>
                     <Grid item xs={10}>
-                      <Typography
-                        color='textPrimary'
-                        className={classes.text}
-                      >
-                        ชื่อตรงนี้
-                    </Typography>
+                      <Typography color='textPrimary' className={classes.text}>
+                        {user_firstname}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </TableCell>
-                <TableCell align='center' style={{ borderBottom: '0px' }}></TableCell>
-                <TableCell align='center' style={{ borderBottom: '0px' }}><Switch /></TableCell>
+                <TableCell
+                  align='center'
+                  style={{ borderBottom: '0px' }}
+                ></TableCell>
+                <TableCell align='center' style={{ borderBottom: '0px' }}>
+                  <MenuUserSecondSwitch
+                    userId={user_id}
+                    userActive={user_active}
+                    snackAlert={snackAlert}
+                  />
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </Paper>
-
-
 
         <Paper className={classes.paper}>
           <Table className={classes.table}>

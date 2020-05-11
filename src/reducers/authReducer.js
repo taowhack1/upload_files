@@ -52,7 +52,9 @@ export default (state = initialState, action) => {
     case UPDATE_ACTIVE_USER:
       return {
         ...state,
-        updatestatususer: action.payload,
+        users: state.users.map((user) =>
+          user.user_id === action.payload.user_id ? action.payload : user
+        ),
         loading: false,
       };
     default:

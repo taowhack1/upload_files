@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import useStyles from "./StyleFiles";
-import { useDispatch } from "react-redux";
-import { Checkbox, TableCell } from "@material-ui/core/";
-import { updateAccessFolder } from "../../actions/authActions";
-import jwt from "jsonwebtoken";
+import React, { useState } from 'react';
+import useStyles from './StyleFiles';
+import { useDispatch } from 'react-redux';
+import { Checkbox, TableCell } from '@material-ui/core/';
+import { updateAccessFolder } from '../../actions/authActions';
 const MenuUserCheckUpload = (props) => {
   const { userData, folderData } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
-  const userDataDecoded = jwt.verify(userData, "1234");
-  let click = "";
+  let click = '';
   const [folder, setFolder] = useState({
-    user_id: parseInt(userDataDecoded.user_id),
+    user_id: parseInt(userData),
     folder_id: folderData.folder_id,
     access_download: folderData.access_download,
     access_upload: folderData.access_upload,
@@ -29,13 +27,13 @@ const MenuUserCheckUpload = (props) => {
   };
 
   const handleDownloadClick = async (accessDownload) => {
-    click = "download";
+    click = 'download';
     console.log(click);
     if (accessDownload === true) {
       await dispatch(
         updateAccessFolder(
           {
-            user_id: parseInt(userDataDecoded.user_id),
+            user_id: parseInt(userData),
             folder_id: folderData.folder_id,
             access_download: false,
             access_upload: access_upload,
@@ -54,7 +52,7 @@ const MenuUserCheckUpload = (props) => {
       await dispatch(
         updateAccessFolder(
           {
-            user_id: parseInt(userDataDecoded.user_id),
+            user_id: parseInt(userData),
             folder_id: folderData.folder_id,
             access_download: true,
             access_upload: access_upload,
@@ -72,13 +70,13 @@ const MenuUserCheckUpload = (props) => {
   };
 
   const handleUploadClick = async (accessUpload) => {
-    click = "upload";
+    click = 'upload';
     console.log(click);
     if (accessUpload === true) {
       await dispatch(
         updateAccessFolder(
           {
-            user_id: parseInt(userDataDecoded.user_id),
+            user_id: parseInt(userData),
             folder_id: folderData.folder_id,
             access_download: access_download,
             access_upload: false,
@@ -97,7 +95,7 @@ const MenuUserCheckUpload = (props) => {
       await dispatch(
         updateAccessFolder(
           {
-            user_id: parseInt(userDataDecoded.user_id),
+            user_id: parseInt(userData),
             folder_id: folderData.folder_id,
             access_download: access_download,
             access_upload: true,
@@ -116,20 +114,20 @@ const MenuUserCheckUpload = (props) => {
 
   return (
     <>
-      <TableCell key={folderData.folder_id} align="center">
+      <TableCell key={folderData.folder_id} align='center'>
         <Checkbox
           className={classes.tableMargin}
           checked={checkedDownload}
           onChange={(event) => handleDownloadClick(access_download)}
-          inputProps={{ "aria-label": "Allow Download" }}
+          inputProps={{ 'aria-label': 'Allow Download' }}
         />
       </TableCell>
-      <TableCell align="center">
+      <TableCell align='center'>
         <Checkbox
           className={classes.tableMargin}
           checked={checkedUpload}
           onChange={(event) => handleUploadClick(access_upload)}
-          inputProps={{ "aria-label": "Allow Upload" }}
+          inputProps={{ 'aria-label': 'Allow Upload' }}
         />
       </TableCell>
     </>

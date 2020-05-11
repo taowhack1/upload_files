@@ -61,7 +61,7 @@ const App = () => {
               />
               <Route
                 exact
-                path="/manageusersecond/:user_id"
+                path="/manageusersecond/"
                 component={ManageUserSecond}
               />
               <Route exact path="/dowload" component={Dowload} />

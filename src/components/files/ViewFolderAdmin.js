@@ -24,8 +24,10 @@ import {
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
+import MenuFolder2 from "./MenuFile";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSnackbar } from "notistack";
+import swal from "sweetalert";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
@@ -134,6 +136,9 @@ const ViewFolderAdmin = (props) => {
                           )}
                         </Typography>
                       </TableCell>
+                      {/* <TableCell>
+                        <MenuFolder2 />
+                      </TableCell> */}
                       <TableCell align="center">
                         <MenuFolder
                           delete={handleDeleteFolder}

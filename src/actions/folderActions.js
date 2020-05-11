@@ -50,6 +50,7 @@ export const deleteFolder = (id, snackAlert) => async (dispatch) => {
   };
   try {
     const res = await axios.delete(`${url}/folder/delete`, config);
+    console.log(res.data);
     if (res.data.success == false) {
       snackAlert("ไม่สามารถลบโฟลเดอร์ได้", "error");
     } else {

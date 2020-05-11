@@ -21,11 +21,12 @@ import {
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import DeleteFiles from "./DeleteFiles";
+import ConfirmDeleteFiles from "./ConfirmDeleteFiles";
 import useStyles from "./StyleFiles";
-import MenuFolder from "./MenuFolder";
+import MenuFile from "./MenuFile";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSnackbar } from "notistack";
+import { deleteFile } from "../../actions/fileActions";
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
   const { folder_id, folder_name } = useParams();
@@ -83,7 +84,13 @@ const ViewFilesAdmin = (props) => {
     dispatch(getFiles(folder_id));
     setSelected([]);
   };
-
+  const handleDelete = async (files) => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      await dispatch(deleteFile(file.file_id, snackAlert));
+    }
+    updateList();
+  };
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -130,17 +137,17 @@ const ViewFilesAdmin = (props) => {
             </TableHead>
             <TableBody>
               {!loading && files !== null
-                ? files.map((row, index) => {
+                ? files.map((file, index) => {
                     return (
-                      <TableRow key={row.file_id} hover>
+                      <TableRow key={file.file_id} hover>
                         <TableCell align="center">
                           <Checkbox
                             className={classes.tableMargin}
                             onClick={(event) =>
                               handleSelectClick(
                                 event,
-                                row.file_id,
-                                row.file_name
+                                file.file_id,
+                                file.file_name
                               )
                             }
                           />
@@ -157,7 +164,7 @@ const ViewFilesAdmin = (props) => {
                                 color="textPrimary"
                                 className={classes.text}
                               >
-                                {row.file_name}
+                                {file.file_name}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -166,13 +173,13 @@ const ViewFilesAdmin = (props) => {
                         </TableCell>
                         <TableCell align="center">
                           <Typography className={classes.text}>
-                            {moment(row.file_created).format(
+                            {moment(file.file_created).format(
                               "DD-MM-YYYY HH:MM"
                             )}
                           </Typography>
                         </TableCell>
                         <TableCell align="center">
-                          <MenuFolder />
+                          <MenuFile file={file} handleDelete={handleDelete} />
                         </TableCell>
                       </TableRow>
                     );
@@ -186,7 +193,8 @@ const ViewFilesAdmin = (props) => {
             </div>
           )}
           {selected.length != 0 && (
-            <DeleteFiles
+            <ConfirmDeleteFiles
+              handleDelete={handleDelete}
               snackAlert={snackAlert}
               listDelFiles={selected}
               refresh={updateList}

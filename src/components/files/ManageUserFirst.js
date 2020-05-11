@@ -27,7 +27,7 @@ const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [checkRigth, setCheckRigth] = useState()
+  const [checkRigth, setCheckRigth] = useState();
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
@@ -46,9 +46,9 @@ const ManageUserFirst = () => {
   };
 
   const check = (values) => {
-    setCheckRigth(values)
-    console.log(values)
-  }
+    setCheckRigth(values);
+    console.log(values);
+  };
 
   return (
     <Fragment>
@@ -90,56 +90,68 @@ const ManageUserFirst = () => {
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Link
-                        to={{
-                          pathname:
-                            "/manageusersecond/" +
-                            jwt.sign({ user_id: user.user_id }, "1234"),
-                        }}
-                      >
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item></Grid>
-                          <Grid item xs={1}>
-                            {checkRigth ? <PersonIcon className={classes.iconPersonTable} /> : <PersonIcon className={classes.iconPersonTableUnActive} />}
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Link
+                          to={{
+                            pathname:
+                              "/manageusersecond/" +
+                              jwt.sign({ user_id: user.user_id }, "1234"),
+                          }}
+                        >
+                          <Grid container className={classes.iconAlign}>
+                            <Grid item></Grid>
+                            <Grid item xs={1}>
+                              {checkRigth ? (
+                                <PersonIcon
+                                  className={classes.iconPersonTable}
+                                />
+                              ) : (
+                                <PersonIcon
+                                  className={classes.iconPersonTableUnActive}
+                                />
+                              )}
+                            </Grid>
+                            <Grid item xs={10}>
+                              <Typography
+                                color="textPrimary"
+                                className={classes.text}
+                              >
+                                {user.user_firstname}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={10}>
-                            <Typography
-                              color="textPrimary"
-                              className={classes.text}
-                            >
-                              {user.user_firstname}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Link>
-                    </TableCell>
-                    <TableCell align="center"></TableCell>
-                    <TableCell align="center">
-                      <MenuUser userData={user} snackAlert={snackAlert} checkRigths={check} />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Link
-                        to={{
-                          pathname:
-                            "/manageusersecond/" +
-                            jwt.sign(
-                              {
-                                user_id: user.user_id,
-                                user_firstname: user.user_firstname,
-                              },
-                              "1234"
-                            ),
-                        }}
-                      >
-                        <IconButton className={classes.tableMargin}>
-                          <NavigateNextIcon></NavigateNextIcon>
-                        </IconButton>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))
+                        </Link>
+                      </TableCell>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center">
+                        <MenuUser
+                          userData={user}
+                          snackAlert={snackAlert}
+                          checkRigths={check}
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link
+                          to={{
+                            pathname:
+                              "/manageusersecond/" +
+                              jwt.sign(
+                                {
+                                  user_id: user.user_id,
+                                  user_firstname: user.user_firstname,
+                                },
+                                "1234"
+                              ),
+                          }}
+                        >
+                          <IconButton className={classes.tableMargin}>
+                            <NavigateNextIcon></NavigateNextIcon>
+                          </IconButton>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>

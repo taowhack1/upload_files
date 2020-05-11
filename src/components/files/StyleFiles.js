@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   menu: {
+    display: "flex",
     width: 250,
   },
   menuItem: {
@@ -243,7 +244,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
   },
   removeBorder: {
-    borderBottom: "0px"
+    borderBottom: "0px",
   },
 
   input: {

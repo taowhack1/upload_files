@@ -22,18 +22,20 @@ import {
   IconButton,
 } from "@material-ui/core/";
 import { useSnackbar } from "notistack";
+import StarIcon from '@material-ui/icons/Star';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [checkRigth, setCheckRigth] = useState()
+  const [checkRigth, setCheckRigth] = useState({})
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
   };
+
   useEffect(() => {
     dispatch(getUserAll());
   }, []);
@@ -47,8 +49,11 @@ const ManageUserFirst = () => {
 
   const check = (values) => {
     setCheckRigth(values)
-    console.log(values)
+    //updateUser()
   }
+
+  console.log(checkRigth)
+
 
   return (
     <Fragment>
@@ -102,14 +107,14 @@ const ManageUserFirst = () => {
                         <Grid container className={classes.iconAlign}>
                           <Grid item></Grid>
                           <Grid item xs={1}>
-                            {checkRigth ? <PersonIcon className={classes.iconPersonTable} /> : <PersonIcon className={classes.iconPersonTableUnActive} />}
+                            {user.user_active ? <PersonIcon className={classes.iconPersonTable} /> : <PersonIcon className={classes.iconPersonTableUnActive} />}
                           </Grid>
                           <Grid item xs={10}>
                             <Typography
                               color="textPrimary"
                               className={classes.text}
                             >
-                              {user.user_firstname}
+                              {user.user_firstname}    {user.authorized_id == 2 ? <StarIcon className={classes.iconStar} /> : ""}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -117,7 +122,7 @@ const ManageUserFirst = () => {
                     </TableCell>
                     <TableCell align="center"></TableCell>
                     <TableCell align="center">
-                      <MenuUser userData={user} snackAlert={snackAlert} checkRigths={check} />
+                      <MenuUser userData={user} snackAlert={snackAlert} check={check} />
                     </TableCell>
                     <TableCell align="center">
                       <Link

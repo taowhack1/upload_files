@@ -93,7 +93,7 @@ export const getUserByFolderId = (folder_id) => async (dispatch) => {
   }
 };
 
-export const updateActiveUser = (user, snackAlert) => async (dispatch) => {
+export const updateActiveUser = (user, snackAlert, check) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -165,6 +165,33 @@ export const updateAccessFolder = (user, snackAlert, click) => async (
     console.log(err);
   }
 };
+
+export const addRegistor = (user, snackAlert) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `${url}/user`,
+      user,
+      config
+    )
+    console.log(res.data)
+    if (res.data.success) {
+      snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
+    } else if (!res.data.success) {
+      snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
 
 export const setLoading = () => async (dispatch) => {
   dispatch({

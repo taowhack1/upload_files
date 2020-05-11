@@ -56,13 +56,6 @@ export default function AddFolder(props) {
       errorChecks_password_old: "",
       errorChecks_password_confirm: "",
     };
-    console.log(
-      user.user_password_old.length +
-      " " +
-      user.user_password.length +
-      " " +
-      confirm.user_password_confirm.length
-    );
     if (user.user_password_old.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_password_old = true;

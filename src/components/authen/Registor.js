@@ -20,6 +20,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
+import { addRegistor } from '../../actions/authActions'
+
 export default function Registor(props) {
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
@@ -27,6 +30,7 @@ export default function Registor(props) {
       variant: variant,
     });
   };
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [value1, setValue1] = useState(true);
@@ -143,26 +147,29 @@ export default function Registor(props) {
     const err = validation();
     console.log(user);
     if (err) {
-      axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
-        console.log(res.data);
-        if (res.data.success == false) {
-          let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
-          let errorChecks = {
-            errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
-          };
-          errorChecks.errorChecks_username = true;
-          errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
-          setErrorCheck({ ...errorCheck, ...errorChecks });
-          setError({ ...error, ...errors });
-          snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
-        } else {
-          snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
-          props.updateUser();
-          handleClose();
-        }
-      });
+      dispatch(addRegistor(user, snackAlert))
     }
-  };
+    // if (err) {
+    //   axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
+    //     console.log(res.data);
+    //     if (res.data.success == false) {
+    //       let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
+    //       let errorChecks = {
+    //         errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
+    //       };
+    //       errorChecks.errorChecks_username = true;
+    //       errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
+    //       setErrorCheck({ ...errorCheck, ...errorChecks });
+    //       setError({ ...error, ...errors });
+    //       snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
+    //     } else {
+    //       snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
+    //       props.updateUser();
+    //       handleClose();
+    //     }
+    //   });
+    // }
+  }
 
   return (
     <div>

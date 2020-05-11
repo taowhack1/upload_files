@@ -19,6 +19,7 @@ const MenuUser = (props) => {
     authorized_id: userData.authorized_id,
   });
 
+
   const { switchchecked } = switchstatus;
   const { user_active } = user;
 
@@ -31,7 +32,8 @@ const MenuUser = (props) => {
             user_active: true,
             authorized_id: userData.authorized_id,
           },
-          props.snackAlert
+          props.snackAlert,
+          props.check
         )
       );
 
@@ -39,8 +41,8 @@ const MenuUser = (props) => {
         ...switchstatus,
         switchchecked: !user_active,
       });
-
       setUser({ ...user, user_active: true });
+      props.check(switchchecked)
     }
     if (user_active === true) {
       await dispatch(
@@ -50,15 +52,16 @@ const MenuUser = (props) => {
             user_active: false,
             authorized_id: userData.authorized_id,
           },
-          props.snackAlert
+          props.snackAlert,
+          props.check
         )
       );
-
       setSwitchstatus({ ...switchstatus, switchchecked: !user_active });
       setUser({ ...user, user_active: false });
+      props.check(switchchecked)
     }
   };
-  props.checkRigths(user_active)
+
 
   return (
     <>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import swal from "sweetalert";
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -166,7 +167,7 @@ export const updateAccessFolder = (user, snackAlert, click) => async (
   }
 };
 
-export const addRegistor = (user, snackAlert) => async (
+export const addRegistor = (user, snackAlert, refresh, close) => async (
   dispatch
 ) => {
   const config = {
@@ -183,8 +184,44 @@ export const addRegistor = (user, snackAlert) => async (
     console.log(res.data)
     if (res.data.success) {
       snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
+      close()
+      refresh()
     } else if (!res.data.success) {
       snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const changePassword = (user, changePasswordSignOut) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  console.log(user)
+  try {
+    const res = await axios.post(
+      `${url}/user/update`,
+      user,
+      config
+    )
+    if (res.data.success) {
+      swal({
+        title: "เปลี่ยนรหัสผ่านแล้ว",
+        icon: "success",
+        button: "เข้าสู่ระบบ",
+      }).then((click) => {
+        click && changePasswordSignOut()
+      });
+    } else if (!res.data.success) {
+      swal({
+        title: "รหัสผ่านเดิมไม่ถูกต้อง",
+        icon: "error",
+        button: "ลองใหม่",
+      });
     }
   } catch (err) {
     console.log(err);

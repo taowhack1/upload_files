@@ -67,6 +67,7 @@ export default function Registor(props) {
     setErrorCheck({});
     setValue1(true);
     setValue2(false);
+    setValues({ ...values, showPassword: false })
   };
   const onChange = (e) => {
     if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
@@ -104,7 +105,7 @@ export default function Registor(props) {
   const validation = (e) => {
     let formIsValid = true;
     let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
-    let errorChecks = { errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "", };
+    let errorChecks = { errorChecks_firstname: false, errorChecks_lastname: false, errorChecks_username: false, errorChecks_password: false, };
     if (user.user_firstname.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_firstname = true;
@@ -147,10 +148,10 @@ export default function Registor(props) {
     const err = validation();
     console.log(user);
     if (err) {
-      dispatch(addRegistor(user, snackAlert))
+      dispatch(addRegistor(user, snackAlert, props.updateUser, handleClose))
     }
     // if (err) {
-    //   axios.post("http://192.168.5.230:8080/upload/user", user).then((res) => {
+    //   axios.post("http://192.168.5.230:8s80/upload/user", user).then((res) => {
     //     console.log(res.data);
     //     if (res.data.success == false) {
     //       let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
@@ -211,12 +212,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_firstname}
                         error={errorCheck.errorChecks_firstname}
-                        helperText={error.error_firstname}
+                        //helperText={error.error_firstname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_firstname}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -229,12 +231,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_lastname}
                         error={errorCheck.errorChecks_lastname}
-                        helperText={error.error_lastname}
+                        //helperText={error.error_lastname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_lastname}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -250,12 +253,13 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_name}
                         error={errorCheck.errorChecks_username}
-                        helperText={error.error_username}
+                        //helperText={error.error_username}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_username}</Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -271,7 +275,7 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_password}
                         error={errorCheck.errorChecks_password}
-                        helperText={error.error_password}
+                        //helperText={error.error_password}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -292,6 +296,7 @@ export default function Registor(props) {
                           ),
                         }}
                       />
+                      <Typography className={classes.errorTextRegistor}>{error.error_password}</Typography>
                     </Grid>
                   </Grid>
                 </form>

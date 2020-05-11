@@ -42,7 +42,7 @@ const MenuUser = (props) => {
         switchchecked: !user_active,
       });
       setUser({ ...user, user_active: true });
-      props.check(switchchecked)
+      //props.check(switchchecked)
     }
     if (user_active === true) {
       await dispatch(
@@ -58,7 +58,7 @@ const MenuUser = (props) => {
       );
       setSwitchstatus({ ...switchstatus, switchchecked: !user_active });
       setUser({ ...user, user_active: false });
-      props.check(switchchecked)
+      //props.check(switchchecked)
     }
   };
 

@@ -161,6 +161,7 @@ export default function AddFolder(props) {
       <Typography onClick={handleOpen} color="textPrimary">
         เปลี่ยนรหัสผ่าน
       </Typography>
+<<<<<<< HEAD
       <Modal
         className={classes.modal}
         disableAutoFocus={true}
@@ -259,6 +260,109 @@ export default function AddFolder(props) {
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
+=======
+            <Modal
+                className={classes.modal}
+                disableAutoFocus={true}
+                outline="none"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.modalPaper}>
+                        <div className={classes.root}>
+                            <Typography className={classes.text}>เปลี่ยนรหัสผ่าน</Typography>
+                            <Container maxWidth="xs">
+                                <form style={{ marginTop: 10 }}>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="user_password_old"
+                                        placeholder="Current password"
+                                        name="user_password_old"
+                                        type={values.showPassword ? "text" : "password"}
+                                        onChange={(e) => onChange(e)}
+                                        value={user.user_password_old}
+                                        error={errorCheck.errorChecks_password_old}
+                                        helperText={error.error_password_old}
+                                        className={classes.textField}
+                                        InputProps={{
+                                            className: classes.input,
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                    >
+                                                        {values.showPassword ? (
+                                                            <Visibility />
+                                                        ) : (
+                                                                <VisibilityOff />
+                                                            )}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="user_password"
+                                        placeholder="New password"
+                                        type={values.showPassword ? "text" : "password"}
+                                        id="user_password"
+                                        onChange={(e) => onChange(e)}
+                                        value={user.user_password}
+                                        error={errorCheck.errorChecks_password}
+                                        helperText={error.error_password}
+                                        className={classes.textField}
+                                        InputProps={{
+                                            className: classes.input,
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                    >
+                                                        {values.showPassword ? (
+                                                            <Visibility />
+                                                        ) : (
+                                                                <VisibilityOff />
+                                                            )}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        type={values.showPassword ? "text" : "password"}
+                                        name="user_password_confirm"
+                                        placeholder="Confirm password"
+                                        id="user_password_confirm"
+                                        value={confirm.user_password_confirm}
+                                        onChange={onChangePass}
+                                        error={errorCheck.errorChecks_password_confirm}
+                                        helperText={error.error_password_confirm}
+                                        className={classes.textField}
+                                        InputProps={{
+                                            className: classes.input,
+>>>>>>> validate-registor
 
                       endAdornment: (
                         <InputAdornment position="end">

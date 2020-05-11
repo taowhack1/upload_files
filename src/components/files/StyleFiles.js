@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 40,
     verticalAlign: "middle",
   },
+  iconPersonTableUnActive: {
+    color: "#DDDBDB",
+    fontSize: 40,
+    verticalAlign: "middle",
+  },
   iconFolder: {
     fontSize: 40,
     color: "#FCD462",

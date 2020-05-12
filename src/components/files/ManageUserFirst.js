@@ -89,7 +89,7 @@ const ManageUserFirst = () => {
                       <TableCell>
                         <Link
                           to={{
-                            pathname: "/manageusersecond/",
+                            pathname: "/manageusersecond/" + user.user_id,
                             state: {
                               user_id: user.user_id,
                               user_firstname: user.user_firstname,

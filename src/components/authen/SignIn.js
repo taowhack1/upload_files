@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "./Styles";
 import Container from "@material-ui/core/Container";
 import { signIn } from "../../actions/authActions";
-import MuiAlert from "@material-ui/lab/Alert";
 import ReactLogo from "./logo.svg";
 import { useSnackbar } from "notistack";
 

@@ -15,7 +15,7 @@ import {
 
 import FolderIcon from '@material-ui/icons/Folder';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { getFolders } from '../../actions/folderActions';
+import { getAllFoldersAdmin } from '../../actions/folderActions';
 import PersonIcon from '@material-ui/icons/Person';
 import useStyles from './StyleFiles';
 import Circular from '../layout/Circular';
@@ -28,11 +28,11 @@ const ManageUserSecond = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const { user_id, user_firstname, user_active } = props.location.state;
-  const { folders, loading } = useSelector((state) => state.folder);
-
+  const { foldersadmin, loading } = useSelector((state) => state.folder);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(user_id));
+    dispatch(getAllFoldersAdmin(user_id));
   }, []);
 
   const snackAlert = (msg, variant) => {
@@ -94,15 +94,13 @@ const ManageUserSecond = (props) => {
                   <Grid container className={classes.iconAlign}>
                     <Grid item></Grid>
                     <Grid item xs={1}>
-                      {user_active ? (
-                        <PersonIcon
-                          className={classes.iconPersonTable}
-                        />
+                      {user !== null && user.user_active ? (
+                        <PersonIcon className={classes.iconPersonTable} />
                       ) : (
-                          <PersonIcon
-                            className={classes.iconPersonTableUnActive}
-                          />
-                        )}
+                        <PersonIcon
+                          className={classes.iconPersonTableUnActive}
+                        />
+                      )}
                     </Grid>
                     <Grid item xs={10}>
                       <Typography color='textPrimary' className={classes.text}>
@@ -118,6 +116,7 @@ const ManageUserSecond = (props) => {
                 <TableCell align='center' style={{ borderBottom: '0px' }}>
                   <MenuUserSecondSwitch
                     userId={user_id}
+                    userData={user}
                     userActive={user_active}
                     snackAlert={snackAlert}
                   />
@@ -149,33 +148,33 @@ const ManageUserSecond = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {!loading && folders !== null
-                ? folders.map((folder, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid item></Grid>
-                        <Grid item xs={1}>
-                          <FolderIcon className={classes.iconFolderTable} />
+              {!loading && foldersadmin !== null
+                ? foldersadmin.map((folder, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
+                          </Grid>
+                          <Grid item xs={10}>
+                            <Typography
+                              color='textPrimary'
+                              className={classes.text}
+                            >
+                              {folder.folder_name}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={10}>
-                          <Typography
-                            color='textPrimary'
-                            className={classes.text}
-                          >
-                            {folder.folder_name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </TableCell>
+                      </TableCell>
 
-                    <MenuUserCheckUpload
-                      userData={user_id}
-                      folderData={folder}
-                      snackAlert={snackAlert}
-                    />
-                  </TableRow>
-                ))
+                      <MenuUserCheckUpload
+                        userData={user_id}
+                        folderData={folder}
+                        snackAlert={snackAlert}
+                      />
+                    </TableRow>
+                  ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>

@@ -1,14 +1,15 @@
 import {
   GET_FOLDERS,
+  GET_FOLDERS_ADMIN,
   ADD_FOLDER,
   SET_LOADING,
   DELETE_FOLDER,
   UPDATE_FOLDER,
-} from "./types";
+} from './types';
 
-import axios from "axios";
+import axios from 'axios';
 
-const url = "http://192.168.5.230:8080/upload";
+const url = 'http://192.168.5.230:8080/upload';
 
 export const getAllFolder = () => async (dispatch) => {
   try {
@@ -19,7 +20,7 @@ export const getAllFolder = () => async (dispatch) => {
       });
     });
   } catch (err) {
-    console.log("ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!");
+    console.log('ไม่สามารถเข้าดึงข้อมูลโฟลเดอร์ได้ !!');
   }
 };
 
@@ -35,14 +36,30 @@ export const getFolders = (user_id) => async (dispatch) => {
       payload: data,
     });
   } catch (err) {
-    console.log("Error");
+    console.log('Error');
+  }
+};
+
+export const getAllFoldersAdmin = (user_id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_LOADING,
+    });
+    const res = await fetch(`${url}/setaccessfolder/user_id=${user_id}`);
+    const data = await res.json();
+    dispatch({
+      type: GET_FOLDERS_ADMIN,
+      payload: data,
+    });
+  } catch (err) {
+    console.log('Error');
   }
 };
 
 export const deleteFolder = (id, snackAlert) => async (dispatch) => {
   const config = {
     header: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     data: {
       folder_id: id,
@@ -52,16 +69,16 @@ export const deleteFolder = (id, snackAlert) => async (dispatch) => {
     const res = await axios.delete(`${url}/folder/delete`, config);
     console.log(res.data);
     if (res.data.success == false) {
-      snackAlert("ไม่สามารถลบโฟลเดอร์ได้", "error");
+      snackAlert('ไม่สามารถลบโฟลเดอร์ได้', 'error');
     } else {
-      snackAlert(`ลบโฟลเดอร์สำเร็จ`, "success");
+      snackAlert(`ลบโฟลเดอร์สำเร็จ`, 'success');
     }
     dispatch({
       type: DELETE_FOLDER,
     });
     dispatch(getAllFolder());
   } catch (err) {
-    console.log("deleteFile Error >>>");
+    console.log('deleteFile Error >>>');
   }
 };
 export const createFolder = (folder_name, snackAlert, closeModal) => async (
@@ -69,9 +86,9 @@ export const createFolder = (folder_name, snackAlert, closeModal) => async (
 ) => {
   const res = await axios.post(`${url}/folder`, { folder_name });
   if (res.data.success == false) {
-    snackAlert("พบข้อผิดพลาด ชื่อโฟลเดอร์ซ้ำ", "error");
+    snackAlert('พบข้อผิดพลาด ชื่อโฟลเดอร์ซ้ำ', 'error');
   } else {
-    snackAlert(`สร้างโฟลเดอร์ ${res.data.folder_name} สำเร็จ`, "success");
+    snackAlert(`สร้างโฟลเดอร์ ${res.data.folder_name} สำเร็จ`, 'success');
     dispatch({
       type: ADD_FOLDER,
       payload: res.data,
@@ -88,9 +105,9 @@ export const updateFolder = (folder, snackAlert) => async (dispatch) => {
     folder_name_old,
   });
   if (res.data.success == true) {
-    snackAlert(`เปลี่ยนชื่อโฟลเดอร์สำเร็จ`, "success");
+    snackAlert(`เปลี่ยนชื่อโฟลเดอร์สำเร็จ`, 'success');
   } else {
-    snackAlert("ชื่อโฟลเดอร์ซ้ำ หรือตรงกับชื่อเดิม", "error");
+    snackAlert('ชื่อโฟลเดอร์ซ้ำ หรือตรงกับชื่อเดิม', 'error');
   }
   dispatch({
     type: UPDATE_FOLDER,

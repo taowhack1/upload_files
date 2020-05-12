@@ -36,6 +36,7 @@ export default (state = initialState, action) => {
     case GET_USER:
       return {
         ...state,
+        user: null,
         user: action.payload,
         loading: false,
       };
@@ -60,14 +61,12 @@ export default (state = initialState, action) => {
     case UPDATE_ACTIVE_USER:
       return {
         ...state,
-        // user: state.user.map((item) =>
-        //   item.user_id === action.payload.user_id ? action.payload : item
-        // ),
         users: state.users.map((user) =>
           user.user_id === action.payload.user_id ? action.payload : user
         ),
         loading: false,
       };
+
     default:
       return state;
   }

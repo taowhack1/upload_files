@@ -16,6 +16,7 @@ import ManageUserFirst from "./components/files/ManageUserFirst";
 import ManageUserSecond from "./components/files/ManageUserSecond";
 import Dowload from "./components/files/Dowload";
 import ConfirmDowload from "./components/files/ConfirmDowload";
+import NotFound from './components/pages/Notfound'
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"; //Google fonts
 import { SnackbarProvider, useSnackbar } from "notistack";
 
@@ -49,6 +50,7 @@ const App = () => {
             <Switch>
               <Route exact path="/admin" component={AddFolder} />
               <Route exact path="/registor" component={Registor} />
+              <Route component={NotFound} />
               <Route
                 exact
                 path="/viewfolderadmin"

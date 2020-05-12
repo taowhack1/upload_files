@@ -85,69 +85,69 @@ const ManageUserFirst = () => {
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <Link
-                          to={{
-                            pathname: "/manageusersecond/",
-                            state: {
-                              user_id: user.user_id,
-                              user_firstname: user.user_firstname,
-                              user_active: user.user_active,
-                            },
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              {user.user_active ? (
-                                <PersonIcon
-                                  className={classes.iconPersonTable}
-                                />
-                              ) : (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Link
+                        to={{
+                          pathname: "/manageusersecond/",
+                          state: {
+                            user_id: user.user_id,
+                            user_firstname: user.user_firstname,
+                            user_active: user.user_active,
+                          },
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            {user.user_active ? (
+                              <PersonIcon
+                                className={classes.iconPersonTable}
+                              />
+                            ) : (
                                 <PersonIcon
                                   className={classes.iconPersonTableUnActive}
                                 />
                               )}
-                            </Grid>
-                            <Grid item xs={10}>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {user.user_firstname}{" "}
-                                {user.authorized_id == 2 ? (
-                                  <StarIcon className={classes.iconStar} />
-                                ) : (
+                          </Grid>
+                          <Grid item xs={10}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {user.user_name}{" "}({user.user_firstname}{" "}{user.user_lastname})
+                              {user.authorized_id == 2 ? (
+                                <StarIcon className={classes.iconStar} />
+                              ) : (
                                   ""
                                 )}
-                              </Typography>
-                            </Grid>
+                            </Typography>
                           </Grid>
-                        </Link>
-                      </TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center">
-                        <MenuUser userData={user} snackAlert={snackAlert} />
-                      </TableCell>
-                      <TableCell align="center">
-                        <Link
-                          to={{
-                            pathname: "/manageusersecond/",
-                            state: {
-                              user_id: user.user_id,
-                              user_firstname: user.user_firstname,
-                              user_active: user.user_active,
-                            },
-                          }}
-                        >
-                          <IconButton className={classes.tableMargin}>
-                            <NavigateNextIcon></NavigateNextIcon>
-                          </IconButton>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        </Grid>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center"></TableCell>
+                    <TableCell align="center">
+                      <MenuUser userData={user} snackAlert={snackAlert} />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Link
+                        to={{
+                          pathname: "/manageusersecond/",
+                          state: {
+                            user_id: user.user_id,
+                            user_firstname: user.user_firstname,
+                            user_active: user.user_active,
+                          },
+                        }}
+                      >
+                        <IconButton className={classes.tableMargin}>
+                          <NavigateNextIcon></NavigateNextIcon>
+                        </IconButton>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>

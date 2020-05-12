@@ -20,7 +20,7 @@ function Alert(props) {
 
 const SignIn = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const authenticated = useSelector((state) => state.auth.authenticated);
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [user, setUser] = useState({
@@ -45,7 +45,12 @@ const SignIn = () => {
   };
 
   if (authenticated) {
-    return <Redirect to="/" />;
+    if (authdata.authorized_id == 1) {
+      return <Redirect to="/" />;
+    }
+    if (authdata.authorized_id == 2) {
+      return <Redirect to="/viewfolderadmin" />;
+    }
   }
   const { user_name, user_password } = user;
 

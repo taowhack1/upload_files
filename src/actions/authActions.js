@@ -101,7 +101,6 @@ export const updateActiveUser = (userData, user, snackAlert) => async (
       'Content-Type': 'application/json',
     },
   };
-
   try {
     const res = await axios.post(`${url}/admin/user/update`, user, config);
     dispatch({

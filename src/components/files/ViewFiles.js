@@ -18,19 +18,19 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import { getFiles } from '../../actions/fileActions';
 import { Link } from 'react-router-dom';
 import ConfirmDownload from './ConfirmDowload';
-
 import useStyles from './StyleFiles';
 import Circular from '../layout/Circular'
 
 const ViewFiles = (props) => {
   const { folder_id, folder_name } = props.location.state;
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFiles(folder_id));
   }, []);
-
+  //console.log(authdata)
   if (loading) {
     console.log('loading >>> ' + loading);
   }
@@ -39,6 +39,7 @@ const ViewFiles = (props) => {
   };
 
   return (
+
     <Fragment>
       <Grid container className={classes.gridContainer}>
         <Paper className={classes.paper}>

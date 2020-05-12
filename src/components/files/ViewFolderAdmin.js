@@ -47,6 +47,9 @@ const ViewFolderAdmin = (props) => {
     });
   };
 
+  const SLASH_DMYHM = 'DD/MM/YYYY HH:mm';
+
+
   const refresh = () => {
     dispatch(getAllFolder());
     console.log("refresh");
@@ -137,9 +140,7 @@ const ViewFolderAdmin = (props) => {
                             </TableCell>
                             <TableCell align="center">
                               <Typography className={classes.text}>
-                                {moment(folder.folder_created).format(
-                                  "DD-MM-YYYY HH:MM"
-                                )}
+                                {moment.utc(folder.folder_created).add(3, 'minutes').format(SLASH_DMYHM)}
                               </Typography>
                             </TableCell>
                             <TableCell align="center">

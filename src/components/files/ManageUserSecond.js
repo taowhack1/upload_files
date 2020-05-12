@@ -48,7 +48,6 @@ const ManageUserSecond = (props) => {
         }
       }
     }
-
   }, []);
 
   const snackAlert = (msg, variant) => {

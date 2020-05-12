@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import {
   Table,
@@ -22,6 +22,15 @@ import useStyles from './StyleFiles';
 const ViewFolder = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
+  const history = useHistory()
+
+
+  const moment = require('moment');
+
+  const SLASH_DMY = 'DD/MM/YYYY';
+  const SLASH_DMYHMS = 'DD/MM/YYYY HH:mm:ss';
+
+  console.log(SLASH_DMYHMS)
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -106,9 +115,7 @@ const ViewFolder = () => {
                                 color='textPrimary'
                                 className={classes.text}
                               >
-                                {moment(row.folder_created).format(
-                                  'DD-MM-YYYY HH:MM'
-                                )}
+                                {moment.utc(row.folder_created).format(SLASH_DMYHMS)}
                               </Typography>
                             </TableCell>
                             <TableCell align='center'></TableCell>
@@ -125,7 +132,8 @@ const ViewFolder = () => {
                 </Paper>
               </Grid>
             </Fragment>
-            : <Redirect to="/viewfolderadmin" />
+            : <Redirect to={'/notfound'} />
+            //history.push('/viewfolderamin')
           }</div>
       }
     </div>

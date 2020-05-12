@@ -29,10 +29,11 @@ import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
-  const { folder_id, folder_name } = useParams();
+  const { folder_id, folder_name } = props.location.state;
   const { files, loading } = useSelector((state) => state.file);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getFiles(folder_id));
   }, []);
@@ -76,14 +77,12 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  if (loading) {
-    console.log("loading >>> " + loading);
-  }
 
   const updateList = () => {
     dispatch(getFiles(folder_id));
     setSelected([]);
   };
+
   const handleDelete = async (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -91,6 +90,7 @@ const ViewFilesAdmin = (props) => {
     }
     updateList();
   };
+
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -173,9 +173,10 @@ const ViewFilesAdmin = (props) => {
                         </TableCell>
                         <TableCell align="center">
                           <Typography className={classes.text}>
-                            {moment(file.file_created).format(
-                              "DD-MM-YYYY HH:MM"
-                            )}
+                            {moment
+                              .utc(file.file_created)
+                              .add(3, "minutes")
+                              .format("DD-MM-YYYY HH:mm")}
                           </Typography>
                         </TableCell>
                         <TableCell align="center">
@@ -187,6 +188,17 @@ const ViewFilesAdmin = (props) => {
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {files === null ? (
+            <Table>
+              <TableRow>
+                <TableCell className={classes.emptyTable}>
+                  <Typography>{" โฟลเดอร์นี้ว่างเปล่า "}</Typography>
+                </TableCell>
+              </TableRow>
+            </Table>
+          ) : (
+            console.log("folder empty")
+          )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

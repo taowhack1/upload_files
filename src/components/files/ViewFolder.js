@@ -18,6 +18,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import Circular from "../layout/Circular";
 import { getFolders } from "../../actions/folderActions";
 import useStyles from "./StyleFiles";
+import dateTH from "./function";
 
 const ViewFolder = () => {
   const classes = useStyles();
@@ -66,16 +67,16 @@ const ViewFolder = () => {
               </TableCell>
             </TableHead>
             <TableBody>
-              {!loading && folders !== null
-                ? folders.map((row) => (
-                    <TableRow key={row.folder_id}>
+              {!loading && folders != null
+                ? folders.map((folder) => (
+                    <TableRow key={folder.folder_id}>
                       <TableCell>
                         <Link
                           to={{
-                            pathname: "/ViewFiles/",
+                            pathname: "/ViewFiles/" + folder.folder_id,
                             state: {
-                              folder_id: row.folder_id,
-                              folder_name: row.folder_name,
+                              folder_id: folder.folder_id,
+                              folder_name: folder.folder_name,
                             },
                           }}
                         >
@@ -86,7 +87,7 @@ const ViewFolder = () => {
                             </Grid>
                             <Grid item xs={10}>
                               <Typography className={classes.text}>
-                                {row.folder_name}
+                                {folder.folder_name}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -97,9 +98,10 @@ const ViewFolder = () => {
                           color="textPrimary"
                           className={classes.text}
                         >
-                          {moment(row.folder_created).format(
-                            "DD-MM-YYYY HH:MM"
-                          )}
+                          {moment
+                            .utc(folder.folder_updated)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
                         </Typography>
                       </TableCell>
                       <TableCell align="center"></TableCell>
@@ -108,6 +110,17 @@ const ViewFolder = () => {
                 : console.log("Nodata")}
             </TableBody>
           </Table>
+          {folders === null ? (
+            <Table>
+              <TableRow>
+                <TableCell className={classes.emptyTable}>
+                  <Typography>{" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}</Typography>
+                </TableCell>
+              </TableRow>
+            </Table>
+          ) : (
+            console.log("folder empty")
+          )}
           {loading && (
             <div className={classes.loading}>
               <Circular />

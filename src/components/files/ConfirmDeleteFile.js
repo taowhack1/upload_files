@@ -13,7 +13,8 @@ import { MenuItem } from "@material-ui/core/";
 export default function ConfirmDeleteFile(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const file = [props.file];
+  const file = props.file;
+  console.log(file);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -54,9 +55,9 @@ export default function ConfirmDeleteFile(props) {
               <div className={classes.modalBtn}>
                 <Button
                   variant="contained"
-                  className={classes.modalbtnDownload}
+                  className={classes.modalbtnDel}
                   onClick={async () => {
-                    await props.handleDelete(file);
+                    await props.handleDelete([file]);
                     handleClose();
                   }}
                 >

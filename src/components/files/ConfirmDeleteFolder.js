@@ -55,7 +55,7 @@ export default function ConfirmDelete(props) {
               <div className={classes.modalBtn}>
                 <Button
                   variant="contained"
-                  className={classes.modalbtnDownload}
+                  className={classes.modalbtnDel}
                   onClick={() => {
                     props.delete(folder.folder_id);
                     handleClose();

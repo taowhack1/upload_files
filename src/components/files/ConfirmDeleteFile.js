@@ -1,32 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import "./upload_style.css";
 import "./style.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import { Button, Typography, IconButton } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import useStyles from "./StyleFiles";
-import { download } from "../../actions/fileActions";
-import axios from "axios";
+import RemoveIcon from "@material-ui/icons/Remove";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { MenuItem } from "@material-ui/core/";
 
-export default function ConfirmDownload(props) {
-  const dispatch = useDispatch();
+export default function ConfirmDeleteFile(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const filename = props.filename;
-  const fileId = props.fileid;
-
-  console.log(filename);
-
-  const FileDownload = require("js-file-download");
-
-  const handleDownload = () => {
-    dispatch(download(fileId, filename));
-    handleClose();
-  };
-
+  const file = [props.file];
   const handleOpen = () => {
     setOpen(true);
   };
@@ -35,9 +22,19 @@ export default function ConfirmDownload(props) {
   };
   return (
     <div>
-      <IconButton className={classes.tableMargin}>
-        <GetAppIcon onClick={handleOpen} />
-      </IconButton>
+      <MenuItem
+        onClick={() => {
+          props.closeMenu();
+          handleOpen();
+        }}
+      >
+        <ListItemIcon>
+          <RemoveIcon />
+        </ListItemIcon>
+        <Typography variant="inherit" className={classes.menuItem}>
+          ลบ
+        </Typography>
+      </MenuItem>
       <Modal
         className={classes.modal}
         open={open}
@@ -51,24 +48,26 @@ export default function ConfirmDownload(props) {
         <Fade in={open}>
           <div className={classes.modalPaper}>
             <div className={classes.root}>
-              <h1>{props.count}</h1>
               <Typography className={classes.text}>
-                คุณต้องการดาวน์โหลด {props.filename} ?
+                คุณต้องการลบ {file.file_name} ?
               </Typography>
               <div className={classes.modalBtn}>
                 <Button
                   variant="contained"
                   className={classes.modalbtnDownload}
-                  onClick={handleDownload}
+                  onClick={async () => {
+                    await props.handleDelete(file);
+                    handleClose();
+                  }}
                 >
-                  <Typography className={classes.text}>Download</Typography>
+                  <Typography className={classes.text}>DELETE</Typography>
                 </Button>
                 <Button
                   color="primary"
                   className={classes.modalbtnCancel}
                   onClick={handleClose}
                 >
-                  <Typography className={classes.text}>Cancel</Typography>
+                  <Typography className={classes.text}>CANCEL</Typography>
                 </Button>
               </div>
             </div>

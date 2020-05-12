@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 40,
   },
   iconStar: {
-    color: '#FFC107',
+    color: "#FFC107",
   },
   NavigateNextIcon: {
     fontSize: 20,
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   menu: {
+    display: "flex",
     width: 250,
   },
   menuItem: {
@@ -181,7 +182,6 @@ const useStyles = makeStyles((theme) => ({
   modalbtnSave: {
     padding: theme.spacing(1, 6, 1),
   },
-
   upload: {
     display: "flex",
     flexDirection: "column",
@@ -246,16 +246,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
   },
   removeBorder: {
-    borderBottom: "0px"
+    borderBottom: "0px",
   },
   errorText: {
     fontSize: 13,
-    color: 'red',
+    color: "red",
     margin: theme.spacing(0, 0, 0, 2),
   },
   errorTextRegistor: {
     fontSize: 13,
-    color: 'red',
+    color: "red",
     margin: theme.spacing(1, 0, 0, 2),
   },
 

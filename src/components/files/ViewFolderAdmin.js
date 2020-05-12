@@ -24,8 +24,10 @@ import {
 import AddFolder from "./AddFolder";
 import useStyles from "./StyleFiles";
 import MenuFolder from "./MenuFolder";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Circular from '../layout/Circular'
+import MenuFolder2 from "./MenuFile";
 import { useSnackbar } from "notistack";
+import swal from "sweetalert";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
@@ -34,7 +36,7 @@ const ViewFolderAdmin = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    console.log("useEffect Running");
+    //console.log("useEffect Running");
     dispatch(getAllFolder());
   }, []);
 
@@ -103,56 +105,56 @@ const ViewFolderAdmin = (props) => {
             <TableBody>
               {!loading && folders != null
                 ? folders.map((folder) => (
-                    <TableRow key={folder.folder_id}>
-                      <TableCell>
-                        <Link
-                          to={{
-                            pathname:
-                              "/viewfilesadmin/" +
-                              folder.folder_id +
-                              folder.folder_name,
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <FolderIcon className={classes.iconFolderTable} />
-                            </Grid>
-
-                            <Grid item xs={10}>
-                              <Typography className={classes.text}>
-                                {folder.folder_name}
-                              </Typography>
-                            </Grid>
+                  <TableRow key={folder.folder_id}>
+                    <TableCell>
+                      <Link
+                        to={{
+                          pathname:
+                            "/viewfilesadmin/" +
+                            folder.folder_id +
+                            folder.folder_name,
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
                           </Grid>
-                        </Link>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment(folder.folder_created).format(
-                            "DD-MM-YYYY HH:MM"
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <MenuFolder
-                          delete={handleDeleteFolder}
-                          edit={handleChangeFolderName}
-                          snackAlert={snackAlert}
-                          refresh={refresh}
-                          folder_name_old={folder.folder_name}
-                          folder_name={folder.folder_name}
-                          folder_id={folder.folder_id}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))
+
+                          <Grid item xs={10}>
+                            <Typography className={classes.text}>
+                              {folder.folder_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment(folder.folder_created).format(
+                          "DD-MM-YYYY HH:MM"
+                        )}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <MenuFolder
+                        delete={handleDeleteFolder}
+                        edit={handleChangeFolderName}
+                        snackAlert={snackAlert}
+                        refresh={refresh}
+                        folder_name_old={folder.folder_name}
+                        folder_name={folder.folder_name}
+                        folder_id={folder.folder_id}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("Nodata")}
             </TableBody>
           </Table>
           {loading && (
             <div className={classes.loading}>
-              <CircularProgress />
+              <Circular />
             </div>
           )}
         </Paper>

@@ -56,7 +56,7 @@ export default function AddFolder(props) {
     setConfirm({ ...confirm, user_password_confirm: "" });
     setErrorCheck({});
     setError({});
-    setValues({ ...values, showPassword: false })
+    setValues({ ...values, showPassword: false });
   };
 
   const handleValidation = (e) => {
@@ -137,26 +137,7 @@ export default function AddFolder(props) {
     const err = handleValidation();
 
     if (err) {
-      dispatch(changePassword(user, changePasswordSignOut))
-      // axios
-      //   .post("http://192.168.5.230:8080/upload/user/update", user)
-      //   .then((res) => {
-      //     if (res.data.success) {
-      //       swal({
-      //         title: "เปลี่ยนรหัสผ่านแล้ว",
-      //         icon: "success",
-      //         button: "เข้าสู่ระบบ",
-      //       }).then((click) => {
-      //         click ? dispatch(signOut()) : dispatch(signOut());
-      //       });
-      //     } else {
-      //       swal({
-      //         title: "รหัสผ่านเดิมไม่ถูกต้อง",
-      //         icon: "error",
-      //         button: "ลองใหม่",
-      //       });
-      //     }
-      //   });
+      dispatch(changePassword(user, changePasswordSignOut));
     }
   };
 
@@ -195,7 +176,6 @@ export default function AddFolder(props) {
                     onChange={(e) => onChange(e)}
                     value={user.user_password_old}
                     error={errorCheck.errorChecks_password_old}
-                    //helperText={error.error_password_old}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -209,14 +189,16 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
                     }}
                   />
-                  <Typography className={classes.errorText}>{error.error_password_old}</Typography>
+                  <Typography className={classes.errorText}>
+                    {error.error_password_old}
+                  </Typography>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -229,7 +211,6 @@ export default function AddFolder(props) {
                     onChange={(e) => onChange(e)}
                     value={user.user_password}
                     error={errorCheck.errorChecks_password}
-                    // helperText={error.error_password}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -243,14 +224,16 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
                     }}
                   />
-                  <Typography className={classes.errorText}>{error.error_password}</Typography>
+                  <Typography className={classes.errorText}>
+                    {error.error_password}
+                  </Typography>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -263,7 +246,6 @@ export default function AddFolder(props) {
                     onChange={onChangePass}
                     value={confirm.user_password_confirm}
                     error={errorCheck.errorChecks_password_confirm}
-                    // helperText={error.error_password_confirm}
                     className={classes.textField}
                     InputProps={{
                       className: classes.input,
@@ -277,14 +259,16 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
                     }}
                   />
-                  <Typography className={classes.errorText}>{error.error_password_confirm}</Typography>
+                  <Typography className={classes.errorText}>
+                    {error.error_password_confirm}
+                  </Typography>
                   <div className={classes.modalBtn} style={{ marginTop: 5 }}>
                     <Button
                       variant="contained"
@@ -315,6 +299,6 @@ export default function AddFolder(props) {
           </div>
         </Fade>
       </Modal>
-    </div >
+    </div>
   );
 }

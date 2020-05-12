@@ -28,6 +28,7 @@ const MenuUser = (props) => {
         updateActiveUser(
           {
             user_id: userData.user_id,
+            user_name: userData.user_name,
             user_firstname: userData.user_firstname,
             user_lastname: userData.user_lastname,
             user_active: true,
@@ -53,6 +54,7 @@ const MenuUser = (props) => {
         updateActiveUser(
           {
             user_id: userData.user_id,
+            user_name: userData.user_name,
             user_firstname: userData.user_firstname,
             user_lastname: userData.user_lastname,
             user_active: false,

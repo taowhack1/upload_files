@@ -1,13 +1,35 @@
-import { GET_FILES, ADD_FILE, DELETE_FILE, SET_LOADING } from "./types";
+import {
+  GET_FILES,
+  ADD_FILE,
+  DELETE_FILE,
+  SET_LOADING,
+  DOWNLOAD_FILE,
+} from "./types";
 import axios from "axios";
-const url = "http://192.168.5.230:8080/upload";
+const url = "http://192.168.5.230:8080";
+export const download = (fileId, filename) => async (dispatch) => {
+  axios({
+    url: `${url}/download/file_id=` + fileId,
+    method: "GET",
+    responseType: "blob", // important
+  }).then((res) => {
+    console.log(res.data);
+    const URL = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = URL;
+    link.setAttribute("download", filename); //or any other extension
 
+    document.body.appendChild(link);
+    link.click();
+    dispatch({ payload: res.data, type: "DOWNLOAD_FILE" });
+  });
+};
 export const getFiles = (folder_id) => async (dispatch) => {
   try {
     dispatch({
       type: SET_LOADING,
     });
-    const res = await fetch(`${url}/accessfile/folder_id=${folder_id}`);
+    const res = await fetch(`${url}/upload/accessfile/folder_id=${folder_id}`);
     const data = await res.json();
     dispatch({
       type: GET_FILES,
@@ -28,7 +50,7 @@ export const deleteFile = (fileId, snackAlert) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.delete(`${url}/file/delete`, config);
+    const res = await axios.delete(`${url}/upload/file/delete`, config);
     if (res.data.success) {
       dispatch({
         type: DELETE_FILE,

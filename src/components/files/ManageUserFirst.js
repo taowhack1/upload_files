@@ -1,13 +1,13 @@
-import React, { useEffect, Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Circular from '../layout/Circular';
-import { getUserAll } from '../../actions/authActions';
-import Registor from '../authen/Registor';
-import useStyles from './StyleFiles';
-import MenuUser from './MenuUser';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import PersonIcon from '@material-ui/icons/Person';
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Circular from "../layout/Circular";
+import { getUserAll } from "../../actions/authActions";
+import Registor from "../authen/Registor";
+import useStyles from "./StyleFiles";
+import MenuUser from "./MenuUser";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import PersonIcon from "@material-ui/icons/Person";
 import {
   Table,
   TableBody,
@@ -19,15 +19,14 @@ import {
   Breadcrumbs,
   Typography,
   IconButton,
-} from '@material-ui/core/';
-import { useSnackbar } from 'notistack';
-import StarIcon from '@material-ui/icons/Star';
+} from "@material-ui/core/";
+import { useSnackbar } from "notistack";
+import StarIcon from "@material-ui/icons/Star";
 
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [checkRigth, setCheckRigth] = useState({});
   const { enqueueSnackbar } = useSnackbar();
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
@@ -46,26 +45,19 @@ const ManageUserFirst = () => {
     dispatch(getUserAll());
   };
 
-  const check = (values) => {
-    setCheckRigth(values);
-    //updateUser()
-  };
-
-  console.log(checkRigth);
-
   return (
     <Fragment>
-      <Grid container direction='row' justify='center' alignItems='center'>
+      <Grid container direction="row" justify="center" alignItems="center">
         <Paper className={classes.paper}>
-          <Grid container direction='row' justify='left' alignItems='center'>
+          <Grid container direction="row" justify="left" alignItems="center">
             <Breadcrumbs
               className={classes.breadcrumbs}
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label='breadcrumb'
+              aria-label="breadcrumb"
             >
-              <Typography className={classes.text} color='textPrimary'>
+              <Typography className={classes.text} color="textPrimary">
                 จัดการผู้ใช้งาน
               </Typography>
             </Breadcrumbs>
@@ -77,27 +69,27 @@ const ManageUserFirst = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableCellName}>
-                  <Typography color='textPrimary' className={classes.text}>
+                  <Typography color="textPrimary" className={classes.text}>
                     ชื่อ
                   </Typography>
                 </TableCell>
-                <TableCell style={{ width: '20%' }} align='center'></TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
+                <TableCell style={{ width: "20%" }} align="center"></TableCell>
+                <TableCell align="center">
+                  <Typography color="textPrimary" className={classes.text}>
                     สิทธิ์การใช้งาน
                   </Typography>
                 </TableCell>
-                <TableCell align='center'></TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users !== null
                 ? users.map((user, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} hover>
                       <TableCell>
                         <Link
                           to={{
-                            pathname: '/manageusersecond/',
+                            pathname: "/manageusersecond/",
                             state: {
                               user_id: user.user_id,
                               user_firstname: user.user_firstname,
@@ -120,32 +112,28 @@ const ManageUserFirst = () => {
                             </Grid>
                             <Grid item xs={10}>
                               <Typography
-                                color='textPrimary'
+                                color="textPrimary"
                                 className={classes.text}
                               >
-                                {user.user_firstname}{' '}
+                                {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
                                 {user.authorized_id == 2 ? (
                                   <StarIcon className={classes.iconStar} />
                                 ) : (
-                                  ''
+                                  ""
                                 )}
                               </Typography>
                             </Grid>
                           </Grid>
                         </Link>
                       </TableCell>
-                      <TableCell align='center'></TableCell>
-                      <TableCell align='center'>
-                        <MenuUser
-                          userData={user}
-                          snackAlert={snackAlert}
-                          checkRigths={check}
-                        />
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center">
+                        <MenuUser userData={user} snackAlert={snackAlert} />
                       </TableCell>
-                      <TableCell align='center'>
+                      <TableCell align="center">
                         <Link
                           to={{
-                            pathname: '/manageusersecond/',
+                            pathname: "/manageusersecond/",
                             state: {
                               user_id: user.user_id,
                               user_firstname: user.user_firstname,
@@ -160,7 +148,7 @@ const ManageUserFirst = () => {
                       </TableCell>
                     </TableRow>
                   ))
-                : console.log('Nodata')}
+                : console.log("Nodata")}
             </TableBody>
           </Table>
         </Paper>

@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -71,10 +71,9 @@ const ViewFolderAdmin = (props) => {
   };
   return (
     <div>
-      {authenticated &&
+      {authenticated && (
         <div>
-          {authdata.authorized_id == 2
-            ?
+          {authdata.authorized_id == 2 ? (
             <Fragment>
               <Grid container className={classes.gridContainer}>
                 <Paper className={classes.paper}>
@@ -82,11 +81,15 @@ const ViewFolderAdmin = (props) => {
                     <Breadcrumbs
                       className={classes.breadcrumbs}
                       separator={
-                        <NavigateNextIcon className={classes.NavigateNextIcon} />
+                        <NavigateNextIcon
+                          className={classes.NavigateNextIcon}
+                        />
                       }
                       aria-label="breadcrumb"
                     >
-                      <Typography className={classes.text}>โฟลเดอร์ทั้งหมด</Typography>
+                      <Typography className={classes.text}>
+                        โฟลเดอร์ทั้งหมด
+                      </Typography>
                     </Breadcrumbs>
                   </Grid>
                 </Paper>
@@ -98,65 +101,85 @@ const ViewFolderAdmin = (props) => {
                           <Typography className={classes.text}>ชื่อ</Typography>
                         </TableCell>
                         <TableCell align="center">
-                          <Typography className={classes.text}>วันที่แก้ไข</Typography>
+                          <Typography className={classes.text}>
+                            วันที่แก้ไข
+                          </Typography>
                         </TableCell>
                         <TableCell align="center">
-                          <Typography className={classes.text}>ตัวเลือก</Typography>
+                          <Typography className={classes.text}>
+                            ตัวเลือก
+                          </Typography>
                         </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {!loading && folders != null
                         ? folders.map((folder) => (
-                          <TableRow key={folder.folder_id}>
-                            <TableCell>
-                              <Link
-                                to={{
-                                  pathname: "/viewfilesadmin/" + folder.folder_id,
-                                  state: {
-                                    folder_id: folder.folder_id,
-                                    folder_name: folder.folder_name,
-                                  },
-                                }}
-                              >
-                                <Grid container className={classes.iconAlign}>
-                                  <Grid item></Grid>
-                                  <Grid item xs={1}>
-                                    <FolderIcon className={classes.iconFolderTable} />
-                                  </Grid>
+                            <TableRow key={folder.folder_id}>
+                              <TableCell>
+                                <Link
+                                  to={{
+                                    pathname:
+                                      "/viewfilesadmin/" + folder.folder_id,
+                                    state: {
+                                      folder_id: folder.folder_id,
+                                      folder_name: folder.folder_name,
+                                    },
+                                  }}
+                                >
+                                  <Grid container className={classes.iconAlign}>
+                                    <Grid item></Grid>
+                                    <Grid item xs={1}>
+                                      <FolderIcon
+                                        className={classes.iconFolderTable}
+                                      />
+                                    </Grid>
 
-                                  <Grid item xs={10}>
-                                    <Typography className={classes.text}>
-                                      {folder.folder_name}
-                                    </Typography>
+                                    <Grid item xs={10}>
+                                      <Typography className={classes.text}>
+                                        {folder.folder_name}
+                                      </Typography>
+                                    </Grid>
                                   </Grid>
-                                </Grid>
-                              </Link>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography className={classes.text}>
-                                {moment
-                                  .utc(folder.folder_updated)
-                                  .add(3, "minutes")
-                                  .format("DD-MM-YYYY HH:mm")}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MenuFolder
-                                delete={handleDeleteFolder}
-                                edit={handleChangeFolderName}
-                                snackAlert={snackAlert}
-                                refresh={refresh}
-                                folder_name_old={folder.folder_name}
-                                folder_name={folder.folder_name}
-                                folder_id={folder.folder_id}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ))
+                                </Link>
+                              </TableCell>
+                              <TableCell align="center">
+                                <Typography className={classes.text}>
+                                  {moment
+                                    .utc(folder.folder_updated)
+                                    .add(3, "minutes")
+                                    .format("DD-MM-YYYY HH:mm")}
+                                </Typography>
+                              </TableCell>
+                              <TableCell align="center">
+                                <MenuFolder
+                                  delete={handleDeleteFolder}
+                                  edit={handleChangeFolderName}
+                                  snackAlert={snackAlert}
+                                  refresh={refresh}
+                                  folder_name_old={folder.folder_name}
+                                  folder_name={folder.folder_name}
+                                  folder_id={folder.folder_id}
+                                />
+                              </TableCell>
+                            </TableRow>
+                          ))
                         : console.log("Nodata")}
                     </TableBody>
                   </Table>
+                  {folders === null ? (
+                    <Table>
+                      <TableRow>
+                        <TableCell className={classes.emptyTable}>
+                          <Typography>
+                            {" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </Table>
+                  ) : (
+                    console.log("folder empty")
+                  )}
                   {loading && (
                     <div className={classes.loading}>
                       <Circular />
@@ -166,10 +189,11 @@ const ViewFolderAdmin = (props) => {
                 <AddFolder handleCreateFolder={handleCreateFolder} />
               </Grid>
             </Fragment>
-            : <Redirect to="/" />
-          }
+          ) : (
+            <Redirect to="/" />
+          )}
         </div>
-      }
+      )}
     </div>
   );
 };

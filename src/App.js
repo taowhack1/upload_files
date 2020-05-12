@@ -15,7 +15,7 @@ import ManageUserFirst from "./components/files/ManageUserFirst";
 import ManageUserSecond from "./components/files/ManageUserSecond";
 import Dowload from "./components/files/Dowload";
 import ConfirmDowload from "./components/files/ConfirmDowload";
-import NotFound from './components/pages/Notfound'
+import NotFound from "./components/pages/Notfound";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"; //Google fonts
 import { SnackbarProvider } from "notistack";
 

@@ -23,6 +23,7 @@ import dateTH from "./function";
 const ViewFolder = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
+  console.log(folders);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFolders(authdata.user_id));
@@ -94,6 +95,8 @@ const ViewFolder = () => {
                                       state: {
                                         folder_id: folder.folder_id,
                                         folder_name: folder.folder_name,
+                                        // access_upload: folder.access_upload,
+                                        access_download: folder.access_download,
                                       },
                                     }}
                                   >
@@ -132,6 +135,19 @@ const ViewFolder = () => {
                           : console.log("Nodata")}
                       </TableBody>
                     </Table>
+                    {folders === null ? (
+                      <Table>
+                        <TableRow>
+                          <TableCell className={classes.emptyTable}>
+                            <Typography>
+                              {" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      </Table>
+                    ) : (
+                      console.log("folder empty")
+                    )}
                     {loading && (
                       <div className={classes.loading}>
                         <Circular />

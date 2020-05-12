@@ -11,15 +11,15 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from '@material-ui/core/';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import UploadBtn from './UploadBtn';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { getFiles } from '../../actions/fileActions';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import ConfirmDownload from './ConfirmDowload';
-import useStyles from './StyleFiles';
-import Circular from '../layout/Circular'
+} from "@material-ui/core/";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import UploadBtn from "./UploadBtn";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import { getFiles } from "../../actions/fileActions";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import ConfirmDownload from "./ConfirmDowload";
+import useStyles from "./StyleFiles";
+import Circular from "../layout/Circular";
 
 const ViewFiles = (props) => {
   //const { folder_id, folder_name } = props.location.state;
@@ -27,21 +27,20 @@ const ViewFiles = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
-
   const dispatch = useDispatch();
-  const { folder_id, folder_name } = ''
+  let { folder_id, folder_name } = "";
+
   useEffect(() => {
     if (props.location.state) {
-      const { folder_id, folder_name } = props.location.state;
+      let { folder_id, folder_name } = props.location.state;
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
-      history.push('/')
+      history.push("/");
     }
   }, []);
   const updateList = () => {
     dispatch(getFiles(folder_id));
   };
-
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -90,40 +89,40 @@ const ViewFiles = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((file) => (
-                  <TableRow key={file.file_id} hover>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid item xs={1}>
-                          <InsertDriveFileIcon
-                            className={classes.iconFilesTable}
-                          />
+                    <TableRow key={file.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item xs={1}>
+                            <InsertDriveFileIcon
+                              className={classes.iconFilesTable}
+                            />
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {file.file_name}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            color="textPrimary"
-                            className={classes.text}
-                          >
-                            {file.file_name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Typography className={classes.text}>
-                        {moment
-                          .utc(file.file_created)
-                          .add(3, "minutes")
-                          .format("DD-MM-YYYY HH:mm")}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      <ConfirmDownload
-                        filename={file.file_name}
-                        fileid={file.file_id}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment
+                            .utc(file.file_created)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <ConfirmDownload
+                          filename={file.file_name}
+                          fileid={file.file_id}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
                 : console.log("folder empty")}
             </TableBody>
           </Table>
@@ -136,8 +135,8 @@ const ViewFiles = (props) => {
               </TableRow>
             </Table>
           ) : (
-              console.log("folder empty")
-            )}
+            console.log("folder empty")
+          )}
           {loading && (
             <div className={classes.loading}>
               <Circular />

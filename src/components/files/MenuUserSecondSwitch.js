@@ -35,6 +35,7 @@ const MenuUserSecondSwitch = (props) => {
       if (users === null) {
         await setSwitchstatus(userActive)
       }
+      console.log(userActive)
 
       await dispatch(getUser(userId));
 

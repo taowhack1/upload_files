@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -11,18 +11,18 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from '@material-ui/core/';
+} from "@material-ui/core/";
 
-import FolderIcon from '@material-ui/icons/Folder';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { getAllFoldersAdmin } from '../../actions/folderActions';
-import PersonIcon from '@material-ui/icons/Person';
-import useStyles from './StyleFiles';
-import Circular from '../layout/Circular';
-import MenuUserCheckUpload from './MenuUserCheckUpload';
-import MenuUserSecondSwitch from './MenuUserSecondSwitch';
+import FolderIcon from "@material-ui/icons/Folder";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import { getAllFoldersAdmin } from "../../actions/folderActions";
+import PersonIcon from "@material-ui/icons/Person";
+import useStyles from "./StyleFiles";
+import Circular from "../layout/Circular";
+import MenuUserCheckUpload from "./MenuUserCheckUpload";
+import MenuUserSecondSwitch from "./MenuUserSecondSwitch";
 
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 
 const ManageUserSecond = (props) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -33,24 +33,24 @@ const ManageUserSecond = (props) => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { user_id, user_firstname, user_active } = ''
-  const [userID, setUserID] = useState()
-  const [userfirstname, setFirstname] = useState()
-  const [userActive, setUserActive] = useState()
+  const { user_id, user_firstname, user_active } = "";
+  const [userID, setUserID] = useState();
+  const [userfirstname, setFirstname] = useState();
+  const [userActive, setUserActive] = useState();
   useEffect(() => {
     if (props.location.state) {
       const { user_id, user_firstname, user_active } = props.location.state;
-      setUserID(user_id)
-      setFirstname(user_firstname)
-      setUserActive(user_active)
+      setUserID(user_id);
+      setFirstname(user_firstname);
+      setUserActive(user_active);
       dispatch(getAllFoldersAdmin(user_id));
     } else if (!props.location.state) {
       if (authenticated) {
         if (authdata.authorized_id == 1) {
-          history.push('/');
+          history.push("/");
         }
         if (authdata.authorized_id == 2) {
-          history.push('/manageuserfirst/');
+          history.push("/manageuserfirst/");
         }
       }
     }
@@ -70,27 +70,27 @@ const ManageUserSecond = (props) => {
     <div>
       {props.location.state != null ? (
         <Fragment>
-          <Grid container direction='row' justify='center' alignItems='center'>
+          <Grid container direction="row" justify="center" alignItems="center">
             <Paper className={classes.paper}>
               <Grid
                 container
-                direction='row'
-                justify='left'
-                alignItems='center'
+                direction="row"
+                justify="left"
+                alignItems="center"
               >
                 <Breadcrumbs
                   className={classes.breadcrumbs}
                   separator={
                     <NavigateNextIcon className={classes.NavigateNextIcon} />
                   }
-                  aria-label='breadcrumb'
+                  aria-label="breadcrumb"
                 >
-                  <Link to={{ pathname: '/manageuserfirst' }}>
-                    <Typography className={classes.opacity} color='textPrimary'>
+                  <Link to={{ pathname: "/manageuserfirst" }}>
+                    <Typography className={classes.opacity} color="textPrimary">
                       จัดการผู้ใช้งาน
                     </Typography>
                   </Link>
-                  <Typography className={classes.text} color='textPrimary'>
+                  <Typography className={classes.text} color="textPrimary">
                     ตั้งค่าการใช้งาน
                   </Typography>
                 </Breadcrumbs>
@@ -103,14 +103,14 @@ const ManageUserSecond = (props) => {
                   <TableRow>
                     <TableCell
                       className={classes.tableCellName}
-                      style={{ borderBottom: '0px' }}
+                      style={{ borderBottom: "0px" }}
                     ></TableCell>
                     <TableCell
-                      align='center'
-                      style={{ width: '27%', borderBottom: '0px' }}
+                      align="center"
+                      style={{ width: "27%", borderBottom: "0px" }}
                     ></TableCell>
-                    <TableCell align='center' style={{ borderBottom: '0px' }}>
-                      <Typography color='textPrimary' className={classes.text}>
+                    <TableCell align="center" style={{ borderBottom: "0px" }}>
+                      <Typography color="textPrimary" className={classes.text}>
                         สิทธิ์การใช้งาน
                       </Typography>
                     </TableCell>
@@ -118,30 +118,33 @@ const ManageUserSecond = (props) => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell border={0} style={{ borderBottom: '0px' }}>
+                    <TableCell border={0} style={{ borderBottom: "0px" }}>
                       <Grid container className={classes.iconAlign}>
                         <Grid item></Grid>
                         <Grid item xs={1}>
-                          {user_active ? (
+                          {userActive ? (
                             <PersonIcon className={classes.iconPersonTable} />
                           ) : (
-                              <PersonIcon
-                                className={classes.iconPersonTableUnActive}
-                              />
-                            )}
+                            <PersonIcon
+                              className={classes.iconPersonTableUnActive}
+                            />
+                          )}
                         </Grid>
                         <Grid item xs={10}>
-                          <Typography color='textPrimary' className={classes.text}>
+                          <Typography
+                            color="textPrimary"
+                            className={classes.text}
+                          >
                             {userfirstname}
                           </Typography>
                         </Grid>
                       </Grid>
                     </TableCell>
                     <TableCell
-                      align='center'
-                      style={{ borderBottom: '0px' }}
+                      align="center"
+                      style={{ borderBottom: "0px" }}
                     ></TableCell>
-                    <TableCell align='center' style={{ borderBottom: '0px' }}>
+                    <TableCell align="center" style={{ borderBottom: "0px" }}>
                       <MenuUserSecondSwitch
                         userId={userID}
                         userActive={userActive}
@@ -158,17 +161,17 @@ const ManageUserSecond = (props) => {
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.tableCellName}>
-                      <Typography color='textPrimary' className={classes.text}>
+                      <Typography color="textPrimary" className={classes.text}>
                         ชื่อ
                       </Typography>
                     </TableCell>
-                    <TableCell align='center'>
-                      <Typography color='textPrimary' className={classes.text}>
+                    <TableCell align="center">
+                      <Typography color="textPrimary" className={classes.text}>
                         ดาวน์โหลด
                       </Typography>
                     </TableCell>
-                    <TableCell align='center'>
-                      <Typography color='textPrimary' className={classes.text}>
+                    <TableCell align="center">
+                      <Typography color="textPrimary" className={classes.text}>
                         อัพโหลด
                       </Typography>
                     </TableCell>
@@ -177,43 +180,43 @@ const ManageUserSecond = (props) => {
                 <TableBody>
                   {!loading && foldersadmin !== null
                     ? foldersadmin.map((folder, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <FolderIcon
-                                className={classes.iconFolderTable}
-                              />
+                        <TableRow key={index}>
+                          <TableCell>
+                            <Grid container className={classes.iconAlign}>
+                              <Grid item></Grid>
+                              <Grid item xs={1}>
+                                <FolderIcon
+                                  className={classes.iconFolderTable}
+                                />
+                              </Grid>
+                              <Grid item xs={10}>
+                                <Typography
+                                  color="textPrimary"
+                                  className={classes.text}
+                                >
+                                  {folder.folder_name}
+                                </Typography>
+                              </Grid>
                             </Grid>
-                            <Grid item xs={10}>
-                              <Typography
-                                color='textPrimary'
-                                className={classes.text}
-                              >
-                                {folder.folder_name}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </TableCell>
+                          </TableCell>
 
-                        <MenuUserCheckUpload
-                          userData={userID}
-                          folderData={folder}
-                          snackAlert={snackAlert}
-                        />
-                      </TableRow>
-                    ))
-                    : console.log('Nodata')}
+                          <MenuUserCheckUpload
+                            userData={userID}
+                            folderData={folder}
+                            snackAlert={snackAlert}
+                          />
+                        </TableRow>
+                      ))
+                    : console.log("Nodata")}
                 </TableBody>
               </Table>
             </Paper>
-          </Grid >
-        </Fragment >
+          </Grid>
+        </Fragment>
       ) : (
-          <Redirect to='/manageuserfirst' />
-        )}
-    </div >
+        <Redirect to="/manageuserfirst" />
+      )}
+    </div>
   );
 };
 export default ManageUserSecond;

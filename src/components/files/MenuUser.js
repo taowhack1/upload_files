@@ -26,14 +26,14 @@ const MenuUser = (props) => {
     if (user_active === false) {
       await dispatch(
         updateActiveUser(
-          {
-            user_id: userData.user_id,
-            user_name: userData.user_name,
-            user_firstname: userData.user_firstname,
-            user_lastname: userData.user_lastname,
-            user_active: true,
-            authorized_id: userData.authorized_id,
-          },
+          // {
+          //   user_id: userData.user_id,
+          //   user_name: userData.user_name,
+          //   user_firstname: userData.user_firstname,
+          //   user_lastname: userData.user_lastname,
+          //   user_active: true,
+          //   authorized_id: userData.authorized_id,
+          // },
           {
             user_id: userData.user_id,
             user_active: true,
@@ -52,14 +52,14 @@ const MenuUser = (props) => {
     if (user_active === true) {
       await dispatch(
         updateActiveUser(
-          {
-            user_id: userData.user_id,
-            user_name: userData.user_name,
-            user_firstname: userData.user_firstname,
-            user_lastname: userData.user_lastname,
-            user_active: false,
-            authorized_id: userData.authorized_id,
-          },
+          // {
+          //   user_id: userData.user_id,
+          //   user_name: userData.user_name,
+          //   user_firstname: userData.user_firstname,
+          //   user_lastname: userData.user_lastname,
+          //   user_active: false,
+          //   authorized_id: userData.authorized_id,
+          // },
           {
             user_id: userData.user_id,
             user_active: false,

@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import {
@@ -15,7 +15,7 @@ import {
 
 import FolderIcon from '@material-ui/icons/Folder';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { getFolders } from '../../actions/folderActions';
+import { getAllFoldersAdmin } from '../../actions/folderActions';
 import PersonIcon from '@material-ui/icons/Person';
 import useStyles from './StyleFiles';
 import Circular from '../layout/Circular';
@@ -29,22 +29,28 @@ const ManageUserSecond = (props) => {
   const classes = useStyles();
 
   const { authenticated, authdata } = useSelector((state) => state.auth);
-  const { folders, loading } = useSelector((state) => state.folder);
-  const history = useHistory()
+  const { foldersadmin, loading } = useSelector((state) => state.folder);
+  const history = useHistory();
 
   const dispatch = useDispatch();
   const { user_id, user_firstname, user_active } = ''
+  const [userID, setUserID] = useState()
+  const [userfirstname, setFirstname] = useState()
+  const [userActive, setUserActive] = useState()
   useEffect(() => {
     if (props.location.state) {
       const { user_id, user_firstname, user_active } = props.location.state;
-      dispatch(getFolders(user_id));
+      setUserID(user_id)
+      setFirstname(user_firstname)
+      setUserActive(user_active)
+      dispatch(getAllFoldersAdmin(user_id));
     } else if (!props.location.state) {
       if (authenticated) {
         if (authdata.authorized_id == 1) {
-          history.push('/')
+          history.push('/');
         }
         if (authdata.authorized_id == 2) {
-          history.push('/manageuserfirst/')
+          history.push('/manageuserfirst/');
         }
       }
     }
@@ -62,12 +68,16 @@ const ManageUserSecond = (props) => {
 
   return (
     <div>
-      {props.location.state != null
-        ?
+      {props.location.state != null ? (
         <Fragment>
           <Grid container direction='row' justify='center' alignItems='center'>
             <Paper className={classes.paper}>
-              <Grid container direction='row' justify='left' alignItems='center'>
+              <Grid
+                container
+                direction='row'
+                justify='left'
+                alignItems='center'
+              >
                 <Breadcrumbs
                   className={classes.breadcrumbs}
                   separator={
@@ -113,9 +123,7 @@ const ManageUserSecond = (props) => {
                         <Grid item></Grid>
                         <Grid item xs={1}>
                           {user_active ? (
-                            <PersonIcon
-                              className={classes.iconPersonTable}
-                            />
+                            <PersonIcon className={classes.iconPersonTable} />
                           ) : (
                               <PersonIcon
                                 className={classes.iconPersonTableUnActive}
@@ -124,7 +132,7 @@ const ManageUserSecond = (props) => {
                         </Grid>
                         <Grid item xs={10}>
                           <Typography color='textPrimary' className={classes.text}>
-                            {user_firstname}
+                            {userfirstname}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -135,8 +143,8 @@ const ManageUserSecond = (props) => {
                     ></TableCell>
                     <TableCell align='center' style={{ borderBottom: '0px' }}>
                       <MenuUserSecondSwitch
-                        userId={user_id}
-                        userActive={user_active}
+                        userId={userID}
+                        userActive={userActive}
                         snackAlert={snackAlert}
                       />
                     </TableCell>
@@ -167,14 +175,16 @@ const ManageUserSecond = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {!loading && folders !== null
-                    ? folders.map((folder, index) => (
+                  {!loading && foldersadmin !== null
+                    ? foldersadmin.map((folder, index) => (
                       <TableRow key={index}>
                         <TableCell>
                           <Grid container className={classes.iconAlign}>
                             <Grid item></Grid>
                             <Grid item xs={1}>
-                              <FolderIcon className={classes.iconFolderTable} />
+                              <FolderIcon
+                                className={classes.iconFolderTable}
+                              />
                             </Grid>
                             <Grid item xs={10}>
                               <Typography
@@ -188,7 +198,7 @@ const ManageUserSecond = (props) => {
                         </TableCell>
 
                         <MenuUserCheckUpload
-                          userData={user_id}
+                          userData={userID}
                           folderData={folder}
                           snackAlert={snackAlert}
                         />
@@ -198,12 +208,12 @@ const ManageUserSecond = (props) => {
                 </TableBody>
               </Table>
             </Paper>
-          </Grid>
-        </Fragment>
-        : <Redirect to='/manageuserfirst' />
-      }
-    </div>
-
+          </Grid >
+        </Fragment >
+      ) : (
+          <Redirect to='/manageuserfirst' />
+        )}
+    </div >
   );
 };
 export default ManageUserSecond;

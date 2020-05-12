@@ -1,13 +1,13 @@
-import React, { useEffect, Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import Circular from "../layout/Circular";
-import { getUserAll } from "../../actions/authActions";
-import Registor from "../authen/Registor";
-import useStyles from "./StyleFiles";
-import MenuUser from "./MenuUser";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import PersonIcon from "@material-ui/icons/Person";
+import React, { useEffect, Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import Circular from '../layout/Circular';
+import { getUserAll } from '../../actions/authActions';
+import Registor from '../authen/Registor';
+import useStyles from './StyleFiles';
+import MenuUser from './MenuUser';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PersonIcon from '@material-ui/icons/Person';
 import {
   Table,
   TableBody,
@@ -19,9 +19,9 @@ import {
   Breadcrumbs,
   Typography,
   IconButton,
-} from "@material-ui/core/";
-import { useSnackbar } from "notistack";
-import StarIcon from "@material-ui/icons/Star";
+} from '@material-ui/core/';
+import { useSnackbar } from 'notistack';
+import StarIcon from '@material-ui/icons/Star';
 
 const ManageUserFirst = () => {
   const classes = useStyles();
@@ -48,24 +48,35 @@ const ManageUserFirst = () => {
 
   return (
     <div>
-      {authenticated &&
+      {authenticated && (
         <div>
-          {authdata.authorized_id == 2
-            ?
+          {authdata.authorized_id == 2 ? (
             <Fragment>
-              <Grid container direction="row" justify="center" alignItems="center">
+              <Grid
+                container
+                direction='row'
+                justify='center'
+                alignItems='center'
+              >
                 <Paper className={classes.paper}>
-                  <Grid container direction="row" justify="left" alignItems="center">
+                  <Grid
+                    container
+                    direction='row'
+                    justify='left'
+                    alignItems='center'
+                  >
                     <Breadcrumbs
                       className={classes.breadcrumbs}
                       separator={
-                        <NavigateNextIcon className={classes.NavigateNextIcon} />
+                        <NavigateNextIcon
+                          className={classes.NavigateNextIcon}
+                        />
                       }
-                      aria-label="breadcrumb"
+                      aria-label='breadcrumb'
                     >
-                      <Typography className={classes.text} color="textPrimary">
+                      <Typography className={classes.text} color='textPrimary'>
                         จัดการผู้ใช้งาน
-              </Typography>
+                      </Typography>
                     </Breadcrumbs>
                   </Grid>
                 </Paper>
@@ -75,96 +86,115 @@ const ManageUserFirst = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell className={classes.tableCellName}>
-                          <Typography color="textPrimary" className={classes.text}>
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
                             ชื่อ
-                  </Typography>
+                          </Typography>
                         </TableCell>
-                        <TableCell style={{ width: "20%" }} align="center"></TableCell>
-                        <TableCell align="center">
-                          <Typography color="textPrimary" className={classes.text}>
+                        <TableCell
+                          style={{ width: '20%' }}
+                          align='center'
+                        ></TableCell>
+                        <TableCell align='center'>
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
                             สิทธิ์การใช้งาน
-                  </Typography>
+                          </Typography>
                         </TableCell>
-                        <TableCell align="center"></TableCell>
+                        <TableCell align='center'></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {users !== null
                         ? users.map((user, index) => (
-                          <TableRow key={index}>
-                            <TableCell>
-                              <Link
-                                to={{
-                                  pathname: "/manageusersecond/" + user.user_id,
-                                  state: {
-                                    user_id: user.user_id,
-                                    user_firstname: user.user_firstname,
-                                    user_active: user.user_active,
-                                  },
-                                }}
-                              >
-                                <Grid container className={classes.iconAlign}>
-                                  <Grid item></Grid>
-                                  <Grid item xs={1}>
-                                    {user.user_active ? (
-                                      <PersonIcon
-                                        className={classes.iconPersonTable}
-                                      />
-                                    ) : (
+                            <TableRow key={index}>
+                              <TableCell>
+                                <Link
+                                  to={{
+                                    pathname:
+                                      '/manageusersecond/' + user.user_id,
+                                    state: {
+                                      user_id: user.user_id,
+                                      user_firstname: user.user_firstname,
+                                      user_active: user.user_active,
+                                    },
+                                  }}
+                                >
+                                  <Grid container className={classes.iconAlign}>
+                                    <Grid item></Grid>
+                                    <Grid item xs={1}>
+                                      {user.user_active ? (
                                         <PersonIcon
-                                          className={classes.iconPersonTableUnActive}
+                                          className={classes.iconPersonTable}
+                                        />
+                                      ) : (
+                                        <PersonIcon
+                                          className={
+                                            classes.iconPersonTableUnActive
+                                          }
                                         />
                                       )}
-                                  </Grid>
-                                  <Grid item xs={10}>
-                                    <Typography
-                                      color="textPrimary"
-                                      className={classes.text}
-                                    >
-                                      {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
-                                      {user.authorized_id == 2 ? (
-                                        <StarIcon className={classes.iconStar} />
-                                      ) : (
-                                          ""
+                                    </Grid>
+                                    <Grid item xs={10}>
+                                      <Typography
+                                        color='textPrimary'
+                                        className={classes.text}
+                                      >
+                                        {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
+                                        {user.authorized_id == 2 ? (
+                                          <StarIcon
+                                            className={classes.iconStar}
+                                          />
+                                        ) : (
+                                          ''
                                         )}
-                                    </Typography>
+                                      </Typography>
+                                    </Grid>
                                   </Grid>
-                                </Grid>
-                              </Link>
-                            </TableCell>
-                            <TableCell align="center"></TableCell>
-                            <TableCell align="center">
-                              <MenuUser userData={user} snackAlert={snackAlert} />
-                            </TableCell>
-                            <TableCell align="center">
-                              <Link
-                                to={{
-                                  pathname: "/manageusersecond/" + user.user_id,
-                                  state: {
-                                    user_id: user.user_id,
-                                    user_firstname: user.user_firstname,
-                                    user_active: user.user_active,
-                                  },
-                                }}
-                              >
-                                <IconButton className={classes.tableMargin}>
-                                  <NavigateNextIcon></NavigateNextIcon>
-                                </IconButton>
-                              </Link>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                        : console.log("Nodata")}
+                                </Link>
+                              </TableCell>
+                              <TableCell align='center'></TableCell>
+                              <TableCell align='center'>
+                                <MenuUser
+                                  userData={user}
+                                  snackAlert={snackAlert}
+                                />
+                              </TableCell>
+                              <TableCell align='center'>
+                                <Link
+                                  to={{
+                                    pathname:
+                                      '/manageusersecond/' + user.user_id,
+                                    state: {
+                                      user_id: user.user_id,
+                                      user_firstname: user.user_firstname,
+                                      user_active: user.user_active,
+                                    },
+                                  }}
+                                >
+                                  <IconButton className={classes.tableMargin}>
+                                    <NavigateNextIcon></NavigateNextIcon>
+                                  </IconButton>
+                                </Link>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        : console.log('Nodata')}
                     </TableBody>
                   </Table>
                 </Paper>
               </Grid>
               <Registor updateUser={updateUser} snackAlert={snackAlert} />
             </Fragment>
-            : <Redirect to="/" />
-          }
+          ) : (
+            <Redirect to='/' />
+          )}
         </div>
-      }
+      )}
     </div>
   );
 };

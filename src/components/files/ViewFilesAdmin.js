@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFiles } from "../../actions/fileActions";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import moment from "moment";
 import {
   Table,
@@ -29,13 +29,30 @@ import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
-  const { folder_id, folder_name } = props.location.state;
   const { files, loading } = useSelector((state) => state.file);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+  const history = useHistory()
+  const { authenticated, authdata } = useSelector((state) => state.auth);
+
+  const { folder_id, folder_name } = ''
+  const [folderID, setFolderID] = React.useState()
 
   useEffect(() => {
-    dispatch(getFiles(folder_id));
+    if (props.location.state) {
+      const { folder_id, folder_name } = props.location.state;
+      setFolderID(folder_id)
+      dispatch(getFiles(folder_id));
+    } else if (!props.location.state) {
+      if (authenticated) {
+        if (authdata.authorized_id == 1) {
+          history.push('/')
+        }
+        if (authdata.authorized_id == 2) {
+          history.push('/manageuserfirst/')
+        }
+      }
+    }
   }, []);
 
   const [selected, setSelected] = React.useState([]);
@@ -79,7 +96,7 @@ const ViewFilesAdmin = (props) => {
   };
 
   const updateList = () => {
-    dispatch(getFiles(folder_id));
+    dispatch(getFiles(folderID));
     setSelected([]);
   };
 

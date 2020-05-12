@@ -85,51 +85,47 @@ const ViewFolder = () => {
                       <TableBody>
                         {!loading && folders !== null
                           ? folders.map((folder) => (
-                              <TableRow key={folder.folder_id}>
-                                <TableCell>
-                                  <Link
-                                    to={{
-                                      pathname:
-                                        "/ViewFiles/" + folder.folder_id,
-                                      state: {
-                                        folder_id: folder.folder_id,
-                                        folder_name: folder.folder_name,
-                                      },
-                                    }}
-                                  >
-                                    <Grid
-                                      container
-                                      className={classes.iconAlign}
-                                    >
-                                      <Grid item></Grid>
-                                      <Grid item xs={1}>
-                                        <FolderIcon
-                                          className={classes.iconFolderTable}
-                                        />
-                                      </Grid>
-                                      <Grid item xs={10}>
-                                        <Typography className={classes.text}>
-                                          {folder.folder_name}
-                                        </Typography>
-                                      </Grid>
+                            <TableRow key={folder.folder_id}>
+                              <TableCell>
+                                <Link
+                                  to={{
+                                    pathname: '/ViewFiles/' + folder.folder_id,
+                                    state: {
+                                      folder_id: folder.folder_id,
+                                      folder_name: folder.folder_name,
+                                      access_upload: folder.access_upload,
+                                      access_download: folder.access_download,
+                                    },
+                                  }}
+                                >
+                                  <Grid container className={classes.iconAlign}>
+                                    <Grid item></Grid>
+                                    <Grid item xs={1}>
+                                      <FolderIcon className={classes.iconFolderTable} />
                                     </Grid>
-                                  </Link>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    color="textPrimary"
-                                    className={classes.text}
-                                  >
-                                    {moment
-                                      .utc(folder.folder_updated)
-                                      .add(3, "minutes")
-                                      .format("DD-MM-YYYY HH:mm")}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center"></TableCell>
-                              </TableRow>
-                            ))
-                          : console.log("Nodata")}
+                                    <Grid item xs={10}>
+                                      <Typography className={classes.text}>
+                                        {folder.folder_name}
+                                      </Typography>
+                                    </Grid>
+                                  </Grid>
+                                </Link>
+                              </TableCell>
+                              <TableCell align='center'>
+                                <Typography
+                                  color='textPrimary'
+                                  className={classes.text}
+                                >
+                                  {moment
+                                    .utc(folder.folder_updated)
+                                    .add(3, "minutes")
+                                    .format("DD-MM-YYYY HH:mm")}
+                                </Typography>
+                              </TableCell>
+                              <TableCell align='center'></TableCell>
+                            </TableRow>
+                          ))
+                          : console.log('Nodata')}
                       </TableBody>
                     </Table>
                     {loading && (
@@ -140,10 +136,9 @@ const ViewFolder = () => {
                   </Paper>
                 </Grid>
               </Fragment>
-            ) : (
-              <Redirect to={"/notfound"} />
             )
-            //history.push('/viewfolderamin')
+              : <Redirect to={'/viewfolderadmin'} />
+            //history.push('/viewfolderamin') 
           }
         </div>
       )}

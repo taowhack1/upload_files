@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import {
@@ -33,10 +33,16 @@ const ManageUserSecond = (props) => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { user_id, user_firstname, user_active } = '';
+  const { user_id, user_firstname, user_active } = ''
+  const [userID, setUserID] = useState()
+  const [userfirstname, setFirstname] = useState()
+  const [userActive, setUserActive] = useState()
   useEffect(() => {
     if (props.location.state) {
       const { user_id, user_firstname, user_active } = props.location.state;
+      setUserID(user_id)
+      setFirstname(user_firstname)
+      setUserActive(user_active)
       dispatch(getAllFoldersAdmin(user_id));
     } else if (!props.location.state) {
       if (authenticated) {
@@ -119,17 +125,14 @@ const ManageUserSecond = (props) => {
                           {user_active ? (
                             <PersonIcon className={classes.iconPersonTable} />
                           ) : (
-                            <PersonIcon
-                              className={classes.iconPersonTableUnActive}
-                            />
-                          )}
+                              <PersonIcon
+                                className={classes.iconPersonTableUnActive}
+                              />
+                            )}
                         </Grid>
                         <Grid item xs={10}>
-                          <Typography
-                            color='textPrimary'
-                            className={classes.text}
-                          >
-                            {user_firstname}
+                          <Typography color='textPrimary' className={classes.text}>
+                            {userfirstname}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -140,8 +143,8 @@ const ManageUserSecond = (props) => {
                     ></TableCell>
                     <TableCell align='center' style={{ borderBottom: '0px' }}>
                       <MenuUserSecondSwitch
-                        userId={user_id}
-                        userActive={user_active}
+                        userId={userID}
+                        userActive={userActive}
                         snackAlert={snackAlert}
                       />
                     </TableCell>
@@ -174,43 +177,43 @@ const ManageUserSecond = (props) => {
                 <TableBody>
                   {!loading && foldersadmin !== null
                     ? foldersadmin.map((folder, index) => (
-                        <TableRow key={index}>
-                          <TableCell>
-                            <Grid container className={classes.iconAlign}>
-                              <Grid item></Grid>
-                              <Grid item xs={1}>
-                                <FolderIcon
-                                  className={classes.iconFolderTable}
-                                />
-                              </Grid>
-                              <Grid item xs={10}>
-                                <Typography
-                                  color='textPrimary'
-                                  className={classes.text}
-                                >
-                                  {folder.folder_name}
-                                </Typography>
-                              </Grid>
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Grid container className={classes.iconAlign}>
+                            <Grid item></Grid>
+                            <Grid item xs={1}>
+                              <FolderIcon
+                                className={classes.iconFolderTable}
+                              />
                             </Grid>
-                          </TableCell>
+                            <Grid item xs={10}>
+                              <Typography
+                                color='textPrimary'
+                                className={classes.text}
+                              >
+                                {folder.folder_name}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </TableCell>
 
-                          <MenuUserCheckUpload
-                            userData={user_id}
-                            folderData={folder}
-                            snackAlert={snackAlert}
-                          />
-                        </TableRow>
-                      ))
+                        <MenuUserCheckUpload
+                          userData={userID}
+                          folderData={folder}
+                          snackAlert={snackAlert}
+                        />
+                      </TableRow>
+                    ))
                     : console.log('Nodata')}
                 </TableBody>
               </Table>
             </Paper>
-          </Grid>
-        </Fragment>
+          </Grid >
+        </Fragment >
       ) : (
-        <Redirect to='/manageuserfirst' />
-      )}
-    </div>
+          <Redirect to='/manageuserfirst' />
+        )}
+    </div >
   );
 };
 export default ManageUserSecond;

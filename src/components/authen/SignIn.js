@@ -24,6 +24,9 @@ const SignIn = () => {
     user_name: "",
     user_password: "",
   });
+  const [values, setValues] = useState({
+    showPassword: false,
+  });
 
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
@@ -51,6 +54,14 @@ const SignIn = () => {
       dispatch(signIn(user, snackAlert));
     }
   };
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
 
   return (
     <div className={classes.background}>

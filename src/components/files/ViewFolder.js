@@ -23,7 +23,7 @@ import dateTH from "./function";
 const ViewFolder = () => {
   const classes = useStyles();
   const { folders, loading } = useSelector((state) => state.folder);
-  const { authdata } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFolders(authdata.user_id));
@@ -76,15 +76,15 @@ const ViewFolder = () => {
                     </TableHead>
                     <TableBody>
                       {!loading && folders !== null
-                        ? folders.map((row) => (
-                          <TableRow key={row.folder_id}>
+                        ? folders.map((folder) => (
+                          <TableRow key={folder.folder_id}>
                             <TableCell>
                               <Link
                                 to={{
                                   pathname: '/ViewFiles/' + folder.folder_id,
                                   state: {
-                                    folder_id: row.folder_id,
-                                    folder_name: row.folder_name,
+                                    folder_id: folder.folder_id,
+                                    folder_name: folder.folder_name,
                                   },
                                 }}
                               >
@@ -95,7 +95,7 @@ const ViewFolder = () => {
                                   </Grid>
                                   <Grid item xs={10}>
                                     <Typography className={classes.text}>
-                                      {row.folder_name}
+                                      {folder.folder_name}
                                     </Typography>
                                   </Grid>
                                 </Grid>
@@ -126,7 +126,7 @@ const ViewFolder = () => {
                 </Paper>
               </Grid>
             </Fragment>
-            : <Redirect to={'/notfound'} />
+            : <Redirect to={'/viewfolderadmin'} />
             //history.push('/viewfolderamin')
           }</div>
       }

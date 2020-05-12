@@ -48,9 +48,6 @@ const App = () => {
           <Router>
             <Navbar />
             <Switch>
-              <Route exact path="/admin" component={AddFolder} />
-              <Route exact path="/registor" component={Registor} />
-              <Route component={NotFound} />
               <Route
                 exact
                 path="/viewfolderadmin"
@@ -66,8 +63,6 @@ const App = () => {
                 path="/manageusersecond/"
                 component={ManageUserSecond}
               />
-              <Route exact path="/dowload" component={Dowload} />
-              <Route exact path="/confirm" component={ConfirmDowload} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/" component={Home} />
               <Route exact path="/ViewFiles" component={ViewFiles} />
@@ -76,6 +71,7 @@ const App = () => {
                 path="/viewfilesadmin/:folder_id:folder_name"
                 children={<ViewFilesAdmin />}
               />
+              <Route component={NotFound} />
             </Switch>
           </Router>
         </SnackbarProvider>

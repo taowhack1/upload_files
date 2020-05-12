@@ -138,52 +138,52 @@ const ViewFilesAdmin = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((file, index) => {
-                    return (
-                      <TableRow key={file.file_id} hover>
-                        <TableCell align="center">
-                          <Checkbox
-                            className={classes.tableMargin}
-                            onClick={(event) =>
-                              handleSelectClick(
-                                event,
-                                file.file_id,
-                                file.file_name
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item xs={1}>
-                              <InsertDriveFileIcon
-                                className={classes.iconFilesTable}
-                              />
-                            </Grid>
-                            <Grid item xs={9}>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {file.file_name}
-                              </Typography>
-                            </Grid>
+                  return (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell align="center">
+                        <Checkbox
+                          className={classes.tableMargin}
+                          onClick={(event) =>
+                            handleSelectClick(
+                              event,
+                              file.file_id,
+                              file.file_name
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item xs={1}>
+                            <InsertDriveFileIcon
+                              className={classes.iconFilesTable}
+                            />
                           </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {file.file_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
 
-                          {/* </Link> */}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment(file.file_created).format(
-                              "DD-MM-YYYY HH:MM"
-                            )}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <MenuFile file={file} handleDelete={handleDelete} />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
+                        {/* </Link> */}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment(file.file_created).format(
+                            "DD-MM-YYYY HH:MM"
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuFile file={file} handleDelete={handleDelete} />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
                 : console.log("Nodata")}
             </TableBody>
           </Table>

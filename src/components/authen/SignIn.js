@@ -13,6 +13,10 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import ReactLogo from "./logo.svg";
 import { useSnackbar } from "notistack";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -29,11 +33,22 @@ const SignIn = () => {
   });
   const [alerttitle, setAlerttitle] = useState("");
   const [opensnackbar, setOpensnackbar] = useState(false);
+  const [values, setValues] = useState({
+    showPassword: false,
+  });
+
 
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   const handleOpenSnackbar = () => {
@@ -100,12 +115,27 @@ const SignIn = () => {
               fullWidth
               name="user_password"
               placeholder="Password"
-              type="password"
+              type={values.showPassword ? "text" : "password"}
               id="user_password"
               autoComplete="current-password"
               onChange={onChange}
               InputProps={{
                 className: classes.input,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? (
+                        <Visibility />
+                      ) : (
+                          <VisibilityOff />
+                        )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
 

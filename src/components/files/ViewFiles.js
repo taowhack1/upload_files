@@ -16,19 +16,26 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import UploadBtn from './UploadBtn';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import { getFiles } from '../../actions/fileActions';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import ConfirmDownload from './ConfirmDowload';
 import useStyles from './StyleFiles';
 import Circular from '../layout/Circular'
 
 const ViewFiles = (props) => {
-  const { folder_id, folder_name } = props.location.state;
+  //const { folder_id, folder_name } = props.location.state;
   const { authenticated, authdata } = useSelector((state) => state.auth);
+  const history = useHistory();
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
+  const { folder_id, folder_name } = ''
   useEffect(() => {
-    dispatch(getFiles(folder_id));
+    if (props.location.state) {
+      const { folder_id, folder_name } = props.location.state;
+      dispatch(getFiles(folder_id));
+    } else if (!props.location.state) {
+      history.push('/')
+    }
   }, []);
   //console.log(authdata)
   if (loading) {
@@ -39,7 +46,6 @@ const ViewFiles = (props) => {
   };
 
   return (
-
     <Fragment>
       <Grid container className={classes.gridContainer}>
         <Paper className={classes.paper}>

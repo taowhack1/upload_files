@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
@@ -20,6 +20,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import ConfirmDownload from './ConfirmDowload';
 import useStyles from './StyleFiles';
 import Circular from '../layout/Circular'
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const ViewFiles = (props) => {
   //const { folder_id, folder_name } = props.location.state;
@@ -30,16 +31,22 @@ const ViewFiles = (props) => {
 
   const dispatch = useDispatch();
   const { folder_id, folder_name } = ''
+  const [folderID, setFolderID] = useState()
+  const [accessupload, setAccessUpload] = useState({})
+  const [accessdownload, setAccessDowload] = useState({})
   useEffect(() => {
     if (props.location.state) {
-      const { folder_id, folder_name } = props.location.state;
+      const { folder_id, folder_name, access_upload, access_download } = props.location.state;
+      setAccessUpload(access_upload)
+      setAccessDowload(access_download)
+      setFolderID(folder_id)
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
       history.push('/')
     }
   }, []);
   const updateList = () => {
-    dispatch(getFiles(folder_id));
+    dispatch(getFiles(folderID));
   };
 
   return (
@@ -117,10 +124,14 @@ const ViewFiles = (props) => {
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <ConfirmDownload
-                        filename={file.file_name}
-                        fileid={file.file_id}
-                      />
+                      {accessdownload
+                        ?
+                        <ConfirmDownload
+                          filename={file.file_name}
+                          fileid={file.file_id}
+                        />
+                        : <GetAppIcon color="disabled" />
+                      }
                     </TableCell>
                   </TableRow>
                 ))
@@ -145,7 +156,9 @@ const ViewFiles = (props) => {
           )}
         </Paper>
       </Grid>
-      <UploadBtn refresh={updateList} folderId={folder_id} />
+      {accessupload &&
+        <UploadBtn refresh={updateList} folderId={folderID} />
+      }
     </Fragment>
   );
 };

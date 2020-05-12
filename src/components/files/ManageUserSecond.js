@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import {
@@ -34,9 +34,15 @@ const ManageUserSecond = (props) => {
 
   const dispatch = useDispatch();
   const { user_id, user_firstname, user_active } = ''
+  const [userID, setUserID] = useState()
+  const [userfirstname, setFirstname] = useState()
+  const [userActive, setUserActive] = useState()
   useEffect(() => {
     if (props.location.state) {
       const { user_id, user_firstname, user_active } = props.location.state;
+      setUserID(user_id)
+      setFirstname(user_firstname)
+      setUserActive(user_active)
       dispatch(getFolders(user_id));
     } else if (!props.location.state) {
       if (authenticated) {
@@ -124,7 +130,7 @@ const ManageUserSecond = (props) => {
                         </Grid>
                         <Grid item xs={10}>
                           <Typography color='textPrimary' className={classes.text}>
-                            {user_firstname}
+                            {userfirstname}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -135,8 +141,8 @@ const ManageUserSecond = (props) => {
                     ></TableCell>
                     <TableCell align='center' style={{ borderBottom: '0px' }}>
                       <MenuUserSecondSwitch
-                        userId={user_id}
-                        userActive={user_active}
+                        userId={userID}
+                        userActive={userActive}
                         snackAlert={snackAlert}
                       />
                     </TableCell>
@@ -188,7 +194,7 @@ const ManageUserSecond = (props) => {
                         </TableCell>
 
                         <MenuUserCheckUpload
-                          userData={user_id}
+                          userData={userID}
                           folderData={folder}
                           snackAlert={snackAlert}
                         />

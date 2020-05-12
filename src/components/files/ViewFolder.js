@@ -85,6 +85,8 @@ const ViewFolder = () => {
                                   state: {
                                     folder_id: folder.folder_id,
                                     folder_name: folder.folder_name,
+                                    access_upload: folder.access_upload,
+                                    access_download: folder.access_download,
                                   },
                                 }}
                               >

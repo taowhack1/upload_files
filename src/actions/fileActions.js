@@ -29,14 +29,16 @@ export const getFiles = (folder_id) => async (dispatch) => {
     dispatch({
       type: SET_LOADING,
     });
-    const res = await fetch(`${url}/upload/accessfile/folder_id=${folder_id}`);
+    const res = await fetch(
+      `http://192.168.5.230:8080/upload/accessfile/folder_id=${folder_id}`
+    );
     const data = await res.json();
     dispatch({
       type: GET_FILES,
       payload: data,
     });
   } catch (err) {
-    console.log("Error");
+    console.log(err);
   }
 };
 

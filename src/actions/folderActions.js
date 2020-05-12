@@ -31,6 +31,7 @@ export const getFolders = (user_id) => async (dispatch) => {
     });
     const res = await fetch(`${url}/accessfolder/user_id=${user_id}`);
     const data = await res.json();
+    console.log(data);
     dispatch({
       type: GET_FOLDERS,
       payload: data,

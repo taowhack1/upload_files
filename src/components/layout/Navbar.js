@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const history = useHistory();
   const classes = useStyles();
-  const authenticated = useSelector((state) => state.auth.authenticated);
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -66,34 +66,44 @@ const Navbar = () => {
 
   const authLinks = (
     <Toolbar>
-      <Grid container>
-        <Grid item xs={3}>
-          {' '}
-          <Typography className={classes.title} component={Link} to='/'>
-            ระบบจัดการเอกสารออนไลน์
-          </Typography>
+      {authdata &&
+        <Grid container>
+          {authdata.authorized_id == 1
+            ?
+            <Grid container>
+              <Grid item xs={3}>
+                {' '}
+                <Typography className={classes.title} component={Link} to='/'>
+                  ระบบจัดการเอกสารออนไลน์
+            </Typography>
+              </Grid>
+            </Grid>
+            :
+            <Grid container >
+              <Grid item xs={2}>
+                {' '}
+                <Typography
+                  className={classes.title}
+                  component={Link}
+                  to='/viewfolderadmin'
+                >
+                  จัดการโฟลเดอร์
+            </Typography>
+              </Grid>
+              <Grid item xs={2}>
+                {' '}
+                <Typography
+                  className={classes.title}
+                  component={Link}
+                  to='/manageuserfirst'
+                >
+                  จัดการผู้ใช้งาน
+            </Typography>
+              </Grid>
+            </Grid>
+          }
         </Grid>
-        <Grid item xs={2}>
-          {' '}
-          <Typography
-            className={classes.title}
-            component={Link}
-            to='/viewfolderadmin'
-          >
-            จัดการโฟลเดอร์
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          {' '}
-          <Typography
-            className={classes.title}
-            component={Link}
-            to='/manageuserfirst'
-          >
-            จัดการผู้ใช้งาน
-          </Typography>
-        </Grid>
-      </Grid>
+      }
 
       {auth && (
         <div>

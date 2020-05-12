@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "150",
   },
+  emptyTable: {
+    textAlign: "center",
+    color: "#a0a0a0",
+  },
   //icon
   iconFolderTable: {
     fontSize: 40,

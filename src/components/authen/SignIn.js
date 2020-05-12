@@ -8,18 +8,24 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "./Styles";
 import Container from "@material-ui/core/Container";
 import { signIn } from "../../actions/authActions";
-import MuiAlert from "@material-ui/lab/Alert";
 import ReactLogo from "./logo.svg";
 import { useSnackbar } from "notistack";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 const SignIn = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const authenticated = useSelector((state) => state.auth.authenticated);
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [user, setUser] = useState({
     user_name: "",
     user_password: "",
+  });
+  const [values, setValues] = useState({
+    showPassword: false,
   });
 
   const snackAlert = (msg, variant) => {
@@ -29,7 +35,12 @@ const SignIn = () => {
   };
 
   if (authenticated) {
-    return <Redirect to="/" />;
+    if (authdata.authorized_id == 1) {
+      return <Redirect to="/" />;
+    }
+    if (authdata.authorized_id == 2) {
+      return <Redirect to="/viewfolderadmin" />;
+    }
   }
   const { user_name, user_password } = user;
 
@@ -43,6 +54,14 @@ const SignIn = () => {
       dispatch(signIn(user, snackAlert));
     }
   };
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
 
   return (
     <div className={classes.background}>
@@ -76,12 +95,27 @@ const SignIn = () => {
               fullWidth
               name="user_password"
               placeholder="Password"
-              type="password"
+              type={values.showPassword ? "text" : "password"}
               id="user_password"
               autoComplete="current-password"
               onChange={onChange}
               InputProps={{
                 className: classes.input,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? (
+                        <Visibility />
+                      ) : (
+                          <VisibilityOff />
+                        )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
 

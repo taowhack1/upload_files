@@ -11,13 +11,13 @@ import ViewFolderAdmin from "./components/files/ViewFolderAdmin";
 import AddFolder from "./components/files/AddFolder";
 import Registor from "./components/authen/Registor";
 import ViewFilesAdmin from "./components/files/ViewFilesAdmin";
-import ManageUser from "./components/files/MangeUser";
 import ManageUserFirst from "./components/files/ManageUserFirst";
 import ManageUserSecond from "./components/files/ManageUserSecond";
 import Dowload from "./components/files/Dowload";
 import ConfirmDowload from "./components/files/ConfirmDowload";
+import NotFound from './components/pages/Notfound'
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"; //Google fonts
-import { SnackbarProvider, useSnackbar } from "notistack";
+import { SnackbarProvider } from "notistack";
 
 const token = localStorage.getItem("authData");
 const tokenParse = JSON.parse(token);
@@ -29,17 +29,13 @@ if (tokenParse) {
   });
 }
 
-//Google Fonts
 const theme = createMuiTheme({
   typography: {
     fontFamily: ['"Sarabun"'].join(","),
   },
 });
-//
 
 const App = () => {
-  //const { enqueueSnackbar } = useSnackbar();
-
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -47,8 +43,6 @@ const App = () => {
           <Router>
             <Navbar />
             <Switch>
-              <Route exact path="/admin" component={AddFolder} />
-              <Route exact path="/registor" component={Registor} />
               <Route
                 exact
                 path="/viewfolderadmin"
@@ -61,19 +55,18 @@ const App = () => {
               />
               <Route
                 exact
-                path="/manageusersecond/"
+                path="/manageusersecond/:user_id"
                 component={ManageUserSecond}
               />
-              <Route exact path="/dowload" component={Dowload} />
-              <Route exact path="/confirm" component={ConfirmDowload} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/" component={Home} />
-              <Route exact path="/ViewFiles" component={ViewFiles} />
+              <Route exact path="/ViewFiles/:folder_id" component={ViewFiles} />
               <Route
                 exact
-                path="/viewfilesadmin/:folder_id:folder_name"
-                children={<ViewFilesAdmin />}
+                path="/viewfilesadmin/:folder_id"
+                component={ViewFilesAdmin}
               />
+              <Route component={NotFound} />
             </Switch>
           </Router>
         </SnackbarProvider>

@@ -29,10 +29,11 @@ import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
-  const { folder_id, folder_name } = useParams();
+  const { folder_id, folder_name } = props.location.state;
   const { files, loading } = useSelector((state) => state.file);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getFiles(folder_id));
   }, []);
@@ -76,14 +77,12 @@ const ViewFilesAdmin = (props) => {
     setIndex(selectIndex);
     setSelected(newSelected);
   };
-  if (loading) {
-    console.log("loading >>> " + loading);
-  }
 
   const updateList = () => {
     dispatch(getFiles(folder_id));
     setSelected([]);
   };
+
   const handleDelete = async (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -91,6 +90,7 @@ const ViewFilesAdmin = (props) => {
     }
     updateList();
   };
+
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -138,71 +138,88 @@ const ViewFilesAdmin = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((file, index) => {
-                    return (
-                      <TableRow key={file.file_id} hover>
-                        <TableCell align="center">
-                          <Checkbox
-                            className={classes.tableMargin}
-                            onClick={(event) =>
-                              handleSelectClick(
-                                event,
-                                file.file_id,
-                                file.file_name
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item xs={1}>
-                              <InsertDriveFileIcon
-                                className={classes.iconFilesTable}
-                              />
-                            </Grid>
-                            <Grid item xs={9}>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {file.file_name}
-                              </Typography>
-                            </Grid>
+                  return (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell align="center">
+                        <Checkbox
+                          className={classes.tableMargin}
+                          onClick={(event) =>
+                            handleSelectClick(
+                              event,
+                              file.file_id,
+                              file.file_name
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item xs={1}>
+                            <InsertDriveFileIcon
+                              className={classes.iconFilesTable}
+                            />
                           </Grid>
-
-                          {/* </Link> */}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment(file.file_created).format(
-                              "DD-MM-YYYY HH:MM"
-                            )}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <MenuFile file={file} handleDelete={handleDelete} />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
+                          <Grid item xs={9}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {file.file_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        {/* </Link> */}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment
+                            .utc(file.file_created)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuFile file={file} handleDelete={handleDelete} />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
                 : console.log("Nodata")}
             </TableBody>
           </Table>
-          {loading && (
-            <div className={classes.loading}>
-              <CircularProgress />
-            </div>
-          )}
-          {selected.length != 0 && (
-            <ConfirmDeleteFiles
-              handleDelete={handleDelete}
-              snackAlert={snackAlert}
-              listDelFiles={selected}
-              refresh={updateList}
-            />
-          )}
-        </Paper>
-      </Grid>
-    </Fragment>
+          {
+            files === null ? (
+              <Table>
+                <TableRow>
+                  <TableCell className={classes.emptyTable}>
+                    <Typography>{" โฟลเดอร์นี้ว่างเปล่า "}</Typography>
+                  </TableCell>
+                </TableRow>
+              </Table>
+            ) : (
+                console.log("folder empty")
+              )
+          }
+          {
+            loading && (
+              <div className={classes.loading}>
+                <CircularProgress />
+              </div>
+            )
+          }
+          {
+            selected.length != 0 && (
+              <ConfirmDeleteFiles
+                handleDelete={handleDelete}
+                snackAlert={snackAlert}
+                listDelFiles={selected}
+                refresh={updateList}
+              />
+            )
+          }
+        </Paper >
+      </Grid >
+    </Fragment >
   );
 };
 export default ViewFilesAdmin;

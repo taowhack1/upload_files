@@ -29,7 +29,7 @@ const ManageUserSecond = (props) => {
   const classes = useStyles();
 
   const { authenticated, authdata } = useSelector((state) => state.auth);
-  const { folders, loading } = useSelector((state) => state.folder);
+  const { foldersadmin, loading } = useSelector((state) => state.folder);
   const history = useHistory();
 
   const dispatch = useDispatch();

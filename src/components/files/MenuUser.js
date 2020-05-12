@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useStyles from './StyleFiles';
 import { useDispatch } from 'react-redux';
 import { Switch } from '@material-ui/core/';
-import { updateActiveUser } from '../../actions/authActions';
+import { updateActiveUser, getUser } from '../../actions/authActions';
 
 const MenuUser = (props) => {
   const { userData } = props;
@@ -41,7 +41,7 @@ const MenuUser = (props) => {
           props.snackAlert
         )
       );
-
+      await dispatch(getUser(userData.user_id));
       setSwitchstatus({
         ...switchstatus,
         switchchecked: !user_active,
@@ -66,6 +66,7 @@ const MenuUser = (props) => {
           props.snackAlert
         )
       );
+      await dispatch(getUser(userData.user_id));
       setSwitchstatus({ ...switchstatus, switchchecked: !user_active });
       setUser({ ...user, user_active: false });
     }

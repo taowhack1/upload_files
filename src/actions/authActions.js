@@ -7,6 +7,7 @@ import {
   SET_LOADING,
   GET_USER_BY_FOLDER_ID,
   UPDATE_ACCESS_FOLDER,
+  GET_USER,
   GET_USER_ALL,
   UPDATE_ACTIVE_USER,
 } from '../actions/types';
@@ -59,6 +60,36 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
   }
 };
 
+// export const getUser = (userId) => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: SET_LOADING,
+//     });
+
+//     // const res = await fetch(`${url}/user/user_id=${userId}`);
+//     // const data = await res.json();
+//     const res = axios.get(
+//       `http://192.168.5.230:8080/upload/user/user_id=${userId}`
+//     );
+//     dispatch({
+//       type: GET_USER,
+//       payload: res.data,
+//     });
+//   } catch (err) {
+//     console.log('Error');
+//   }
+// };
+
+export const getUser = (userId) => (dispatch) =>
+  axios
+    .get(`http://192.168.5.230:8080/upload/user/user_id=${userId}`)
+    .then((res) =>
+      dispatch({
+        type: GET_USER,
+        payload: res.data,
+      })
+    );
+
 export const getUserAll = () => async (dispatch) => {
   try {
     dispatch({
@@ -101,7 +132,6 @@ export const updateActiveUser = (userData, user, snackAlert) => async (
       'Content-Type': 'application/json',
     },
   };
-
   try {
     const res = await axios.post(`${url}/admin/user/update`, user, config);
     dispatch({

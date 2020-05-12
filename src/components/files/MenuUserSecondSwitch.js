@@ -10,7 +10,7 @@ import {
 } from '../../actions/authActions';
 
 const MenuUserSecondSwitch = (props) => {
-  const { userId } = props;
+  const { userId, userActive } = props;
   const dispatch = useDispatch();
   const { user, users } = useSelector((state) => state.auth);
   const { foldersadmin } = useSelector((state) => state.folder);
@@ -24,7 +24,7 @@ const MenuUserSecondSwitch = (props) => {
     user_name: '',
     user_firstname: '',
     user_lastname: '',
-    user_active: '',
+    user_active: props.userActive,
     authorized_id: '',
   });
 
@@ -33,7 +33,7 @@ const MenuUserSecondSwitch = (props) => {
   useEffect(() => {
     async function getUsers() {
       if (users === null) {
-        dispatch(getUserAll());
+        await setSwitchstatus(userActive)
       }
 
       await dispatch(getUser(userId));

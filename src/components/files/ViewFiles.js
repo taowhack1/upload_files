@@ -100,22 +100,13 @@ const ViewFiles = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((file) => (
-                    <TableRow key={file.file_id} hover>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
-                          </Grid>
-                          <Grid item xs={9}>
-                            <Typography
-                              color="textPrimary"
-                              className={classes.text}
-                            >
-                              {file.file_name}
-                            </Typography>
-                          </Grid>
+                  <TableRow key={file.file_id} hover>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid item xs={1}>
+                          <InsertDriveFileIcon
+                            className={classes.iconFilesTable}
+                          />
                         </Grid>
                         <Grid item xs={9}>
                           <Typography
@@ -125,27 +116,29 @@ const ViewFiles = (props) => {
                             {file.file_name}
                           </Typography>
                         </Grid>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment
-                            .utc(file.file_created)
-                            .add(3, "minutes")
-                            .format("DD-MM-YYYY HH:mm")}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        {accessdownload ? (
-                          <ConfirmDownload
-                            filename={file.file_name}
-                            fileid={file.file_id}
-                          />
-                        ) : (
+                      </Grid>
+
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography className={classes.text}>
+                        {moment
+                          .utc(file.file_created)
+                          .add(3, "minutes")
+                          .format("DD-MM-YYYY HH:mm")}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      {accessdownload ? (
+                        <ConfirmDownload
+                          filename={file.file_name}
+                          fileid={file.file_id}
+                        />
+                      ) : (
                           <GetAppIcon color="disabled" />
                         )}
-                      </TableCell>
-                    </TableRow>
-                  ))
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log("folder empty")}
             </TableBody>
           </Table>
@@ -158,8 +151,8 @@ const ViewFiles = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log("folder empty")
-          )}
+              console.log("folder empty")
+            )}
           {loading && (
             <div className={classes.loading}>
               <Circular />

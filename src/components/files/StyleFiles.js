@@ -278,7 +278,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
   },
   filetype: {
-    width: 30
+    width: 30,
+    verticalAlign: 'middle'
+  },
+  filetypeUpload: {
+    width: 35,
+    verticalAlign: 'middle'
   },
 
   input: {

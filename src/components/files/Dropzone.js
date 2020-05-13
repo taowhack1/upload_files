@@ -10,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Box from "@material-ui/core/Box";
 import Icon from "@material-ui/core/Icon";
 import { useSnackbar } from "notistack";
+import FileType from './filetype/Filetypes'
 
 const Dropzone = (props) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -157,10 +158,7 @@ const Dropzone = (props) => {
                   <div key={index} className={classes.uploadPreviewList}>
                     <Card className={classes.uploadPreviewCard}>
                       <ListItem data-imgindex={index}>
-                        <img
-                          style={{ width: "20px", height: "20px" }}
-                          src={item.src}
-                        />
+                        <FileType typefile={item.name} checktype={item.size} style={{ width: "50px", height: "50px" }} />
                         <div className={classes.uploadPreviewBox}>
                           <Box
                             className={classes.uploadPreviewListName}
@@ -186,8 +184,8 @@ const Dropzone = (props) => {
             </List>
           </div>
         ) : (
-          <div className={classes.uploadPreviewDisable}></div>
-        )}
+            <div className={classes.uploadPreviewDisable}></div>
+          )}
       </div>
 
       <div className={classes.modalBtnUpload}>

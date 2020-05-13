@@ -107,7 +107,7 @@ const ViewFiles = (props) => {
                     <TableCell>
                       <Grid container className={classes.iconAlign}>
                         <Grid item xs={1}>
-                          <FileType typefile={file.file_name} />
+                          <FileType typefile={file.file_name} src={file.src} />
                         </Grid>
                         <Grid item xs={9}>
                           <Typography

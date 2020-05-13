@@ -18,7 +18,7 @@ export default function ConfirmDownload(props) {
   const filename = props.filename;
   const fileId = props.fileid;
 
-  console.log(filename);
+  //console.log(filename);
 
   const FileDownload = require("js-file-download");
 

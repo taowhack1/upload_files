@@ -5,34 +5,10 @@ import { signOut } from '../../actions/authActions';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import { MenuItem, Grid } from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
 import MenuNavbar from '../menu/MenuNavbar';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  AppBar: {
-    backgroundColor: '#1976D2',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    color: '#FFFFFF',
-    fontSize: 25,
-  },
-}));
+import useStyles from '../files/StyleFiles'
 
 const Navbar = () => {
   const history = useHistory();
@@ -71,7 +47,7 @@ const Navbar = () => {
           {authdata.authorized_id == 1
             ?
             <Grid container>
-              <Grid item xs={3}>
+              <Grid >
                 {' '}
                 <Typography className={classes.title} component={Link} to='/'>
                   ระบบจัดการเอกสารออนไลน์
@@ -80,7 +56,7 @@ const Navbar = () => {
             </Grid>
             :
             <Grid container >
-              <Grid item xs={2}>
+              <Grid >
                 {' '}
                 <Typography
                   className={classes.title}
@@ -90,7 +66,8 @@ const Navbar = () => {
                   จัดการโฟลเดอร์
             </Typography>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item sm={1}></Grid>
+              <Grid >
                 {' '}
                 <Typography
                   className={classes.title}
@@ -100,6 +77,7 @@ const Navbar = () => {
                   จัดการผู้ใช้งาน
             </Typography>
               </Grid>
+              <Grid item xs={12}></Grid>
             </Grid>
           }
         </Grid>
@@ -114,7 +92,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.AppbarRoot}>
       <AppBar className={classes.AppBar}>
         {authenticated ? authLinks : console.log('Guest')}
       </AppBar>

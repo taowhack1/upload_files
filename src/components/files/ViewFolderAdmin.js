@@ -112,58 +112,58 @@ const ViewFolderAdmin = (props) => {
                         </TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody >
                       {!loading && folders != null
                         ? folders.map((folder) => (
-                            <TableRow key={folder.folder_id}>
-                              <TableCell>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      "/viewfilesadmin/" + folder.folder_id,
-                                    state: {
-                                      folder_id: folder.folder_id,
-                                      folder_name: folder.folder_name,
-                                    },
-                                  }}
-                                >
-                                  <Grid container className={classes.iconAlign}>
-                                    <Grid item></Grid>
-                                    <Grid item xs={1}>
-                                      <FolderIcon
-                                        className={classes.iconFolderTable}
-                                      />
-                                    </Grid>
-
-                                    <Grid item xs={10}>
-                                      <Typography className={classes.text}>
-                                        {folder.folder_name}
-                                      </Typography>
-                                    </Grid>
+                          <TableRow key={folder.folder_id} >
+                            <TableCell>
+                              <Link
+                                to={{
+                                  pathname:
+                                    "/viewfilesadmin/" + folder.folder_id,
+                                  state: {
+                                    folder_id: folder.folder_id,
+                                    folder_name: folder.folder_name,
+                                  },
+                                }}
+                              >
+                                <Grid container className={classes.iconAlign}>
+                                  <Grid item></Grid>
+                                  <Grid item xs={1}>
+                                    <FolderIcon
+                                      className={classes.iconFolderTable}
+                                    />
                                   </Grid>
-                                </Link>
-                              </TableCell>
-                              <TableCell align="center">
-                                <Typography className={classes.text}>
-                                  {moment
-                                    .utc(folder.folder_updated)
-                                    .add(3, "minutes")
-                                    .format("DD-MM-YYYY HH:mm")}
-                                </Typography>
-                              </TableCell>
-                              <TableCell align="center">
-                                <MenuFolder
-                                  delete={handleDeleteFolder}
-                                  edit={handleChangeFolderName}
-                                  snackAlert={snackAlert}
-                                  refresh={refresh}
-                                  folder_name_old={folder.folder_name}
-                                  folder_name={folder.folder_name}
-                                  folder_id={folder.folder_id}
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))
+
+                                  <Grid item xs={10}>
+                                    <Typography className={classes.text}>
+                                      {folder.folder_name}
+                                    </Typography>
+                                  </Grid>
+                                </Grid>
+                              </Link>
+                            </TableCell>
+                            <TableCell align="center">
+                              <Typography className={classes.text}>
+                                {moment
+                                  .utc(folder.folder_updated)
+                                  .add(3, "minutes")
+                                  .format("DD-MM-YYYY HH:mm")}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                              <MenuFolder
+                                delete={handleDeleteFolder}
+                                edit={handleChangeFolderName}
+                                snackAlert={snackAlert}
+                                refresh={refresh}
+                                folder_name_old={folder.folder_name}
+                                folder_name={folder.folder_name}
+                                folder_id={folder.folder_id}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))
                         : console.log("Nodata")}
                     </TableBody>
                   </Table>
@@ -178,8 +178,8 @@ const ViewFolderAdmin = (props) => {
                       </TableRow>
                     </Table>
                   ) : (
-                    console.log("folder empty")
-                  )}
+                      console.log("folder empty")
+                    )}
                   {loading && (
                     <div className={classes.loading}>
                       <Circular />
@@ -190,8 +190,8 @@ const ViewFolderAdmin = (props) => {
               </Grid>
             </Fragment>
           ) : (
-            <Redirect to="/" />
-          )}
+              <Redirect to="/" />
+            )}
         </div>
       )}
     </div>

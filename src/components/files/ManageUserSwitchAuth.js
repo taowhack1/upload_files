@@ -4,14 +4,19 @@ import { useDispatch } from 'react-redux';
 import { Switch } from '@material-ui/core/';
 import { updateActiveUser, getUser } from '../../actions/authActions';
 
-const MenuUser = (props) => {
+const ManageUserSwitchAuth = (props) => {
   const { userData } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
+  const [switchstatus, setSwitchstatus] = useState('');
 
-  const [switchstatus, setSwitchstatus] = useState({
-    switchchecked: userData.user_active,
-  });
+  useEffect(() => {
+    if (userData.authorized_id === 1) {
+      setSwitchstatus(false);
+    } else {
+      setSwitchstatus(true);
+    }
+  }, []);
 
   const [user, setUser] = useState({
     user_id: userData.user_id,
@@ -19,49 +24,45 @@ const MenuUser = (props) => {
     authorized_id: userData.authorized_id,
   });
 
-  const { switchchecked } = switchstatus;
-  const { user_active } = user;
+  const { authorized_id } = user;
 
   const handleChange = async () => {
-    if (user_active === false) {
+    if (authorized_id === 1) {
       await dispatch(
         updateActiveUser(
           {
             user_id: userData.user_id,
-            user_active: true,
-            authorized_id: userData.authorized_id,
+            user_active: userData.user_active,
+            authorized_id: 2,
           },
           props.snackAlert
         )
       );
       await dispatch(getUser(userData.user_id));
-      setSwitchstatus({
-        ...switchstatus,
-        switchchecked: !user_active,
-      });
-      setUser({ ...user, user_active: true });
+      setSwitchstatus(!switchstatus);
+      setUser({ ...user, authorized_id: 2 });
     }
-    if (user_active === true) {
+    if (authorized_id === 2) {
       await dispatch(
         updateActiveUser(
           {
             user_id: userData.user_id,
-            user_active: false,
-            authorized_id: userData.authorized_id,
+            user_active: userData.user_active,
+            authorized_id: 1,
           },
           props.snackAlert
         )
       );
       await dispatch(getUser(userData.user_id));
-      setSwitchstatus({ ...switchstatus, switchchecked: !user_active });
-      setUser({ ...user, user_active: false });
+      setSwitchstatus(!switchstatus);
+      setUser({ ...user, authorized_id: 1 });
     }
   };
 
   return (
     <>
       <Switch
-        checked={switchchecked}
+        checked={switchstatus}
         onChange={handleChange}
         className={classes.tableMargin}
       ></Switch>
@@ -69,4 +70,4 @@ const MenuUser = (props) => {
   );
 };
 
-export default MenuUser;
+export default ManageUserSwitchAuth;

@@ -6,6 +6,7 @@ import { getUserAll } from '../../actions/authActions';
 import Registor from '../authen/Registor';
 import useStyles from './StyleFiles';
 import MenuUser from './MenuUser';
+import ManageUserSwitchAuth from './ManageUserSwitchAuth';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PersonIcon from '@material-ui/icons/Person';
 import {
@@ -93,10 +94,14 @@ const ManageUserFirst = () => {
                             ชื่อ
                           </Typography>
                         </TableCell>
-                        <TableCell
-                          style={{ width: '20%' }}
-                          align='center'
-                        ></TableCell>
+                        <TableCell style={{ width: '20%' }} align='center'>
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
+                            สิทธิ์ผู้ดูแลระบบ
+                          </Typography>
+                        </TableCell>
                         <TableCell align='center'>
                           <Typography
                             color='textPrimary'
@@ -157,7 +162,12 @@ const ManageUserFirst = () => {
                                   </Grid>
                                 </Link>
                               </TableCell>
-                              <TableCell align='center'></TableCell>
+                              <TableCell align='center'>
+                                <ManageUserSwitchAuth
+                                  userData={user}
+                                  snackAlert={snackAlert}
+                                />
+                              </TableCell>
                               <TableCell align='center'>
                                 <MenuUser
                                   userData={user}

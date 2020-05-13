@@ -16,7 +16,7 @@ import ManageUserSecond from "./components/files/ManageUserSecond";
 import Dowload from "./components/files/Dowload";
 import ConfirmDowload from "./components/files/ConfirmDowload";
 import NotFound from "./components/pages/Notfound";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"; //Google fonts
+import { createMuiTheme, ThemeProvider, MuiThemeProvider } from "@material-ui/core/styles"; //Google fonts
 import { SnackbarProvider } from "notistack";
 
 const token = localStorage.getItem("authData");
@@ -33,6 +33,17 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: ['"Sarabun"'].join(","),
   },
+  overrides: {
+    MuiTableCell: {
+      root: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        "&:last-child": {
+          paddingRight: 5
+        }
+      }
+    }
+  }
 });
 
 const App = () => {

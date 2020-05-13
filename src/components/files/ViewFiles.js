@@ -21,6 +21,8 @@ import ConfirmDownload from "./ConfirmDowload";
 import useStyles from "./StyleFiles";
 import Circular from "../layout/Circular";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import FileType from './filetype/Filetypes'
+
 
 const ViewFiles = (props) => {
   //const { folder_id, folder_name } = props.location.state;
@@ -52,6 +54,7 @@ const ViewFiles = (props) => {
   const updateList = () => {
     dispatch(getFiles(folderID));
   };
+
   return (
     <Fragment>
       <Grid container className={classes.gridContainer}>
@@ -104,9 +107,7 @@ const ViewFiles = (props) => {
                     <TableCell>
                       <Grid container className={classes.iconAlign}>
                         <Grid item xs={1}>
-                          <InsertDriveFileIcon
-                            className={classes.iconFilesTable}
-                          />
+                          <FileType typefile={file.file_name} />
                         </Grid>
                         <Grid item xs={9}>
                           <Typography

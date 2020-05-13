@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/styles";
 import MuiTableCell from "@material-ui/core/TableCell";
+import { createMuiTheme } from '@material-ui/core/styles';
 import { yellow, grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     width: "100%",
-    height: "150",
+    //padding: theme.spacing(0, 0, 0, 0),
   },
   emptyTable: {
     textAlign: "center",
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0, 2, 0),
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     color: "#000000",
   },
 
@@ -90,12 +91,15 @@ const useStyles = makeStyles((theme) => ({
 
   opacity: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 16,
     opacity: 0.7,
   },
   tableCellName: {
     width: "50%",
     textAlign: "center",
+  },
+  tablePadding: {
+    padingTop: -100
   },
   gridContainer: {
     direction: "row",
@@ -262,12 +266,27 @@ const useStyles = makeStyles((theme) => ({
     color: "red",
     margin: theme.spacing(1, 0, 0, 2),
   },
+  AppBar: {
+    backgroundColor: '#1976D2',
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    color: '#FFFFFF',
+    fontSize: 20,
+  },
+  filetype: {
+    width: 30
+  },
 
   input: {
     "&::placeholder": {
-      fontSize: 20,
+      fontSize: 16,
     },
   },
 }));
+
 
 export default useStyles;

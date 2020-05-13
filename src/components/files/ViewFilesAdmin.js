@@ -27,6 +27,10 @@ import MenuFile from "./MenuFile";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
+import FileType from './filetype/Filetypes'
+
+
+
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
@@ -155,52 +159,50 @@ const ViewFilesAdmin = (props) => {
             <TableBody>
               {!loading && files !== null
                 ? files.map((file, index) => {
-                    return (
-                      <TableRow key={file.file_id} hover>
-                        <TableCell align="center">
-                          <Checkbox
-                            className={classes.tableMargin}
-                            onClick={(event) =>
-                              handleSelectClick(
-                                event,
-                                file.file_id,
-                                file.file_name
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item xs={1}>
-                              <InsertDriveFileIcon
-                                className={classes.iconFilesTable}
-                              />
-                            </Grid>
-                            <Grid item xs={9}>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {file.file_name}
-                              </Typography>
-                            </Grid>
+                  return (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell align="center">
+                        <Checkbox
+                          className={classes.tableMargin}
+                          onClick={(event) =>
+                            handleSelectClick(
+                              event,
+                              file.file_id,
+                              file.file_name
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item xs={1}>
+                            <FileType typefile={file.file_name} />
                           </Grid>
-                          {/* </Link> */}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment
-                              .utc(file.file_created)
-                              .add(3, "minutes")
-                              .format("DD-MM-YYYY HH:mm")}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <MenuFile file={file} handleDelete={handleDelete} />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
+                          <Grid item xs={9}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {file.file_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        {/* </Link> */}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment
+                            .utc(file.file_created)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuFile file={file} handleDelete={handleDelete} />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
                 : console.log("Nodata")}
             </TableBody>
           </Table>
@@ -213,8 +215,8 @@ const ViewFilesAdmin = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log("folder empty")
-          )}
+              console.log("folder empty")
+            )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

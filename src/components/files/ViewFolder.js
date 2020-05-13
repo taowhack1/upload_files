@@ -138,9 +138,21 @@ const ViewFolder = () => {
                                     <Chip
                                       icon={<CloudDownload />}
                                       label='Download'
+                                      color='secondary'
+                                      style={{
+                                        backgroundColor: '#4CAF50',
+                                        width: '110px',
+                                      }}
                                     />
                                   ) : (
-                                    <></>
+                                    <Chip
+                                      disabled={true}
+                                      icon={<CloudDownload />}
+                                      label='Download'
+                                      style={{
+                                        width: '110px',
+                                      }}
+                                    />
                                   )}
                                 </TableCell>
                                 <TableCell align='left'>
@@ -148,9 +160,21 @@ const ViewFolder = () => {
                                     <Chip
                                       icon={<CloudUpload />}
                                       label='Upload'
+                                      color='secondary'
+                                      style={{
+                                        backgroundColor: '#2196F3',
+                                        width: '110px',
+                                      }}
                                     />
                                   ) : (
-                                    <></>
+                                    <Chip
+                                      disabled={true}
+                                      icon={<CloudUpload />}
+                                      label='Upload'
+                                      style={{
+                                        width: '110px',
+                                      }}
+                                    />
                                   )}
                                 </TableCell>
                               </TableRow>

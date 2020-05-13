@@ -33,9 +33,10 @@ const MenuUserSecondSwitch = (props) => {
   useEffect(() => {
     async function getUsers() {
       if (users === null) {
-        await setSwitchstatus(userActive)
+        await dispatch(getUserAll());
+        await setSwitchstatus(userActive);
       }
-      console.log(userActive)
+      console.log(userActive);
 
       await dispatch(getUser(userId));
 

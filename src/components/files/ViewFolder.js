@@ -1,7 +1,7 @@
-import React, { useEffect, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import moment from "moment";
+import React, { useEffect, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -12,13 +12,15 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderIcon from "@material-ui/icons/Folder";
-import Circular from "../layout/Circular";
-import { getFolders } from "../../actions/folderActions";
-import useStyles from "./StyleFiles";
-import dateTH from "./function";
+  Chip,
+} from '@material-ui/core/';
+import { CloudDownload, CloudUpload } from '@material-ui/icons';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import FolderIcon from '@material-ui/icons/Folder';
+import Circular from '../layout/Circular';
+import { getFolders } from '../../actions/folderActions';
+import useStyles from './StyleFiles';
+import dateTH from './function';
 
 const ViewFolder = () => {
   const classes = useStyles();
@@ -30,7 +32,7 @@ const ViewFolder = () => {
   }, []);
   const { authenticated, authdata } = useSelector((state) => state.auth);
   if (loading) {
-    console.log("loading >>> " + loading);
+    console.log('loading >>> ' + loading);
   }
 
   return (
@@ -46,11 +48,11 @@ const ViewFolder = () => {
                       <Breadcrumbs
                         className={classes.breadcrumbs}
                         separator={<NavigateNextIcon />}
-                        aria-label="breadcrumb"
+                        aria-label='breadcrumb'
                       >
                         <Typography
                           className={classes.text}
-                          color="textPrimary"
+                          color='textPrimary'
                         >
                           โฟลเดอร์ทั้งหมด
                         </Typography>
@@ -62,25 +64,27 @@ const ViewFolder = () => {
                       <TableHead>
                         <TableCell className={classes.tableCellName}>
                           <Typography
-                            color="textPrimary"
+                            color='textPrimary'
                             className={classes.text}
                           >
                             ชื่อ
                           </Typography>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell align='center'>
                           <Typography
-                            color="textPrimary"
+                            color='textPrimary'
                             className={classes.text}
                           >
                             วันที่แก้ไข
                           </Typography>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell align='center' colSpan={2}>
                           <Typography
-                            color="textPrimary"
+                            color='textPrimary'
                             className={classes.text}
-                          ></Typography>
+                          >
+                            สิทธิ์การใช้งานโฟลเดอร์
+                          </Typography>
                         </TableCell>
                       </TableHead>
                       <TableBody>
@@ -91,7 +95,7 @@ const ViewFolder = () => {
                                   <Link
                                     to={{
                                       pathname:
-                                        "/ViewFiles/" + folder.folder_id,
+                                        '/ViewFiles/' + folder.folder_id,
                                       state: {
                                         folder_id: folder.folder_id,
                                         folder_name: folder.folder_name,
@@ -118,21 +122,40 @@ const ViewFolder = () => {
                                     </Grid>
                                   </Link>
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align='center'>
                                   <Typography
-                                    color="textPrimary"
+                                    color='textPrimary'
                                     className={classes.text}
                                   >
                                     {moment
                                       .utc(folder.folder_updated)
-                                      .add(3, "minutes")
-                                      .format("DD-MM-YYYY HH:mm")}
+                                      .add(3, 'minutes')
+                                      .format('DD-MM-YYYY HH:mm')}
                                   </Typography>
                                 </TableCell>
-                                <TableCell align="center"></TableCell>
+                                <TableCell align='right'>
+                                  {folder.access_download ? (
+                                    <Chip
+                                      icon={<CloudDownload />}
+                                      label='Download'
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </TableCell>
+                                <TableCell align='left'>
+                                  {folder.access_upload ? (
+                                    <Chip
+                                      icon={<CloudUpload />}
+                                      label='Upload'
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </TableCell>
                               </TableRow>
                             ))
-                          : console.log("Nodata")}
+                          : console.log('Nodata')}
                       </TableBody>
                     </Table>
                     {folders === null ? (
@@ -140,13 +163,13 @@ const ViewFolder = () => {
                         <TableRow>
                           <TableCell className={classes.emptyTable}>
                             <Typography>
-                              {" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}
+                              {' ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง '}
                             </Typography>
                           </TableCell>
                         </TableRow>
                       </Table>
                     ) : (
-                      console.log("folder empty")
+                      console.log('folder empty')
                     )}
                     {loading && (
                       <div className={classes.loading}>
@@ -157,7 +180,7 @@ const ViewFolder = () => {
                 </Grid>
               </Fragment>
             ) : (
-              <Redirect to={"/viewfolderadmin"} />
+              <Redirect to={'/viewfolderadmin'} />
             )
             //history.push('/viewfolderamin')
           }

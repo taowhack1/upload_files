@@ -21,7 +21,7 @@ export const getLogs = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText,
+      payload: err.response,
     });
   }
 };
@@ -40,7 +40,7 @@ export const getLogsDelete = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText,
+      payload: err.response,
     });
   }
 };

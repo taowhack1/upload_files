@@ -20,6 +20,7 @@ import HistoryUpload from './components/history/HistoryUpload';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'; //Google fonts
 import { SnackbarProvider } from 'notistack';
 import HistoryDelete from './components/history/HistoryDelete';
+import Search from './components/pages/Search';
 
 const token = localStorage.getItem('authData');
 const tokenParse = JSON.parse(token);
@@ -70,6 +71,7 @@ const App = () => {
               />
               <Route exact path='/historyupload' component={HistoryUpload} />
               <Route exact path='/historydelete' component={HistoryDelete} />
+              <Route exact path='/search' component={Search} />
               <Route component={NotFound} />
             </Switch>
           </Router>

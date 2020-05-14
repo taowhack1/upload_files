@@ -27,3 +27,6 @@ export const GET_LOGS = 'GET_LOGS';
 export const GET_LOGS_DELETE = 'GET_LOGS_DELETE';
 export const SEARCH_LOGS = 'SEARCH_LOGS';
 export const LOGS_ERROR = 'LOGS_ERROR';
+export const SEARCH_FILES = 'SEARCH_FILES';
+export const SEARCH_FILES_ERROR = 'SEARCH_FILES_ERROR';
+export const CLEAR_SEARCH_FILES = 'CLEAR_SEARCH_FILES';

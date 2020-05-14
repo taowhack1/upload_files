@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../../actions/authActions';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -16,7 +16,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { MenuItem, Grid } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuNavbar from '../menu/MenuNavbar';
-
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import { searchFiles, clearSearchFiles } from '../../actions/searchActions';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,6 +34,43 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFFFFF',
     fontSize: 25,
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
 }));
 
 const Navbar = () => {
@@ -42,11 +81,28 @@ const Navbar = () => {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [text, setText] = useState('');
+
+  const onChange = (e) => {
+    setText(e.target.value);
+    history.push('/search');
+  };
+
+  useEffect(() => {
+    if (text !== '') {
+      dispatch(searchFiles(authdata.user_id, text));
+    } else {
+      dispatch(clearSearchFiles());
+      history.push('/');
+    }
+  }, [text]);
+
   useEffect(() => {
     if (!authenticated) {
       history.push('/signin');
     }
   }, [authenticated]);
+
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -75,6 +131,24 @@ const Navbar = () => {
                 <Typography className={classes.title} component={Link} to='/'>
                   ระบบจัดการเอกสารออนไลน์
                 </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder='ค้นหา'
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    name='text'
+                    onChange={onChange}
+                    value={text}
+                  />
+                </div>
               </Grid>
             </Grid>
           ) : (

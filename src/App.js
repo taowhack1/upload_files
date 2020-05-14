@@ -17,7 +17,11 @@ import Dowload from './components/files/Dowload';
 import ConfirmDowload from './components/files/ConfirmDowload';
 import NotFound from './components/pages/Notfound';
 import HistoryUpload from './components/history/HistoryUpload';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'; //Google fonts
+import {
+  createMuiTheme,
+  ThemeProvider,
+  MuiThemeProvider,
+} from '@material-ui/core/styles'; //Google fonts
 import { SnackbarProvider } from 'notistack';
 import HistoryDelete from './components/history/HistoryDelete';
 import Search from './components/pages/Search';
@@ -35,6 +39,18 @@ if (tokenParse) {
 const theme = createMuiTheme({
   typography: {
     fontFamily: ['"Sarabun"'].join(','),
+  },
+  overrides: {
+    MuiTableCell: {
+      root: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        ['@media (max-width:600px)']: {
+          paddingTop: 8,
+          paddingBottom: 8,
+        },
+      },
+    },
   },
 });
 

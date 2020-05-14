@@ -5,17 +5,12 @@ import { signOut } from '../../actions/authActions';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import { MenuItem, Grid } from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
+import { MenuItem, Grid, Icon } from '@material-ui/core';
 import MenuNavbar from '../menu/MenuNavbar';
+import MenuNavbarRespon from '../menu/MenuNavbarRespon';
+import MenuAdmin from '../menu/MenuAdmin';
+import Hidden from '@material-ui/core/Hidden';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { searchFiles, clearSearchFiles } from '../../actions/searchActions';
@@ -121,93 +116,137 @@ const Navbar = () => {
   };
 
   const authLinks = (
-    <Toolbar>
-      {authdata && (
-        <Grid container>
-          {authdata.authorized_id == 1 ? (
-            <Grid container>
-              <Grid item xs={3}>
-                {' '}
-                <Typography className={classes.title} component={Link} to='/'>
-                  ระบบจัดการเอกสารออนไลน์
-                </Typography>
+    <div>
+      <div>
+        <Hidden xsDown>
+          <Toolbar>
+            {authdata && (
+              <Grid container>
+                {authdata.authorized_id == 1 ? (
+                  <Grid container>
+                    <Grid>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/'
+                      >
+                        ระบบจัดการเอกสารออนไลน์
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                          <SearchIcon />
+                        </div>
+                        <InputBase
+                          placeholder='ค้นหา'
+                          classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                          }}
+                          inputProps={{ 'aria-label': 'search' }}
+                          name='text'
+                          onChange={onChange}
+                          value={text}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  <Grid container>
+                    <Grid>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/viewfolderadmin'
+                      >
+                        จัดการโฟลเดอร์
+                      </Typography>
+                    </Grid>
+                    <Grid>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/manageuserfirst'
+                      >
+                        จัดการผู้ใช้งาน
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/historyupload'
+                      >
+                        ประวัติการอัพโหลด
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/historydelete'
+                      >
+                        ประวัติการลบไฟล์
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
-              <Grid item xs={3}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder='ค้นหา'
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                    name='text'
-                    onChange={onChange}
-                    value={text}
-                  />
-                </div>
+            )}
+            {auth && (
+              <div>
+                <MenuNavbar signOut={handleSignOut} />
+              </div>
+            )}
+          </Toolbar>
+        </Hidden>
+      </div>
+      <div>
+        <Hidden smUp>
+          <Toolbar>
+            {authdata && (
+              <Grid container>
+                {authdata.authorized_id == 1 ? (
+                  <Grid container>
+                    <Grid>
+                      {' '}
+                      <Typography
+                        className={classes.title}
+                        component={Link}
+                        to='/'
+                      >
+                        ระบบจัดการเอกสารออนไลน์sss
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  <Grid container>
+                    <Grid>
+                      <MenuAdmin />
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
-            </Grid>
-          ) : (
-            <Grid container>
-              <Grid item xs={2}>
-                {' '}
-                <Typography
-                  className={classes.title}
-                  component={Link}
-                  to='/viewfolderadmin'
-                >
-                  จัดการโฟลเดอร์
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                {' '}
-                <Typography
-                  className={classes.title}
-                  component={Link}
-                  to='/manageuserfirst'
-                >
-                  จัดการผู้ใช้งาน
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                {' '}
-                <Typography
-                  className={classes.title}
-                  component={Link}
-                  to='/historyupload'
-                >
-                  ประวัติการอัพโหลด
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                {' '}
-                <Typography
-                  className={classes.title}
-                  component={Link}
-                  to='/historydelete'
-                >
-                  ประวัติการลบไฟล์
-                </Typography>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-      )}
-
-      {auth && (
-        <div>
-          <MenuNavbar signOut={handleSignOut} />
-        </div>
-      )}
-    </Toolbar>
+            )}
+            {auth && (
+              <div>
+                <MenuNavbarRespon signOut={handleSignOut} />
+              </div>
+            )}
+          </Toolbar>
+        </Hidden>
+      </div>
+    </div>
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.AppbarRoot}>
       <AppBar className={classes.AppBar}>
         {authenticated ? authLinks : console.log('Guest')}
       </AppBar>

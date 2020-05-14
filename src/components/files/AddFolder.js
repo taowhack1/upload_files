@@ -12,6 +12,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
+import Hidden from '@material-ui/core/Hidden';
 export default function AddFolder(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -23,12 +24,13 @@ export default function AddFolder(props) {
     setOpen(false);
     setFolderName("");
   };
-  
+
   const handleChangeFolderName = (e) => {
     let value = e.target.value.replace(/[^A-Za-z\d]$/gi, "");
     value = value.slice(0, 15);
     setFolderName(value);
   };
+
 
   return (
     <div>
@@ -61,29 +63,46 @@ export default function AddFolder(props) {
               </Typography>
               <div className={classes.modalIconAlign}>
                 <Grid container className={classes.iconAlign}>
-                  <Grid item xs>
-                    {" "}
-                  </Grid>
-                  <Grid item sm={1}>
-                    <FolderIcon className={classes.iconFolder} />
-                  </Grid>
-                  <Grid item> </Grid>
-                  <Grid item xs={7}>
-                    <TextField
-                      placeholder="ชื่อโฟลเดอร์"
-                      type="search"
-                      variant="outlined"
-                      className={classes.textField}
-                      onChange={handleChangeFolderName}
-                      value={folder_name}
-                      InputProps={{
-                        classes: { input: classes.input },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    {" "}
-                  </Grid>
+                  <Hidden xsDown>
+                    <Grid item xs>
+                      {" "}
+                    </Grid>
+                    <Grid >
+                      <FolderIcon className={classes.iconFolder} />
+                    </Grid>
+                    <Grid item> </Grid>
+                    <Grid item xs={7}>
+                      <TextField
+                        placeholder="ชื่อโฟลเดอร์"
+                        type="search"
+                        variant="outlined"
+                        className={classes.textField}
+                        onChange={handleChangeFolderName}
+                        value={folder_name}
+                        InputProps={{
+                          classes: { input: classes.input },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs>
+                      {" "}
+                    </Grid>
+                  </Hidden>
+                  <Hidden smUp>
+                    <Grid container className={classes.iconAlign}>
+                      <TextField
+                        placeholder="ชื่อโฟลเดอร์"
+                        type="search"
+                        variant="outlined"
+                        className={classes.textField}
+                        onChange={handleChangeFolderName}
+                        value={folder_name}
+                        InputProps={{
+                          classes: { input: classes.input },
+                        }}
+                      />
+                    </Grid>
+                  </Hidden>
                 </Grid>
               </div>
             </div>

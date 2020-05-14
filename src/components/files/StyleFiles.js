@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/styles";
 import MuiTableCell from "@material-ui/core/TableCell";
+import { createMuiTheme } from '@material-ui/core/styles';
 import { yellow, grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -9,12 +10,18 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "90%",
+    alignItems: 'center',
     boxShadow: "0 0 0 0",
     color: "white",
+    ['@media (max-width:600px)']: {
+      width: "100%",
+      padding: theme.spacing(0, 0, 0, 0),
+    },
   },
+
   table: {
     width: "100%",
-    height: "150",
+    //padding: theme.spacing(0, 0, 0, 0),
   },
   emptyTable: {
     textAlign: "center",
@@ -22,24 +29,28 @@ const useStyles = makeStyles((theme) => ({
   },
   //icon
   iconFolderTable: {
-    fontSize: 40,
+    fontSize: 35,
     color: "#FCD462",
     verticalAlign: "middle",
+    marginRight: 8
   },
   iconFilesTable: {
-    fontSize: 40,
+    fontSize: 35,
     color: "#1976D2",
     verticalAlign: "middle",
+    marginRight: 8
   },
   iconPersonTable: {
     color: "#FDC8A2",
-    fontSize: 40,
+    fontSize: 35,
     verticalAlign: "middle",
+    marginRight: 8
   },
   iconPersonTableUnActive: {
     color: "#DDDBDB",
-    fontSize: 40,
+    fontSize: 35,
     verticalAlign: "middle",
+    marginRight: 8
   },
   iconFolder: {
     fontSize: 40,
@@ -65,24 +76,52 @@ const useStyles = makeStyles((theme) => ({
   },
   iconStar: {
     color: "#FFC107",
+    marginTop: 3
+  },
+  iconButton: {
+    padding: theme.spacing(0, 0, 0, 0),
+  },
+  iconSwitch: {
+    padding: theme.spacing(10, 0, 10, 0),
+  },
+  iconCheckBox: {
+    margin: theme.spacing(0, 0, 0, 0),
+    padding: theme.spacing(0, 0, 0, 1)
   },
   NavigateNextIcon: {
     fontSize: 20,
   },
   breadcrumbs: {
     margin: theme.spacing(2, 0, 2, 0),
+    ['@media (max-width:600px)']: {
+      margin: theme.spacing(2, 0, 2, 2),
+    },
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     color: "#000000",
+  },
+  textDate: {
+    fontSize: 14,
+    color: "#000000",
+    opacity: 0.7,
+    ['@media (max-width:321px)']: { // eslint-disable-line no-useless-computed-key
+      fontSize: 11,
+    },
   },
 
   menu: {
     display: "flex",
     width: 250,
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      width: 300,
+    },
   },
   menuItem: {
     margin: theme.spacing(0, 0, 0, -2),
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      padding: theme.spacing(0, 0, 0, 0),
+    },
   },
   tableMargin: {
     margin: theme.spacing(-1, 0, -1, 0),
@@ -90,12 +129,15 @@ const useStyles = makeStyles((theme) => ({
 
   opacity: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 16,
     opacity: 0.7,
   },
   tableCellName: {
     width: "50%",
     textAlign: "center",
+  },
+  tablePadding: {
+    padingTop: -100
   },
   gridContainer: {
     direction: "row",
@@ -118,9 +160,18 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
     width: 100,
     backgroundColor: "#1976D2",
+    ['@media (max-width:600px)']: {
+      bottom: theme.spacing(4),
+      right: theme.spacing(4),
+      height: 80,
+      width: 80,
+    },
   },
   icon: {
     fontSize: 50,
+    ['@media (max-width:600px)']: {
+      fontSize: 40,
+    },
   },
   grid: {
     marginTop: 25,
@@ -144,6 +195,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
     outline: "none",
     padding: theme.spacing(1, 5, 4),
+    ['@media (max-width:730px)']: { // eslint-disable-line no-useless-computed-key
+      width: 400
+    },
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      width: 260,
+    },
+    ['@media (max-width:400px)']: { // eslint-disable-line no-useless-computed-key
+      width: 240
+    },
+    ['@media (max-width:350px)']: { // eslint-disable-line no-useless-computed-key
+      width: 230
+    },
   },
   modalIconAlign: {
     direction: "row",
@@ -170,6 +233,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(-5),
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      display: "flex",
+    },
   },
   modalbtnOk: {
     padding: theme.spacing(1, 7, 1),
@@ -206,6 +272,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     height: 200,
     marginTop: 20,
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      height: 150,
+    },
   },
   uploadPreviewDisable: {
     overflowY: "auto",
@@ -262,12 +331,115 @@ const useStyles = makeStyles((theme) => ({
     color: "red",
     margin: theme.spacing(1, 0, 0, 2),
   },
+  AppBar: {
+    backgroundColor: '#1976D2',
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    color: '#FFFFFF',
+    fontSize: 20,
+    marginRight: 30,
+    ['@media (max-width:1050px)']: { // eslint-disable-line no-useless-computed-key
+      marginRight: 20,
+    },
+  },
+  filetype: {
+    width: 30,
+    verticalAlign: 'middle',
+    marginRight: 8,
+    marginTop: 2
+  },
+  filetypeUpload: {
+    width: 35,
+    verticalAlign: 'middle'
+  },
+  nowrapText: {
+    fontSize: 16,
+    width: 400,
+    color: "#000000",
+    ['@media (max-width:1083px)']: {
+      width: 350,
+    },
+    ['@media (max-width:600px)']: {
+      width: 200,
+    },
+    ['@media (max-width:400px)']: {
+      width: 140,
+    },
+    ['@media (max-width:321px)']: { // eslint-disable-line no-useless-computed-key
+      width: 100,
+    },
+  },
+  nowrap: {
+    width: 410,
+    whiteSpace: "nowrap",
+    ['@media (max-width:1083px)']: {
+      width: 360,
+    },
+    ['@media (max-width:600px)']: {
+      width: 210,
+    },
+    ['@media (max-width:400px)']: {
+      width: 150,
+    },
+    ['@media (max-width:321px)']: { // eslint-disable-line no-useless-computed-key
+      width: 110,
+    },
+  },
+  nowrapTextMany: {
+    fontSize: 16,
+    width: 400,
+    color: "#000000",
+    ['@media (max-width:1083px)']: {
+      width: 350,
+    },
+    ['@media (max-width:650px)']: {
+      width: 200,
+    },
+    ['@media (max-width:450px)']: {
+      width: 140,
+    },
+    ['@media (max-width:321px)']: { // eslint-disable-line no-useless-computed-key
+      width: 90,
+    },
+  },
+  nowrapMany: {
+    width: 410,
+    whiteSpace: "nowrap",
+    ['@media (max-width:1083px)']: {
+      width: 360,
+    },
+    ['@media (max-width:650px)']: {
+      width: 210,
+    },
+    ['@media (max-width:450px)']: {
+      width: 150,
+    },
+    ['@media (max-width:371px)']: { // eslint-disable-line no-useless-computed-key
+      width: 100,
+    },
+  },
+
+  formStyle: {
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    ['@media (max-width:600px)']: {
+      marginRight: -20,
+      marginLeft: -20,
+    },
+  },
+
 
   input: {
     "&::placeholder": {
-      fontSize: 20,
+      fontSize: 16,
     },
   },
 }));
+
 
 export default useStyles;

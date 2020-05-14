@@ -10,6 +10,7 @@ import { Button, Typography, IconButton } from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import { download } from "../../actions/fileActions";
 import axios from "axios";
+import Hidden from '@material-ui/core/Hidden';
 
 export default function ConfirmDownload(props) {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export default function ConfirmDownload(props) {
   const filename = props.filename;
   const fileId = props.fileid;
 
-  console.log(filename);
+  //console.log(filename);
 
   const FileDownload = require("js-file-download");
 
@@ -35,9 +36,17 @@ export default function ConfirmDownload(props) {
   };
   return (
     <div>
-      <IconButton className={classes.tableMargin}>
-        <GetAppIcon onClick={handleOpen} />
-      </IconButton>
+      <Hidden mdDown >
+        <IconButton className={classes.tableMargin} onClick={handleOpen}>
+          <GetAppIcon />
+        </IconButton>
+      </Hidden>
+      <Hidden smUp >
+        <IconButton className={classes.iconButton} onClick={handleOpen}>
+          <GetAppIcon />
+        </IconButton>
+      </Hidden>
+
       <Modal
         className={classes.modal}
         open={open}

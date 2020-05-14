@@ -72,37 +72,37 @@ const ManageUser = () => {
             <TableBody>
               {!loading && folders !== null
                 ? folders.map((row) => (
-                    <TableRow key={row.folder_id}>
-                      <TableCell>
-                        <Link
-                          //component={Link}
-                          to={{
-                            pathname: '/manageuserfirst/' + row.folder_id,
-                          }}
-                        >
-                          <Grid container className={classes.iconAlign}>
-                            <Grid item></Grid>
-                            <Grid item xs={1}>
-                              <FolderIcon className={classes.iconFolderTable} />
-                            </Grid>
-                            <Grid item xs={10}>
-                              <Typography className={classes.text}>
-                                {row.folder_name}
-                              </Typography>
-                            </Grid>
+                  <TableRow key={row.folder_id}>
+                    <TableCell>
+                      <Link
+                        //component={Link}
+                        to={{
+                          pathname: '/manageuserfirst/' + row.folder_id,
+                        }}
+                      >
+                        <Grid container className={classes.iconAlign}>
+                          <Grid item></Grid>
+                          <Grid item xs={1}>
+                            <FolderIcon className={classes.iconFolderTable} />
                           </Grid>
-                        </Link>
-                        {/* </Link> */}
-                      </TableCell>
-                      <TableCell align='center'>
-                        <Typography className={classes.text}>
-                          {moment(row.folder_created).format(
-                            'DD-MM-YYYY HH:MM'
-                          )}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          <Grid item xs={10}>
+                            <Typography className={classes.text}>
+                              {row.folder_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell align='center'>
+                      <Typography className={classes.text}>
+                        {moment(row.folder_created).format(
+                          'DD-MM-YYYY HH:MM'
+                        )}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ))
                 : console.log('Nodata')}
             </TableBody>
           </Table>

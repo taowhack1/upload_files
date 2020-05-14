@@ -60,12 +60,7 @@ const ManageUserFirst = () => {
                 alignItems='center'
               >
                 <Paper className={classes.paper}>
-                  <Grid
-                    container
-                    direction='row'
-                    justify='left'
-                    alignItems='center'
-                  >
+                  <Grid container>
                     <Breadcrumbs
                       className={classes.breadcrumbs}
                       separator={
@@ -75,7 +70,7 @@ const ManageUserFirst = () => {
                       }
                       aria-label='breadcrumb'
                     >
-                      <Typography className={classes.text} color='textPrimary'>
+                      <Typography className={classes.text}>
                         จัดการผู้ใช้งาน
                       </Typography>
                     </Breadcrumbs>
@@ -91,7 +86,7 @@ const ManageUserFirst = () => {
                             color='textPrimary'
                             className={classes.text}
                           >
-                            ชื่อ
+                            ชื่อผู้ใช้งาน
                           </Typography>
                         </TableCell>
                         <TableCell style={{ width: '20%' }} align='center'>
@@ -130,8 +125,7 @@ const ManageUserFirst = () => {
                                   }}
                                 >
                                   <Grid container className={classes.iconAlign}>
-                                    <Grid item></Grid>
-                                    <Grid item xs={1}>
+                                    <Grid>
                                       {user.user_active ? (
                                         <PersonIcon
                                           className={classes.iconPersonTable}
@@ -144,20 +138,22 @@ const ManageUserFirst = () => {
                                         />
                                       )}
                                     </Grid>
-                                    <Grid item xs={10}>
+                                    <Grid>
                                       <Typography
                                         color='textPrimary'
                                         className={classes.text}
                                       >
                                         {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
-                                        {user.authorized_id == 2 ? (
-                                          <StarIcon
-                                            className={classes.iconStar}
-                                          />
-                                        ) : (
-                                          ''
-                                        )}
                                       </Typography>
+                                    </Grid>
+                                    <Grid>
+                                      {user.authorized_id == 2 ? (
+                                        <StarIcon
+                                          className={classes.iconStar}
+                                        />
+                                      ) : (
+                                        ''
+                                      )}
                                     </Grid>
                                   </Grid>
                                 </Link>

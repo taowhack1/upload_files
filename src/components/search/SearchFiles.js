@@ -11,6 +11,7 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
+  Tab,
 } from '@material-ui/core/';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
@@ -18,7 +19,9 @@ import ConfirmDownload from '../files/ConfirmDowload';
 import useStyles from '../files/StyleFiles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import SearchMain from './SearchMain';
-
+import FileType from '../files/filetype/Filetypes'
+import Hidden from '@material-ui/core/Hidden';
+import Box from "@material-ui/core/Box";
 const SearchFiles = () => {
   const classes = useStyles();
   const { loading, searchfiles } = useSelector((state) => state.search);
@@ -42,46 +45,45 @@ const SearchFiles = () => {
 
         <Paper className={classes.paper}>
           {/* <SearchMain /> */}
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.tableCellName}>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อไฟล์
+          <Hidden smDown>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.tableCellName}>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อไฟล์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อโฟลเดอร์
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อโฟลเดอร์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    วันที่อัพโหลด
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      วันที่อัพโหลด
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ผู้อัพโหลด
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ผู้อัพโหลด
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ดาวน์โหลด
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ดาวน์โหลด
                   </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading !== true && searchfiles !== null
-                ? searchfiles.map((file, index) => (
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loading !== true && searchfiles !== null
+                  ? searchfiles.map((file, index) => (
                     <TableRow key={index} hover>
                       <TableCell>
                         <Grid container className={classes.iconAlign}>
                           <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
+                            <FileType typefile={file.file_data.file_name} />
                           </Grid>
                           <Grid item xs={9}>
                             <Typography
@@ -118,14 +120,68 @@ const SearchFiles = () => {
                             fileid={file.file_data.file_id}
                           />
                         ) : (
-                          <GetAppIcon color='disabled' />
-                        )}
+                            <GetAppIcon color='disabled' />
+                          )}
                       </TableCell>
                     </TableRow>
                   ))
-                : console.log('folder empty')}
-            </TableBody>
-          </Table>
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <Table>
+              <TableBody >
+                {loading !== true && searchfiles !== null
+                  ? searchfiles.map((file, index) => (
+                    <TableRow key={index} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType typefile={file.file_data.file_name} />
+                          </Grid>
+                          <Grid >
+                            <div className={classes.nowrap}>
+                              <Box className={classes.nowrapText} textOverflow="ellipsis"
+                                overflow="hidden">
+                                {file.file_data.file_name}
+                              </Box>
+                            </div>
+
+                            <Grid>
+                              <Typography className={classes.textDate}>
+                                {moment
+                                  .utc(file.file_data.file_created)
+                                  .add(3, 'minutes')
+                                  .format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                {file.file_data.folder_name}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                {file.file_data.user_firstname} {file.file_data.user_lastname}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell align='center'>
+                        {file.access_download ? (
+                          <ConfirmDownload
+                            filename={file.file_data.file_name}
+                            fileid={file.file_data.file_id}
+                          />
+                        ) : (
+                            <GetAppIcon color='disabled' />
+                          )}
+                      </TableCell>
+
+                    </TableRow>
+                  ))
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
+          </Hidden>
           {searchfiles === null ? (
             <Table>
               <TableRow>
@@ -135,8 +191,8 @@ const SearchFiles = () => {
               </TableRow>
             </Table>
           ) : (
-            console.log('folder empty')
-          )}
+              console.log('folder empty')
+            )}
         </Paper>
       </Grid>
     </div>

@@ -24,7 +24,7 @@ const MenuNavbarRespon = (props) => {
     return (
         <div>
             <IconButton className={classes.tableMargin} onClick={handleOpen}>
-                <img src={UserImage} width="40" />
+                <img src={UserImage} width="50" />
             </IconButton>
             <Menu
                 className={classes.menu}

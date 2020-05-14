@@ -134,71 +134,67 @@ const Navbar = () => {
                         ระบบจัดการเอกสารออนไลน์
                       </Typography>
                     </Grid>
-                    <Grid item xs={3}>
-                      <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                          <SearchIcon />
-                        </div>
-                        <InputBase
-                          placeholder='ค้นหา'
-                          classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                          }}
-                          inputProps={{ 'aria-label': 'search' }}
-                          name='text'
-                          onChange={onChange}
-                          value={text}
-                        />
-                      </div>
-                    </Grid>
+
                   </Grid>
                 ) : (
-                  <Grid container>
-                    <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/viewfolderadmin'
-                      >
-                        จัดการโฟลเดอร์
+                    <Grid container>
+                      <Grid>
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/viewfolderadmin'
+                        >
+                          จัดการโฟลเดอร์
                       </Typography>
-                    </Grid>
-                    <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/manageuserfirst'
-                      >
-                        จัดการผู้ใช้งาน
+                      </Grid>
+                      <Grid>
+
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/manageuserfirst'
+                        >
+                          จัดการผู้ใช้งาน
                       </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/historyupload'
-                      >
-                        ประวัติการอัพโหลด
+                      </Grid>
+                      <Grid >
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/historyupload'
+                        >
+                          ประวัติการอัพโหลด
                       </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/historydelete'
-                      >
-                        ประวัติการลบไฟล์
+                      </Grid>
+                      <Grid >
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/historydelete'
+                        >
+                          ประวัติการลบไฟล์
                       </Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                )}
+                  )}
               </Grid>
             )}
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder='ค้นหา'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                name='text'
+                onChange={onChange}
+                value={text}
+              />
+            </div>
             {auth && (
               <div>
                 <MenuNavbar signOut={handleSignOut} />
@@ -215,23 +211,32 @@ const Navbar = () => {
                 {authdata.authorized_id == 1 ? (
                   <Grid container>
                     <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/'
-                      >
-                        ระบบจัดการเอกสารออนไลน์sss
-                      </Typography>
+                      <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                          <SearchIcon />
+                        </div>
+                        <InputBase
+                          placeholder='ค้นหา'
+                          classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                          }}
+                          inputProps={{ 'aria-label': 'search' }}
+                          name='text'
+                          onChange={onChange}
+                          value={text}
+                        />
+
+                      </div>
                     </Grid>
                   </Grid>
                 ) : (
-                  <Grid container>
-                    <Grid>
-                      <MenuAdmin />
+                    <Grid container>
+                      <Grid>
+                        <MenuAdmin />
+                      </Grid>
                     </Grid>
-                  </Grid>
-                )}
+                  )}
               </Grid>
             )}
             {auth && (

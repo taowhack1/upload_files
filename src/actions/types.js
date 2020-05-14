@@ -23,3 +23,7 @@ export const UNAUTH_USER = 'UNAUTH_USER';
 export const GET_USER_BY_FOLDER_ID = 'GET_USER_BY_FOLDER_ID';
 export const UPDATE_ACCESS_FOLDER = 'UPDATE_ACCESS_FOLDER';
 export const UPDATE_ACTIVE_USER = 'UPDATE_ACTIVE_USER';
+export const GET_LOGS = 'GET_LOGS';
+export const GET_LOGS_DELETE = 'GET_LOGS_DELETE';
+export const SEARCH_LOGS = 'SEARCH_LOGS';
+export const LOGS_ERROR = 'LOGS_ERROR';

@@ -66,20 +66,19 @@ const Navbar = () => {
 
   const authLinks = (
     <Toolbar>
-      {authdata &&
+      {authdata && (
         <Grid container>
-          {authdata.authorized_id == 1
-            ?
+          {authdata.authorized_id == 1 ? (
             <Grid container>
               <Grid item xs={3}>
                 {' '}
                 <Typography className={classes.title} component={Link} to='/'>
                   ระบบจัดการเอกสารออนไลน์
-            </Typography>
+                </Typography>
               </Grid>
             </Grid>
-            :
-            <Grid container >
+          ) : (
+            <Grid container>
               <Grid item xs={2}>
                 {' '}
                 <Typography
@@ -88,7 +87,7 @@ const Navbar = () => {
                   to='/viewfolderadmin'
                 >
                   จัดการโฟลเดอร์
-            </Typography>
+                </Typography>
               </Grid>
               <Grid item xs={2}>
                 {' '}
@@ -98,12 +97,32 @@ const Navbar = () => {
                   to='/manageuserfirst'
                 >
                   จัดการผู้ใช้งาน
-            </Typography>
+                </Typography>
+              </Grid>
+              <Grid item xs={2}>
+                {' '}
+                <Typography
+                  className={classes.title}
+                  component={Link}
+                  to='/historyupload'
+                >
+                  ประวัติการอัพโหลด
+                </Typography>
+              </Grid>
+              <Grid item xs={2}>
+                {' '}
+                <Typography
+                  className={classes.title}
+                  component={Link}
+                  to='/historydelete'
+                >
+                  ประวัติการลบไฟล์
+                </Typography>
               </Grid>
             </Grid>
-          }
+          )}
         </Grid>
-      }
+      )}
 
       {auth && (
         <div>

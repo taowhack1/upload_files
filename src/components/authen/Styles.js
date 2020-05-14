@@ -29,7 +29,10 @@ const useStyles = makeStyles((theme) => ({
   background: {
     marginTop: -80,
     backgroundColor: "#1976D2",
-    height: '100vh'
+    height: '100vh',
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      height: '130vh',
+    },
   },
   modal: {
     display: "flex",

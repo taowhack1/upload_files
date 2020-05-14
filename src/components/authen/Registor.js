@@ -198,7 +198,7 @@ export default function Registor(props) {
               <Typography className={classes.text}>เปลี่ยนรหัสผ่าน</Typography>
               <Container maxWidth="xl">
                 <form
-                  style={{ marginTop: 10, marginRight: 30, marginLeft: 30 }}
+                  className={classes.formStyle}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -308,7 +308,7 @@ export default function Registor(props) {
                 value={user.authorized_id}
                 name="authorized_id"
                 id="authorized_id"
-                style={{ marginLeft: 100 }}
+                style={{ marginLeft: 30, marginTop: 10 }}
                 onChange={onChangeRadio}
               >
                 <FormControlLabel

@@ -22,6 +22,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import ConfirmDelete from "./ConfirmDeleteFolder";
+import Hidden from '@material-ui/core/Hidden';
 const MenuFolder = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -114,14 +115,32 @@ const MenuFolder = (props) => {
                 </Typography>
                 <div className={classes.modalIconAlign}>
                   <Grid container className={classes.iconAlign}>
-                    <Grid item xs>
-                      {" "}
-                    </Grid>
-                    <Grid item sm={1}>
-                      <FolderIcon className={classes.iconFolder} />
-                    </Grid>
-                    <Grid item> </Grid>
-                    <Grid item xs={7}>
+                    <Hidden xsDown>
+                      <Grid item xs>
+                        {" "}
+                      </Grid>
+                      <Grid item sm={1}>
+                        <FolderIcon className={classes.iconFolder} />
+                      </Grid>
+                      <Grid item> </Grid>
+                      <Grid item xs={7}>
+                        <TextField
+                          placeholder="ชื่อโฟลเดอร์"
+                          type="search"
+                          variant="outlined"
+                          className={classes.textField}
+                          onChange={handleChangeFolderName}
+                          value={folder.folder_name}
+                          InputProps={{
+                            classes: { input: classes.input },
+                          }}
+                        ></TextField>
+                      </Grid>
+                      <Grid item xs>
+                        {" "}
+                      </Grid>
+                    </Hidden>
+                    <Hidden smUp>
                       <TextField
                         placeholder="ชื่อโฟลเดอร์"
                         type="search"
@@ -133,10 +152,7 @@ const MenuFolder = (props) => {
                           classes: { input: classes.input },
                         }}
                       ></TextField>
-                    </Grid>
-                    <Grid item xs>
-                      {" "}
-                    </Grid>
+                    </Hidden>
                   </Grid>
                 </div>
               </div>

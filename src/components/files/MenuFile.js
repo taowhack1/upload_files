@@ -14,6 +14,7 @@ import "./upload_style.css";
 import "./style.css";
 import ConfirmDeleteFile from "./ConfirmDeleteFile";
 import ConfirmDownloadAdmin from "./ConfirmDowloadAdmin";
+import Hidden from '@material-ui/core/Hidden';
 const MenuFile = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,12 +28,23 @@ const MenuFile = (props) => {
   };
   return (
     <div>
-      <IconButton
-        className={classes.tableMargin}
-        onClick={handleMoreVertIconClick}
-      >
-        <MoreVertIcon></MoreVertIcon>
-      </IconButton>
+      <Hidden smDown >
+        <IconButton
+          className={classes.tableMargin}
+          onClick={handleMoreVertIconClick}
+        >
+          <MoreVertIcon></MoreVertIcon>
+        </IconButton>
+      </Hidden>
+      <Hidden mdUp >
+        <IconButton
+          className={classes.iconButton}
+          onClick={handleMoreVertIconClick}
+        >
+          <MoreVertIcon></MoreVertIcon>
+        </IconButton>
+
+      </Hidden>
       <Menu
         className={classes.menu}
         id="simple-menu"

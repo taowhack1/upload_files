@@ -9,9 +9,18 @@ export default (theme) => ({
     height: 100,
     width: 100,
     backgroundColor: "#1976D2",
+    ['@media (max-width:600px)']: {
+      bottom: theme.spacing(4),
+      right: theme.spacing(4),
+      height: 80,
+      width: 80,
+    },
   },
   icon: {
     fontSize: 50,
+    ['@media (max-width:600px)']: {
+      fontSize: 40,
+    },
   },
   text: {
     fontSize: 20,
@@ -26,7 +35,10 @@ export default (theme) => ({
   modalIconAlign: {
     direction: "row",
     alignItems: "center",
-    margin: theme.spacing(5, 10, 5, 10),
+    margin: theme.spacing(5, 5, 5, 5),
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      margin: theme.spacing(5, 0, 5, 0),
+    }
   },
   modalPaper: {
     width: 600,
@@ -35,5 +47,18 @@ export default (theme) => ({
     borderRadius: 4,
     outline: "none",
     padding: theme.spacing(1, 5, 4),
+    ['@media (max-width:730px)']: { // eslint-disable-line no-useless-computed-key
+      width: 400
+    },
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      width: 260,
+    },
+    ['@media (max-width:400px)']: { // eslint-disable-line no-useless-computed-key
+      width: 240
+    },
+    ['@media (max-width:350px)']: { // eslint-disable-line no-useless-computed-key
+      width: 230
+    },
   },
+
 });

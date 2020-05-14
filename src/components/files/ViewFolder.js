@@ -19,6 +19,7 @@ import Circular from "../layout/Circular";
 import { getFolders } from "../../actions/folderActions";
 import useStyles from "./StyleFiles";
 import dateTH from "./function";
+import Hidden from '@material-ui/core/Hidden';
 
 const ViewFolder = () => {
   const classes = useStyles();
@@ -58,34 +59,35 @@ const ViewFolder = () => {
                     </Grid>
                   </Paper>
                   <Paper className={classes.paper}>
-                    <Table className={classes.table}>
-                      <TableHead>
-                        <TableCell className={classes.tableCellName}>
-                          <Typography
-                            color="textPrimary"
-                            className={classes.text}
-                          >
-                            ชื่อ
+                    <Hidden smDown>
+                      <Table className={classes.table}>
+                        <TableHead>
+                          <TableCell className={classes.tableCellName}>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              ชื่อ
                           </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            color="textPrimary"
-                            className={classes.text}
-                          >
-                            วันที่แก้ไข
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              วันที่แก้ไข
                           </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            color="textPrimary"
-                            className={classes.text}
-                          ></Typography>
-                        </TableCell>
-                      </TableHead>
-                      <TableBody>
-                        {!loading && folders !== null
-                          ? folders.map((folder) => (
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            ></Typography>
+                          </TableCell>
+                        </TableHead>
+                        <TableBody>
+                          {!loading && folders !== null
+                            ? folders.map((folder) => (
                               <TableRow key={folder.folder_id}>
                                 <TableCell>
                                   <Link
@@ -104,17 +106,12 @@ const ViewFolder = () => {
                                       container
                                       className={classes.iconAlign}
                                     >
-                                      <Grid item></Grid>
-                                      <Grid item xs={1}>
-                                        <FolderIcon
-                                          className={classes.iconFolderTable}
-                                        />
-                                      </Grid>
-                                      <Grid item xs={10}>
-                                        <Typography className={classes.text}>
-                                          {folder.folder_name}
-                                        </Typography>
-                                      </Grid>
+                                      <FolderIcon
+                                        className={classes.iconFolderTable}
+                                      />
+                                      <Typography className={classes.text}>
+                                        {folder.folder_name}
+                                      </Typography>
                                     </Grid>
                                   </Link>
                                 </TableCell>
@@ -132,9 +129,55 @@ const ViewFolder = () => {
                                 <TableCell align="center"></TableCell>
                               </TableRow>
                             ))
-                          : console.log("Nodata")}
-                      </TableBody>
-                    </Table>
+                            : console.log("Nodata")}
+                        </TableBody>
+                      </Table>
+                    </Hidden>
+                    <Hidden mdUp>
+                      <Table>
+                        <TableBody>
+                          {!loading && folders !== null
+                            ? folders.map((folder) => (
+                              <TableRow key={folder.folder_id}>
+                                <TableCell>
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        "/ViewFiles/" + folder.folder_id,
+                                      state: {
+                                        folder_id: folder.folder_id,
+                                        folder_name: folder.folder_name,
+                                        access_upload: folder.access_upload,
+                                        access_download: folder.access_download,
+                                      },
+                                    }}
+                                  >
+                                    <Grid container className={classes.iconAlign}>
+                                      <Grid>
+                                        <FolderIcon
+                                          className={classes.iconFolderTable}
+                                        />
+                                      </Grid>
+                                      <Grid >
+                                        <Typography className={classes.nowrapText}>
+                                          {folder.folder_name}
+                                        </Typography>
+                                        <Typography className={classes.textDate}>
+                                          {moment
+                                            .utc(folder.folder_updated)
+                                            .add(3, "minutes")
+                                            .format("DD-MM-YYYY HH:mm")}
+                                        </Typography>
+                                      </Grid>
+                                    </Grid>
+                                  </Link>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                            : console.log("Nodata")}
+                        </TableBody>
+                      </Table>
+                    </Hidden>
                     {folders === null ? (
                       <Table>
                         <TableRow>
@@ -146,8 +189,8 @@ const ViewFolder = () => {
                         </TableRow>
                       </Table>
                     ) : (
-                      console.log("folder empty")
-                    )}
+                        console.log("folder empty")
+                      )}
                     {loading && (
                       <div className={classes.loading}>
                         <Circular />
@@ -157,8 +200,8 @@ const ViewFolder = () => {
                 </Grid>
               </Fragment>
             ) : (
-              <Redirect to={"/viewfolderadmin"} />
-            )
+                <Redirect to={"/viewfolderadmin"} />
+              )
             //history.push('/viewfolderamin')
           }
         </div>

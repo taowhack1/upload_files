@@ -23,6 +23,7 @@ import {
 import { useSnackbar } from 'notistack';
 import StarIcon from '@material-ui/icons/Star';
 
+
 const ManageUserFirst = () => {
   const classes = useStyles();
   const { loading, users } = useSelector((state) => state.auth);
@@ -61,9 +62,6 @@ const ManageUserFirst = () => {
                 <Paper className={classes.paper}>
                   <Grid
                     container
-                    direction='row'
-                    justify='left'
-                    alignItems='center'
                   >
                     <Breadcrumbs
                       className={classes.breadcrumbs}
@@ -74,7 +72,7 @@ const ManageUserFirst = () => {
                       }
                       aria-label='breadcrumb'
                     >
-                      <Typography className={classes.text} color='textPrimary'>
+                      <Typography className={classes.text} >
                         จัดการผู้ใช้งาน
                       </Typography>
                     </Breadcrumbs>
@@ -90,7 +88,7 @@ const ManageUserFirst = () => {
                             color='textPrimary'
                             className={classes.text}
                           >
-                            ชื่อ
+                            ชื่อผู้ใช้งาน
                           </Typography>
                         </TableCell>
                         <TableCell
@@ -111,78 +109,80 @@ const ManageUserFirst = () => {
                     <TableBody>
                       {users !== null
                         ? users.map((user, index) => (
-                            <TableRow key={index}>
-                              <TableCell>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      '/manageusersecond/' + user.user_id,
-                                    state: {
-                                      user_id: user.user_id,
-                                      user_firstname: user.user_firstname,
-                                      user_active: user.user_active,
-                                    },
-                                  }}
-                                >
-                                  <Grid container className={classes.iconAlign}>
-                                    <Grid item></Grid>
-                                    <Grid item xs={1}>
-                                      {user.user_active ? (
-                                        <PersonIcon
-                                          className={classes.iconPersonTable}
-                                        />
-                                      ) : (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <Link
+                                to={{
+                                  pathname:
+                                    '/manageusersecond/' + user.user_id,
+                                  state: {
+                                    user_id: user.user_id,
+                                    user_firstname: user.user_firstname,
+                                    user_active: user.user_active,
+                                  },
+                                }}
+                              >
+                                <Grid container className={classes.iconAlign}>
+                                  <Grid >
+                                    {user.user_active ? (
+                                      <PersonIcon
+                                        className={classes.iconPersonTable}
+                                      />
+                                    ) : (
                                         <PersonIcon
                                           className={
                                             classes.iconPersonTableUnActive
                                           }
                                         />
                                       )}
-                                    </Grid>
-                                    <Grid item xs={10}>
-                                      <Typography
-                                        color='textPrimary'
-                                        className={classes.text}
-                                      >
-                                        {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
-                                        {user.authorized_id == 2 ? (
-                                          <StarIcon
-                                            className={classes.iconStar}
-                                          />
-                                        ) : (
-                                          ''
-                                        )}
-                                      </Typography>
-                                    </Grid>
                                   </Grid>
-                                </Link>
-                              </TableCell>
-                              <TableCell align='center'></TableCell>
-                              <TableCell align='center'>
-                                <MenuUser
-                                  userData={user}
-                                  snackAlert={snackAlert}
-                                />
-                              </TableCell>
-                              <TableCell align='center'>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      '/manageusersecond/' + user.user_id,
-                                    state: {
-                                      user_id: user.user_id,
-                                      user_firstname: user.user_firstname,
-                                      user_active: user.user_active,
-                                    },
-                                  }}
-                                >
-                                  <IconButton className={classes.tableMargin}>
-                                    <NavigateNextIcon></NavigateNextIcon>
-                                  </IconButton>
-                                </Link>
-                              </TableCell>
-                            </TableRow>
-                          ))
+                                  <Grid>
+                                    <Typography
+                                      color='textPrimary'
+                                      className={classes.text}
+                                    >
+                                      {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
+
+                                    </Typography>
+                                  </Grid>
+                                  <Grid>
+                                    {user.authorized_id == 2 ? (
+                                      <StarIcon
+                                        className={classes.iconStar}
+                                      />
+                                    ) : (
+                                        ''
+                                      )}
+                                  </Grid>
+                                </Grid>
+                              </Link>
+                            </TableCell>
+                            <TableCell align='center'></TableCell>
+                            <TableCell align='center'>
+                              <MenuUser
+                                userData={user}
+                                snackAlert={snackAlert}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              <Link
+                                to={{
+                                  pathname:
+                                    '/manageusersecond/' + user.user_id,
+                                  state: {
+                                    user_id: user.user_id,
+                                    user_firstname: user.user_firstname,
+                                    user_active: user.user_active,
+                                  },
+                                }}
+                              >
+                                <IconButton className={classes.tableMargin}>
+                                  <NavigateNextIcon></NavigateNextIcon>
+                                </IconButton>
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        ))
                         : console.log('Nodata')}
                     </TableBody>
                   </Table>
@@ -191,8 +191,8 @@ const ManageUserFirst = () => {
               <Registor updateUser={updateUser} snackAlert={snackAlert} />
             </Fragment>
           ) : (
-            <Redirect to='/' />
-          )}
+              <Redirect to='/' />
+            )}
         </div>
       )}
     </div>

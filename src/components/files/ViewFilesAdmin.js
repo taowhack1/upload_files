@@ -1,8 +1,8 @@
-import React, { useEffect, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getFiles } from "../../actions/fileActions";
-import { useParams, Link, useHistory } from "react-router-dom";
-import moment from "moment";
+import React, { useEffect, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFiles } from '../../actions/fileActions';
+import { useParams, Link, useHistory } from 'react-router-dom';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -18,44 +18,44 @@ import {
   MenuItem,
   IconButton,
   Checkbox,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import ConfirmDeleteFiles from "./ConfirmDeleteFiles";
-import useStyles from "./StyleFiles";
-import MenuFile from "./MenuFile";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { useSnackbar } from "notistack";
-import { deleteFile } from "../../actions/fileActions";
-import FileType from './filetype/Filetypes'
+} from '@material-ui/core/';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import ConfirmDeleteFiles from './ConfirmDeleteFiles';
+import useStyles from './StyleFiles';
+import MenuFile from './MenuFile';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSnackbar } from 'notistack';
+import { deleteFile } from '../../actions/fileActions';
+import FileType from './filetype/Filetypes';
 import Hidden from '@material-ui/core/Hidden';
-import Box from "@material-ui/core/Box";
+import Box from '@material-ui/core/Box';
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const { authenticated, authdata } = useSelector((state) => state.auth);
 
-  const { folder_id, folder_name } = ''
-  const [folderID, setFolderID] = React.useState()
-  const [folderName, setFolderName] = React.useState()
+  const { folder_id, folder_name } = '';
+  const [folderID, setFolderID] = React.useState();
+  const [folderName, setFolderName] = React.useState();
 
   useEffect(() => {
     if (props.location.state) {
       const { folder_id, folder_name } = props.location.state;
-      setFolderID(folder_id)
-      setFolderName(folder_name)
+      setFolderID(folder_id);
+      setFolderName(folder_name);
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
       if (authenticated) {
         if (authdata.authorized_id == 1) {
-          history.push('/')
+          history.push('/');
         }
         if (authdata.authorized_id == 2) {
-          history.push('/manageuserfirst/')
+          history.push('/manageuserfirst/');
         }
       }
     }
@@ -124,9 +124,9 @@ const ViewFilesAdmin = (props) => {
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label="breadcrumb"
+              aria-label='breadcrumb'
             >
-              <Link to={{ pathname: "/viewfolderadmin" }}>
+              <Link to={{ pathname: '/viewfolderadmin' }}>
                 <Typography className={classes.opacity}>
                   โฟลเดอร์ทั้งหมด
                 </Typography>
@@ -137,36 +137,90 @@ const ViewFilesAdmin = (props) => {
         </Paper>
 
         <Paper className={classes.paper}>
-          <Hidden smDown >
+          <Hidden smDown>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" style={{ width: "1%" }}></TableCell>
+                  <TableCell align='center' style={{ width: '1%' }}></TableCell>
                   <TableCell className={classes.tableCellName}>
-                    <Typography color="textPrimary" className={classes.text}>
-                      ชื่อ
-                  </Typography>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อไฟล์
+                    </Typography>
                   </TableCell>
-                  <TableCell align="center">
-                    <Typography color="textPrimary" className={classes.text}>
-                      วันที่แก้ไข
-                  </Typography>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      วันที่อัพโหลดล่าสุด
+                    </Typography>
                   </TableCell>
-                  <TableCell align="center">
-                    <Typography color="textPrimary" className={classes.text}>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
                       ตัวเลือก
-                  </Typography>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file, index) => {
-                    return (
+                      return (
+                        <TableRow key={file.file_id} hover>
+                          <TableCell align='center'>
+                            <Checkbox
+                              className={classes.tableMargin}
+                              onClick={(event) =>
+                                handleSelectClick(
+                                  event,
+                                  file.file_id,
+                                  file.file_name
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Grid container className={classes.iconAlign}>
+                              <Grid>
+                                <FileType typefile={file.file_name} />
+                              </Grid>
+                              <Grid>
+                                <Typography
+                                  color='textPrimary'
+                                  className={classes.text}
+                                >
+                                  {file.file_name}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                            {/* </Link> */}
+                          </TableCell>
+                          <TableCell align='center'>
+                            <Typography className={classes.text}>
+                              {moment
+                                .utc(file.file_created)
+                                .add(3, 'minutes')
+                                .format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align='center'>
+                            <MenuFile file={file} handleDelete={handleDelete} />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  : console.log('Nodata')}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <Table>
+              <TableBody>
+                {!loading && files !== null
+                  ? files.map((file) => (
                       <TableRow key={file.file_id} hover>
-                        <TableCell align="center">
+                        <TableCell
+                          align='center'
+                          className={classes.iconCheckBox}
+                        >
                           <Checkbox
-                            className={classes.tableMargin}
                             onClick={(event) =>
                               handleSelectClick(
                                 event,
@@ -176,85 +230,37 @@ const ViewFilesAdmin = (props) => {
                             }
                           />
                         </TableCell>
+
                         <TableCell>
                           <Grid container className={classes.iconAlign}>
                             <Grid>
                               <FileType typefile={file.file_name} />
                             </Grid>
                             <Grid>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {file.file_name}
+                              <div className={classes.nowrapMany}>
+                                <Box
+                                  className={classes.nowrapTextMany}
+                                  textOverflow='ellipsis'
+                                  overflow='hidden'
+                                >
+                                  {file.file_name}
+                                </Box>
+                              </div>
+                              <Typography className={classes.textDate}>
+                                {moment
+                                  .utc(file.file_created)
+                                  .add(3, 'minutes')
+                                  .format('DD-MM-YYYY HH:mm')}
                               </Typography>
                             </Grid>
                           </Grid>
-                          {/* </Link> */}
                         </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment
-                              .utc(file.file_created)
-                              .add(3, "minutes")
-                              .format("DD-MM-YYYY HH:mm")}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
+                        <TableCell align='center'>
                           <MenuFile file={file} handleDelete={handleDelete} />
                         </TableCell>
                       </TableRow>
-                    );
-                  })
-                  : console.log("Nodata")}
-              </TableBody>
-            </Table>
-          </Hidden>
-          <Hidden mdUp>
-            <Table >
-              <TableBody>
-                {!loading && files !== null
-                  ? files.map((file) => (
-                    <TableRow key={file.file_id} hover>
-                      <TableCell align="center" className={classes.iconCheckBox}>
-                        <Checkbox
-                          onClick={(event) =>
-                            handleSelectClick(
-                              event,
-                              file.file_id,
-                              file.file_name
-                            )
-                          }
-                        />
-                      </TableCell>
-
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid>
-                            <FileType typefile={file.file_name} />
-                          </Grid>
-                          <Grid >
-                            <div className={classes.nowrapMany}>
-                              <Box className={classes.nowrapTextMany} textOverflow="ellipsis"
-                                overflow="hidden">
-                                {file.file_name}
-                              </Box>
-                            </div>
-                            <Typography className={classes.textDate}>
-                              {moment
-                                .utc(file.file_created)
-                                .add(3, "minutes")
-                                .format("DD-MM-YYYY HH:mm")}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell align="center">
-                        <MenuFile file={file} handleDelete={handleDelete} />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                  : console.log("folder empty")}
+                    ))
+                  : console.log('folder empty')}
               </TableBody>
             </Table>
           </Hidden>
@@ -262,13 +268,13 @@ const ViewFilesAdmin = (props) => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{" โฟลเดอร์นี้ว่างเปล่า "}</Typography>
+                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>
           ) : (
-              console.log("folder empty")
-            )}
+            console.log('folder empty')
+          )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

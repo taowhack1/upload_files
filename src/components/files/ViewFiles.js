@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import React, { useEffect, Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -11,20 +11,19 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import UploadBtn from "./UploadBtn";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { getFiles } from "../../actions/fileActions";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import ConfirmDownload from "./ConfirmDowload";
-import useStyles from "./StyleFiles";
-import Circular from "../layout/Circular";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import FileType from './filetype/Filetypes'
-import Box from "@material-ui/core/Box";
+} from '@material-ui/core/';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import UploadBtn from './UploadBtn';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import { getFiles } from '../../actions/fileActions';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import ConfirmDownload from './ConfirmDowload';
+import useStyles from './StyleFiles';
+import Circular from '../layout/Circular';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import FileType from './filetype/Filetypes';
+import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
-
 
 const ViewFiles = (props) => {
   //const { folder_id, folder_name } = props.location.state;
@@ -33,7 +32,7 @@ const ViewFiles = (props) => {
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
-  const { folder_id, folder_name } = "";
+  const { folder_id, folder_name } = '';
   const [folderID, setFolderID] = useState();
   const [folderName, setFolderName] = useState();
   const [accessupload, setAccessUpload] = useState({});
@@ -49,10 +48,10 @@ const ViewFiles = (props) => {
       setAccessUpload(access_upload);
       setAccessDowload(access_download);
       setFolderID(folder_id);
-      setFolderName(folder_name)
+      setFolderName(folder_name);
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
-      history.push("/");
+      history.push('/');
     }
   }, []);
   const updateList = () => {
@@ -79,9 +78,7 @@ const ViewFiles = (props) => {
   //   setPrev(window.scrollY)
   // };
 
-
   return (
-
     <Fragment>
       <Grid container className={classes.gridContainer}>
         <Paper className={classes.paper}>
@@ -91,122 +88,131 @@ const ViewFiles = (props) => {
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label="breadcrumb"
+              aria-label='breadcrumb'
             >
-              <Link to={{ pathname: "/" }}>
+              <Link to={{ pathname: '/' }}>
                 <Typography className={classes.opacity}>
                   โฟลเดอร์ทั้งหมด
                 </Typography>
               </Link>
-              <Typography className={classes.text}>
-                {folderName}
-              </Typography>
+              <Typography className={classes.text}>{folderName}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
 
-
         <Paper className={classes.paper}>
-          <Hidden smDown >
+          <Hidden smDown>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.tableCellName}>
-                    <Typography color="textPrimary" className={classes.text}>
-                      ชื่อ
-                  </Typography>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อไฟล์
+                    </Typography>
                   </TableCell>
-                  <TableCell align="center">
-                    <Typography color="textPrimary" className={classes.text}>
-                      วันที่แก้ไขล่าสุด
-                  </Typography>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      วันที่อัพโหลดล่าสุด
+                    </Typography>
                   </TableCell>
-                  <TableCell align="center">
-                    <Typography color="textPrimary" className={classes.text}>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
                       ดาวน์โหลด
-                  </Typography>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
-                    <TableRow key={file.file_id} hover>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <FileType typefile={file.file_name} src={file.src} />
-                          <div className={classes.nowrap}>
-                            <Box className={classes.nowrapText} textOverflow="ellipsis"
-                              overflow="hidden">
-                              {file.file_name}
-                            </Box>
-                          </div>
-                        </Grid>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Typography className={classes.text}>
-                          {moment
-                            .utc(file.file_created)
-                            .add(3, "minutes")
-                            .format("DD-MM-YYYY HH:mm")}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        {accessdownload ? (
-                          <ConfirmDownload
-                            filename={file.file_name}
-                            fileid={file.file_id}
-                          />
-                        ) : (
-                            <GetAppIcon color="disabled" />
+                      <TableRow key={file.file_id} hover>
+                        <TableCell>
+                          <Grid container className={classes.iconAlign}>
+                            <FileType
+                              typefile={file.file_name}
+                              src={file.src}
+                            />
+                            <div className={classes.nowrap}>
+                              <Box
+                                className={classes.nowrapText}
+                                textOverflow='ellipsis'
+                                overflow='hidden'
+                              >
+                                {file.file_name}
+                              </Box>
+                            </div>
+                          </Grid>
+                        </TableCell>
+                        <TableCell align='center'>
+                          <Typography className={classes.text}>
+                            {moment
+                              .utc(file.file_created)
+                              .add(3, 'minutes')
+                              .format('DD-MM-YYYY HH:mm')}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align='center'>
+                          {accessdownload ? (
+                            <ConfirmDownload
+                              filename={file.file_name}
+                              fileid={file.file_id}
+                            />
+                          ) : (
+                            <GetAppIcon color='disabled' />
                           )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                  : console.log("folder empty")}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : console.log('folder empty')}
               </TableBody>
             </Table>
           </Hidden>
           <Hidden mdUp>
-            <Table >
+            <Table>
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
-                    <TableRow key={file.file_id} hover>
-                      <TableCell >
-                        <Grid container className={classes.iconAlign}>
-                          <Grid>
-                            <FileType typefile={file.file_name} src={file.src} />
+                      <TableRow key={file.file_id} hover>
+                        <TableCell>
+                          <Grid container className={classes.iconAlign}>
+                            <Grid>
+                              <FileType
+                                typefile={file.file_name}
+                                src={file.src}
+                              />
+                            </Grid>
+                            <Grid>
+                              <div className={classes.nowrap}>
+                                <Box
+                                  className={classes.nowrapText}
+                                  textOverflow='ellipsis'
+                                  overflow='hidden'
+                                >
+                                  {file.file_name}
+                                </Box>
+                              </div>
+                              <Typography className={classes.textDate}>
+                                {moment
+                                  .utc(file.file_created)
+                                  .add(3, 'minutes')
+                                  .format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid >
-                            <div className={classes.nowrap}>
-                              <Box className={classes.nowrapText} textOverflow="ellipsis"
-                                overflow="hidden">
-                                {file.file_name}
-                              </Box>
-                            </div>
-                            <Typography className={classes.textDate}>
-                              {moment
-                                .utc(file.file_created)
-                                .add(3, "minutes")
-                                .format("DD-MM-YYYY HH:mm")}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell>
-                        {accessdownload ? (
-                          <ConfirmDownload
-                            filename={file.file_name}
-                            fileid={file.file_id}
-                          />
-                        ) : (
-                            <GetAppIcon color="disabled" />
+                        </TableCell>
+                        <TableCell>
+                          {accessdownload ? (
+                            <ConfirmDownload
+                              filename={file.file_name}
+                              fileid={file.file_id}
+                            />
+                          ) : (
+                            <GetAppIcon color='disabled' />
                           )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                  : console.log("folder empty")}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : console.log('folder empty')}
               </TableBody>
             </Table>
           </Hidden>
@@ -214,13 +220,13 @@ const ViewFiles = (props) => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{" โฟลเดอร์นี้ว่างเปล่า "}</Typography>
+                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>
           ) : (
-              console.log("folder empty")
-            )}
+            console.log('folder empty')
+          )}
           {loading && (
             <div className={classes.loading}>
               <Circular />
@@ -234,8 +240,7 @@ const ViewFiles = (props) => {
       {accessupload && <UploadBtn refresh={updateList} folderId={folderID} />}
       {/* </div>
       } */}
-
-    </Fragment >
+    </Fragment>
   );
 };
 

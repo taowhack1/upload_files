@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import React, { useEffect, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -11,21 +11,21 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderIcon from "@material-ui/icons/Folder";
+} from '@material-ui/core/';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import FolderIcon from '@material-ui/icons/Folder';
 import {
   deleteFolder,
   updateFolder,
   getAllFolder,
   createFolder,
-} from "../../actions/folderActions";
-import AddFolder from "./AddFolder";
-import useStyles from "./StyleFiles";
-import MenuFolder from "./MenuFolder";
-import Circular from "../layout/Circular";
-import { useSnackbar } from "notistack";
-import moment from "moment";
+} from '../../actions/folderActions';
+import AddFolder from './AddFolder';
+import useStyles from './StyleFiles';
+import MenuFolder from './MenuFolder';
+import Circular from '../layout/Circular';
+import { useSnackbar } from 'notistack';
+import moment from 'moment';
 import Hidden from '@material-ui/core/Hidden';
 
 const ViewFolderAdmin = (props) => {
@@ -39,7 +39,7 @@ const ViewFolderAdmin = (props) => {
     dispatch(getAllFolder());
   }, []);
 
-  const snackAlert = (msg = "Alert", variant = "warning") => {
+  const snackAlert = (msg = 'Alert', variant = 'warning') => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
@@ -47,7 +47,7 @@ const ViewFolderAdmin = (props) => {
 
   const refresh = () => {
     dispatch(getAllFolder());
-    console.log("refresh");
+    console.log('refresh');
   };
 
   const handleDeleteFolder = async (folderId) => {
@@ -59,7 +59,7 @@ const ViewFolderAdmin = (props) => {
         createFolder(folder_name, snackAlert, handleAddFolderClose)
       );
     } else {
-      snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
+      snackAlert('กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง', 'error');
     }
   };
   const handleChangeFolderName = async (folder, handleAddFolderClose) => {
@@ -67,7 +67,7 @@ const ViewFolderAdmin = (props) => {
       await dispatch(updateFolder(folder, snackAlert));
       handleAddFolderClose(true);
     } else {
-      snackAlert("กรุณาระบุชื่อโฟลเดอร์", "warning");
+      snackAlert('กรุณาระบุชื่อโฟลเดอร์', 'warning');
     }
   };
   return (
@@ -86,7 +86,7 @@ const ViewFolderAdmin = (props) => {
                           className={classes.NavigateNextIcon}
                         />
                       }
-                      aria-label="breadcrumb"
+                      aria-label='breadcrumb'
                     >
                       <Typography className={classes.text}>
                         โฟลเดอร์ทั้งหมด
@@ -100,72 +100,76 @@ const ViewFolderAdmin = (props) => {
                       <TableHead>
                         <TableRow>
                           <TableCell className={classes.tableCellName}>
-                            <Typography className={classes.text}>ชื่อ</Typography>
+                            <Typography className={classes.text}>
+                              ชื่อโฟลเดอร์
+                            </Typography>
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align='center'>
                             <Typography className={classes.text}>
                               วันที่แก้ไข
-                          </Typography>
+                            </Typography>
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align='center'>
                             <Typography className={classes.text}>
                               ตัวเลือก
-                          </Typography>
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       </TableHead>
-                      <TableBody >
+                      <TableBody>
                         {!loading && folders != null
                           ? folders.map((folder) => (
-                            <TableRow key={folder.folder_id} >
-                              <TableCell>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      "/viewfilesadmin/" + folder.folder_id,
-                                    state: {
-                                      folder_id: folder.folder_id,
-                                      folder_name: folder.folder_name,
-                                    },
-                                  }}
-                                >
-                                  <Grid container className={classes.iconAlign}>
-
-                                    <Grid >
-                                      <FolderIcon
-                                        className={classes.iconFolderTable}
-                                      />
+                              <TableRow key={folder.folder_id}>
+                                <TableCell>
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/viewfilesadmin/' + folder.folder_id,
+                                      state: {
+                                        folder_id: folder.folder_id,
+                                        folder_name: folder.folder_name,
+                                      },
+                                    }}
+                                  >
+                                    <Grid
+                                      container
+                                      className={classes.iconAlign}
+                                    >
+                                      <Grid>
+                                        <FolderIcon
+                                          className={classes.iconFolderTable}
+                                        />
+                                      </Grid>
+                                      <Grid>
+                                        <Typography className={classes.text}>
+                                          {folder.folder_name}
+                                        </Typography>
+                                      </Grid>
                                     </Grid>
-                                    <Grid>
-                                      <Typography className={classes.text}>
-                                        {folder.folder_name}
-                                      </Typography>
-                                    </Grid>
-                                  </Grid>
-                                </Link>
-                              </TableCell>
-                              <TableCell align="center">
-                                <Typography className={classes.text}>
-                                  {moment
-                                    .utc(folder.folder_updated)
-                                    .add(3, "minutes")
-                                    .format("DD-MM-YYYY HH:mm")}
-                                </Typography>
-                              </TableCell>
-                              <TableCell align="center">
-                                <MenuFolder
-                                  delete={handleDeleteFolder}
-                                  edit={handleChangeFolderName}
-                                  snackAlert={snackAlert}
-                                  refresh={refresh}
-                                  folder_name_old={folder.folder_name}
-                                  folder_name={folder.folder_name}
-                                  folder_id={folder.folder_id}
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))
-                          : console.log("Nodata")}
+                                  </Link>
+                                </TableCell>
+                                <TableCell align='center'>
+                                  <Typography className={classes.text}>
+                                    {moment
+                                      .utc(folder.folder_updated)
+                                      .add(3, 'minutes')
+                                      .format('DD-MM-YYYY HH:mm')}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align='center'>
+                                  <MenuFolder
+                                    delete={handleDeleteFolder}
+                                    edit={handleChangeFolderName}
+                                    snackAlert={snackAlert}
+                                    refresh={refresh}
+                                    folder_name_old={folder.folder_name}
+                                    folder_name={folder.folder_name}
+                                    folder_id={folder.folder_id}
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          : console.log('Nodata')}
                       </TableBody>
                     </Table>
                   </Hidden>
@@ -174,52 +178,59 @@ const ViewFolderAdmin = (props) => {
                       <TableBody>
                         {!loading && folders != null
                           ? folders.map((folder) => (
-                            <TableRow key={folder.folder_id} >
-                              <TableCell>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      "/viewfilesadmin/" + folder.folder_id,
-                                    state: {
-                                      folder_id: folder.folder_id,
-                                      folder_name: folder.folder_name,
-                                    },
-                                  }}
-                                >
-                                  <Grid container className={classes.iconAlign}>
-                                    <Grid>
-                                      <FolderIcon
-                                        className={classes.iconFolderTable}
-                                      />
+                              <TableRow key={folder.folder_id}>
+                                <TableCell>
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/viewfilesadmin/' + folder.folder_id,
+                                      state: {
+                                        folder_id: folder.folder_id,
+                                        folder_name: folder.folder_name,
+                                      },
+                                    }}
+                                  >
+                                    <Grid
+                                      container
+                                      className={classes.iconAlign}
+                                    >
+                                      <Grid>
+                                        <FolderIcon
+                                          className={classes.iconFolderTable}
+                                        />
+                                      </Grid>
+                                      <Grid>
+                                        <Typography
+                                          className={classes.nowrapText}
+                                        >
+                                          {folder.folder_name}
+                                        </Typography>
+                                        <Typography
+                                          className={classes.textDate}
+                                        >
+                                          {moment
+                                            .utc(folder.folder_updated)
+                                            .add(3, 'minutes')
+                                            .format('DD-MM-YYYY HH:mm')}
+                                        </Typography>
+                                      </Grid>
                                     </Grid>
-                                    <Grid >
-                                      <Typography className={classes.nowrapText}>
-                                        {folder.folder_name}
-                                      </Typography>
-                                      <Typography className={classes.textDate}>
-                                        {moment
-                                          .utc(folder.folder_updated)
-                                          .add(3, "minutes")
-                                          .format("DD-MM-YYYY HH:mm")}
-                                      </Typography>
-                                    </Grid>
-                                  </Grid>
-                                </Link>
-                              </TableCell>
-                              <TableCell align="center">
-                                <MenuFolder
-                                  delete={handleDeleteFolder}
-                                  edit={handleChangeFolderName}
-                                  snackAlert={snackAlert}
-                                  refresh={refresh}
-                                  folder_name_old={folder.folder_name}
-                                  folder_name={folder.folder_name}
-                                  folder_id={folder.folder_id}
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))
-                          : console.log("Nodata")}
+                                  </Link>
+                                </TableCell>
+                                <TableCell align='center'>
+                                  <MenuFolder
+                                    delete={handleDeleteFolder}
+                                    edit={handleChangeFolderName}
+                                    snackAlert={snackAlert}
+                                    refresh={refresh}
+                                    folder_name_old={folder.folder_name}
+                                    folder_name={folder.folder_name}
+                                    folder_id={folder.folder_id}
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          : console.log('Nodata')}
                       </TableBody>
                     </Table>
                   </Hidden>
@@ -228,14 +239,14 @@ const ViewFolderAdmin = (props) => {
                       <TableRow>
                         <TableCell className={classes.emptyTable}>
                           <Typography>
-                            {" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}
+                            {' ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง '}
                           </Typography>
                         </TableCell>
                       </TableRow>
                     </Table>
                   ) : (
-                      console.log("folder empty")
-                    )}
+                    console.log('folder empty')
+                  )}
                   {loading && (
                     <div className={classes.loading}>
                       <Circular />
@@ -246,8 +257,8 @@ const ViewFolderAdmin = (props) => {
               </Grid>
             </Fragment>
           ) : (
-              <Redirect to="/" />
-            )}
+            <Redirect to='/' />
+          )}
         </div>
       )}
     </div>

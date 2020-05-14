@@ -69,7 +69,7 @@ const ViewFolder = () => {
                               color='textPrimary'
                               className={classes.text}
                             >
-                              ชื่อ
+                              ชื่อโฟลเดอร์
                             </Typography>
                           </TableCell>
                           <TableCell align='center'>

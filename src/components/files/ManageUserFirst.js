@@ -113,17 +113,57 @@ const ManageUserFirst = () => {
                         ? users.map((user, index) => (
                             <TableRow key={index}>
                               <TableCell>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      '/manageusersecond/' + user.user_id,
-                                    state: {
-                                      user_id: user.user_id,
-                                      user_firstname: user.user_firstname,
-                                      user_active: user.user_active,
-                                    },
-                                  }}
-                                >
+                                {/* authorized_id : 1 = user, 2 = Admin */}
+                                {user.authorized_id === 1 &&
+                                user.user_active === true ? (
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/manageusersecond/' + user.user_id,
+                                      state: {
+                                        user_id: user.user_id,
+                                        user_firstname: user.user_firstname,
+                                        user_active: user.user_active,
+                                      },
+                                    }}
+                                  >
+                                    <Grid
+                                      container
+                                      className={classes.iconAlign}
+                                    >
+                                      <Grid>
+                                        {user.user_active ? (
+                                          <PersonIcon
+                                            className={classes.iconPersonTable}
+                                          />
+                                        ) : (
+                                          <PersonIcon
+                                            className={
+                                              classes.iconPersonTableUnActive
+                                            }
+                                          />
+                                        )}
+                                      </Grid>
+                                      <Grid>
+                                        <Typography
+                                          color='textPrimary'
+                                          className={classes.text}
+                                        >
+                                          {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
+                                        </Typography>
+                                      </Grid>
+                                      <Grid>
+                                        {user.authorized_id == 2 ? (
+                                          <StarIcon
+                                            className={classes.iconStar}
+                                          />
+                                        ) : (
+                                          ''
+                                        )}
+                                      </Grid>
+                                    </Grid>
+                                  </Link>
+                                ) : (
                                   <Grid container className={classes.iconAlign}>
                                     <Grid>
                                       {user.user_active ? (
@@ -156,7 +196,7 @@ const ManageUserFirst = () => {
                                       )}
                                     </Grid>
                                   </Grid>
-                                </Link>
+                                )}
                               </TableCell>
                               <TableCell align='center'>
                                 <ManageUserSwitchAuth
@@ -171,21 +211,26 @@ const ManageUserFirst = () => {
                                 />
                               </TableCell>
                               <TableCell align='center'>
-                                <Link
-                                  to={{
-                                    pathname:
-                                      '/manageusersecond/' + user.user_id,
-                                    state: {
-                                      user_id: user.user_id,
-                                      user_firstname: user.user_firstname,
-                                      user_active: user.user_active,
-                                    },
-                                  }}
-                                >
-                                  <IconButton className={classes.tableMargin}>
-                                    <NavigateNextIcon></NavigateNextIcon>
-                                  </IconButton>
-                                </Link>
+                                {user.authorized_id === 2 ||
+                                  (user.user_active && (
+                                    <Link
+                                      to={{
+                                        pathname:
+                                          '/manageusersecond/' + user.user_id,
+                                        state: {
+                                          user_id: user.user_id,
+                                          user_firstname: user.user_firstname,
+                                          user_active: user.user_active,
+                                        },
+                                      }}
+                                    >
+                                      <IconButton
+                                        className={classes.tableMargin}
+                                      >
+                                        <NavigateNextIcon></NavigateNextIcon>
+                                      </IconButton>
+                                    </Link>
+                                  ))}
                               </TableCell>
                             </TableRow>
                           ))

@@ -99,7 +99,7 @@ const ViewFiles = (props) => {
                 </Typography>
               </Link>
               <Typography className={classes.text}>
-                โฟลเดอร์ {folderName}
+                {folderName}
               </Typography>
             </Breadcrumbs>
           </Grid>

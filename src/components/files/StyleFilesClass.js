@@ -12,14 +12,14 @@ export default (theme) => ({
     ['@media (max-width:600px)']: {
       bottom: theme.spacing(4),
       right: theme.spacing(4),
-      height: 70,
-      width: 70,
+      height: 80,
+      width: 80,
     },
   },
   icon: {
     fontSize: 50,
     ['@media (max-width:600px)']: {
-      fontSize: 30,
+      fontSize: 40,
     },
   },
   text: {
@@ -51,9 +51,14 @@ export default (theme) => ({
       width: 400
     },
     ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
-      width: 250
+      width: 260,
     },
-
+    ['@media (max-width:400px)']: { // eslint-disable-line no-useless-computed-key
+      width: 240
+    },
+    ['@media (max-width:350px)']: { // eslint-disable-line no-useless-computed-key
+      width: 230
+    },
   },
 
 });

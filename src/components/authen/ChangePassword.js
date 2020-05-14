@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import swal from "sweetalert";
 import "./style.css";
+import Hidden from '@material-ui/core/Hidden';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -163,7 +164,7 @@ export default function AddFolder(props) {
             <div className={classes.root}>
               <Typography className={classes.text}>เปลี่ยนรหัสผ่าน</Typography>
               <Container maxWidth="xs">
-                <form style={{ marginTop: 10 }}>
+                <form className={classes.formStyle}>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -189,8 +190,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -224,8 +225,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -259,8 +260,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),

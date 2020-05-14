@@ -113,9 +113,15 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     display: "flex",
     width: 250,
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      width: 300,
+    },
   },
   menuItem: {
     margin: theme.spacing(0, 0, 0, -2),
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      padding: theme.spacing(0, 0, 0, 0),
+    },
   },
   tableMargin: {
     margin: theme.spacing(-1, 0, -1, 0),
@@ -155,12 +161,17 @@ const useStyles = makeStyles((theme) => ({
     width: 100,
     backgroundColor: "#1976D2",
     ['@media (max-width:600px)']: {
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
+      bottom: theme.spacing(4),
+      right: theme.spacing(4),
+      height: 80,
+      width: 80,
     },
   },
   icon: {
     fontSize: 50,
+    ['@media (max-width:600px)']: {
+      fontSize: 40,
+    },
   },
   grid: {
     marginTop: 25,
@@ -188,9 +199,14 @@ const useStyles = makeStyles((theme) => ({
       width: 400
     },
     ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
-      width: 250
+      width: 260,
     },
-
+    ['@media (max-width:400px)']: { // eslint-disable-line no-useless-computed-key
+      width: 240
+    },
+    ['@media (max-width:350px)']: { // eslint-disable-line no-useless-computed-key
+      width: 230
+    },
   },
   modalIconAlign: {
     direction: "row",
@@ -217,6 +233,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(-5),
+    ['@media (max-width:600px)']: { // eslint-disable-line no-useless-computed-key
+      display: "flex",
+    },
   },
   modalbtnOk: {
     padding: theme.spacing(1, 7, 1),
@@ -322,6 +341,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     color: '#FFFFFF',
     fontSize: 20,
+    marginRight: 30,
+    ['@media (max-width:1050px)']: { // eslint-disable-line no-useless-computed-key
+      marginRight: 20,
+    },
   },
   filetype: {
     width: 30,
@@ -397,6 +420,16 @@ const useStyles = makeStyles((theme) => ({
     },
     ['@media (max-width:371px)']: { // eslint-disable-line no-useless-computed-key
       width: 100,
+    },
+  },
+
+  formStyle: {
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    ['@media (max-width:600px)']: {
+      marginRight: -20,
+      marginLeft: -20,
     },
   },
 

@@ -45,6 +45,7 @@ class UploadBtn extends Component {
           aria-describedby="transition-modal-description"
           className={classes.modal}
           open={this.state.open}
+
         >
           <div className={classes.modalPaper}>
             <div className={classes.root}>

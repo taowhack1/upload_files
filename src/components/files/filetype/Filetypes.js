@@ -28,74 +28,44 @@ const Filetypes = (props) => {
             setType(type)
         }
     })
-    console.log(props.checktype)
     return (
         <div>
-            {props.checktype != null
-                ? <div className={classes.filetypeUpload}>
-                    {type == "docx" &&
-                        <img src={Document} />
-                    }
-                    {type == "xlsx" &&
-                        <img src={xlxs} />
-                    }
-                    {type == "pptx" &&
-                        <img src={PowerPoint} />
-                    }
-                    {type == "pdf" &&
-                        <img src={PDF} />
-                    }
-                    {type == "png" &&
-                        <img src={PNG} />
-                        //<img src={props.src} />
-                    }
-                    {type == "jpg" &&
-                        <img src={JPG} />
-                        //<img src={props.src} />
-                    }
-                    {type == "txt" &&
-                        <img src={TXT} />
-                    }
-                    {type == "zip" &&
-                        <img src={ZIP} />
-                    }
-                    {type != "docx" && type != "xlsx" && type != "pptx" && type != "pdf" && type != "png" && type != "jpg" && type != "txt" && type != "zip" &&
-                        <img src={Option} />
-                    }
-                </div>
-                :
-                <div className={classes.filetype}>
-                    {type == "docx" &&
-                        <img src={Document} />
-                    }
-                    {type == "xlsx" &&
-                        <img src={xlxs} />
-                    }
-                    {type == "pptx" &&
-                        <img src={PowerPoint} />
-                    }
-                    {type == "pdf" &&
-                        <img src={PDF} />
-                    }
-                    {type == "png" &&
-                        <img src={PNG} />
-                        //<img src={props.src} />
-                    }
-                    {type == "jpg" &&
-                        <img src={JPG} />
-                        //<img src={props.src} />
-                    }
-                    {type == "txt" &&
-                        <img src={TXT} />
-                    }
-                    {type == "zip" &&
-                        <img src={ZIP} />
-                    }
-                    {type != "docx" && type != "xlsx" && type != "pptx" && type != "pdf" && type != "png" && type != "jpg" && type != "txt" && type != "zip" &&
-                        <img src={Option} />
-                    }
-                </div>
-            }
+            <div className={
+                props.checktype != null
+                    ? classes.filetypeUpload
+                    : classes.filetype
+            }>
+                {type == "docx" &&
+                    <img src={Document} />
+                }
+                {type == "xlsx" &&
+                    <img src={xlxs} />
+                }
+                {type == "pptx" &&
+                    <img src={PowerPoint} />
+                }
+                {type == "pdf" &&
+                    <img src={PDF} />
+                }
+                {type == "png" &&
+                    <img src={PNG} />
+                    //<img src={props.src} />
+                }
+                {type == "jpg" &&
+                    <img src={JPG} />
+                    //<img src={props.src} />
+                }
+                {type == "txt" &&
+                    <img src={TXT} />
+                }
+                {type == "zip" &&
+                    <img src={ZIP} />
+                }
+                {type != "docx" && type != "xlsx" && type != "pptx" && type != "pdf" && type != "png" && type != "jpg" && type != "txt" && type != "zip" &&
+                    <img src={Option} />
+                }
+            </div>
+
 
         </div>
     )

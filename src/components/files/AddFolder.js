@@ -23,12 +23,13 @@ export default function AddFolder(props) {
     setOpen(false);
     setFolderName("");
   };
-  
+
   const handleChangeFolderName = (e) => {
     let value = e.target.value.replace(/[^A-Za-z\d]$/gi, "");
     value = value.slice(0, 15);
     setFolderName(value);
   };
+
 
   return (
     <div>

@@ -82,6 +82,7 @@ const Dropzone = (props) => {
           console.log(err);
         }
       }
+      console.log(res.data)
       res.data
         ? UploadSucces()
         : snackAlert("พบข้อผิดพลาด กรุณาลองใหม่...", "error");

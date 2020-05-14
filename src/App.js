@@ -36,12 +36,13 @@ const theme = createMuiTheme({
   overrides: {
     MuiTableCell: {
       root: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        "&:last-child": {
-          paddingRight: 5
+        paddingTop: 6,
+        paddingBottom: 6,
+        ['@media (max-width:600px)']: {
+          paddingTop: 8,
+          paddingBottom: 8,
         }
-      }
+      },
     }
   }
 });

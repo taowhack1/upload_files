@@ -31,11 +31,7 @@ const ViewFolder = () => {
   console.log(folders);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (authdata.user_id === null) {
-      history.push("/");
-    } else {
-      dispatch(getFolders(authdata.user_id));
-    }
+    dispatch(getFolders(authdata.user_id));
   }, []);
 
   if (loading) {

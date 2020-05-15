@@ -17,6 +17,7 @@ import Dowload from './components/files/Dowload';
 import ConfirmDowload from './components/files/ConfirmDowload';
 import NotFound from './components/pages/Notfound';
 import HistoryUpload from './components/history/HistoryUpload';
+
 import {
   createMuiTheme,
   ThemeProvider,
@@ -78,7 +79,7 @@ const App = () => {
                 component={ManageUserSecond}
               />
               <Route exact path='/signin' component={SignIn} />
-              <Route exact path='/' component={SignIn} />
+              <Route exact path='/' component={Home} />
               <Route exact path='/ViewFiles/:folder_id' component={ViewFiles} />
               <Route
                 exact

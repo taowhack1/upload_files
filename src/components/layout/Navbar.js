@@ -220,6 +220,7 @@ const Navbar = () => {
                   <Grid container>
                     <Grid>
                       <IconButton
+                        style={{ color: 'white' }}
                         component={Link}
                         to='/'>
                         <HomeIcon />

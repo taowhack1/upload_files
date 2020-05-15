@@ -6,7 +6,7 @@ import {
   POSTS_ERROR,
   DELETE_FOLDER,
   UPDATE_FOLDER,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   folders: null,

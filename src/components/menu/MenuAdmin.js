@@ -42,6 +42,7 @@ const MenuAdmin = (props) => {
                         className={classes.text}
                         component={Link}
                         to='/viewfolderadmin'
+                        onClick={handleClose}
                         variant="inherit">จัดการโฟลเดอร์
                         </Typography>
                 </MenuItem>
@@ -50,6 +51,7 @@ const MenuAdmin = (props) => {
                         className={classes.text}
                         component={Link}
                         to='/manageuserfirst'
+                        onClick={handleClose}
                         variant="inherit">
                         จัดการผู้ใช้งาน
                         </Typography>
@@ -59,6 +61,7 @@ const MenuAdmin = (props) => {
                         className={classes.text}
                         component={Link}
                         to='/historyupload'
+                        onClick={handleClose}
                         variant="inherit"
                     >ประวัติการอัพโหลด</Typography>
                 </MenuItem>
@@ -67,6 +70,7 @@ const MenuAdmin = (props) => {
                         className={classes.text}
                         component={Link}
                         to='/historydelete'
+                        onClick={handleClose}
                         variant="inherit"
                     >ประวัติการลบไฟล์</Typography>
                 </MenuItem>

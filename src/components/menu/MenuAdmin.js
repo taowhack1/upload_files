@@ -128,7 +128,7 @@ const MenuAdmin = (props) => {
                         <IconButton onClick={toggleDrawer(anchor, true)}>
                             <MenuIcon style={{ color: 'white' }}></MenuIcon>
                         </IconButton>
-                        <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                        <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} >
                             {list(anchor)}
                         </Drawer>
                     </React.Fragment>

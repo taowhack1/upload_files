@@ -87,42 +87,42 @@ const HistoryUpload = (props) => {
               <TableBody>
                 {!loading && logs !== null
                   ? logs.map((log) => (
-                      <TableRow key={log.file_id} hover>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid>
-                              <FileType typefile={log.file_name} />
-                            </Grid>
-                            <Grid>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {log.file_name}
-                              </Typography>
-                            </Grid>
+                    <TableRow key={log.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType typefile={log.file_name} />
                           </Grid>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {log.folder_name}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment
-                              .utc(log.file_created)
-                              .add(3, "minutes")
-                              .format("DD-MM-YYYY HH:mm")}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {log.user_firstname} {log.user_lastname}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                          <Grid>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {log.file_name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {log.folder_name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment
+                            .utc(log.file_created)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {log.user_firstname} {log.user_lastname}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : null}
               </TableBody>
             </Table>
@@ -132,20 +132,48 @@ const HistoryUpload = (props) => {
               <TableBody>
                 {!loading && logs !== null
                   ? logs.map((log) => (
-                      <TableRow key={log.file_id} hover>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid>
-                              <FileType typefile={log.file_name} />
-                            </Grid>
-                            <Grid>
-                              <Typography
-                                color="textPrimary"
-                                className={classes.text}
-                              >
-                                {log.file_name}
-                              </Typography>
-                              <Grid>
+                    <TableRow key={log.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType typefile={log.file_name} />
+                          </Grid>
+                          <Grid>
+                            <Typography
+                              color="textPrimary"
+                              className={classes.text}
+                            >
+                              {log.file_name}
+                            </Typography>
+                            <Hidden xsDown>
+                              <Grid container direction="row">
+                                <Grid>
+                                  <Typography className={classes.textDate} style={{ marginRight: 10 }}>
+                                    <ScheduleIcon
+                                      className={classes.iconHistory}
+                                    />
+                                    {moment
+                                      .utc(log.file_created)
+                                      .add(3, "minutes")
+                                      .format("DD-MM-YYYY HH:mm")}
+                                  </Typography>
+                                </Grid>
+                                <Grid>
+                                  <Typography className={classes.textDate} style={{ marginRight: 10 }}>
+                                    <FolderIcon className={classes.iconHistory} />
+                                    {log.folder_name}
+                                  </Typography>
+                                </Grid>
+                                <Grid>
+                                  <Typography className={classes.textDate} style={{ marginRight: 10 }}>
+                                    <PersonIcon className={classes.iconHistory} />
+                                    {log.user_firstname} {log.user_lastname}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Hidden>
+                            <Hidden smUp>
+                              <Grid >
                                 <Typography className={classes.textDate}>
                                   <ScheduleIcon
                                     className={classes.iconHistory}
@@ -164,11 +192,12 @@ const HistoryUpload = (props) => {
                                   {log.user_firstname} {log.user_lastname}
                                 </Typography>
                               </Grid>
-                            </Grid>
+                            </Hidden>
                           </Grid>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                        </Grid>
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : null}
               </TableBody>
             </Table>

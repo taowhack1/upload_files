@@ -14,6 +14,8 @@ import Hidden from '@material-ui/core/Hidden';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { searchFiles, clearSearchFiles } from '../../actions/searchActions';
+import HomeIcon from '@material-ui/icons/Home';
+import IconButton from "@material-ui/core/IconButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -217,23 +219,11 @@ const Navbar = () => {
                 {authdata.authorized_id == 1 ? (
                   <Grid container>
                     <Grid>
-                      <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                          <SearchIcon />
-                        </div>
-                        <InputBase
-                          placeholder='ค้นหา'
-                          classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                          }}
-                          inputProps={{ 'aria-label': 'search' }}
-                          name='text'
-                          onChange={onChange}
-                          value={text}
-                        />
-
-                      </div>
+                      <IconButton
+                        component={Link}
+                        to='/'>
+                        <HomeIcon />
+                      </IconButton>
                     </Grid>
                   </Grid>
                 ) : (
@@ -261,6 +251,7 @@ const Navbar = () => {
                 value={text}
               />
             </div>
+
             {auth && (
               <div>
                 <MenuNavbarRespon signOut={handleSignOut} />

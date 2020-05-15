@@ -353,7 +353,7 @@ export default function Registor(props) {
                     color="textPrimary"
                     elevation={0}
                   >
-                    Save
+                    สร้าง
                   </Typography>
                 </Button>
                 <Button
@@ -362,7 +362,7 @@ export default function Registor(props) {
                   onClick={handleClose}
                 >
                   <Typography className={classes.text} color="textPrimary">
-                    Cancel
+                    ยกเลิก
                   </Typography>
                 </Button>
               </div>

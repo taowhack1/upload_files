@@ -23,8 +23,8 @@ const MenuNavbar = (props) => {
   const { authenticated, authdata } = useSelector((state) => state.auth);
   return (
     <div>
-      <IconButton className={classes.tableMargin} onClick={handleOpen}>
-        <img src={UserImage} width="50" />
+      <IconButton className={classes.imgSize} onClick={handleOpen}>
+        <img src={UserImage} />
       </IconButton>
       <Menu
         className={classes.menu}

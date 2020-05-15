@@ -49,6 +49,10 @@ const theme = createMuiTheme({
         ['@media (max-width:600px)']: {
           paddingTop: 8,
           paddingBottom: 8,
+          manage: {
+            paddingLeft: 0,
+            paddingRigth: 0,
+          }
         },
       },
     },

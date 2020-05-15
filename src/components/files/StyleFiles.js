@@ -44,13 +44,15 @@ const useStyles = makeStyles((theme) => ({
     color: "#FDC8A2",
     fontSize: 35,
     verticalAlign: "middle",
-    marginRight: 8
+    marginRight: 8,
+
   },
   iconPersonTableUnActive: {
     color: "#DDDBDB",
     fontSize: 35,
     verticalAlign: "middle",
-    marginRight: 8
+    marginRight: 8,
+
   },
   iconFolder: {
     fontSize: 40,
@@ -75,6 +77,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 40,
   },
   iconStar: {
+    color: "#FFC107",
+    marginTop: 3,
+    fontSize: 16,
+  },
+  iconStarSmall: {
+    fontSize: 13,
     color: "#FFC107",
     marginTop: 3
   },
@@ -106,6 +114,12 @@ const useStyles = makeStyles((theme) => ({
   text: {
     fontSize: 16,
     color: "#000000",
+
+  },
+  textmenuAdmin: {
+    fontSize: 14,
+    color: "#000000",
+    marginLeft: -10
   },
   textDate: {
     fontSize: 14,
@@ -428,6 +442,9 @@ const useStyles = makeStyles((theme) => ({
       width: 100,
     },
   },
+  rigth: {
+    marginLeft: 20
+  },
 
   formStyle: {
     marginTop: 10,
@@ -437,6 +454,9 @@ const useStyles = makeStyles((theme) => ({
       marginRight: -20,
       marginLeft: -20,
     },
+  },
+  imgSize: {
+    width: 50
   },
 
 

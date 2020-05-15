@@ -65,7 +65,6 @@ const MenuUser = (props) => {
         <Switch
           checked={switchchecked}
           onChange={handleChange}
-
         ></Switch>
       </Hidden>
       <Hidden mdUp className={classes.iconButton}>

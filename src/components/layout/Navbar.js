@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 20,
+    marginRight: 30,
+    ['@media (max-width:1050px)']: { // eslint-disable-line no-useless-computed-key
+      marginRight: 20,
+    },
   },
   search: {
     position: 'relative',
@@ -117,8 +121,9 @@ const Navbar = () => {
 
   const authLinks = (
     <div>
+
       <div>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Toolbar>
             {authdata && (
               <Grid container>
@@ -140,6 +145,7 @@ const Navbar = () => {
                     <Grid container>
                       <Grid>
                         <Typography
+                          style={{ marginRight: 20 }}
                           className={classes.title}
                           component={Link}
                           to='/viewfolderadmin'
@@ -204,7 +210,7 @@ const Navbar = () => {
         </Hidden>
       </div>
       <div>
-        <Hidden smUp>
+        <Hidden mdUp>
           <Toolbar>
             {authdata && (
               <Grid container>

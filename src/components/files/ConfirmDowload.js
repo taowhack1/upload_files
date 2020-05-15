@@ -36,7 +36,7 @@ export default function ConfirmDownload(props) {
   };
   return (
     <div>
-      <Hidden mdDown>
+      <Hidden xsDown>
         <IconButton className={classes.tableMargin} onClick={handleOpen}>
           <GetAppIcon />
         </IconButton>

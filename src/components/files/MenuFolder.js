@@ -1,28 +1,26 @@
 import React, { useState } from "react";
-
+import CreateIcon from "@material-ui/icons/Create";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import useStyles from "./StyleFiles";
+import "./upload_style.css";
+import "./style.css";
+import FolderIcon from "@material-ui/icons/Folder";
+import ConfirmDelete from "./ConfirmDeleteFolder";
 import {
   Modal,
   Typography,
   Menu,
   MenuItem,
   IconButton,
+  ListItemIcon,
+  Backdrop,
+  Fade,
+  Button,
+  TextField,
+  Grid,
+  Hidden,
 } from "@material-ui/core/";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CreateIcon from "@material-ui/icons/Create";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import RemoveIcon from "@material-ui/icons/Remove";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import useStyles from "./StyleFiles";
-import "./upload_style.css";
-import "./style.css";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import Button from "@material-ui/core/Button";
-import FolderIcon from "@material-ui/icons/Folder";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import ConfirmDelete from "./ConfirmDeleteFolder";
-import Hidden from "@material-ui/core/Hidden";
+
 const MenuFolder = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,6 +30,7 @@ const MenuFolder = (props) => {
     folder_name_old: props.folder_name_old,
     folder_name: props.folder_name,
   });
+
   const handleEditFolderOpen = () => {
     handleMoreVertIconClose();
     setOpen(true);
@@ -53,6 +52,7 @@ const MenuFolder = (props) => {
   const handleMoreVertIconClose = () => {
     setAnchorEl(null);
   };
+
   const handleChangeFolderName = (e) => {
     let value = e.target.value.replace(/[^A-Za-z\d]$/gi, "");
     value = value.slice(0, 15);
@@ -61,9 +61,11 @@ const MenuFolder = (props) => {
       folder_name: value,
     });
   };
+
   const handleRenameSave = () => {
     props.edit(folder, handleEditFolderClose);
   };
+
   return (
     <div>
       <IconButton

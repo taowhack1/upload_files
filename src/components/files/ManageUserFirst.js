@@ -1,14 +1,14 @@
-import React, { useEffect, Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import Circular from '../layout/Circular';
-import { getUserAll } from '../../actions/authActions';
-import Registor from '../authen/Registor';
-import useStyles from './StyleFiles';
-import MenuUser from './MenuUser';
-import ManageUserSwitchAuth from './ManageUserSwitchAuth';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import PersonIcon from '@material-ui/icons/Person';
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import Circular from "../layout/Circular";
+import { getUserAll } from "../../actions/authActions";
+import Registor from "../authen/Registor";
+import useStyles from "./StyleFiles";
+import MenuUser from "./MenuUser";
+import ManageUserSwitchAuth from "./ManageUserSwitchAuth";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import PersonIcon from "@material-ui/icons/Person";
 import {
   Table,
   TableBody,
@@ -20,9 +20,9 @@ import {
   Breadcrumbs,
   Typography,
   IconButton,
-} from '@material-ui/core/';
-import { useSnackbar } from 'notistack';
-import StarIcon from '@material-ui/icons/Star';
+} from "@material-ui/core/";
+import { useSnackbar } from "notistack";
+import StarIcon from "@material-ui/icons/Star";
 
 const ManageUserFirst = () => {
   const classes = useStyles();
@@ -55,9 +55,9 @@ const ManageUserFirst = () => {
             <Fragment>
               <Grid
                 container
-                direction='row'
-                justify='center'
-                alignItems='center'
+                direction="row"
+                justify="center"
+                alignItems="center"
               >
                 <Paper className={classes.paper}>
                   <Grid container>
@@ -68,7 +68,7 @@ const ManageUserFirst = () => {
                           className={classes.NavigateNextIcon}
                         />
                       }
-                      aria-label='breadcrumb'
+                      aria-label="breadcrumb"
                     >
                       <Typography className={classes.text}>
                         จัดการผู้ใช้งาน
@@ -83,43 +83,43 @@ const ManageUserFirst = () => {
                       <TableRow>
                         <TableCell className={classes.tableCellName}>
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             ชื่อผู้ใช้งาน
                           </Typography>
                         </TableCell>
-                        <TableCell style={{ width: '20%' }} align='center'>
+                        <TableCell style={{ width: "20%" }} align="center">
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             สิทธิ์ผู้ดูแลระบบ
                           </Typography>
                         </TableCell>
-                        <TableCell align='center'>
+                        <TableCell align="center">
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             สิทธิ์การใช้งาน
                           </Typography>
                         </TableCell>
-                        <TableCell align='center'></TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {users !== null
                         ? users.map((user, index) => (
-                          <TableRow key={index}>
-                            <TableCell>
-                              {/* authorized_id : 1 = user, 2 = Admin */}
-                              {user.authorized_id === 1 &&
+                            <TableRow key={index}>
+                              <TableCell>
+                                {/* authorized_id : 1 = user, 2 = Admin */}
+                                {user.authorized_id === 1 &&
                                 user.user_active === true ? (
                                   <Link
                                     to={{
                                       pathname:
-                                        '/manageusersecond/' + user.user_id,
+                                        "/manageusersecond/" + user.user_id,
                                       state: {
                                         user_id: user.user_id,
                                         user_firstname: user.user_firstname,
@@ -137,16 +137,16 @@ const ManageUserFirst = () => {
                                             className={classes.iconPersonTable}
                                           />
                                         ) : (
-                                            <PersonIcon
-                                              className={
-                                                classes.iconPersonTableUnActive
-                                              }
-                                            />
-                                          )}
+                                          <PersonIcon
+                                            className={
+                                              classes.iconPersonTableUnActive
+                                            }
+                                          />
+                                        )}
                                       </Grid>
                                       <Grid>
                                         <Typography
-                                          color='textPrimary'
+                                          color="textPrimary"
                                           className={classes.text}
                                         >
                                           {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
@@ -158,8 +158,8 @@ const ManageUserFirst = () => {
                                             className={classes.iconStar}
                                           />
                                         ) : (
-                                            ''
-                                          )}
+                                          ""
+                                        )}
                                       </Grid>
                                     </Grid>
                                   </Link>
@@ -171,16 +171,16 @@ const ManageUserFirst = () => {
                                           className={classes.iconPersonTable}
                                         />
                                       ) : (
-                                          <PersonIcon
-                                            className={
-                                              classes.iconPersonTableUnActive
-                                            }
-                                          />
-                                        )}
+                                        <PersonIcon
+                                          className={
+                                            classes.iconPersonTableUnActive
+                                          }
+                                        />
+                                      )}
                                     </Grid>
                                     <Grid>
                                       <Typography
-                                        color='textPrimary'
+                                        color="textPrimary"
                                         className={classes.text}
                                       >
                                         {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
@@ -192,49 +192,49 @@ const ManageUserFirst = () => {
                                           className={classes.iconStar}
                                         />
                                       ) : (
-                                          ''
-                                        )}
+                                        ""
+                                      )}
                                     </Grid>
                                   </Grid>
                                 )}
-                            </TableCell>
-                            <TableCell align='center'>
-                              <ManageUserSwitchAuth
-                                userData={user}
-                                snackAlert={snackAlert}
-                              />
-                            </TableCell>
-                            <TableCell align='center'>
-                              <MenuUser
-                                userData={user}
-                                snackAlert={snackAlert}
-                              />
-                            </TableCell>
-                            <TableCell align='center'>
-                              {user.authorized_id === 2 ||
-                                (user.user_active && (
-                                  <Link
-                                    to={{
-                                      pathname:
-                                        '/manageusersecond/' + user.user_id,
-                                      state: {
-                                        user_id: user.user_id,
-                                        user_firstname: user.user_firstname,
-                                        user_active: user.user_active,
-                                      },
-                                    }}
-                                  >
-                                    <IconButton
-                                      className={classes.tableMargin}
+                              </TableCell>
+                              <TableCell align="center">
+                                <ManageUserSwitchAuth
+                                  userData={user}
+                                  snackAlert={snackAlert}
+                                />
+                              </TableCell>
+                              <TableCell align="center">
+                                <MenuUser
+                                  userData={user}
+                                  snackAlert={snackAlert}
+                                />
+                              </TableCell>
+                              <TableCell align="center">
+                                {user.authorized_id === 2 ||
+                                  (user.user_active && (
+                                    <Link
+                                      to={{
+                                        pathname:
+                                          "/manageusersecond/" + user.user_id,
+                                        state: {
+                                          user_id: user.user_id,
+                                          user_firstname: user.user_firstname,
+                                          user_active: user.user_active,
+                                        },
+                                      }}
                                     >
-                                      <NavigateNextIcon></NavigateNextIcon>
-                                    </IconButton>
-                                  </Link>
-                                ))}
-                            </TableCell>
-                          </TableRow>
-                        ))
-                        : console.log('Nodata')}
+                                      <IconButton
+                                        className={classes.tableMargin}
+                                      >
+                                        <NavigateNextIcon></NavigateNextIcon>
+                                      </IconButton>
+                                    </Link>
+                                  ))}
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        : console.log("Nodata")}
                     </TableBody>
                   </Table>
                 </Paper>
@@ -242,8 +242,8 @@ const ManageUserFirst = () => {
               <Registor updateUser={updateUser} snackAlert={snackAlert} />
             </Fragment>
           ) : (
-              <Redirect to='/' />
-            )}
+            <Redirect to="/" />
+          )}
         </div>
       )}
     </div>

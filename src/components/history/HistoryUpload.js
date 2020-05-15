@@ -1,8 +1,8 @@
-import React, { useEffect, Fragment } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getLogs } from '../../actions/logActions';
-import moment from 'moment';
+import React, { useEffect, Fragment } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getLogs } from "../../actions/logActions";
+import moment from "moment";
 import {
   Table,
   TableBody,
@@ -13,27 +13,15 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-  Checkbox,
-  Divider,
-} from '@material-ui/core/';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import useStyles from '../files/StyleFiles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FileType from '../files/filetype/Filetypes'
-import Hidden from '@material-ui/core/Hidden';
-import Box from "@material-ui/core/Box";
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import PersonIcon from '@material-ui/icons/Person';
-import FolderIcon from '@material-ui/icons/Folder';
+} from "@material-ui/core/";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import useStyles from "../files/StyleFiles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FileType from "../files/filetype/Filetypes";
+import Hidden from "@material-ui/core/Hidden";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import PersonIcon from "@material-ui/icons/Person";
+import FolderIcon from "@material-ui/icons/Folder";
 const HistoryUpload = (props) => {
   const classes = useStyles();
   const { logs, loading } = useSelector((state) => state.log);
@@ -45,7 +33,7 @@ const HistoryUpload = (props) => {
     dispatch(getLogs());
     if (authenticated) {
       if (authdata.authorized_id == 1) {
-        history.push('/');
+        history.push("/");
       }
     }
   }, []);
@@ -60,9 +48,9 @@ const HistoryUpload = (props) => {
               separator={
                 <NavigateNextIcon className={classes.NavigateNextIcon} />
               }
-              aria-label='breadcrumb'
+              aria-label="breadcrumb"
             >
-              <Typography className={classes.text} color='textPrimary'>
+              <Typography className={classes.text} color="textPrimary">
                 ประวัติการอัพโหลด
               </Typography>
             </Breadcrumbs>
@@ -75,67 +63,67 @@ const HistoryUpload = (props) => {
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.tableCellName}>
-                    <Typography color='textPrimary' className={classes.text}>
+                    <Typography color="textPrimary" className={classes.text}>
                       ชื่อไฟล์
-                  </Typography>
+                    </Typography>
                   </TableCell>
-                  <TableCell align='center'>
-                    <Typography color='textPrimary' className={classes.text}>
+                  <TableCell align="center">
+                    <Typography color="textPrimary" className={classes.text}>
                       ชื่อโฟลเดอร์
-                  </Typography>
+                    </Typography>
                   </TableCell>
-                  <TableCell align='center'>
-                    <Typography color='textPrimary' className={classes.text}>
+                  <TableCell align="center">
+                    <Typography color="textPrimary" className={classes.text}>
                       วันที่อัพโหลด
-                  </Typography>
+                    </Typography>
                   </TableCell>
-                  <TableCell align='center'>
-                    <Typography color='textPrimary' className={classes.text}>
+                  <TableCell align="center">
+                    <Typography color="textPrimary" className={classes.text}>
                       ผู้อัพโหลด
-                  </Typography>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {!loading && logs !== null
                   ? logs.map((log) => (
-                    <TableRow key={log.file_id} hover>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid >
-                            <FileType typefile={log.file_name} />
+                      <TableRow key={log.file_id} hover>
+                        <TableCell>
+                          <Grid container className={classes.iconAlign}>
+                            <Grid>
+                              <FileType typefile={log.file_name} />
+                            </Grid>
+                            <Grid>
+                              <Typography
+                                color="textPrimary"
+                                className={classes.text}
+                              >
+                                {log.file_name}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid>
-                            <Typography
-                              color='textPrimary'
-                              className={classes.text}
-                            >
-                              {log.file_name}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell align='center'>
-                        <Typography className={classes.text}>
-                          {log.folder_name}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align='center'>
-                        <Typography className={classes.text}>
-                          {moment
-                            .utc(log.file_created)
-                            .add(3, 'minutes')
-                            .format('DD-MM-YYYY HH:mm')}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align='center'>
-                        <Typography className={classes.text}>
-                          {log.user_firstname} {log.user_lastname}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                  : console.log('folder empty')}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography className={classes.text}>
+                            {log.folder_name}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography className={classes.text}>
+                            {moment
+                              .utc(log.file_created)
+                              .add(3, "minutes")
+                              .format("DD-MM-YYYY HH:mm")}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography className={classes.text}>
+                            {log.user_firstname} {log.user_lastname}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
@@ -144,43 +132,44 @@ const HistoryUpload = (props) => {
               <TableBody>
                 {!loading && logs !== null
                   ? logs.map((log) => (
-                    <TableRow key={log.file_id} hover>
-                      <TableCell>
-                        <Grid container className={classes.iconAlign}>
-                          <Grid>
-                            <FileType typefile={log.file_name} />
-                          </Grid>
-                          <Grid >
-                            <Typography
-                              color='textPrimary'
-                              className={classes.text}
-                            >
-                              {log.file_name}
-                            </Typography>
+                      <TableRow key={log.file_id} hover>
+                        <TableCell>
+                          <Grid container className={classes.iconAlign}>
                             <Grid>
-                              <Typography className={classes.textDate}>
-                                <ScheduleIcon className={classes.iconHistory} />
-                                {moment
-                                  .utc(log.file_created)
-                                  .add(3, 'minutes')
-                                  .format('DD-MM-YYYY HH:mm')}
+                              <FileType typefile={log.file_name} />
+                            </Grid>
+                            <Grid>
+                              <Typography
+                                color="textPrimary"
+                                className={classes.text}
+                              >
+                                {log.file_name}
                               </Typography>
-                              <Typography className={classes.textDate}>
-                                <FolderIcon className={classes.iconHistory} />
-                                {log.folder_name}
-                              </Typography>
-                              <Typography className={classes.textDate}>
-                                <PersonIcon className={classes.iconHistory} />
-                                {log.user_firstname} {log.user_lastname}
-                              </Typography>
+                              <Grid>
+                                <Typography className={classes.textDate}>
+                                  <ScheduleIcon
+                                    className={classes.iconHistory}
+                                  />
+                                  {moment
+                                    .utc(log.file_created)
+                                    .add(3, "minutes")
+                                    .format("DD-MM-YYYY HH:mm")}
+                                </Typography>
+                                <Typography className={classes.textDate}>
+                                  <FolderIcon className={classes.iconHistory} />
+                                  {log.folder_name}
+                                </Typography>
+                                <Typography className={classes.textDate}>
+                                  <PersonIcon className={classes.iconHistory} />
+                                  {log.user_firstname} {log.user_lastname}
+                                </Typography>
+                              </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                      </TableCell>
-
-                    </TableRow>
-                  ))
-                  : console.log('folder empty')}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
@@ -188,13 +177,11 @@ const HistoryUpload = (props) => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' ไม่มีประวัติการอัพโหลดเอกสาร '}</Typography>
+                  <Typography>{" ไม่มีประวัติการอัพโหลดเอกสาร "}</Typography>
                 </TableCell>
               </TableRow>
             </Table>
-          ) : (
-              console.log('folder empty')
-            )}
+          ) : null}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

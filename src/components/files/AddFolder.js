@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import "./upload_style.css";
 import "./style.css";
-import { Modal, Typography } from "@material-ui/core";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import {
+  Modal,
+  Typography,
+  Backdrop,
+  Fade,
+  Fab,
+  Tooltip,
+  Button,
+  TextField,
+  Grid,
+  Hidden,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
 import FolderIcon from "@material-ui/icons/Folder";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
-import Hidden from "@material-ui/core/Hidden";
 export default function AddFolder(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);

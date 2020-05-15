@@ -28,6 +28,12 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import useStyles from '../files/StyleFiles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FileType from '../files/filetype/Filetypes'
+import Hidden from '@material-ui/core/Hidden';
+import Box from "@material-ui/core/Box";
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import PersonIcon from '@material-ui/icons/Person';
+import FolderIcon from '@material-ui/icons/Folder';
 const HistoryUpload = (props) => {
   const classes = useStyles();
   const { logs, loading } = useSelector((state) => state.log);
@@ -64,43 +70,42 @@ const HistoryUpload = (props) => {
         </Paper>
 
         <Paper className={classes.paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.tableCellName}>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อไฟล์
+          <Hidden smDown>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.tableCellName}>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อไฟล์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อโฟลเดอร์
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อโฟลเดอร์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    วันที่อัพโหลด
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      วันที่อัพโหลด
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ผู้อัพโหลด
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ผู้อัพโหลด
                   </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {!loading && logs !== null
-                ? logs.map((log) => (
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {!loading && logs !== null
+                  ? logs.map((log) => (
                     <TableRow key={log.file_id} hover>
                       <TableCell>
                         <Grid container className={classes.iconAlign}>
-                          <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
+                          <Grid >
+                            <FileType typefile={log.file_name} />
                           </Grid>
-                          <Grid item xs={9}>
+                          <Grid>
                             <Typography
                               color='textPrimary'
                               className={classes.text}
@@ -130,9 +135,53 @@ const HistoryUpload = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <TableBody>
+              {!loading && logs !== null
+                ? logs.map((log) => (
+                  <TableRow key={log.file_id} hover>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid>
+                          <FileType typefile={log.file_name} />
+                        </Grid>
+                        <Grid >
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
+                            {log.file_name}
+                          </Typography>
+                          <Grid>
+                            <Typography className={classes.textDate}>
+                              <ScheduleIcon className={classes.iconHistory} />
+                              {moment
+                                .utc(log.file_created)
+                                .add(3, 'minutes')
+                                .format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                            <Typography className={classes.textDate}>
+                              <FolderIcon className={classes.iconHistory} />
+                              {log.folder_name}
+                            </Typography>
+                            <Typography className={classes.textDate}>
+                              <PersonIcon className={classes.iconHistory} />
+                              {log.user_firstname} {log.user_lastname}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+
+                  </TableRow>
+                ))
                 : console.log('folder empty')}
             </TableBody>
-          </Table>
+          </Hidden>
           {logs === null ? (
             <Table>
               <TableRow>
@@ -142,8 +191,8 @@ const HistoryUpload = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log('folder empty')
-          )}
+              console.log('folder empty')
+            )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

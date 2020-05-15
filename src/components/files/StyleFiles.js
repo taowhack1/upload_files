@@ -88,6 +88,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0, 0, 0),
     padding: theme.spacing(0, 0, 0, 1)
   },
+  iconHistory: {
+    fontSize: 12,
+
+    marginTop: 5,
+    marginRight: 3
+  },
   NavigateNextIcon: {
     fontSize: 20,
   },

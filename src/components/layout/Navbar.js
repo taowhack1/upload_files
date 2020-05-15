@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 20,
+    marginRight: 30,
+    ['@media (max-width:1050px)']: { // eslint-disable-line no-useless-computed-key
+      marginRight: 20,
+    },
   },
   search: {
     position: 'relative',
@@ -117,8 +121,9 @@ const Navbar = () => {
 
   const authLinks = (
     <div>
+
       <div>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Toolbar>
             {authdata && (
               <Grid container>
@@ -134,7 +139,84 @@ const Navbar = () => {
                         ระบบจัดการเอกสารออนไลน์
                       </Typography>
                     </Grid>
-                    <Grid item xs={3}>
+
+                  </Grid>
+                ) : (
+                    <Grid container>
+                      <Grid>
+                        <Typography
+                          style={{ marginRight: 20 }}
+                          className={classes.title}
+                          component={Link}
+                          to='/viewfolderadmin'
+                        >
+                          จัดการโฟลเดอร์
+                      </Typography>
+                      </Grid>
+                      <Grid>
+
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/manageuserfirst'
+                        >
+                          จัดการผู้ใช้งาน
+                      </Typography>
+                      </Grid>
+                      <Grid >
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/historyupload'
+                        >
+                          ประวัติการอัพโหลด
+                      </Typography>
+                      </Grid>
+                      <Grid >
+                        <Typography
+                          className={classes.title}
+                          component={Link}
+                          to='/historydelete'
+                        >
+                          ประวัติการลบไฟล์
+                      </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
+              </Grid>
+            )}
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder='ค้นหา'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                name='text'
+                onChange={onChange}
+                value={text}
+              />
+            </div>
+            {auth && (
+              <div>
+                <MenuNavbar signOut={handleSignOut} />
+              </div>
+            )}
+          </Toolbar>
+        </Hidden>
+      </div>
+      <div>
+        <Hidden mdUp>
+          <Toolbar>
+            {authdata && (
+              <Grid container>
+                {authdata.authorized_id == 1 ? (
+                  <Grid container>
+                    <Grid>
                       <div className={classes.search}>
                         <div className={classes.searchIcon}>
                           <SearchIcon />
@@ -150,88 +232,17 @@ const Navbar = () => {
                           onChange={onChange}
                           value={text}
                         />
+
                       </div>
                     </Grid>
                   </Grid>
                 ) : (
-                  <Grid container>
-                    <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/viewfolderadmin'
-                      >
-                        จัดการโฟลเดอร์
-                      </Typography>
+                    <Grid container>
+                      <Grid>
+                        <MenuAdmin />
+                      </Grid>
                     </Grid>
-                    <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/manageuserfirst'
-                      >
-                        จัดการผู้ใช้งาน
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/historyupload'
-                      >
-                        ประวัติการอัพโหลด
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/historydelete'
-                      >
-                        ประวัติการลบไฟล์
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                )}
-              </Grid>
-            )}
-            {auth && (
-              <div>
-                <MenuNavbar signOut={handleSignOut} />
-              </div>
-            )}
-          </Toolbar>
-        </Hidden>
-      </div>
-      <div>
-        <Hidden smUp>
-          <Toolbar>
-            {authdata && (
-              <Grid container>
-                {authdata.authorized_id == 1 ? (
-                  <Grid container>
-                    <Grid>
-                      {' '}
-                      <Typography
-                        className={classes.title}
-                        component={Link}
-                        to='/'
-                      >
-                        ระบบจัดการเอกสารออนไลน์sss
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  <Grid container>
-                    <Grid>
-                      <MenuAdmin />
-                    </Grid>
-                  </Grid>
-                )}
+                  )}
               </Grid>
             )}
             {auth && (

@@ -149,7 +149,7 @@ const ViewFilesAdmin = (props) => {
                   </TableCell>
                   <TableCell align='center'>
                     <Typography color='textPrimary' className={classes.text}>
-                      วันที่อัพโหลดล่าสุด
+                      วันที่อัพโหลด
                     </Typography>
                   </TableCell>
                   <TableCell align='center'>

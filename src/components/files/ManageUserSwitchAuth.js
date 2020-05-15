@@ -36,7 +36,8 @@ const ManageUserSwitchAuth = (props) => {
             user_active: userData.user_active,
             authorized_id: 2,
           },
-          props.snackAlert
+          props.snackAlert,
+          'updateAuth'
         )
       );
       await dispatch(getUser(userData.user_id));
@@ -51,7 +52,8 @@ const ManageUserSwitchAuth = (props) => {
             user_active: userData.user_active,
             authorized_id: 1,
           },
-          props.snackAlert
+          props.snackAlert,
+          'updateAuth'
         )
       );
       await dispatch(getUser(userData.user_id));
@@ -62,18 +64,11 @@ const ManageUserSwitchAuth = (props) => {
 
   return (
     <>
-      <Hidden smDown className={classes.tableMargin} >
-        <Switch
-          checked={switchstatus}
-          onChange={handleChange}
-
-        ></Switch>
+      <Hidden smDown className={classes.tableMargin}>
+        <Switch checked={switchstatus} onChange={handleChange}></Switch>
       </Hidden>
       <Hidden mdUp className={classes.iconButton}>
-        <Switch
-          checked={switchstatus}
-          onChange={handleChange}
-        ></Switch>
+        <Switch checked={switchstatus} onChange={handleChange}></Switch>
       </Hidden>
     </>
   );

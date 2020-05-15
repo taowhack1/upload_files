@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import useStyles from "./StyleFiles";
-import { useDispatch } from "react-redux";
-import { Switch, Hidden } from "@material-ui/core/";
-import { updateActiveUser, getUser } from "../../actions/authActions";
+import React, { useState } from 'react';
+import useStyles from './StyleFiles';
+import { useDispatch } from 'react-redux';
+import { Switch, Hidden } from '@material-ui/core/';
+import { updateActiveUser, getUser } from '../../actions/authActions';
 
 const MenuUser = (props) => {
   const { userData } = props;
@@ -31,7 +31,8 @@ const MenuUser = (props) => {
             user_active: true,
             authorized_id: userData.authorized_id,
           },
-          props.snackAlert
+          props.snackAlert,
+          'updateActive'
         )
       );
       await dispatch(getUser(userData.user_id));
@@ -49,7 +50,8 @@ const MenuUser = (props) => {
             user_active: false,
             authorized_id: userData.authorized_id,
           },
-          props.snackAlert
+          props.snackAlert,
+          'updateActive'
         )
       );
       await dispatch(getUser(userData.user_id));

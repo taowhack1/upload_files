@@ -183,7 +183,7 @@ const ManageUserFirst = () => {
                                         color='textPrimary'
                                         className={classes.text}
                                       >
-                                        {`${user.user_firstname}`}
+                                        {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
                                       </Typography>
                                     </Grid>
                                     <Grid>
@@ -195,57 +195,58 @@ const ManageUserFirst = () => {
                                           ''
                                         )}
                                     </Grid>
+                                  </Grid>
                                 )}
-                              </TableCell>
-                                  <TableCell align='center'>
-                                    <ManageUserSwitchAuth
-                                      userData={user}
-                                      snackAlert={snackAlert}
-                                    />
-                                  </TableCell>
-                                  <TableCell align='center'>
-                                    <MenuUser
-                                      userData={user}
-                                      snackAlert={snackAlert}
-                                    />
-                                  </TableCell>
-                                  <TableCell align='center'>
-                                    {user.authorized_id === 2 ||
-                                      (user.user_active && (
-                                        <Link
-                                          to={{
-                                            pathname:
-                                              '/manageusersecond/' + user.user_id,
-                                            state: {
-                                              user_id: user.user_id,
-                                              user_firstname: user.user_firstname,
-                                              user_active: user.user_active,
-                                            },
-                                          }}
-                                        >
-                                          <IconButton
-                                            className={classes.tableMargin}
-                                          >
-                                            <NavigateNextIcon></NavigateNextIcon>
-                                          </IconButton>
-                                        </Link>
-                                      ))}
-                                  </TableCell>
-                            </TableRow>
-                          ))
+                            </TableCell>
+                            <TableCell align='center'>
+                              <ManageUserSwitchAuth
+                                userData={user}
+                                snackAlert={snackAlert}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              <MenuUser
+                                userData={user}
+                                snackAlert={snackAlert}
+                              />
+                            </TableCell>
+                            <TableCell align='center'>
+                              {user.authorized_id === 2 ||
+                                (user.user_active && (
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/manageusersecond/' + user.user_id,
+                                      state: {
+                                        user_id: user.user_id,
+                                        user_firstname: user.user_firstname,
+                                        user_active: user.user_active,
+                                      },
+                                    }}
+                                  >
+                                    <IconButton
+                                      className={classes.tableMargin}
+                                    >
+                                      <NavigateNextIcon></NavigateNextIcon>
+                                    </IconButton>
+                                  </Link>
+                                ))}
+                            </TableCell>
+                          </TableRow>
+                        ))
                         : console.log('Nodata')}
                     </TableBody>
                   </Table>
                 </Paper>
               </Grid>
-                <Registor updateUser={updateUser} snackAlert={snackAlert} />
+              <Registor updateUser={updateUser} snackAlert={snackAlert} />
             </Fragment>
           ) : (
               <Redirect to='/' />
             )}
         </div>
-          )}
-        </div>
-      );
+      )}
+    </div>
+  );
 };
 export default ManageUserFirst;

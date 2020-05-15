@@ -7,7 +7,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  files: null,
+  files: [],
   current: null,
   loading: null,
   error: null,

@@ -15,7 +15,7 @@ export const getAllFolder = () => async (dispatch) => {
   try {
     await axios.get(`${url}/folderall`).then((res) => {
       dispatch({
-        type: GET_FOLDERS,
+        type: GET_FOLDERS_ADMIN,
         payload: res.data,
       });
     });

@@ -25,13 +25,19 @@ import Hidden from '@material-ui/core/Hidden';
 
 const ViewFolder = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   const { folders, loading } = useSelector((state) => state.folder);
   console.log(folders);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(authdata.user_id));
+    if (authdata.user_id === null) {
+      history.push("/");
+    } else {
+      dispatch(getFolders(authdata.user_id));
+    }
   }, []);
-  const { authenticated, authdata } = useSelector((state) => state.auth);
+
   if (loading) {
     console.log('loading >>> ' + loading);
   }

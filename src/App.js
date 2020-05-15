@@ -78,7 +78,7 @@ const App = () => {
                 component={ManageUserSecond}
               />
               <Route exact path='/signin' component={SignIn} />
-              <Route exact path='/' component={Home} />
+              <Route exact path='/' component={SignIn} />
               <Route exact path='/ViewFiles/:folder_id' component={ViewFiles} />
               <Route
                 exact

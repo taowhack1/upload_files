@@ -30,7 +30,7 @@ import Hidden from "@material-ui/core/Hidden";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
-  const { folders, loading } = useSelector((state) => state.folder);
+  const { foldersadmin, loading } = useSelector((state) => state.folder);
   const { authenticated, authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -117,8 +117,8 @@ const ViewFolderAdmin = (props) => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {!loading && folders != null
-                          ? folders.map((folder) => (
+                        {!loading && foldersadmin != null
+                          ? foldersadmin.map((folder) => (
                               <TableRow key={folder.folder_id}>
                                 <TableCell>
                                   <Link
@@ -176,8 +176,8 @@ const ViewFolderAdmin = (props) => {
                   <Hidden mdUp>
                     <Table>
                       <TableBody>
-                        {!loading && folders != null
-                          ? folders.map((folder) => (
+                        {!loading && foldersadmin != null
+                          ? foldersadmin.map((folder) => (
                               <TableRow key={folder.folder_id}>
                                 <TableCell>
                                   <Link
@@ -234,7 +234,7 @@ const ViewFolderAdmin = (props) => {
                       </TableBody>
                     </Table>
                   </Hidden>
-                  {folders === null ? (
+                  {foldersadmin === null ? (
                     <Table>
                       <TableRow>
                         <TableCell className={classes.emptyTable}>

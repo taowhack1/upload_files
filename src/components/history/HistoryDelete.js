@@ -126,7 +126,7 @@ const HistoryDelete = (props) => {
                       </TableCell>
                       <TableCell align='center'>
                         <Typography className={classes.text}>
-                          {log.del_user_firstname} {log.del_user_lastname}
+                          {log.user_firstname} {log.user_lastname}
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -182,7 +182,7 @@ const HistoryDelete = (props) => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
+                  <Typography>{' ไม่มีประวัติการลบเอกสาร '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>

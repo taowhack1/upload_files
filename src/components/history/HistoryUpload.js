@@ -188,7 +188,7 @@ const HistoryUpload = (props) => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
+                  <Typography>{' ไม่มีประวัติการอัพโหลดเอกสาร '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>

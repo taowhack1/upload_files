@@ -245,22 +245,7 @@ const Navbar = () => {
                   )}
               </Grid>
             )}
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder='ค้นหา'
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                name='text'
-                onChange={onChange}
-                value={text}
-              />
-            </div>
+
             {auth && (
               <div>
                 <MenuNavbarRespon signOut={handleSignOut} />

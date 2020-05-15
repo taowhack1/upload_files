@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useStyles from './StyleFiles';
+import useStyles from '../../style/StyleFiles';
 import { useDispatch } from 'react-redux';
 import { Switch } from '@material-ui/core/';
 import { updateActiveUser, getUser } from '../../actions/authActions';

@@ -1,7 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import "./upload_style.css";
-import "./style.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -14,7 +11,7 @@ import { yellow } from "@material-ui/core/colors";
 import { TextField, Checkbox, Typography } from "@material-ui/core";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 
 export default function Dowload(props) {
   const classes = useStyles();
@@ -77,39 +74,39 @@ export default function Dowload(props) {
                           </Grid>
                         </Grid>
                       ) : (
-                        <Grid container className={classes.iconAlign}>
-                          ? <Grid item xs></Grid>
-                          <Grid item xs={1}>
-                            {" "}
-                            <Checkbox
-                              className={classes.iconCheck}
-                              checked={checked}
-                              onChange={handleChange}
-                              inputProps={{ "aria-label": "primary checkbox" }}
-                            />
-                          </Grid>
-                          <Grid item xs={5}>
-                            <Typography className={classes.text}>
-                              {listDownload}
-                            </Typography>
-                          </Grid>
+                          <Grid container className={classes.iconAlign}>
+                            ? <Grid item xs></Grid>
+                            <Grid item xs={1}>
+                              {" "}
+                              <Checkbox
+                                className={classes.iconCheck}
+                                checked={checked}
+                                onChange={handleChange}
+                                inputProps={{ "aria-label": "primary checkbox" }}
+                              />
+                            </Grid>
+                            <Grid item xs={5}>
+                              <Typography className={classes.text}>
+                                {listDownload}
+                              </Typography>
+                            </Grid>
                           : <Grid item xs></Grid>
-                          <Grid item xs={1}>
-                            {" "}
-                            <Checkbox
-                              className={classes.iconCheck}
-                              checked={checked}
-                              onChange={handleChange}
-                              inputProps={{ "aria-label": "primary checkbox" }}
-                            />
+                            <Grid item xs={1}>
+                              {" "}
+                              <Checkbox
+                                className={classes.iconCheck}
+                                checked={checked}
+                                onChange={handleChange}
+                                inputProps={{ "aria-label": "primary checkbox" }}
+                              />
+                            </Grid>
+                            <Grid item xs={5}>
+                              <Typography className={classes.text}>
+                                {listDownload}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={5}>
-                            <Typography className={classes.text}>
-                              {listDownload}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      )}
+                        )}
                     </div>
                   ))}
               </div>

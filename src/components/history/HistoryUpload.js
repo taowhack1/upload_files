@@ -15,9 +15,9 @@ import {
   Typography,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import FileType from "../files/filetype/Filetypes";
+import FileType from "../filetype/Filetypes";
 import Hidden from "@material-ui/core/Hidden";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import PersonIcon from "@material-ui/icons/Person";

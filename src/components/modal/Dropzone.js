@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./upload_style.css";
+import "../../style/upload_style.css";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import axios from "axios";
 import { Grid, Card } from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -12,7 +12,7 @@ import Icon from "@material-ui/core/Icon";
 import { useSnackbar } from "notistack";
 import { ADD_FILE } from "../../actions/types";
 import { useDispatch } from "react-redux";
-import FileType from "./filetype/Filetypes";
+import FileType from "../filetype/Filetypes";
 
 const Dropzone = (props) => {
   const { enqueueSnackbar } = useSnackbar();

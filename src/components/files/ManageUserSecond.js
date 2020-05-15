@@ -17,10 +17,10 @@ import FolderIcon from "@material-ui/icons/Folder";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { getAllFoldersAdmin } from "../../actions/folderActions";
 import PersonIcon from "@material-ui/icons/Person";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import Circular from "../layout/Circular";
-import MenuUserCheckUpload from "./MenuUserCheckUpload";
-import MenuUserSecondSwitch from "./MenuUserSecondSwitch";
+import MenuUserCheckUpload from "../menu/MenuUserCheckUpload";
+import MenuUserSecondSwitch from "../menu/MenuUserSecondSwitch";
 
 import { useSnackbar } from "notistack";
 

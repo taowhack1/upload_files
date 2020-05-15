@@ -23,12 +23,12 @@ import {
   CircularProgress,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import ConfirmDeleteFiles from "./ConfirmDeleteFiles";
-import useStyles from "./StyleFiles";
-import MenuFile from "./MenuFile";
+import ConfirmDeleteFiles from "../modal/ConfirmDeleteFiles";
+import useStyles from "../../style/StyleFiles";
+import MenuFile from "../menu/MenuFile";
 import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
-import FileType from "./filetype/Filetypes";
+import FileType from "../filetype/Filetypes";
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
@@ -158,64 +158,11 @@ const ViewFilesAdmin = (props) => {
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => {
-                      return (
-                        <TableRow key={file.file_id} hover>
-                          <TableCell align="center">
-                            <Checkbox
-                              className={classes.tableMargin}
-                              onClick={(event) =>
-                                handleSelectClick(
-                                  event,
-                                  file.file_id,
-                                  file.file_name
-                                )
-                              }
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Grid container className={classes.iconAlign}>
-                              <Grid>
-                                <FileType typefile={file.file_name} />
-                              </Grid>
-                              <Grid>
-                                <Typography
-                                  color="textPrimary"
-                                  className={classes.text}
-                                >
-                                  {file.file_name}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </TableCell>
-                          <TableCell align="center">
-                            <Typography className={classes.text}>
-                              {moment
-                                .utc(file.file_created)
-                                .add(3, "minutes")
-                                .format("DD-MM-YYYY HH:mm")}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="center">
-                            <MenuFile file={file} handleDelete={handleDelete} />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  : null}
-              </TableBody>
-            </Table>
-          </Hidden>
-          <Hidden mdUp>
-            <Table>
-              <TableBody>
-                {!loading && files !== null
-                  ? files.map((file) => (
+                    return (
                       <TableRow key={file.file_id} hover>
-                        <TableCell
-                          align="center"
-                          className={classes.iconCheckBox}
-                        >
+                        <TableCell align="center">
                           <Checkbox
+                            className={classes.tableMargin}
                             onClick={(event) =>
                               handleSelectClick(
                                 event,
@@ -225,36 +172,89 @@ const ViewFilesAdmin = (props) => {
                             }
                           />
                         </TableCell>
-
                         <TableCell>
                           <Grid container className={classes.iconAlign}>
                             <Grid>
                               <FileType typefile={file.file_name} />
                             </Grid>
                             <Grid>
-                              <div className={classes.nowrapMany}>
-                                <Box
-                                  className={classes.nowrapTextMany}
-                                  textOverflow="ellipsis"
-                                  overflow="hidden"
-                                >
-                                  {file.file_name}
-                                </Box>
-                              </div>
-                              <Typography className={classes.textDate}>
-                                {moment
-                                  .utc(file.file_created)
-                                  .add(3, "minutes")
-                                  .format("DD-MM-YYYY HH:mm")}
+                              <Typography
+                                color="textPrimary"
+                                className={classes.text}
+                              >
+                                {file.file_name}
                               </Typography>
                             </Grid>
                           </Grid>
                         </TableCell>
                         <TableCell align="center">
+                          <Typography className={classes.text}>
+                            {moment
+                              .utc(file.file_created)
+                              .add(3, "minutes")
+                              .format("DD-MM-YYYY HH:mm")}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="center">
                           <MenuFile file={file} handleDelete={handleDelete} />
                         </TableCell>
                       </TableRow>
-                    ))
+                    );
+                  })
+                  : null}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <Table>
+              <TableBody>
+                {!loading && files !== null
+                  ? files.map((file) => (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell
+                        align="center"
+                        className={classes.iconCheckBox}
+                      >
+                        <Checkbox
+                          onClick={(event) =>
+                            handleSelectClick(
+                              event,
+                              file.file_id,
+                              file.file_name
+                            )
+                          }
+                        />
+                      </TableCell>
+
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType typefile={file.file_name} />
+                          </Grid>
+                          <Grid>
+                            <div className={classes.nowrapMany}>
+                              <Box
+                                className={classes.nowrapTextMany}
+                                textOverflow="ellipsis"
+                                overflow="hidden"
+                              >
+                                {file.file_name}
+                              </Box>
+                            </div>
+                            <Typography className={classes.textDate}>
+                              {moment
+                                .utc(file.file_created)
+                                .add(3, "minutes")
+                                .format("DD-MM-YYYY HH:mm")}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell align="center">
+                        <MenuFile file={file} handleDelete={handleDelete} />
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : null}
               </TableBody>
             </Table>

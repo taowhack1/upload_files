@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "./upload_style.css";
-import "./style.css";
 import {
   Modal,
   Typography,
@@ -15,7 +13,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import FolderIcon from "@material-ui/icons/Folder";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 export default function AddFolder(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
-import useStyles from './StyleFiles';
+import useStyles from '../../style/StyleFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from '@material-ui/core/';
 import {

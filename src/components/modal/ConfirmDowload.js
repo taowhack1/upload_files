@@ -1,33 +1,31 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import "./upload_style.css";
-import "./style.css";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import {
   Button,
   Typography,
-  MenuItem,
-  ListItemIcon,
+  IconButton,
   Fade,
   Backdrop,
   Modal,
 } from "@material-ui/core";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import { download } from "../../actions/fileActions";
+import Hidden from "@material-ui/core/Hidden";
 
-export default function ConfirmDownloadAdmin(props) {
+export default function ConfirmDownload(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const file = props.file;
+  const filename = props.filename;
+  const fileId = props.fileid;
 
   const handleDownload = () => {
-    dispatch(download(file.file_id, file.file_name));
+    dispatch(download(fileId, filename));
     handleClose();
   };
 
   const handleOpen = () => {
-    props.closeMenu();
     setOpen(true);
   };
   const handleClose = () => {
@@ -35,14 +33,17 @@ export default function ConfirmDownloadAdmin(props) {
   };
   return (
     <div>
-      <MenuItem onClick={handleOpen}>
-        <ListItemIcon>
+      <Hidden xsDown>
+        <IconButton className={classes.tableMargin} onClick={handleOpen}>
           <GetAppIcon />
-        </ListItemIcon>
-        <Typography variant="inherit" className={classes.menuItem}>
-          ดาวน์โหลด
-        </Typography>
-      </MenuItem>
+        </IconButton>
+      </Hidden>
+      <Hidden smUp>
+        <IconButton className={classes.iconButton} onClick={handleOpen}>
+          <GetAppIcon />
+        </IconButton>
+      </Hidden>
+
       <Modal
         className={classes.modal}
         open={open}
@@ -56,8 +57,9 @@ export default function ConfirmDownloadAdmin(props) {
         <Fade in={open}>
           <div className={classes.modalPaper}>
             <div className={classes.root}>
+              <h1>{props.count}</h1>
               <Typography className={classes.text}>
-                คุณต้องการดาวน์โหลด {file.file_name} ?
+                คุณต้องการดาวน์โหลด {props.filename} ?
               </Typography>
               <div className={classes.modalBtn}>
                 <Button

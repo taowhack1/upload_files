@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import CreateIcon from "@material-ui/icons/Create";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import useStyles from "./StyleFiles";
-import "./upload_style.css";
-import "./style.css";
+import useStyles from "../../style/StyleFiles";
 import FolderIcon from "@material-ui/icons/Folder";
-import ConfirmDelete from "./ConfirmDeleteFolder";
+import ConfirmDelete from "../modal/ConfirmDeleteFolder";
 import {
   Modal,
   Typography,

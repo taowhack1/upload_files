@@ -6,7 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import { signOut, changePassword } from "../../actions/authActions";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -186,8 +186,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -221,8 +221,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -256,8 +256,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                              <VisibilityOff />
-                            )}
+                                <VisibilityOff />
+                              )}
                           </IconButton>
                         </InputAdornment>
                       ),

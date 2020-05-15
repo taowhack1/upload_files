@@ -8,7 +8,7 @@ import PowerPoint from './powerpoint.svg';
 import TXT from './txt.svg';
 import ZIP from './zip.svg';
 import xlxs from './xls.svg'
-import useStyles from "../StyleFiles";
+import useStyles from "../../style/StyleFiles";
 
 const Filetypes = (props) => {
     const classes = useStyles();

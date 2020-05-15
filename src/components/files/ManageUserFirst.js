@@ -4,9 +4,9 @@ import { Link, Redirect } from "react-router-dom";
 import Circular from "../layout/Circular";
 import { getUserAll } from "../../actions/authActions";
 import Registor from "../authen/Registor";
-import useStyles from "./StyleFiles";
-import MenuUser from "./MenuUser";
-import ManageUserSwitchAuth from "./ManageUserSwitchAuth";
+import useStyles from "../../style/StyleFiles";
+import MenuUser from "../menu/MenuUser";
+import ManageUserSwitchAuth from "../menu/ManageUserSwitchAuth";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import PersonIcon from "@material-ui/icons/Person";
 import {

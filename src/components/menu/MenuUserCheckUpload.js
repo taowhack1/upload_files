@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import { useDispatch } from "react-redux";
 import { Checkbox, TableCell } from "@material-ui/core/";
 import { updateAccessFolder } from "../../actions/authActions";

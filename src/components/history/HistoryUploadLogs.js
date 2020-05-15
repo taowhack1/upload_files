@@ -18,7 +18,7 @@ import {
   Divider,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 const HistoryUpload = (props) => {
   const classes = useStyles();
   const { logs, loading } = useSelector((state) => state.log);
@@ -57,23 +57,23 @@ const HistoryUpload = (props) => {
           <List className={classes.root}>
             {!loading && logs !== null
               ? logs.map((log, index) => (
-                  <div>
-                    <ListItem key={log.file_id}>
-                      <ListItemText
-                        primary={log.file_name}
-                        secondary={`ID #${
-                          log.file_id
+                <div>
+                  <ListItem key={log.file_id}>
+                    <ListItemText
+                      primary={log.file_name}
+                      secondary={`ID #${
+                        log.file_id
                         } last uploaded ${moment
                           .utc(log.file_created)
                           .add(3, "minutes")
                           .format("DD-MM-YYYY HH:mm")} by ${
-                          log.user_firstname
+                        log.user_firstname
                         } ${log.user_lastname}  `}
-                      />
-                    </ListItem>
-                    <Divider />
-                  </div>
-                ))
+                    />
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))
               : console.log("Nodata")}
           </List>
           {logs === null ? (
@@ -85,8 +85,8 @@ const HistoryUpload = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log("folder empty")
-          )}
+              console.log("folder empty")
+            )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Typography, Menu, MenuItem, IconButton } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChangePassword from "../authen/ChangePassword";
 import UserImage from "./user.svg";

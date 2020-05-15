@@ -1,6 +1,4 @@
 import React, { Fragment, useState } from "react";
-import "./upload_style.css";
-import "./style.css";
 import {
   Modal,
   Typography,
@@ -12,7 +10,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import useStyles from "./StyleFiles";
+import useStyles from "../../style/StyleFiles";
 
 const ConfirmDeleteFiles = (props) => {
   const { listDelFiles } = props;

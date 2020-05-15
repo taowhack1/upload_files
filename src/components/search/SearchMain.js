@@ -14,7 +14,7 @@ import {
   Breadcrumbs,
   Typography,
 } from '@material-ui/core/';
-import useStyles from '../files/StyleFiles';
+import useStyles from '../../style/StyleFiles';
 const SearchMain = () => {
   const classes = useStyles();
   const dispatch = useDispatch();

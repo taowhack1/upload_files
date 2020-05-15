@@ -15,11 +15,11 @@ import {
 } from '@material-ui/core/';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import ConfirmDownload from '../files/ConfirmDowload';
-import useStyles from '../files/StyleFiles';
+import ConfirmDownload from '../modal/ConfirmDowload';
+import useStyles from '../../style/StyleFiles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import SearchMain from './SearchMain';
-import FileType from '../files/filetype/Filetypes'
+import FileType from '../filetype/Filetypes'
 import Hidden from '@material-ui/core/Hidden';
 import Box from "@material-ui/core/Box";
 import ScheduleIcon from "@material-ui/icons/Schedule";

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -8,13 +7,13 @@ import Home from './components/pages/Home';
 import SignIn from './components/authen/SignIn';
 import ViewFiles from './components/files/ViewFiles';
 import ViewFolderAdmin from './components/files/ViewFolderAdmin';
-import AddFolder from './components/files/AddFolder';
+import AddFolder from './components/modal/AddFolder';
 import Registor from './components/authen/Registor';
 import ViewFilesAdmin from './components/files/ViewFilesAdmin';
 import ManageUserFirst from './components/files/ManageUserFirst';
 import ManageUserSecond from './components/files/ManageUserSecond';
-import Dowload from './components/files/Dowload';
-import ConfirmDowload from './components/files/ConfirmDowload';
+import Dowload from './components/modal/Dowload';
+import ConfirmDowload from './components/modal/ConfirmDowload';
 import NotFound from './components/pages/Notfound';
 import HistoryUpload from './components/history/HistoryUpload';
 

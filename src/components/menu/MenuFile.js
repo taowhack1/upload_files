@@ -9,11 +9,9 @@ import {
 } from '@material-ui/core/';
 import CreateIcon from '@material-ui/icons/Create';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import useStyles from './StyleFiles';
-import './upload_style.css';
-import './style.css';
-import ConfirmDeleteFile from './ConfirmDeleteFile';
-import ConfirmDownloadAdmin from './ConfirmDowloadAdmin';
+import useStyles from '../../style/StyleFiles';
+import ConfirmDeleteFile from '../modal/ConfirmDeleteFile';
+import ConfirmDownloadAdmin from '../modal/ConfirmDowloadAdmin';
 import Hidden from '@material-ui/core/Hidden';
 const MenuFile = (props) => {
   const classes = useStyles();

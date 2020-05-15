@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Modal from "@material-ui/core/Modal";
-import "./style.css";
+import "../../style/style.css";
 import { withStyles } from "@material-ui/styles";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import styles from "./StyleFilesClass";
+import styles from "../../style/StyleFilesClass";
 import Dropzone from "./Dropzone";
 import { Typography } from "@material-ui/core";
 class UploadBtn extends Component {

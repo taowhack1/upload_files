@@ -17,7 +17,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useSnackbar } from "notistack";
@@ -279,8 +279,8 @@ export default function Registor(props) {
                                 {values.showPassword ? (
                                   <Visibility />
                                 ) : (
-                                  <VisibilityOff />
-                                )}
+                                    <VisibilityOff />
+                                  )}
                               </IconButton>
                             </InputAdornment>
                           ),

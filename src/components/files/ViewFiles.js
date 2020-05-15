@@ -13,14 +13,14 @@ import {
   Typography,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import UploadBtn from "./UploadBtn";
+import UploadBtn from "../modal/UploadBtn";
 import { getFiles } from "../../actions/fileActions";
 import { Link, useHistory } from "react-router-dom";
-import ConfirmDownload from "./ConfirmDowload";
-import useStyles from "./StyleFiles";
+import ConfirmDownload from "../modal/ConfirmDowload";
+import useStyles from "../../style/StyleFiles";
 import Circular from "../layout/Circular";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import FileType from "./filetype/Filetypes";
+import FileType from "../filetype/Filetypes";
 import Box from "@material-ui/core/Box";
 import Hidden from "@material-ui/core/Hidden";
 
@@ -101,44 +101,44 @@ const ViewFiles = (props) => {
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
-                      <TableRow key={file.file_id} hover>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <FileType
-                              typefile={file.file_name}
-                              src={file.src}
-                            />
-                            <div className={classes.nowrap}>
-                              <Box
-                                className={classes.nowrapText}
-                                textOverflow="ellipsis"
-                                overflow="hidden"
-                              >
-                                {file.file_name}
-                              </Box>
-                            </div>
-                          </Grid>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography className={classes.text}>
-                            {moment
-                              .utc(file.file_created)
-                              .add(3, "minutes")
-                              .format("DD-MM-YYYY HH:mm")}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          {accessdownload ? (
-                            <ConfirmDownload
-                              filename={file.file_name}
-                              fileid={file.file_id}
-                            />
-                          ) : (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <FileType
+                            typefile={file.file_name}
+                            src={file.src}
+                          />
+                          <div className={classes.nowrap}>
+                            <Box
+                              className={classes.nowrapText}
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
+                              {file.file_name}
+                            </Box>
+                          </div>
+                        </Grid>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.text}>
+                          {moment
+                            .utc(file.file_created)
+                            .add(3, "minutes")
+                            .format("DD-MM-YYYY HH:mm")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        {accessdownload ? (
+                          <ConfirmDownload
+                            filename={file.file_name}
+                            fileid={file.file_id}
+                          />
+                        ) : (
                             <GetAppIcon color="disabled" />
                           )}
-                        </TableCell>
-                      </TableRow>
-                    ))
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : null}
               </TableBody>
             </Table>
@@ -148,46 +148,46 @@ const ViewFiles = (props) => {
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
-                      <TableRow key={file.file_id} hover>
-                        <TableCell>
-                          <Grid container className={classes.iconAlign}>
-                            <Grid>
-                              <FileType
-                                typefile={file.file_name}
-                                src={file.src}
-                              />
-                            </Grid>
-                            <Grid>
-                              <div className={classes.nowrap}>
-                                <Box
-                                  className={classes.nowrapText}
-                                  textOverflow="ellipsis"
-                                  overflow="hidden"
-                                >
-                                  {file.file_name}
-                                </Box>
-                              </div>
-                              <Typography className={classes.textDate}>
-                                {moment
-                                  .utc(file.file_created)
-                                  .add(3, "minutes")
-                                  .format("DD-MM-YYYY HH:mm")}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </TableCell>
-                        <TableCell>
-                          {accessdownload ? (
-                            <ConfirmDownload
-                              filename={file.file_name}
-                              fileid={file.file_id}
+                    <TableRow key={file.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType
+                              typefile={file.file_name}
+                              src={file.src}
                             />
-                          ) : (
+                          </Grid>
+                          <Grid>
+                            <div className={classes.nowrap}>
+                              <Box
+                                className={classes.nowrapText}
+                                textOverflow="ellipsis"
+                                overflow="hidden"
+                              >
+                                {file.file_name}
+                              </Box>
+                            </div>
+                            <Typography className={classes.textDate}>
+                              {moment
+                                .utc(file.file_created)
+                                .add(3, "minutes")
+                                .format("DD-MM-YYYY HH:mm")}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell>
+                        {accessdownload ? (
+                          <ConfirmDownload
+                            filename={file.file_name}
+                            fileid={file.file_id}
+                          />
+                        ) : (
                             <GetAppIcon color="disabled" />
                           )}
-                        </TableCell>
-                      </TableRow>
-                    ))
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : null}
               </TableBody>
             </Table>

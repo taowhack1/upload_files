@@ -24,7 +24,10 @@ export default (state = initialState, action) => {
     case ADD_FILE:
       return {
         ...state,
-        files: [action.payload, ...state.files],
+        files:
+          state.files === null
+            ? [action.payload]
+            : [action.payload, ...state.files],
         loading: false,
       };
     case DELETE_FILE:

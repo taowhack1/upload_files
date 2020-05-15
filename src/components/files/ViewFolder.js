@@ -22,16 +22,19 @@ import { getFolders } from '../../actions/folderActions';
 import useStyles from './StyleFiles';
 import dateTH from './function';
 import Hidden from '@material-ui/core/Hidden';
-
+import SignIn from "../authen/SignIn";
 const ViewFolder = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { folders, loading } = useSelector((state) => state.folder);
+  const { authenticated, authdata } = useSelector((state) => state.auth);
   console.log(folders);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFolders(authdata.user_id));
+    authdata === null
+      ? history.push("/signin")
+      : dispatch(getFolders(authdata.user_id));
   }, []);
-  const { authenticated, authdata } = useSelector((state) => state.auth);
   if (loading) {
     console.log('loading >>> ' + loading);
   }

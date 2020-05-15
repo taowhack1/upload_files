@@ -126,7 +126,7 @@ const HistoryDelete = (props) => {
                       </TableCell>
                       <TableCell align='center'>
                         <Typography className={classes.text}>
-                          {log.del_user_firstname} {log.del_user_lastname}
+                          {log.user_firstname} {log.user_lastname}
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -136,51 +136,53 @@ const HistoryDelete = (props) => {
             </Table>
           </Hidden>
           <Hidden mdUp>
-            <TableBody>
-              {!loading && logsdelete !== null
-                ? logsdelete.map((log) => (
-                  <TableRow key={log.file_id} hover>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid>
-                          <FileType typefile={log.file_name} />
-                        </Grid>
-                        <Grid >
-                          <Typography
-                            color='textPrimary'
-                            className={classes.text}
-                          >
-                            {log.file_name}
-                          </Typography>
+            <Table>
+              <TableBody>
+                {!loading && logsdelete !== null
+                  ? logsdelete.map((log) => (
+                    <TableRow key={log.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
                           <Grid>
-                            <Typography className={classes.textDate}>
-                              {moment
-                                .utc(log.file_created)
-                                .add(3, 'minutes')
-                                .format('DD-MM-YYYY HH:mm')}
+                            <FileType typefile={log.file_name} />
+                          </Grid>
+                          <Grid >
+                            <Typography
+                              color='textPrimary'
+                              className={classes.text}
+                            >
+                              {log.file_name}
                             </Typography>
-                            <Typography className={classes.textDate}>
-                              {log.folder_name}
-                            </Typography>
-                            <Typography className={classes.textDate}>
-                              {log.user_firstname} {log.user_lastname}
-                            </Typography>
+                            <Grid>
+                              <Typography className={classes.textDate}>
+                                {moment
+                                  .utc(log.file_created)
+                                  .add(3, 'minutes')
+                                  .format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                {log.folder_name}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                {log.user_firstname} {log.user_lastname}
+                              </Typography>
+                            </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </TableCell>
+                      </TableCell>
 
-                  </TableRow>
-                ))
-                : console.log('folder empty')}
-            </TableBody>
+                    </TableRow>
+                  ))
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
           </Hidden>
 
           {logsdelete === null ? (
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
+                  <Typography>{' ไม่มีประวัติการลบเอกสาร '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>

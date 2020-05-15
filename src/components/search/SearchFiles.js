@@ -186,7 +186,7 @@ const SearchFiles = () => {
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' ไม่มีข้อมูล '}</Typography>
+                  <Typography>{' ไม่พบข้อมูล '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>

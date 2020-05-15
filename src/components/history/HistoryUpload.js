@@ -140,53 +140,55 @@ const HistoryUpload = (props) => {
             </Table>
           </Hidden>
           <Hidden mdUp>
-            <TableBody>
-              {!loading && logs !== null
-                ? logs.map((log) => (
-                  <TableRow key={log.file_id} hover>
-                    <TableCell>
-                      <Grid container className={classes.iconAlign}>
-                        <Grid>
-                          <FileType typefile={log.file_name} />
-                        </Grid>
-                        <Grid >
-                          <Typography
-                            color='textPrimary'
-                            className={classes.text}
-                          >
-                            {log.file_name}
-                          </Typography>
+            <Table>
+              <TableBody>
+                {!loading && logs !== null
+                  ? logs.map((log) => (
+                    <TableRow key={log.file_id} hover>
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
                           <Grid>
-                            <Typography className={classes.textDate}>
-                              <ScheduleIcon className={classes.iconHistory} />
-                              {moment
-                                .utc(log.file_created)
-                                .add(3, 'minutes')
-                                .format('DD-MM-YYYY HH:mm')}
+                            <FileType typefile={log.file_name} />
+                          </Grid>
+                          <Grid >
+                            <Typography
+                              color='textPrimary'
+                              className={classes.text}
+                            >
+                              {log.file_name}
                             </Typography>
-                            <Typography className={classes.textDate}>
-                              <FolderIcon className={classes.iconHistory} />
-                              {log.folder_name}
-                            </Typography>
-                            <Typography className={classes.textDate}>
-                              <PersonIcon className={classes.iconHistory} />
-                              {log.user_firstname} {log.user_lastname}
-                            </Typography>
+                            <Grid>
+                              <Typography className={classes.textDate}>
+                                <ScheduleIcon className={classes.iconHistory} />
+                                {moment
+                                  .utc(log.file_created)
+                                  .add(3, 'minutes')
+                                  .format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                <FolderIcon className={classes.iconHistory} />
+                                {log.folder_name}
+                              </Typography>
+                              <Typography className={classes.textDate}>
+                                <PersonIcon className={classes.iconHistory} />
+                                {log.user_firstname} {log.user_lastname}
+                              </Typography>
+                            </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </TableCell>
+                      </TableCell>
 
-                  </TableRow>
-                ))
-                : console.log('folder empty')}
-            </TableBody>
+                    </TableRow>
+                  ))
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
           </Hidden>
           {logs === null ? (
             <Table>
               <TableRow>
                 <TableCell className={classes.emptyTable}>
-                  <Typography>{' โฟลเดอร์นี้ว่างเปล่า '}</Typography>
+                  <Typography>{' ไม่มีประวัติการอัพโหลดเอกสาร '}</Typography>
                 </TableCell>
               </TableRow>
             </Table>

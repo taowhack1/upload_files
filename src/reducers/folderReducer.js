@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
     case ADD_FOLDER:
       return {
         ...state,
-        foldersadmin: [action.payload, ...state.foldersadmin],
+        foldersadmin: state.foldersadmin === null ? [action.payload] : [action.payload, ...state.foldersadmin],
         loading: false,
       };
     case UPDATE_FOLDER:

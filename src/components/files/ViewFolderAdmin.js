@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useEffect, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -11,22 +11,22 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
-} from '@material-ui/core/';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import FolderIcon from '@material-ui/icons/Folder';
+} from "@material-ui/core/";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FolderIcon from "@material-ui/icons/Folder";
 import {
   deleteFolder,
   updateFolder,
   getAllFolder,
   createFolder,
-} from '../../actions/folderActions';
-import AddFolder from './AddFolder';
-import useStyles from './StyleFiles';
-import MenuFolder from './MenuFolder';
-import Circular from '../layout/Circular';
-import { useSnackbar } from 'notistack';
-import moment from 'moment';
-import Hidden from '@material-ui/core/Hidden';
+} from "../../actions/folderActions";
+import AddFolder from "./AddFolder";
+import useStyles from "./StyleFiles";
+import MenuFolder from "./MenuFolder";
+import Circular from "../layout/Circular";
+import { useSnackbar } from "notistack";
+import moment from "moment";
+import Hidden from "@material-ui/core/Hidden";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
@@ -39,7 +39,7 @@ const ViewFolderAdmin = (props) => {
     dispatch(getAllFolder());
   }, []);
 
-  const snackAlert = (msg = 'Alert', variant = 'warning') => {
+  const snackAlert = (msg = "Alert", variant = "warning") => {
     enqueueSnackbar(msg, {
       variant: variant,
     });
@@ -47,7 +47,7 @@ const ViewFolderAdmin = (props) => {
 
   const refresh = () => {
     dispatch(getAllFolder());
-    console.log('refresh');
+    console.log("refresh");
   };
 
   const handleDeleteFolder = async (folderId) => {
@@ -59,7 +59,7 @@ const ViewFolderAdmin = (props) => {
         createFolder(folder_name, snackAlert, handleAddFolderClose)
       );
     } else {
-      snackAlert('กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง', 'error');
+      snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
     }
   };
   const handleChangeFolderName = async (folder, handleAddFolderClose) => {
@@ -67,7 +67,7 @@ const ViewFolderAdmin = (props) => {
       await dispatch(updateFolder(folder, snackAlert));
       handleAddFolderClose(true);
     } else {
-      snackAlert('กรุณาระบุชื่อโฟลเดอร์', 'warning');
+      snackAlert("กรุณาระบุชื่อโฟลเดอร์", "warning");
     }
   };
   return (
@@ -86,7 +86,7 @@ const ViewFolderAdmin = (props) => {
                           className={classes.NavigateNextIcon}
                         />
                       }
-                      aria-label='breadcrumb'
+                      aria-label="breadcrumb"
                     >
                       <Typography className={classes.text}>
                         โฟลเดอร์ทั้งหมด
@@ -104,12 +104,12 @@ const ViewFolderAdmin = (props) => {
                               ชื่อโฟลเดอร์
                             </Typography>
                           </TableCell>
-                          <TableCell align='center'>
+                          <TableCell align="center">
                             <Typography className={classes.text}>
                               วันที่แก้ไข
                             </Typography>
                           </TableCell>
-                          <TableCell align='center'>
+                          <TableCell align="center">
                             <Typography className={classes.text}>
                               ตัวเลือก
                             </Typography>
@@ -124,7 +124,7 @@ const ViewFolderAdmin = (props) => {
                                   <Link
                                     to={{
                                       pathname:
-                                        '/viewfilesadmin/' + folder.folder_id,
+                                        "/viewfilesadmin/" + folder.folder_id,
                                       state: {
                                         folder_id: folder.folder_id,
                                         folder_name: folder.folder_name,
@@ -148,15 +148,15 @@ const ViewFolderAdmin = (props) => {
                                     </Grid>
                                   </Link>
                                 </TableCell>
-                                <TableCell align='center'>
+                                <TableCell align="center">
                                   <Typography className={classes.text}>
                                     {moment
                                       .utc(folder.folder_updated)
-                                      .add(3, 'minutes')
-                                      .format('DD-MM-YYYY HH:mm')}
+                                      .add(3, "minutes")
+                                      .format("DD-MM-YYYY HH:mm")}
                                   </Typography>
                                 </TableCell>
-                                <TableCell align='center'>
+                                <TableCell align="center">
                                   <MenuFolder
                                     delete={handleDeleteFolder}
                                     edit={handleChangeFolderName}
@@ -169,7 +169,7 @@ const ViewFolderAdmin = (props) => {
                                 </TableCell>
                               </TableRow>
                             ))
-                          : console.log('Nodata')}
+                          : console.log("Nodata")}
                       </TableBody>
                     </Table>
                   </Hidden>
@@ -183,7 +183,7 @@ const ViewFolderAdmin = (props) => {
                                   <Link
                                     to={{
                                       pathname:
-                                        '/viewfilesadmin/' + folder.folder_id,
+                                        "/viewfilesadmin/" + folder.folder_id,
                                       state: {
                                         folder_id: folder.folder_id,
                                         folder_name: folder.folder_name,
@@ -210,14 +210,14 @@ const ViewFolderAdmin = (props) => {
                                         >
                                           {moment
                                             .utc(folder.folder_updated)
-                                            .add(3, 'minutes')
-                                            .format('DD-MM-YYYY HH:mm')}
+                                            .add(3, "minutes")
+                                            .format("DD-MM-YYYY HH:mm")}
                                         </Typography>
                                       </Grid>
                                     </Grid>
                                   </Link>
                                 </TableCell>
-                                <TableCell align='center'>
+                                <TableCell align="center">
                                   <MenuFolder
                                     delete={handleDeleteFolder}
                                     edit={handleChangeFolderName}
@@ -230,7 +230,7 @@ const ViewFolderAdmin = (props) => {
                                 </TableCell>
                               </TableRow>
                             ))
-                          : console.log('Nodata')}
+                          : console.log("Nodata")}
                       </TableBody>
                     </Table>
                   </Hidden>
@@ -239,13 +239,13 @@ const ViewFolderAdmin = (props) => {
                       <TableRow>
                         <TableCell className={classes.emptyTable}>
                           <Typography>
-                            {' ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง '}
+                            {" ไม่พบโฟลเดอร์ที่มีสิทธิ์เข้าถึง "}
                           </Typography>
                         </TableCell>
                       </TableRow>
                     </Table>
                   ) : (
-                    console.log('folder empty')
+                    console.log("folder empty")
                   )}
                   {loading && (
                     <div className={classes.loading}>
@@ -257,7 +257,7 @@ const ViewFolderAdmin = (props) => {
               </Grid>
             </Fragment>
           ) : (
-            <Redirect to='/' />
+            <Redirect to="/" />
           )}
         </div>
       )}

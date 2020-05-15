@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Modal,
@@ -6,23 +6,23 @@ import {
   Menu,
   MenuItem,
   IconButton,
-} from '@material-ui/core/';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CreateIcon from '@material-ui/icons/Create';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import RemoveIcon from '@material-ui/icons/Remove';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import useStyles from './StyleFiles';
-import './upload_style.css';
-import './style.css';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
-import FolderIcon from '@material-ui/icons/Folder';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import ConfirmDelete from './ConfirmDeleteFolder';
-import Hidden from '@material-ui/core/Hidden';
+} from "@material-ui/core/";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import CreateIcon from "@material-ui/icons/Create";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import RemoveIcon from "@material-ui/icons/Remove";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import useStyles from "./StyleFiles";
+import "./upload_style.css";
+import "./style.css";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import Button from "@material-ui/core/Button";
+import FolderIcon from "@material-ui/icons/Folder";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import ConfirmDelete from "./ConfirmDeleteFolder";
+import Hidden from "@material-ui/core/Hidden";
 const MenuFolder = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -54,7 +54,7 @@ const MenuFolder = (props) => {
     setAnchorEl(null);
   };
   const handleChangeFolderName = (e) => {
-    let value = e.target.value.replace(/[^A-Za-z\d]$/gi, '');
+    let value = e.target.value.replace(/[^A-Za-z\d]$/gi, "");
     value = value.slice(0, 15);
     setFolder({
       ...folder,
@@ -74,12 +74,12 @@ const MenuFolder = (props) => {
       </IconButton>
       <Menu
         className={classes.menu}
-        id='simple-menu'
+        id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={handleMoreVertIconClose}
       >
         <ConfirmDelete
@@ -89,16 +89,16 @@ const MenuFolder = (props) => {
         />
         <MenuItem onClick={handleEditFolderOpen}>
           <ListItemIcon>
-            <CreateIcon fontSize='small' />
+            <CreateIcon fontSize="small" />
           </ListItemIcon>
-          <Typography variant='inherit' className={classes.menuItem}>
+          <Typography variant="inherit" className={classes.menuItem}>
             แก้ไข
           </Typography>
         </MenuItem>
         <Modal
           className={classes.modal}
           disableAutoFocus={true}
-          outline='none'
+          outline="none"
           open={open}
           onClose={handleEditFolderClose}
           closeAfterTransition
@@ -110,14 +110,14 @@ const MenuFolder = (props) => {
           <Fade in={open}>
             <div className={classes.modalPaper}>
               <div className={classes.root}>
-                <Typography className={classes.text} color='textPrimary'>
+                <Typography className={classes.text} color="textPrimary">
                   เปลี่ยนชื่อโฟลเดอร์
                 </Typography>
                 <div className={classes.modalIconAlign}>
                   <Grid container className={classes.iconAlign}>
                     <Hidden xsDown>
                       <Grid item xs>
-                        {' '}
+                        {" "}
                       </Grid>
                       <Grid item sm={1}>
                         <FolderIcon className={classes.iconFolder} />
@@ -125,9 +125,9 @@ const MenuFolder = (props) => {
                       <Grid item> </Grid>
                       <Grid item xs={7}>
                         <TextField
-                          placeholder='ชื่อโฟลเดอร์'
-                          type='search'
-                          variant='outlined'
+                          placeholder="ชื่อโฟลเดอร์"
+                          type="search"
+                          variant="outlined"
                           className={classes.textField}
                           onChange={handleChangeFolderName}
                           value={folder.folder_name}
@@ -137,14 +137,14 @@ const MenuFolder = (props) => {
                         ></TextField>
                       </Grid>
                       <Grid item xs>
-                        {' '}
+                        {" "}
                       </Grid>
                     </Hidden>
                     <Hidden smUp>
                       <TextField
-                        placeholder='ชื่อโฟลเดอร์'
-                        type='search'
-                        variant='outlined'
+                        placeholder="ชื่อโฟลเดอร์"
+                        type="search"
+                        variant="outlined"
                         className={classes.textField}
                         onChange={handleChangeFolderName}
                         value={folder.folder_name}
@@ -159,25 +159,25 @@ const MenuFolder = (props) => {
 
               <div className={classes.modalBtn}>
                 <Button
-                  variant='contained'
+                  variant="contained"
                   className={classes.modalbtnOk}
                   onClick={handleRenameSave}
                 >
                   <Typography
                     className={classes.text}
-                    color='textPrimary'
+                    color="textPrimary"
                     elevation={0}
                   >
-                    SAVE
+                    บันทึก
                   </Typography>
                 </Button>
                 <Button
-                  color='primary'
+                  color="primary"
                   className={classes.modalbtnCancel}
                   onClick={handleEditFolderClose}
                 >
-                  <Typography className={classes.text} color='textPrimary'>
-                    Cancel
+                  <Typography className={classes.text} color="textPrimary">
+                    ยกเลิก
                   </Typography>
                 </Button>
               </div>

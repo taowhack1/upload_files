@@ -49,7 +49,7 @@ const SignIn = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (user_name === "" || user_password === "") {
-      snackAlert("กรุณากรอก Username , Password", "warning");
+      snackAlert("กรุณากรอกชื่อผู้ใช้งาน , รหัสผ่าน", "warning");
     } else {
       dispatch(signIn(user, snackAlert));
     }
@@ -77,7 +77,7 @@ const SignIn = () => {
               required
               fullWidth
               id="user_name"
-              placeholder="Username"
+              placeholder="ชื่อผู้ใช้งาน"
               name="user_name"
               autoComplete="email"
               autoFocus
@@ -92,7 +92,7 @@ const SignIn = () => {
               required
               fullWidth
               name="user_password"
-              placeholder="Password"
+              placeholder="รหัสผ่าน"
               type={values.showPassword ? "text" : "password"}
               id="user_password"
               autoComplete="current-password"
@@ -106,11 +106,7 @@ const SignIn = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {values.showPassword ? (
-                        <Visibility />
-                      ) : (
-                          <VisibilityOff />
-                        )}
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -124,7 +120,7 @@ const SignIn = () => {
               variant="contained"
               className={classes.submit}
             >
-              LOGIN
+              เข้าสู่ระบบ
             </Button>
           </form>
         </div>

@@ -10,7 +10,7 @@ import { Button, Typography, IconButton } from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import { download } from "../../actions/fileActions";
 import axios from "axios";
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from "@material-ui/core/Hidden";
 
 export default function ConfirmDownload(props) {
   const dispatch = useDispatch();
@@ -36,12 +36,12 @@ export default function ConfirmDownload(props) {
   };
   return (
     <div>
-      <Hidden mdDown >
+      <Hidden mdDown>
         <IconButton className={classes.tableMargin} onClick={handleOpen}>
           <GetAppIcon />
         </IconButton>
       </Hidden>
-      <Hidden smUp >
+      <Hidden smUp>
         <IconButton className={classes.iconButton} onClick={handleOpen}>
           <GetAppIcon />
         </IconButton>
@@ -70,14 +70,14 @@ export default function ConfirmDownload(props) {
                   className={classes.modalbtnDownload}
                   onClick={handleDownload}
                 >
-                  <Typography className={classes.text}>Download</Typography>
+                  <Typography className={classes.text}>ดาวน์โหลด</Typography>
                 </Button>
                 <Button
                   color="primary"
                   className={classes.modalbtnCancel}
                   onClick={handleClose}
                 >
-                  <Typography className={classes.text}>Cancel</Typography>
+                  <Typography className={classes.text}>ยกเลิก</Typography>
                 </Button>
               </div>
             </div>

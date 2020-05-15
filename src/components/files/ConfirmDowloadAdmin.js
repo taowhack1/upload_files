@@ -67,14 +67,14 @@ export default function ConfirmDownloadAdmin(props) {
                   className={classes.modalbtnDownload}
                   onClick={handleDownload}
                 >
-                  <Typography className={classes.text}>Download</Typography>
+                  <Typography className={classes.text}>ดาวน์โหลด</Typography>
                 </Button>
                 <Button
                   color="primary"
                   className={classes.modalbtnCancel}
                   onClick={handleClose}
                 >
-                  <Typography className={classes.text}>Cancel</Typography>
+                  <Typography className={classes.text}>ยกเลิก</Typography>
                 </Button>
               </div>
             </div>

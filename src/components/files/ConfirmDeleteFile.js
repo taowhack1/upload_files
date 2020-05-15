@@ -61,14 +61,14 @@ export default function ConfirmDeleteFile(props) {
                     handleClose();
                   }}
                 >
-                  <Typography className={classes.text}>DELETE</Typography>
+                  <Typography className={classes.text}>ลบ</Typography>
                 </Button>
                 <Button
                   color="primary"
                   className={classes.modalbtnCancel}
                   onClick={handleClose}
                 >
-                  <Typography className={classes.text}>CANCEL</Typography>
+                  <Typography className={classes.text}>ยกเลิก</Typography>
                 </Button>
               </div>
             </div>

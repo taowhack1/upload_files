@@ -25,7 +25,7 @@ const MenuAdmin = (props) => {
     return (
         <div>
             <IconButton className={classes.tableMargin} onClick={handleOpen}>
-                <MenuIcon />
+                <MenuIcon style={{ color: 'white' }} />
             </IconButton>
             <Menu
                 className={classes.menu}
@@ -39,6 +39,7 @@ const MenuAdmin = (props) => {
             >
                 <MenuItem>
                     <Typography
+                        className={classes.text}
                         component={Link}
                         to='/viewfolderadmin'
                         variant="inherit">จัดการโฟลเดอร์
@@ -46,6 +47,7 @@ const MenuAdmin = (props) => {
                 </MenuItem>
                 <MenuItem >
                     <Typography
+                        className={classes.text}
                         component={Link}
                         to='/manageuserfirst'
                         variant="inherit">
@@ -54,11 +56,17 @@ const MenuAdmin = (props) => {
                 </MenuItem>
                 <MenuItem >
                     <Typography
+                        className={classes.text}
+                        component={Link}
+                        to='/historyupload'
                         variant="inherit"
                     >ประวัติการอัพโหลด</Typography>
                 </MenuItem>
                 <MenuItem>
                     <Typography
+                        className={classes.text}
+                        component={Link}
+                        to='/historydelete'
                         variant="inherit"
                     >ประวัติการลบไฟล์</Typography>
                 </MenuItem>

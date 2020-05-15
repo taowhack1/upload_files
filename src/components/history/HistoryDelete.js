@@ -28,6 +28,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import useStyles from '../files/StyleFiles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FileType from '../files/filetype/Filetypes'
+import Hidden from '@material-ui/core/Hidden';
 const HistoryDelete = (props) => {
   const classes = useStyles();
   const { logsdelete, loading } = useSelector((state) => state.log);
@@ -64,41 +66,40 @@ const HistoryDelete = (props) => {
         </Paper>
 
         <Paper className={classes.paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.tableCellName}>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อไฟล์
+          <Hidden smDown>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.tableCellName}>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อไฟล์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ชื่อโฟลเดอร์
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ชื่อโฟลเดอร์
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    วันที่ลบ
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      วันที่ลบ
                   </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography color='textPrimary' className={classes.text}>
-                    ผู้ลบ
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Typography color='textPrimary' className={classes.text}>
+                      ผู้ลบ
                   </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {!loading && logsdelete !== null
-                ? logsdelete.map((log) => (
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {!loading && logsdelete !== null
+                  ? logsdelete.map((log) => (
                     <TableRow key={log.file_id} hover>
                       <TableCell>
                         <Grid container className={classes.iconAlign}>
                           <Grid item xs={1}>
-                            <InsertDriveFileIcon
-                              className={classes.iconFilesTable}
-                            />
+                            <FileType typefile={log.file_name} />
                           </Grid>
                           <Grid item xs={9}>
                             <Typography
@@ -130,9 +131,51 @@ const HistoryDelete = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
+                  : console.log('folder empty')}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <TableBody>
+              {!loading && logsdelete !== null
+                ? logsdelete.map((log) => (
+                  <TableRow key={log.file_id} hover>
+                    <TableCell>
+                      <Grid container className={classes.iconAlign}>
+                        <Grid>
+                          <FileType typefile={log.file_name} />
+                        </Grid>
+                        <Grid >
+                          <Typography
+                            color='textPrimary'
+                            className={classes.text}
+                          >
+                            {log.file_name}
+                          </Typography>
+                          <Grid>
+                            <Typography className={classes.textDate}>
+                              {moment
+                                .utc(log.file_created)
+                                .add(3, 'minutes')
+                                .format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                            <Typography className={classes.textDate}>
+                              {log.folder_name}
+                            </Typography>
+                            <Typography className={classes.textDate}>
+                              {log.user_firstname} {log.user_lastname}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+
+                  </TableRow>
+                ))
                 : console.log('folder empty')}
             </TableBody>
-          </Table>
+          </Hidden>
+
           {logsdelete === null ? (
             <Table>
               <TableRow>
@@ -142,8 +185,8 @@ const HistoryDelete = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log('folder empty')
-          )}
+              console.log('folder empty')
+            )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

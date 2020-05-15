@@ -92,57 +92,57 @@ const ViewFolder = () => {
                         <TableBody>
                           {!loading && folders !== null
                             ? folders.map((folder) => (
-                                <TableRow key={folder.folder_id}>
-                                  <TableCell>
-                                    <Link
-                                      to={{
-                                        pathname:
-                                          '/ViewFiles/' + folder.folder_id,
-                                        state: {
-                                          folder_id: folder.folder_id,
-                                          folder_name: folder.folder_name,
-                                          access_upload: folder.access_upload,
-                                          access_download:
-                                            folder.access_download,
-                                        },
+                              <TableRow key={folder.folder_id}>
+                                <TableCell>
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/ViewFiles/' + folder.folder_id,
+                                      state: {
+                                        folder_id: folder.folder_id,
+                                        folder_name: folder.folder_name,
+                                        access_upload: folder.access_upload,
+                                        access_download:
+                                          folder.access_download,
+                                      },
+                                    }}
+                                  >
+                                    <Grid
+                                      container
+                                      className={classes.iconAlign}
+                                    >
+                                      <FolderIcon
+                                        className={classes.iconFolderTable}
+                                      />
+                                      <Typography className={classes.text}>
+                                        {folder.folder_name}
+                                      </Typography>
+                                    </Grid>
+                                  </Link>
+                                </TableCell>
+                                <TableCell align='center'>
+                                  <Typography
+                                    color='textPrimary'
+                                    className={classes.text}
+                                  >
+                                    {moment
+                                      .utc(folder.folder_updated)
+                                      .add(3, 'minutes')
+                                      .format('DD-MM-YYYY HH:mm')}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align='right'>
+                                  {folder.access_download ? (
+                                    <Chip
+                                      icon={<CloudDownload />}
+                                      label='Download'
+                                      color='secondary'
+                                      style={{
+                                        backgroundColor: '#4CAF50',
+                                        width: '110px',
                                       }}
-                                    >
-                                      <Grid
-                                        container
-                                        className={classes.iconAlign}
-                                      >
-                                        <FolderIcon
-                                          className={classes.iconFolderTable}
-                                        />
-                                        <Typography className={classes.text}>
-                                          {folder.folder_name}
-                                        </Typography>
-                                      </Grid>
-                                    </Link>
-                                  </TableCell>
-                                  <TableCell align='center'>
-                                    <Typography
-                                      color='textPrimary'
-                                      className={classes.text}
-                                    >
-                                      {moment
-                                        .utc(folder.folder_updated)
-                                        .add(3, 'minutes')
-                                        .format('DD-MM-YYYY HH:mm')}
-                                    </Typography>
-                                  </TableCell>
-                                  <TableCell align='right'>
-                                    {folder.access_download ? (
-                                      <Chip
-                                        icon={<CloudDownload />}
-                                        label='Download'
-                                        color='secondary'
-                                        style={{
-                                          backgroundColor: '#4CAF50',
-                                          width: '110px',
-                                        }}
-                                      />
-                                    ) : (
+                                    />
+                                  ) : (
                                       <Chip
                                         disabled={true}
                                         icon={<CloudDownload />}
@@ -152,19 +152,19 @@ const ViewFolder = () => {
                                         }}
                                       />
                                     )}
-                                  </TableCell>
-                                  <TableCell align='left'>
-                                    {folder.access_upload ? (
-                                      <Chip
-                                        icon={<CloudUpload />}
-                                        label='Upload'
-                                        color='secondary'
-                                        style={{
-                                          backgroundColor: '#2196F3',
-                                          width: '110px',
-                                        }}
-                                      />
-                                    ) : (
+                                </TableCell>
+                                <TableCell align='left'>
+                                  {folder.access_upload ? (
+                                    <Chip
+                                      icon={<CloudUpload />}
+                                      label='Upload'
+                                      color='secondary'
+                                      style={{
+                                        backgroundColor: '#2196F3',
+                                        width: '110px',
+                                      }}
+                                    />
+                                  ) : (
                                       <Chip
                                         disabled={true}
                                         icon={<CloudUpload />}
@@ -174,9 +174,9 @@ const ViewFolder = () => {
                                         }}
                                       />
                                     )}
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                                </TableCell>
+                              </TableRow>
+                            ))
                             : console.log('Nodata')}
                         </TableBody>
                       </Table>
@@ -186,50 +186,84 @@ const ViewFolder = () => {
                         <TableBody>
                           {!loading && folders !== null
                             ? folders.map((folder) => (
-                                <TableRow key={folder.folder_id}>
-                                  <TableCell>
-                                    <Link
-                                      to={{
-                                        pathname:
-                                          '/ViewFiles/' + folder.folder_id,
-                                        state: {
-                                          folder_id: folder.folder_id,
-                                          folder_name: folder.folder_name,
-                                          access_upload: folder.access_upload,
-                                          access_download:
-                                            folder.access_download,
-                                        },
-                                      }}
+                              <TableRow key={folder.folder_id}>
+                                <TableCell>
+                                  <Link
+                                    to={{
+                                      pathname:
+                                        '/ViewFiles/' + folder.folder_id,
+                                      state: {
+                                        folder_id: folder.folder_id,
+                                        folder_name: folder.folder_name,
+                                        access_upload: folder.access_upload,
+                                        access_download:
+                                          folder.access_download,
+                                      },
+                                    }}
+                                  >
+                                    <Grid
+                                      container
+                                      className={classes.iconAlign}
                                     >
-                                      <Grid
-                                        container
-                                        className={classes.iconAlign}
-                                      >
-                                        <Grid>
-                                          <FolderIcon
-                                            className={classes.iconFolderTable}
-                                          />
-                                        </Grid>
-                                        <Grid>
-                                          <Typography
-                                            className={classes.nowrapText}
-                                          >
-                                            {folder.folder_name}
-                                          </Typography>
-                                          <Typography
-                                            className={classes.textDate}
-                                          >
-                                            {moment
-                                              .utc(folder.folder_updated)
-                                              .add(3, 'minutes')
-                                              .format('DD-MM-YYYY HH:mm')}
-                                          </Typography>
-                                        </Grid>
+                                      <Grid>
+                                        <FolderIcon
+                                          className={classes.iconFolderTable}
+                                        />
                                       </Grid>
-                                    </Link>
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                                      <Grid>
+                                        <Typography
+                                          className={classes.nowrapText}
+                                        >
+                                          {folder.folder_name}
+                                        </Typography>
+                                        <Typography
+                                          className={classes.textDate}
+                                        >
+                                          {moment
+                                            .utc(folder.folder_updated)
+                                            .add(3, 'minutes')
+                                            .format('DD-MM-YYYY HH:mm')}
+                                        </Typography>
+                                      </Grid>
+                                    </Grid>
+                                  </Link>
+                                </TableCell>
+                                <TableCell>
+
+                                  {folder.access_download ? (
+                                    <CloudDownload color='secondary'
+                                      style={{
+                                        color: '#4CAF50',
+                                        width: '30px',
+                                      }} />
+
+                                  ) : (
+                                      <CloudDownload
+                                        color='disabled'
+                                        style={{
+                                          width: '30px',
+                                        }} />
+                                    )}
+
+                                  {folder.access_upload ? (
+                                    <CloudUpload
+                                      style={{
+                                        color: '#2196F3',
+                                        width: '30px',
+                                      }} />
+
+                                  ) : (
+                                      <CloudUpload
+                                        color="disabled"
+                                        style={{
+                                          width: '30px',
+                                        }} />
+
+                                    )}
+
+                                </TableCell>
+                              </TableRow>
+                            ))
                             : console.log('Nodata')}
                         </TableBody>
                       </Table>
@@ -250,8 +284,8 @@ const ViewFolder = () => {
                 </Grid>
               </Fragment>
             ) : (
-              <Redirect to={'/viewfolderadmin'} />
-            )
+                <Redirect to={'/viewfolderadmin'} />
+              )
             //history.push('/viewfolderamin')
           }
         </div>

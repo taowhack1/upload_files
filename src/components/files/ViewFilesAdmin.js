@@ -109,7 +109,7 @@ const ViewFilesAdmin = (props) => {
   const handleDelete = async (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      await dispatch(deleteFile(file.file_id, snackAlert));
+      await dispatch(deleteFile(file.file_id, authdata.user_id, snackAlert));
     }
     updateList();
   };
@@ -162,65 +162,11 @@ const ViewFilesAdmin = (props) => {
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file, index) => {
-                      return (
-                        <TableRow key={file.file_id} hover>
-                          <TableCell align='center'>
-                            <Checkbox
-                              className={classes.tableMargin}
-                              onClick={(event) =>
-                                handleSelectClick(
-                                  event,
-                                  file.file_id,
-                                  file.file_name
-                                )
-                              }
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Grid container className={classes.iconAlign}>
-                              <Grid>
-                                <FileType typefile={file.file_name} />
-                              </Grid>
-                              <Grid>
-                                <Typography
-                                  color='textPrimary'
-                                  className={classes.text}
-                                >
-                                  {file.file_name}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                            {/* </Link> */}
-                          </TableCell>
-                          <TableCell align='center'>
-                            <Typography className={classes.text}>
-                              {moment
-                                .utc(file.file_created)
-                                .add(3, 'minutes')
-                                .format('DD-MM-YYYY HH:mm')}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align='center'>
-                            <MenuFile file={file} handleDelete={handleDelete} />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  : console.log('Nodata')}
-              </TableBody>
-            </Table>
-          </Hidden>
-          <Hidden mdUp>
-            <Table>
-              <TableBody>
-                {!loading && files !== null
-                  ? files.map((file) => (
+                    return (
                       <TableRow key={file.file_id} hover>
-                        <TableCell
-                          align='center'
-                          className={classes.iconCheckBox}
-                        >
+                        <TableCell align='center'>
                           <Checkbox
+                            className={classes.tableMargin}
                             onClick={(event) =>
                               handleSelectClick(
                                 event,
@@ -230,36 +176,90 @@ const ViewFilesAdmin = (props) => {
                             }
                           />
                         </TableCell>
-
                         <TableCell>
                           <Grid container className={classes.iconAlign}>
                             <Grid>
                               <FileType typefile={file.file_name} />
                             </Grid>
                             <Grid>
-                              <div className={classes.nowrapMany}>
-                                <Box
-                                  className={classes.nowrapTextMany}
-                                  textOverflow='ellipsis'
-                                  overflow='hidden'
-                                >
-                                  {file.file_name}
-                                </Box>
-                              </div>
-                              <Typography className={classes.textDate}>
-                                {moment
-                                  .utc(file.file_created)
-                                  .add(3, 'minutes')
-                                  .format('DD-MM-YYYY HH:mm')}
+                              <Typography
+                                color='textPrimary'
+                                className={classes.text}
+                              >
+                                {file.file_name}
                               </Typography>
                             </Grid>
                           </Grid>
+                          {/* </Link> */}
+                        </TableCell>
+                        <TableCell align='center'>
+                          <Typography className={classes.text}>
+                            {moment
+                              .utc(file.file_created)
+                              .add(3, 'minutes')
+                              .format('DD-MM-YYYY HH:mm')}
+                          </Typography>
                         </TableCell>
                         <TableCell align='center'>
                           <MenuFile file={file} handleDelete={handleDelete} />
                         </TableCell>
                       </TableRow>
-                    ))
+                    );
+                  })
+                  : console.log('Nodata')}
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden mdUp>
+            <Table>
+              <TableBody>
+                {!loading && files !== null
+                  ? files.map((file) => (
+                    <TableRow key={file.file_id} hover>
+                      <TableCell
+                        align='center'
+                        className={classes.iconCheckBox}
+                      >
+                        <Checkbox
+                          onClick={(event) =>
+                            handleSelectClick(
+                              event,
+                              file.file_id,
+                              file.file_name
+                            )
+                          }
+                        />
+                      </TableCell>
+
+                      <TableCell>
+                        <Grid container className={classes.iconAlign}>
+                          <Grid>
+                            <FileType typefile={file.file_name} />
+                          </Grid>
+                          <Grid>
+                            <div className={classes.nowrapMany}>
+                              <Box
+                                className={classes.nowrapTextMany}
+                                textOverflow='ellipsis'
+                                overflow='hidden'
+                              >
+                                {file.file_name}
+                              </Box>
+                            </div>
+                            <Typography className={classes.textDate}>
+                              {moment
+                                .utc(file.file_created)
+                                .add(3, 'minutes')
+                                .format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell align='center'>
+                        <MenuFile file={file} handleDelete={handleDelete} />
+                      </TableCell>
+                    </TableRow>
+                  ))
                   : console.log('folder empty')}
               </TableBody>
             </Table>
@@ -273,8 +273,8 @@ const ViewFilesAdmin = (props) => {
               </TableRow>
             </Table>
           ) : (
-            console.log('folder empty')
-          )}
+              console.log('folder empty')
+            )}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

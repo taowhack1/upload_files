@@ -4,11 +4,10 @@ import "./style.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, MenuItem } from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import RemoveIcon from "@material-ui/icons/Remove";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import { MenuItem } from "@material-ui/core/";
 
 export default function ConfirmDeleteFile(props) {
   const classes = useStyles();

@@ -4,7 +4,7 @@ import "./style.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { Button, Typography, IconButton } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import RemoveIcon from "@material-ui/icons/Remove";
 import ListItemIcon from "@material-ui/core/ListItemIcon";

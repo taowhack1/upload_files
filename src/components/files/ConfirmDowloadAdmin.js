@@ -2,16 +2,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import "./upload_style.css";
 import "./style.css";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import {
   Button,
   Typography,
-  IconButton,
   MenuItem,
   ListItemIcon,
+  Fade,
+  Backdrop,
+  Modal,
 } from "@material-ui/core";
 import useStyles from "./StyleFiles";
 import { download } from "../../actions/fileActions";
@@ -21,7 +20,6 @@ export default function ConfirmDownloadAdmin(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const file = props.file;
-  const FileDownload = require("js-file-download");
 
   const handleDownload = () => {
     dispatch(download(file.file_id, file.file_name));

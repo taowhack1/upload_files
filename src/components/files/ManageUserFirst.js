@@ -1,14 +1,14 @@
-import React, { useEffect, Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import Circular from '../layout/Circular';
-import { getUserAll } from '../../actions/authActions';
-import Registor from '../authen/Registor';
-import useStyles from './StyleFiles';
-import MenuUser from './MenuUser';
-import ManageUserSwitchAuth from './ManageUserSwitchAuth';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import PersonIcon from '@material-ui/icons/Person';
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import Circular from "../layout/Circular";
+import { getUserAll } from "../../actions/authActions";
+import Registor from "../authen/Registor";
+import useStyles from "./StyleFiles";
+import MenuUser from "./MenuUser";
+import ManageUserSwitchAuth from "./ManageUserSwitchAuth";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import PersonIcon from "@material-ui/icons/Person";
 import {
   Table,
   TableBody,
@@ -55,9 +55,9 @@ const ManageUserFirst = () => {
             <Fragment>
               <Grid
                 container
-                direction='row'
-                justify='center'
-                alignItems='center'
+                direction="row"
+                justify="center"
+                alignItems="center"
               >
                 <Paper className={classes.paper}>
                   <Grid container>
@@ -68,7 +68,7 @@ const ManageUserFirst = () => {
                           className={classes.NavigateNextIcon}
                         />
                       }
-                      aria-label='breadcrumb'
+                      aria-label="breadcrumb"
                     >
                       <Typography className={classes.text}>
                         จัดการผู้ใช้งาน
@@ -83,29 +83,29 @@ const ManageUserFirst = () => {
                       <TableRow>
                         <TableCell className={classes.tableCellName}>
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             ชื่อผู้ใช้งาน
                           </Typography>
                         </TableCell>
-                        <TableCell style={{ width: '20%' }} align='center'>
+                        <TableCell style={{ width: "20%" }} align="center">
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             สิทธิ์ผู้ดูแลระบบ
                           </Typography>
                         </TableCell>
-                        <TableCell align='center'>
+                        <TableCell align="center">
                           <Typography
-                            color='textPrimary'
+                            color="textPrimary"
                             className={classes.text}
                           >
                             สิทธิ์การใช้งาน
                           </Typography>
                         </TableCell>
-                        <TableCell align='center'></TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -181,7 +181,7 @@ const ManageUserFirst = () => {
                                       </Grid>
                                       <Grid>
                                         <Typography
-                                          color='textPrimary'
+                                          color="textPrimary"
                                           className={classes.text}
                                         >
                                           {`${user.user_name}  ( ${user.user_firstname}  ${user.user_lastname} )`}
@@ -193,7 +193,7 @@ const ManageUserFirst = () => {
                                             className={classes.iconStar}
                                           />
                                         ) : (
-                                            ''
+                                            ""
                                           )}
                                       </Grid>
                                     </Grid>
@@ -366,7 +366,7 @@ const ManageUserFirst = () => {
               <Registor updateUser={updateUser} snackAlert={snackAlert} />
             </Fragment>
           ) : (
-              <Redirect to='/' />
+              <Redirect to="/" />
             )}
         </div>
       )}

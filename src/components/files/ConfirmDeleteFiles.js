@@ -95,14 +95,14 @@ const ConfirmDeleteFiles = (props) => {
                   handleClose();
                 }}
               >
-                <Typography className={classes.text}>Delete</Typography>
+                <Typography className={classes.text}>ลบ</Typography>
               </Button>
               <Button
                 color="primary"
                 className={classes.modalbtnCancel}
                 onClick={handleClose}
               >
-                <Typography className={classes.text}>Cancel</Typography>
+                <Typography className={classes.text}>ยกเลิก</Typography>
               </Button>
             </div>
           </div>

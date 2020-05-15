@@ -16,7 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import swal from "sweetalert";
 import "./style.css";
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from "@material-ui/core/Hidden";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -171,7 +171,7 @@ export default function AddFolder(props) {
                     required
                     fullWidth
                     id="user_password_old"
-                    placeholder="Current password"
+                    placeholder="รหัสผ่านปัจจุบัน"
                     name="user_password_old"
                     type={values.showPassword ? "text" : "password"}
                     onChange={(e) => onChange(e)}
@@ -190,8 +190,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -206,7 +206,7 @@ export default function AddFolder(props) {
                     required
                     fullWidth
                     name="user_password"
-                    placeholder="New password"
+                    placeholder="รหัสผ่านใหม่"
                     type={values.showPassword ? "text" : "password"}
                     id="user_password"
                     onChange={(e) => onChange(e)}
@@ -225,8 +225,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -242,7 +242,7 @@ export default function AddFolder(props) {
                     fullWidth
                     type={values.showPassword ? "text" : "password"}
                     name="user_password_confirm"
-                    placeholder="Confirm password"
+                    placeholder="ยืนยันรหัสผ่านใหม่"
                     id="user_password_confirm"
                     onChange={onChangePass}
                     value={confirm.user_password_confirm}
@@ -260,8 +260,8 @@ export default function AddFolder(props) {
                             {values.showPassword ? (
                               <Visibility />
                             ) : (
-                                <VisibilityOff />
-                              )}
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -281,7 +281,7 @@ export default function AddFolder(props) {
                         color="textPrimary"
                         elevation={0}
                       >
-                        Save
+                        บันทึก
                       </Typography>
                     </Button>
                     <Button
@@ -290,7 +290,7 @@ export default function AddFolder(props) {
                       onClick={handleClose}
                     >
                       <Typography className={classes.text} color="textPrimary">
-                        Cancel
+                        ยกเลิก
                       </Typography>
                     </Button>
                   </div>

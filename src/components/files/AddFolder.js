@@ -12,7 +12,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./StyleFiles";
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from "@material-ui/core/Hidden";
 export default function AddFolder(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -30,7 +30,6 @@ export default function AddFolder(props) {
     value = value.slice(0, 15);
     setFolderName(value);
   };
-
 
   return (
     <div>
@@ -67,7 +66,7 @@ export default function AddFolder(props) {
                     <Grid item xs>
                       {" "}
                     </Grid>
-                    <Grid >
+                    <Grid>
                       <FolderIcon className={classes.iconFolder} />
                     </Grid>
                     <Grid item> </Grid>
@@ -110,7 +109,7 @@ export default function AddFolder(props) {
             <div className={classes.modalBtn}>
               <Button
                 variant="contained"
-                className={classes.modalbtnOk}
+                className={classes.modalbtnSave}
                 onClick={() =>
                   props.handleCreateFolder(folder_name, handleAddFolderClose)
                 }
@@ -120,7 +119,7 @@ export default function AddFolder(props) {
                   color="textPrimary"
                   elevation={0}
                 >
-                  OK
+                  ตกลง
                 </Typography>
               </Button>
               <Button
@@ -129,7 +128,7 @@ export default function AddFolder(props) {
                 onClick={handleAddFolderClose}
               >
                 <Typography className={classes.text} color="textPrimary">
-                  Cancel
+                  ยกเลิก
                 </Typography>
               </Button>
             </div>

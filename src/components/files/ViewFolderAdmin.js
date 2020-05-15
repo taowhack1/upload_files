@@ -1,6 +1,14 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FolderIcon from "@material-ui/icons/Folder";
+import AddFolder from "./AddFolder";
+import useStyles from "./StyleFiles";
+import MenuFolder from "./MenuFolder";
+import Circular from "../layout/Circular";
+import { useSnackbar } from "notistack";
+import moment from "moment";
 import {
   Table,
   TableBody,
@@ -11,22 +19,14 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
+  Hidden,
 } from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderIcon from "@material-ui/icons/Folder";
 import {
   deleteFolder,
   updateFolder,
   getAllFolder,
   createFolder,
 } from "../../actions/folderActions";
-import AddFolder from "./AddFolder";
-import useStyles from "./StyleFiles";
-import MenuFolder from "./MenuFolder";
-import Circular from "../layout/Circular";
-import { useSnackbar } from "notistack";
-import moment from "moment";
-import Hidden from "@material-ui/core/Hidden";
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
@@ -53,6 +53,7 @@ const ViewFolderAdmin = (props) => {
   const handleDeleteFolder = async (folderId) => {
     await dispatch(deleteFolder(folderId, snackAlert));
   };
+
   const handleCreateFolder = async (folder_name, handleAddFolderClose) => {
     if (folder_name) {
       await dispatch(
@@ -62,6 +63,7 @@ const ViewFolderAdmin = (props) => {
       snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
     }
   };
+
   const handleChangeFolderName = async (folder, handleAddFolderClose) => {
     if (folder.folder_name) {
       await dispatch(updateFolder(folder, snackAlert));
@@ -70,6 +72,7 @@ const ViewFolderAdmin = (props) => {
       snackAlert("กรุณาระบุชื่อโฟลเดอร์", "warning");
     }
   };
+
   return (
     <div>
       {authenticated && (

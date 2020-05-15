@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import useStyles from './StyleFiles';
-import { useDispatch } from 'react-redux';
-import { Switch } from '@material-ui/core/';
-import { updateActiveUser, getUser } from '../../actions/authActions';
-import Hidden from '@material-ui/core/Hidden';
+import React, { useState } from "react";
+import useStyles from "./StyleFiles";
+import { useDispatch } from "react-redux";
+import { Switch, Hidden } from "@material-ui/core/";
+import { updateActiveUser, getUser } from "../../actions/authActions";
 
 const MenuUser = (props) => {
   const { userData } = props;
@@ -62,17 +61,10 @@ const MenuUser = (props) => {
   return (
     <>
       <Hidden smDown className={classes.tableMargin}>
-        <Switch
-          checked={switchchecked}
-          onChange={handleChange}
-
-        ></Switch>
+        <Switch checked={switchchecked} onChange={handleChange}></Switch>
       </Hidden>
       <Hidden mdUp className={classes.iconButton}>
-        <Switch
-          checked={switchchecked}
-          onChange={handleChange}
-        ></Switch>
+        <Switch checked={switchchecked} onChange={handleChange}></Switch>
       </Hidden>
     </>
   );

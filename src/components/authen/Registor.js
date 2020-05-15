@@ -1,24 +1,25 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Typography } from "@material-ui/core";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import {
+  Modal,
+  Typography,
+  Backdrop,
+  Fade,
+  Fab,
+  Tooltip,
+  Button,
+  Container,
+  TextField,
+  Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import { Container } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import useStyles from "../files/StyleFiles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import axios from "axios";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
 import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
 import { addRegistor } from "../../actions/authActions";
@@ -91,13 +92,11 @@ export default function Registor(props) {
     if (e.target.value == "1") {
       setValue1(true);
       setValue2(false);
-      console.log(e.target.value);
       setUser({ ...user, authorized_id: parseInt(e.target.value) });
     }
     if (e.target.value == "2") {
       setValue1(false);
       setValue2(true);
-      console.log(e.target.value);
       setUser({ ...user, authorized_id: parseInt(e.target.value) });
     }
   };
@@ -159,26 +158,6 @@ export default function Registor(props) {
     if (err) {
       dispatch(addRegistor(user, snackAlert, props.updateUser, handleClose));
     }
-    // if (err) {
-    //   axios.post("http://192.168.5.230:8s80/upload/user", user).then((res) => {
-    //     console.log(res.data);
-    //     if (res.data.success == false) {
-    //       let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
-    //       let errorChecks = {
-    //         errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
-    //       };
-    //       errorChecks.errorChecks_username = true;
-    //       errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
-    //       setErrorCheck({ ...errorCheck, ...errorChecks });
-    //       setError({ ...error, ...errors });
-    //       snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
-    //     } else {
-    //       snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
-    //       props.updateUser();
-    //       handleClose();
-    //     }
-    //   });
-    // }
   };
 
   return (
@@ -221,7 +200,6 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_firstname}
                         error={errorCheck.errorChecks_firstname}
-                        //helperText={error.error_firstname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -242,7 +220,6 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_lastname}
                         error={errorCheck.errorChecks_lastname}
-                        //helperText={error.error_lastname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -266,7 +243,6 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_name}
                         error={errorCheck.errorChecks_username}
-                        //helperText={error.error_username}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -290,7 +266,6 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_password}
                         error={errorCheck.errorChecks_password}
-                        //helperText={error.error_password}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,

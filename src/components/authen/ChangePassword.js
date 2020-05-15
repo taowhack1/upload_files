@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, Typography, Container } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -7,16 +7,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import useStyles from "../files/StyleFiles";
-import axios from "axios";
 import { signOut, changePassword } from "../../actions/authActions";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import swal from "sweetalert";
 import "./style.css";
-import Hidden from "@material-ui/core/Hidden";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

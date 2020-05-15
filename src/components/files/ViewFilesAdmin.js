@@ -52,7 +52,7 @@ const ViewFilesAdmin = (props) => {
           history.push("/");
         }
         if (authdata.authorized_id == 2) {
-          history.push("/manageuserfirst/");
+          history.push("/viewfolderadmin/");
         }
       }
     }

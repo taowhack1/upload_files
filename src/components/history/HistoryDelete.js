@@ -118,7 +118,7 @@ const HistoryDelete = (props) => {
                       </TableCell>
                       <TableCell align="center">
                         <Typography className={classes.text}>
-                          {log.user_firstname} {log.user_lastname}
+                          {log.del_user_firstname} {log.del_user_lastname}
                         </Typography>
                       </TableCell>
                     </TableRow>

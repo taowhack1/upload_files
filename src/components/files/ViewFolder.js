@@ -21,7 +21,6 @@ import Circular from '../layout/Circular';
 import { getFolders } from '../../actions/folderActions';
 import useStyles from '../../style/StyleFiles';
 import Hidden from '@material-ui/core/Hidden';
-import SignIn from "../authen/SignIn";
 const ViewFolder = () => {
   const classes = useStyles();
   const history = useHistory();

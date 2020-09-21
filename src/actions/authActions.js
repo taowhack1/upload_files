@@ -29,7 +29,9 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
   };
 
   try {
+    console.log(user)
     const response = await axios.post(`${url}/login`, user, config);
+    
     if (response.data.user_login) {
       if (response.data.user_login_active === false) {
         snackAlert(
@@ -49,6 +51,7 @@ export const signIn = (user, snackAlert) => async (dispatch) => {
         });
       }
     } else {
+      // console.log(response);
       snackAlert("ชื่อผู้ใช้งาน หรือ รหัสผ่าน ไม่ถูกต้อง!", "error");
     }
   } catch (err) {

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Typography, Menu, MenuItem, IconButton } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
-import useStyles from "../files/StyleFiles";
+import useStyles from "../../style/StyleFiles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChangePassword from "../authen/ChangePassword";
 import UserImage from "./user.svg";
@@ -23,8 +23,8 @@ const MenuNavbar = (props) => {
   const { authenticated, authdata } = useSelector((state) => state.auth);
   return (
     <div>
-      <IconButton className={classes.tableMargin} onClick={handleOpen}>
-        <img src={UserImage} width="50" />
+      <IconButton className={classes.imgSize} onClick={handleOpen}>
+        <img src={UserImage} />
       </IconButton>
       <Menu
         className={classes.menu}

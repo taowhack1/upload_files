@@ -1,6 +1,14 @@
 import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FolderIcon from "@material-ui/icons/Folder";
+import AddFolder from "../modal/AddFolder";
+import useStyles from "../../style/StyleFiles";
+import MenuFolder from "../menu/MenuFolder";
+import Circular from "../layout/Circular";
+import { useSnackbar } from "notistack";
+import moment from "moment";
 import {
   Table,
   TableBody,
@@ -11,26 +19,18 @@ import {
   Grid,
   Breadcrumbs,
   Typography,
+  Hidden,
 } from "@material-ui/core/";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderIcon from "@material-ui/icons/Folder";
 import {
   deleteFolder,
   updateFolder,
   getAllFolder,
   createFolder,
 } from "../../actions/folderActions";
-import AddFolder from "./AddFolder";
-import useStyles from "./StyleFiles";
-import MenuFolder from "./MenuFolder";
-import Circular from "../layout/Circular";
-import { useSnackbar } from "notistack";
-import moment from "moment";
-import Hidden from '@material-ui/core/Hidden';
 
 const ViewFolderAdmin = (props) => {
   const classes = useStyles();
-  const { folders, loading } = useSelector((state) => state.folder);
+  const { foldersadmin, loading } = useSelector((state) => state.folder);
   const { authenticated, authdata } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -53,6 +53,7 @@ const ViewFolderAdmin = (props) => {
   const handleDeleteFolder = async (folderId) => {
     await dispatch(deleteFolder(folderId, snackAlert));
   };
+
   const handleCreateFolder = async (folder_name, handleAddFolderClose) => {
     if (folder_name) {
       await dispatch(
@@ -62,6 +63,7 @@ const ViewFolderAdmin = (props) => {
       snackAlert("กรุณาระบุชื่อโฟลเดอร์ที่ต้องการสร้าง", "error");
     }
   };
+
   const handleChangeFolderName = async (folder, handleAddFolderClose) => {
     if (folder.folder_name) {
       await dispatch(updateFolder(folder, snackAlert));
@@ -70,6 +72,7 @@ const ViewFolderAdmin = (props) => {
       snackAlert("กรุณาระบุชื่อโฟลเดอร์", "warning");
     }
   };
+
   return (
     <div>
       {authenticated && (
@@ -100,24 +103,26 @@ const ViewFolderAdmin = (props) => {
                       <TableHead>
                         <TableRow>
                           <TableCell className={classes.tableCellName}>
-                            <Typography className={classes.text}>ชื่อ</Typography>
+                            <Typography className={classes.text}>
+                              ชื่อโฟลเดอร์
+                            </Typography>
                           </TableCell>
                           <TableCell align="center">
                             <Typography className={classes.text}>
                               วันที่แก้ไข
-                          </Typography>
+                            </Typography>
                           </TableCell>
                           <TableCell align="center">
                             <Typography className={classes.text}>
                               ตัวเลือก
-                          </Typography>
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       </TableHead>
-                      <TableBody >
-                        {!loading && folders != null
-                          ? folders.map((folder) => (
-                            <TableRow key={folder.folder_id} >
+                      <TableBody>
+                        {!loading && foldersadmin != null
+                          ? foldersadmin.map((folder) => (
+                            <TableRow key={folder.folder_id}>
                               <TableCell>
                                 <Link
                                   to={{
@@ -129,9 +134,11 @@ const ViewFolderAdmin = (props) => {
                                     },
                                   }}
                                 >
-                                  <Grid container className={classes.iconAlign}>
-
-                                    <Grid >
+                                  <Grid
+                                    container
+                                    className={classes.iconAlign}
+                                  >
+                                    <Grid>
                                       <FolderIcon
                                         className={classes.iconFolderTable}
                                       />
@@ -172,9 +179,9 @@ const ViewFolderAdmin = (props) => {
                   <Hidden mdUp>
                     <Table>
                       <TableBody>
-                        {!loading && folders != null
-                          ? folders.map((folder) => (
-                            <TableRow key={folder.folder_id} >
+                        {!loading && foldersadmin != null
+                          ? foldersadmin.map((folder) => (
+                            <TableRow key={folder.folder_id}>
                               <TableCell>
                                 <Link
                                   to={{
@@ -186,17 +193,24 @@ const ViewFolderAdmin = (props) => {
                                     },
                                   }}
                                 >
-                                  <Grid container className={classes.iconAlign}>
+                                  <Grid
+                                    container
+                                    className={classes.iconAlign}
+                                  >
                                     <Grid>
                                       <FolderIcon
                                         className={classes.iconFolderTable}
                                       />
                                     </Grid>
-                                    <Grid >
-                                      <Typography className={classes.nowrapText}>
+                                    <Grid>
+                                      <Typography
+                                        className={classes.nowrapText}
+                                      >
                                         {folder.folder_name}
                                       </Typography>
-                                      <Typography className={classes.textDate}>
+                                      <Typography
+                                        className={classes.textDate}
+                                      >
                                         {moment
                                           .utc(folder.folder_updated)
                                           .add(3, "minutes")
@@ -223,7 +237,7 @@ const ViewFolderAdmin = (props) => {
                       </TableBody>
                     </Table>
                   </Hidden>
-                  {folders === null ? (
+                  {foldersadmin === null ? (
                     <Table>
                       <TableRow>
                         <TableCell className={classes.emptyTable}>

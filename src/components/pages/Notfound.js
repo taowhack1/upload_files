@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, useHistory } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
-import useStyles from '../files/StyleFiles';
+import useStyles from '../../style/StyleFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import './Notfound'
 import {

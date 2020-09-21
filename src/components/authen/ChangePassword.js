@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, Typography, Container } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -6,17 +6,13 @@ import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import useStyles from "../files/StyleFiles";
-import axios from "axios";
+import useStyles from "../../style/StyleFiles";
 import { signOut, changePassword } from "../../actions/authActions";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import swal from "sweetalert";
 import "./style.css";
-import Hidden from '@material-ui/core/Hidden';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -171,7 +167,7 @@ export default function AddFolder(props) {
                     required
                     fullWidth
                     id="user_password_old"
-                    placeholder="Current password"
+                    placeholder="รหัสผ่านปัจจุบัน"
                     name="user_password_old"
                     type={values.showPassword ? "text" : "password"}
                     onChange={(e) => onChange(e)}
@@ -206,7 +202,7 @@ export default function AddFolder(props) {
                     required
                     fullWidth
                     name="user_password"
-                    placeholder="New password"
+                    placeholder="รหัสผ่านใหม่"
                     type={values.showPassword ? "text" : "password"}
                     id="user_password"
                     onChange={(e) => onChange(e)}
@@ -242,7 +238,7 @@ export default function AddFolder(props) {
                     fullWidth
                     type={values.showPassword ? "text" : "password"}
                     name="user_password_confirm"
-                    placeholder="Confirm password"
+                    placeholder="ยืนยันรหัสผ่านใหม่"
                     id="user_password_confirm"
                     onChange={onChangePass}
                     value={confirm.user_password_confirm}
@@ -281,7 +277,7 @@ export default function AddFolder(props) {
                         color="textPrimary"
                         elevation={0}
                       >
-                        Save
+                        บันทึก
                       </Typography>
                     </Button>
                     <Button
@@ -290,7 +286,7 @@ export default function AddFolder(props) {
                       onClick={handleClose}
                     >
                       <Typography className={classes.text} color="textPrimary">
-                        Cancel
+                        ยกเลิก
                       </Typography>
                     </Button>
                   </div>

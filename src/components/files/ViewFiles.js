@@ -13,27 +13,22 @@ import {
   Typography,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import UploadBtn from "./UploadBtn";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import UploadBtn from "../modal/UploadBtn";
 import { getFiles } from "../../actions/fileActions";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import ConfirmDownload from "./ConfirmDowload";
-import useStyles from "./StyleFiles";
+import { Link, useHistory } from "react-router-dom";
+import ConfirmDownload from "../modal/ConfirmDowload";
+import useStyles from "../../style/StyleFiles";
 import Circular from "../layout/Circular";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import FileType from './filetype/Filetypes'
+import FileType from "../filetype/Filetypes";
 import Box from "@material-ui/core/Box";
-import Hidden from '@material-ui/core/Hidden';
-
+import Hidden from "@material-ui/core/Hidden";
 
 const ViewFiles = (props) => {
-  //const { folder_id, folder_name } = props.location.state;
-  const { authenticated, authdata } = useSelector((state) => state.auth);
   const history = useHistory();
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const dispatch = useDispatch();
-  const { folder_id, folder_name } = "";
   const [folderID, setFolderID] = useState();
   const [folderName, setFolderName] = useState();
   const [accessupload, setAccessUpload] = useState({});
@@ -49,7 +44,7 @@ const ViewFiles = (props) => {
       setAccessUpload(access_upload);
       setAccessDowload(access_download);
       setFolderID(folder_id);
-      setFolderName(folder_name)
+      setFolderName(folder_name);
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
       history.push("/");
@@ -58,30 +53,8 @@ const ViewFiles = (props) => {
   const updateList = () => {
     dispatch(getFiles(folderID));
   };
-  // const [scrollUp, setScrollUp] = useState('')
-  // const [scrollDown, setScrollDown] = useState('')
-  // const [prev, setPrev] = useState('')
-  // useEffect(() => {
-  //   const prev = window.scrollY;
-  //   setPrev(prev)
-  //   window.addEventListener('scroll', e => handleNavigation(e));
-  // })
-
-  // const handleNavigation = (e) => {
-  //   const window = e.currentTarget;
-  //   if (prev > window.scrollY) {
-  //     setScrollUp("scrolling up");
-  //     setScrollDown("");
-  //   } else if (prev < window.scrollY) {
-  //     setScrollDown("scrolling down");
-  //     setScrollUp("");
-  //   }
-  //   setPrev(window.scrollY)
-  // };
-
 
   return (
-
     <Fragment>
       <Grid container className={classes.gridContainer}>
         <Paper className={classes.paper}>
@@ -98,33 +71,30 @@ const ViewFiles = (props) => {
                   โฟลเดอร์ทั้งหมด
                 </Typography>
               </Link>
-              <Typography className={classes.text}>
-                {folderName}
-              </Typography>
+              <Typography className={classes.text}>{folderName}</Typography>
             </Breadcrumbs>
           </Grid>
         </Paper>
 
-
         <Paper className={classes.paper}>
-          <Hidden smDown >
+          <Hidden smDown>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.tableCellName}>
                     <Typography color="textPrimary" className={classes.text}>
-                      ชื่อ
-                  </Typography>
+                      ชื่อไฟล์
+                    </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography color="textPrimary" className={classes.text}>
-                      วันที่แก้ไขล่าสุด
-                  </Typography>
+                      วันที่อัพโหลด
+                    </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography color="textPrimary" className={classes.text}>
                       ดาวน์โหลด
-                  </Typography>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -134,10 +104,16 @@ const ViewFiles = (props) => {
                     <TableRow key={file.file_id} hover>
                       <TableCell>
                         <Grid container className={classes.iconAlign}>
-                          <FileType typefile={file.file_name} src={file.src} />
+                          <FileType
+                            typefile={file.file_name}
+                            src={file.src}
+                          />
                           <div className={classes.nowrap}>
-                            <Box className={classes.nowrapText} textOverflow="ellipsis"
-                              overflow="hidden">
+                            <Box
+                              className={classes.nowrapText}
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
                               {file.file_name}
                             </Box>
                           </div>
@@ -163,25 +139,31 @@ const ViewFiles = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
-                  : console.log("folder empty")}
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
           <Hidden mdUp>
-            <Table >
+            <Table>
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
                     <TableRow key={file.file_id} hover>
-                      <TableCell >
+                      <TableCell>
                         <Grid container className={classes.iconAlign}>
                           <Grid>
-                            <FileType typefile={file.file_name} src={file.src} />
+                            <FileType
+                              typefile={file.file_name}
+                              src={file.src}
+                            />
                           </Grid>
-                          <Grid >
+                          <Grid>
                             <div className={classes.nowrap}>
-                              <Box className={classes.nowrapText} textOverflow="ellipsis"
-                                overflow="hidden">
+                              <Box
+                                className={classes.nowrapText}
+                                textOverflow="ellipsis"
+                                overflow="hidden"
+                              >
                                 {file.file_name}
                               </Box>
                             </div>
@@ -206,7 +188,7 @@ const ViewFiles = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
-                  : console.log("folder empty")}
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
@@ -218,9 +200,7 @@ const ViewFiles = (props) => {
                 </TableCell>
               </TableRow>
             </Table>
-          ) : (
-              console.log("folder empty")
-            )}
+          ) : null}
           {loading && (
             <div className={classes.loading}>
               <Circular />
@@ -228,14 +208,8 @@ const ViewFiles = (props) => {
           )}
         </Paper>
       </Grid>
-
-      {/* {scrollDown != 'scrolling down' &&
-        < div > */}
       {accessupload && <UploadBtn refresh={updateList} folderId={folderID} />}
-      {/* </div>
-      } */}
-
-    </Fragment >
+    </Fragment>
   );
 };
 

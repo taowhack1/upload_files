@@ -42,17 +42,18 @@ export const getFiles = (folder_id) => async (dispatch) => {
   }
 };
 
-export const deleteFile = (fileId, snackAlert) => async (dispatch) => {
+export const deleteFile = (fileId, userID, snackAlert) => async (dispatch) => {
   const config = {
     header: {
       "Content-Type": "application/json",
     },
     data: {
       file_id: fileId,
+      user_id: userID,
     },
   };
   try {
-    const res = await axios.delete(`${url}/upload/file/delete`, config);
+    const res = await axios.delete(`${url}/upload/file/deletekeepfile`, config);
     if (res.data.success) {
       dispatch({
         type: DELETE_FILE,

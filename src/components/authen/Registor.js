@@ -1,27 +1,28 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Typography } from "@material-ui/core";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import {
+  Modal,
+  Typography,
+  Backdrop,
+  Fade,
+  Fab,
+  Tooltip,
+  Button,
+  Container,
+  TextField,
+  Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import { Container } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Grid, { GridSpacing } from "@material-ui/core/Grid";
-import useStyles from "../files/StyleFiles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import axios from "axios";
+import useStyles from "../../style/StyleFiles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
 import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
-import { addRegistor } from '../../actions/authActions'
+import { addRegistor } from "../../actions/authActions";
 
 export default function Registor(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -67,7 +68,7 @@ export default function Registor(props) {
     setErrorCheck({});
     setValue1(true);
     setValue2(false);
-    setValues({ ...values, showPassword: false })
+    setValues({ ...values, showPassword: false });
   };
   const onChange = (e) => {
     if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
@@ -91,21 +92,29 @@ export default function Registor(props) {
     if (e.target.value == "1") {
       setValue1(true);
       setValue2(false);
-      console.log(e.target.value);
       setUser({ ...user, authorized_id: parseInt(e.target.value) });
     }
     if (e.target.value == "2") {
       setValue1(false);
       setValue2(true);
-      console.log(e.target.value);
       setUser({ ...user, authorized_id: parseInt(e.target.value) });
     }
   };
 
   const validation = (e) => {
     let formIsValid = true;
-    let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
-    let errorChecks = { errorChecks_firstname: false, errorChecks_lastname: false, errorChecks_username: false, errorChecks_password: false, };
+    let errors = {
+      error_firstname: "",
+      error_lastname: "",
+      error_username: "",
+      error_password: "",
+    };
+    let errorChecks = {
+      errorChecks_firstname: false,
+      errorChecks_lastname: false,
+      errorChecks_username: false,
+      errorChecks_password: false,
+    };
     if (user.user_firstname.length == 0) {
       formIsValid = false;
       errorChecks.errorChecks_firstname = true;
@@ -142,35 +151,14 @@ export default function Registor(props) {
     return formIsValid;
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = validation();
     console.log(user);
     if (err) {
-      dispatch(addRegistor(user, snackAlert, props.updateUser, handleClose))
+      dispatch(addRegistor(user, snackAlert, props.updateUser, handleClose));
     }
-    // if (err) {
-    //   axios.post("http://192.168.5.230:8s80/upload/user", user).then((res) => {
-    //     console.log(res.data);
-    //     if (res.data.success == false) {
-    //       let errors = { error_firstname: "", error_lastname: "", error_username: "", error_password: "", };
-    //       let errorChecks = {
-    //         errorChecks_firstname: "", errorChecks_lastname: "", errorChecks_username: "", errorChecks_password: "",
-    //       };
-    //       errorChecks.errorChecks_username = true;
-    //       errors.error_username = "Username เหมือนกันไม่ได้นะ เปลี่ยนใหม่ด้วย";
-    //       setErrorCheck({ ...errorCheck, ...errorChecks });
-    //       setError({ ...error, ...errors });
-    //       snackAlert("ชื่อผู้ใช้งานมีอยู่ในระบบแล้ว", "warning");
-    //     } else {
-    //       snackAlert("เพิ่มผู้ใช้งานสำเร็จ", "success");
-    //       props.updateUser();
-    //       handleClose();
-    //     }
-    //   });
-    // }
-  }
+  };
 
   return (
     <div>
@@ -195,11 +183,11 @@ export default function Registor(props) {
         <Fade in={open}>
           <div className={classes.modalPaper}>
             <div className={classes.root}>
-              <Typography className={classes.text}>เปลี่ยนรหัสผ่าน</Typography>
+              <Typography className={classes.text}>
+                สร้างผู้ใช้งานระบบ
+              </Typography>
               <Container maxWidth="xl">
-                <form
-                  className={classes.formStyle}
-                >
+                <form className={classes.formStyle}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -212,13 +200,14 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_firstname}
                         error={errorCheck.errorChecks_firstname}
-                        //helperText={error.error_firstname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
-                      <Typography className={classes.errorTextRegistor}>{error.error_firstname}</Typography>
+                      <Typography className={classes.errorTextRegistor}>
+                        {error.error_firstname}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -231,13 +220,14 @@ export default function Registor(props) {
                         onChange={onChange}
                         value={user.user_lastname}
                         error={errorCheck.errorChecks_lastname}
-                        //helperText={error.error_lastname}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
-                      <Typography className={classes.errorTextRegistor}>{error.error_lastname}</Typography>
+                      <Typography className={classes.errorTextRegistor}>
+                        {error.error_lastname}
+                      </Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -246,20 +236,21 @@ export default function Registor(props) {
                         autoComplete="fname"
                         name="user_name"
                         variant="outlined"
-                        placeholder="Username"
+                        placeholder="ชื่อผู้ใช้งาน"
                         required
                         fullWidth
                         id="user_name"
                         onChange={onChange}
                         value={user.user_name}
                         error={errorCheck.errorChecks_username}
-                        //helperText={error.error_username}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
                         }}
                       />
-                      <Typography className={classes.errorTextRegistor}>{error.error_username}</Typography>
+                      <Typography className={classes.errorTextRegistor}>
+                        {error.error_username}
+                      </Typography>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} style={{ marginTop: 10 }}>
@@ -268,14 +259,13 @@ export default function Registor(props) {
                         autoComplete="fname"
                         name="user_password"
                         variant="outlined"
-                        placeholder="Password"
+                        placeholder="รหัสผ่าน"
                         type={values.showPassword ? "text" : "password"}
                         fullWidth
                         id="user_password"
                         onChange={onChange}
                         value={user.user_password}
                         error={errorCheck.errorChecks_password}
-                        //helperText={error.error_password}
                         className={classes.textField}
                         InputProps={{
                           className: classes.input,
@@ -296,7 +286,9 @@ export default function Registor(props) {
                           ),
                         }}
                       />
-                      <Typography className={classes.errorTextRegistor}>{error.error_password}</Typography>
+                      <Typography className={classes.errorTextRegistor}>
+                        {error.error_password}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </form>
@@ -336,7 +328,7 @@ export default function Registor(props) {
                     color="textPrimary"
                     elevation={0}
                   >
-                    Save
+                    สร้าง
                   </Typography>
                 </Button>
                 <Button
@@ -345,7 +337,7 @@ export default function Registor(props) {
                   onClick={handleClose}
                 >
                   <Typography className={classes.text} color="textPrimary">
-                    Cancel
+                    ยกเลิก
                   </Typography>
                 </Button>
               </div>

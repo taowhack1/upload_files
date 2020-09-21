@@ -18,44 +18,41 @@ import {
   MenuItem,
   IconButton,
   Checkbox,
+  Hidden,
+  Box,
+  CircularProgress,
 } from "@material-ui/core/";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import ConfirmDeleteFiles from "./ConfirmDeleteFiles";
-import useStyles from "./StyleFiles";
-import MenuFile from "./MenuFile";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import ConfirmDeleteFiles from "../modal/ConfirmDeleteFiles";
+import useStyles from "../../style/StyleFiles";
+import MenuFile from "../menu/MenuFile";
 import { useSnackbar } from "notistack";
 import { deleteFile } from "../../actions/fileActions";
-import FileType from './filetype/Filetypes'
-import Hidden from '@material-ui/core/Hidden';
-import Box from "@material-ui/core/Box";
+import FileType from "../filetype/Filetypes";
 
 const ViewFilesAdmin = (props) => {
   const classes = useStyles();
   const { files, loading } = useSelector((state) => state.file);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const { authenticated, authdata } = useSelector((state) => state.auth);
-
-  const { folder_id, folder_name } = ''
-  const [folderID, setFolderID] = React.useState()
-  const [folderName, setFolderName] = React.useState()
+  const [folderID, setFolderID] = React.useState();
+  const [folderName, setFolderName] = React.useState();
 
   useEffect(() => {
     if (props.location.state) {
       const { folder_id, folder_name } = props.location.state;
-      setFolderID(folder_id)
-      setFolderName(folder_name)
+      setFolderID(folder_id);
+      setFolderName(folder_name);
       dispatch(getFiles(folder_id));
     } else if (!props.location.state) {
       if (authenticated) {
         if (authdata.authorized_id == 1) {
-          history.push('/')
+          history.push("/");
         }
         if (authdata.authorized_id == 2) {
-          history.push('/manageuserfirst/')
+          history.push("/viewfolderadmin/");
         }
       }
     }
@@ -63,7 +60,6 @@ const ViewFilesAdmin = (props) => {
 
   const [selected, setSelected] = React.useState([]);
   const [index, setIndex] = React.useState([]);
-  const [checked, setChecked] = React.useState(false);
   const snackAlert = (msg, variant) => {
     enqueueSnackbar(msg, {
       variant: variant,
@@ -109,7 +105,7 @@ const ViewFilesAdmin = (props) => {
   const handleDelete = async (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      await dispatch(deleteFile(file.file_id, snackAlert));
+      await dispatch(deleteFile(file.file_id, authdata.user_id, snackAlert));
     }
     updateList();
   };
@@ -137,31 +133,31 @@ const ViewFilesAdmin = (props) => {
         </Paper>
 
         <Paper className={classes.paper}>
-          <Hidden smDown >
+          <Hidden smDown>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
                   <TableCell align="center" style={{ width: "1%" }}></TableCell>
                   <TableCell className={classes.tableCellName}>
                     <Typography color="textPrimary" className={classes.text}>
-                      ชื่อ
-                  </Typography>
+                      ชื่อไฟล์
+                    </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography color="textPrimary" className={classes.text}>
-                      วันที่แก้ไข
-                  </Typography>
+                      วันที่อัพโหลด
+                    </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography color="textPrimary" className={classes.text}>
                       ตัวเลือก
-                  </Typography>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {!loading && files !== null
-                  ? files.map((file, index) => {
+                  ? files.map((file) => {
                     return (
                       <TableRow key={file.file_id} hover>
                         <TableCell align="center">
@@ -190,7 +186,6 @@ const ViewFilesAdmin = (props) => {
                               </Typography>
                             </Grid>
                           </Grid>
-                          {/* </Link> */}
                         </TableCell>
                         <TableCell align="center">
                           <Typography className={classes.text}>
@@ -206,17 +201,20 @@ const ViewFilesAdmin = (props) => {
                       </TableRow>
                     );
                   })
-                  : console.log("Nodata")}
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
           <Hidden mdUp>
-            <Table >
+            <Table>
               <TableBody>
                 {!loading && files !== null
                   ? files.map((file) => (
                     <TableRow key={file.file_id} hover>
-                      <TableCell align="center" className={classes.iconCheckBox}>
+                      <TableCell
+                        align="center"
+                        className={classes.iconCheckBox}
+                      >
                         <Checkbox
                           onClick={(event) =>
                             handleSelectClick(
@@ -233,10 +231,13 @@ const ViewFilesAdmin = (props) => {
                           <Grid>
                             <FileType typefile={file.file_name} />
                           </Grid>
-                          <Grid >
+                          <Grid>
                             <div className={classes.nowrapMany}>
-                              <Box className={classes.nowrapTextMany} textOverflow="ellipsis"
-                                overflow="hidden">
+                              <Box
+                                className={classes.nowrapTextMany}
+                                textOverflow="ellipsis"
+                                overflow="hidden"
+                              >
                                 {file.file_name}
                               </Box>
                             </div>
@@ -254,7 +255,7 @@ const ViewFilesAdmin = (props) => {
                       </TableCell>
                     </TableRow>
                   ))
-                  : console.log("folder empty")}
+                  : null}
               </TableBody>
             </Table>
           </Hidden>
@@ -266,9 +267,7 @@ const ViewFilesAdmin = (props) => {
                 </TableCell>
               </TableRow>
             </Table>
-          ) : (
-              console.log("folder empty")
-            )}
+          ) : null}
           {loading && (
             <div className={classes.loading}>
               <CircularProgress />

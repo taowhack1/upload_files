@@ -1,37 +1,44 @@
-import React, { Fragment } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
-import Navbar from "./components/layout/Navbar";
-import Home from "./components/pages/Home";
-import SignIn from "./components/authen/SignIn";
-import ViewFiles from "./components/files/ViewFiles";
-import ViewFolderAdmin from "./components/files/ViewFolderAdmin";
-import AddFolder from "./components/files/AddFolder";
-import Registor from "./components/authen/Registor";
-import ViewFilesAdmin from "./components/files/ViewFilesAdmin";
-import ManageUserFirst from "./components/files/ManageUserFirst";
-import ManageUserSecond from "./components/files/ManageUserSecond";
-import Dowload from "./components/files/Dowload";
-import ConfirmDowload from "./components/files/ConfirmDowload";
-import NotFound from "./components/pages/Notfound";
-import { createMuiTheme, ThemeProvider, MuiThemeProvider } from "@material-ui/core/styles"; //Google fonts
-import { SnackbarProvider } from "notistack";
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import Navbar from './components/layout/Navbar';
+import Home from './components/pages/Home';
+import SignIn from './components/authen/SignIn';
+import ViewFiles from './components/files/ViewFiles';
+import ViewFolderAdmin from './components/files/ViewFolderAdmin';
+import AddFolder from './components/modal/AddFolder';
+import Registor from './components/authen/Registor';
+import ViewFilesAdmin from './components/files/ViewFilesAdmin';
+import ManageUserFirst from './components/files/ManageUserFirst';
+import ManageUserSecond from './components/files/ManageUserSecond';
+import Dowload from './components/modal/Dowload';
+import ConfirmDowload from './components/modal/ConfirmDowload';
+import NotFound from './components/pages/Notfound';
+import HistoryUpload from './components/history/HistoryUpload';
 
-const token = localStorage.getItem("authData");
+import {
+  createMuiTheme,
+  ThemeProvider,
+  MuiThemeProvider,
+} from '@material-ui/core/styles'; //Google fonts
+import { SnackbarProvider } from 'notistack';
+import HistoryDelete from './components/history/HistoryDelete';
+import Search from './components/pages/Search';
+
+const token = localStorage.getItem('authData');
 const tokenParse = JSON.parse(token);
 
 if (tokenParse) {
   store.dispatch({
-    type: "AUTH_USER",
+    type: 'AUTH_USER',
     payload: tokenParse,
   });
 }
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: ['"Sarabun"'].join(","),
+    fontFamily: ['"Sarabun"'].join(','),
   },
   overrides: {
     MuiTableCell: {
@@ -41,10 +48,14 @@ const theme = createMuiTheme({
         ['@media (max-width:600px)']: {
           paddingTop: 8,
           paddingBottom: 8,
-        }
+          manage: {
+            paddingLeft: 0,
+            paddingRigth: 0,
+          }
+        },
       },
-    }
-  }
+    },
+  },
 });
 
 const App = () => {
@@ -57,27 +68,30 @@ const App = () => {
             <Switch>
               <Route
                 exact
-                path="/viewfolderadmin"
+                path='/viewfolderadmin'
                 children={<ViewFolderAdmin />}
               />
               <Route
                 exact
-                path="/manageuserfirst"
+                path='/manageuserfirst'
                 component={ManageUserFirst}
               />
               <Route
                 exact
-                path="/manageusersecond/:user_id"
+                path='/manageusersecond/:user_id'
                 component={ManageUserSecond}
               />
-              <Route exact path="/signin" component={SignIn} />
-              <Route exact path="/" component={Home} />
-              <Route exact path="/ViewFiles/:folder_id" component={ViewFiles} />
+              <Route exact path='/signin' component={SignIn} />
+              <Route exact path='/' component={Home} />
+              <Route exact path='/ViewFiles/:folder_id' component={ViewFiles} />
               <Route
                 exact
-                path="/viewfilesadmin/:folder_id"
+                path='/viewfilesadmin/:folder_id'
                 component={ViewFilesAdmin}
               />
+              <Route exact path='/historyupload' component={HistoryUpload} />
+              <Route exact path='/historydelete' component={HistoryDelete} />
+              <Route exact path='/search' component={Search} />
               <Route component={NotFound} />
             </Switch>
           </Router>
